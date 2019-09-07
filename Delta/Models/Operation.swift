@@ -31,7 +31,10 @@ enum Operation {
     
     // Get precedence
     func getPrecedence() -> Int {
-        if self == .multiplication || self == .division || self == .power {
+        if self == .power {
+            return 3
+        }
+        if self == .multiplication || self == .division {
             return 2
         }
         return 1

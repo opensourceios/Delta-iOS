@@ -21,17 +21,17 @@ struct Expression: Token {
         }
         
         // Check for brackets on both sides
-        if let expr1 = left as? Expression, let expr2 = right as? Expression, expr1.operation.getPrecedence() == 1, expr2.operation.getPrecedence() == 1, operation.getPrecedence() == 2 {
+        if let expr1 = left as? Expression, let expr2 = right as? Expression, operation.getPrecedence() > expr1.operation.getPrecedence(), operation.getPrecedence() > expr2.operation.getPrecedence() {
             return "(\(left.toString())) \(operation.toString()) (\(right.toString()))".exponentize()
         }
         
         // Check for brackets on the left
-        if let expr = left as? Expression, expr.operation.getPrecedence() == 1, operation.getPrecedence() == 2 {
+        if let expr = left as? Expression, operation.getPrecedence() > expr.operation.getPrecedence() {
             return "(\(left.toString())) \(operation.toString()) \(right.toString())".exponentize()
         }
         
         // Check for brackets on the right
-        if let expr = right as? Expression, expr.operation.getPrecedence() == 1, operation.getPrecedence() == 2 {
+        if let expr = right as? Expression, operation.getPrecedence() > expr.operation.getPrecedence() {
             return "\(left.toString()) \(operation.toString()) (\(right.toString()))".exponentize()
         }
         
@@ -42,12 +42,17 @@ struct Expression: Token {
     func compute(with inputs: [Input]) -> Token {
         // Compute expression terms
         let left = self.left.compute(with: inputs)
-        let right = self.right.compute(with: inputs)
+        var right = self.right.compute(with: inputs)
         
         // Check if any error
         if left as? SyntaxError != nil || right as? SyntaxError != nil {
             // Return it
             return SyntaxError()
+        }
+        
+        // Right is negative and sign can be changed
+        if right.getSign() == .minus && (operation == .addition || operation == .subtraction) && right.changedSign() {
+            return Expression(left: left, right: right, operation: operation == .addition ? .subtraction : .addition).compute(with: inputs)
         }
         
         // Check if left is a number
@@ -111,8 +116,42 @@ struct Expression: Token {
         return Expression(left: left, right: right, operation: operation)
     }
     
-    func times(_ right: String) -> Expression {
-        return Expression(left: self, right: Variable(name: right), operation: .multiplication)
+    func getSign() -> FloatingPointSign {
+        if operation == .addition {
+            if left.getSign() == .plus && right.getSign() == .plus {
+                return .plus
+            }
+        } else if operation == .subtraction {
+            
+        } else if operation == .multiplication || operation == .division {
+            if (left.getSign() == .plus && right.getSign() == .plus) || (left.getSign() == .minus && right.getSign() == .minus) {
+                return .plus
+            } else {
+                return .minus
+            }
+        } else if operation == .power {
+            if left.getSign() == .plus {
+                return .plus
+            } else if left.getSign() == .minus, let right = right as? Number, right.value % 2 == 0 {
+                return .plus
+            } else {
+                return .minus
+            }
+        }
+        
+        return .plus
+    }
+    
+    mutating func changedSign() -> Bool {
+        if operation == .multiplication || operation == .division {
+            if left.changedSign() {
+                return true
+            } else if right.changedSign() {
+                return true
+            }
+        }
+        
+        return false
     }
     
     func plus(_ right: String) -> Expression {
@@ -125,6 +164,14 @@ struct Expression: Token {
     
     func minus(_ right: Token) -> Expression {
         return Expression(left: self, right: right, operation: .subtraction)
+    }
+    
+    func times(_ right: String) -> Expression {
+        return Expression(left: self, right: Variable(name: right), operation: .multiplication)
+    }
+    
+    func times(_ right: Token) -> Expression {
+        return Expression(left: self, right: right, operation: .multiplication)
     }
     
     func divides(_ right: Token) -> Expression {

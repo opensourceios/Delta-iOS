@@ -18,4 +18,12 @@ struct SyntaxError: Token, Error {
         return self
     }
     
+    func getSign() -> FloatingPointSign {
+        return .plus
+    }
+    
+    func changedSign() -> Bool {
+        return false
+    }
+    
 }

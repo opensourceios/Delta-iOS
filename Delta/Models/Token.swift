@@ -12,5 +12,7 @@ protocol Token {
     
     func toString() -> String
     func compute(with inputs: [Input]) -> Token
+    func getSign() -> FloatingPointSign
+    mutating func changedSign() -> Bool
     
 }

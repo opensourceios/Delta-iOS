@@ -19,14 +19,17 @@ extension Feature {
         let d = Intermediate(name: "d", expression: "b".power(2).minus(4.times("a").times("c")))
         let e = Intermediate(name: "e", expression: (-1).times("b").divides(2.times("a")))
         let f = Intermediate(name: "f", expression: (-1).times("d").divides(4.times("a")))
+        let g = Intermediate(name: "g", expression: (-1).times("b").minus("d".power(1.divides(2))).divides(2.times("a")))
+        let h = Intermediate(name: "h", expression: (-1).times("b").plus("d".power(1.divides(2))).divides(2.times("a")))
         
         let developed = Output(name: "Developed form:", expression: "a".times("x".power(2)).plus("b".times("x")).plus("c"))
         let canonical = Output(name: "Canonical form:", expression: "a".times("x".minus("e").power(2)).plus("f"))
         let delta = Output(name: "∆ =", expression: Variable(name: "d"))
-        let x1 = Output(name: "x1 =", expression: (-1).times("b").minus("d".power(1.divides(2))).divides(2.times("a")))
-        let x2 = Output(name: "x2 =", expression: (-1).times("b").plus("d".power(1.divides(2))).divides(2.times("a")))
+        let x1 = Output(name: "x1 =", expression: Variable(name: "g"))
+        let x2 = Output(name: "x2 =", expression: Variable(name: "h"))
+        let factorized = Output(name: "Factorized form:", expression: "x".minus("g").times("x".minus("h")))
         
-        return Feature(name: "Second degree equation", inputs: [a, b, c], intermediates: [d, e, f], outputs: [developed, canonical, delta, x1, x2])
+        return Feature(name: "Second degree equation", inputs: [a, b, c], intermediates: [d, e, f, g, h], outputs: [developed, canonical, delta, x1, x2, factorized])
     }()
     
 }

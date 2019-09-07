@@ -16,6 +16,10 @@ extension Int {
         return Expression(left: Number(value: self), right: Variable(name: right), operation: .multiplication)
     }
     
+    func times(_ right: Token) -> Expression {
+        return Expression(left: Number(value: self), right: right, operation: .multiplication)
+    }
+    
     func divides(_ right: Int) -> Expression {
         return Expression(left: Number(value: self), right: Number(value: right), operation: .division)
     }

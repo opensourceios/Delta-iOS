@@ -27,5 +27,13 @@ struct Variable: Token {
         // No input found
         return self
     }
+    
+    func getSign() -> FloatingPointSign {
+        return .plus
+    }
+    
+    mutating func changedSign() -> Bool {
+        return false
+    }
 
 }
