@@ -36,6 +36,7 @@ class InputTableViewCell: UITableViewCell {
         input.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor).isActive = true
         input.setContentCompressionResistancePriority(.required, for: .horizontal)
         input.placeholder = "0"
+        input.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -53,6 +54,12 @@ class InputTableViewCell: UITableViewCell {
         if selected {
             input.becomeFirstResponder()
         }
+    }
+    
+    @objc func editingChanged(_ sender: Any) {
+        let expression = Parser.parseExpression(tokens: input.text ?? "")
+        print(expression.toString())
+        print("=> \(expression.compute(with: []).toString())")
     }
 
 }

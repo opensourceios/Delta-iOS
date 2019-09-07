@@ -18,6 +18,16 @@
 		6A0A8CB92323AF2900F0C41C /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CB82323AF2900F0C41C /* SplitViewController.swift */; };
 		6A0A8CBB2323B08D00F0C41C /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CBA2323B08D00F0C41C /* Feature.swift */; };
 		6A0A8CBD2323BE5B00F0C41C /* InputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CBC2323BE5B00F0C41C /* InputTableViewCell.swift */; };
+		6A0A8CBF2323CC4600F0C41C /* Output.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CBE2323CC4600F0C41C /* Output.swift */; };
+		6A0A8CC12323CD6800F0C41C /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CC02323CD6800F0C41C /* Expression.swift */; };
+		6A0A8CC32323CE6D00F0C41C /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CC22323CE6D00F0C41C /* Token.swift */; };
+		6A0A8CC52323CEA300F0C41C /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CC42323CEA300F0C41C /* Number.swift */; };
+		6A0A8CC72323CECF00F0C41C /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CC62323CECF00F0C41C /* Operation.swift */; };
+		6A0A8CC92323D89C00F0C41C /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CC82323D89C00F0C41C /* Parser.swift */; };
+		6A0A8CCD2323EBE800F0C41C /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CCC2323EBE800F0C41C /* ArrayExtension.swift */; };
+		6A0A8CCF2323EFD600F0C41C /* SyntaxError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CCE2323EFD600F0C41C /* SyntaxError.swift */; };
+		6A0A8CD12323FDB700F0C41C /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CD02323FDB700F0C41C /* Variable.swift */; };
+		6A0A8CD32323FEBC00F0C41C /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CD22323FEBC00F0C41C /* Input.swift */; };
 		6A0E7B5121BD956E00A16F99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6A0E7B4F21BD956E00A16F99 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +61,16 @@
 		6A0A8CB82323AF2900F0C41C /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		6A0A8CBA2323B08D00F0C41C /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 		6A0A8CBC2323BE5B00F0C41C /* InputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTableViewCell.swift; sourceTree = "<group>"; };
+		6A0A8CBE2323CC4600F0C41C /* Output.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Output.swift; sourceTree = "<group>"; };
+		6A0A8CC02323CD6800F0C41C /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
+		6A0A8CC22323CE6D00F0C41C /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		6A0A8CC42323CEA300F0C41C /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
+		6A0A8CC62323CECF00F0C41C /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
+		6A0A8CC82323D89C00F0C41C /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		6A0A8CCC2323EBE800F0C41C /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
+		6A0A8CCE2323EFD600F0C41C /* SyntaxError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxError.swift; sourceTree = "<group>"; };
+		6A0A8CD02323FDB700F0C41C /* Variable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
+		6A0A8CD22323FEBC00F0C41C /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		6A0E7B5021BD956E00A16F99 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,7 +141,16 @@
 			isa = PBXGroup;
 			children = (
 				3203EF69214FB132005C287C /* AppDelegate.swift */,
+				6A0A8CC02323CD6800F0C41C /* Expression.swift */,
 				6A0A8CBA2323B08D00F0C41C /* Feature.swift */,
+				6A0A8CD22323FEBC00F0C41C /* Input.swift */,
+				6A0A8CC42323CEA300F0C41C /* Number.swift */,
+				6A0A8CC62323CECF00F0C41C /* Operation.swift */,
+				6A0A8CBE2323CC4600F0C41C /* Output.swift */,
+				6A0A8CC82323D89C00F0C41C /* Parser.swift */,
+				6A0A8CCE2323EFD600F0C41C /* SyntaxError.swift */,
+				6A0A8CC22323CE6D00F0C41C /* Token.swift */,
+				6A0A8CD02323FDB700F0C41C /* Variable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -129,6 +158,7 @@
 		6A0A8CB02323A92900F0C41C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				6A0A8CCC2323EBE800F0C41C /* ArrayExtension.swift */,
 				6A0A8CB12323A93C00F0C41C /* StringExtension.swift */,
 			);
 			path = Extensions;
@@ -222,13 +252,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A0A8CBF2323CC4600F0C41C /* Output.swift in Sources */,
+				6A0A8CD12323FDB700F0C41C /* Variable.swift in Sources */,
+				6A0A8CCD2323EBE800F0C41C /* ArrayExtension.swift in Sources */,
 				6A0A8CB22323A93C00F0C41C /* StringExtension.swift in Sources */,
+				6A0A8CC92323D89C00F0C41C /* Parser.swift in Sources */,
 				6A0A8CB92323AF2900F0C41C /* SplitViewController.swift in Sources */,
+				6A0A8CC32323CE6D00F0C41C /* Token.swift in Sources */,
+				6A0A8CD32323FEBC00F0C41C /* Input.swift in Sources */,
 				6A0A8CB42323A99500F0C41C /* FeatureTableViewController.swift in Sources */,
 				6A0A8CB72323AE3400F0C41C /* LabelTableViewCell.swift in Sources */,
+				6A0A8CC52323CEA300F0C41C /* Number.swift in Sources */,
+				6A0A8CC12323CD6800F0C41C /* Expression.swift in Sources */,
 				6A0A8CBB2323B08D00F0C41C /* Feature.swift in Sources */,
 				6A0A8CAC2323A88100F0C41C /* HomeTableViewController.swift in Sources */,
 				3203EF6C214FB132005C287C /* ViewController.swift in Sources */,
+				6A0A8CC72323CECF00F0C41C /* Operation.swift in Sources */,
+				6A0A8CCF2323EFD600F0C41C /* SyntaxError.swift in Sources */,
 				6A0A8CBD2323BE5B00F0C41C /* InputTableViewCell.swift in Sources */,
 				3203EF6A214FB132005C287C /* AppDelegate.swift in Sources */,
 			);
