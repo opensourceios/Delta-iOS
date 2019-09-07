@@ -1,0 +1,19 @@
+/* Canonical form */
+"canonical" = "Forme canonique : %@";
+
+/* Developed form */
+"developed" = "Forme développée : %@";
+
+/* Factorized form */
+"factorized" = "Forme factorisée : %@";
+
+/* Factorized form like canonical */
+"factorized2" = "Forme factorisée comme forme canonique";
+
+/* No roots - No factorized form */
+"factorized3" = "Pas de racine
+Pas de forme factorisée";
+
+/* First degree */
+"first_degree" = "a = 0, problème du premier degré !";
+
