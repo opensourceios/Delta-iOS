@@ -28,7 +28,7 @@ extension String {
     
     func toOperation() -> Operation? {
         // Iterate values
-        for value in [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division] {
+        for value in [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.power] {
             // If it's the value we want
             if self == value.toString() {
                 return value
@@ -37,6 +37,61 @@ extension String {
         
         // Nothing found
         return nil
+    }
+    
+    func exponentize() -> String {
+        // Define characters
+        let supers = [
+            "1": "\u{00B9}",
+            "2": "\u{00B2}",
+            "3": "\u{00B3}",
+            "4": "\u{2074}",
+            "5": "\u{2075}",
+            "6": "\u{2076}",
+            "7": "\u{2077}",
+            "8": "\u{2078}",
+            "9": "\u{2079}"
+        ]
+
+        // Final string and current char status
+        var newStr = ""
+        var isExp = false
+        
+        // Iterate string
+        for char in self {
+            // If exp character
+            if char == "^" {
+                // Clear space before
+                if let last = newStr.last, last == " " {
+                    newStr.removeLast()
+                }
+                
+                // Set current as exp
+                isExp = true
+            } else {
+                // If last was exp
+                if isExp {
+                    // Get character as string
+                    let key = String(char)
+                    
+                    // Check if it's a numpber
+                    if supers.keys.contains(key) {
+                        // Replace by character
+                        newStr.append(Character(supers[key]!))
+                    } else if key != " " {
+                        // End of number, go back to normal
+                        isExp = false
+                        newStr.append(char)
+                    }
+                } else {
+                    // Normal state
+                    newStr.append(char)
+                }
+            }
+        }
+        
+        // Return final string
+        return newStr
     }
     
     // Subscript

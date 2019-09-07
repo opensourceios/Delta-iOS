@@ -8,9 +8,18 @@
 
 import Foundation
 
-struct Output {
+class Output {
     
     var name: String
     var expression: Token
+    
+    init(name: String, expression: Token) {
+        self.name = name
+        self.expression = expression
+    }
+    
+    func toString(with inputs: [Input]) -> String {
+        return "\(name) \(expression.compute(with: inputs).toString())"
+    }
     
 }

@@ -11,7 +11,9 @@ import UIKit
 class InputTableViewCell: UITableViewCell {
 
     var label: UILabel = UILabel()
-    var input: UITextField = UITextField()
+    var field: UITextField = UITextField()
+    var input: Input?
+    weak var delegate: InputChangedDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -19,7 +21,7 @@ class InputTableViewCell: UITableViewCell {
         selectionStyle = .none
         
         contentView.addSubview(label)
-        contentView.addSubview(input)
+        contentView.addSubview(field)
         
         label.translatesAutoresizingMaskIntoConstraints = false
         label.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
@@ -29,37 +31,39 @@ class InputTableViewCell: UITableViewCell {
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.adjustsFontSizeToFitWidth = true
         
-        input.translatesAutoresizingMaskIntoConstraints = false
-        input.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
-        input.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 4).isActive = true
-        input.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
-        input.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor).isActive = true
-        input.setContentCompressionResistancePriority(.required, for: .horizontal)
-        input.placeholder = "0"
-        input.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        field.translatesAutoresizingMaskIntoConstraints = false
+        field.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
+        field.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 4).isActive = true
+        field.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
+        field.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor).isActive = true
+        field.setContentCompressionResistancePriority(.required, for: .horizontal)
+        field.autocapitalizationType = .none
+        field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func with(text: String, accessory: UITableViewCell.AccessoryType = .none) -> InputTableViewCell {
-        label.text = text
-        accessoryType = accessory
+    func with(input: Input, delegate: InputChangedDelegate) -> InputTableViewCell {
+        self.input = input
+        self.delegate = delegate
+        
+        label.text = input.toString()
+        field.text = input.expression.toString()
         
         return self
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         if selected {
-            input.becomeFirstResponder()
+            field.becomeFirstResponder()
         }
     }
     
     @objc func editingChanged(_ sender: Any) {
-        let expression = Parser.parseExpression(tokens: input.text ?? "")
-        print(expression.toString())
-        print("=> \(expression.compute(with: []).toString())")
+        input?.expression = Parser.parseExpression(tokens: field.text ?? "")
+        delegate?.inputChanged(input)
     }
 
 }

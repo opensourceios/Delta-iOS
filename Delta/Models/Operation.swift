@@ -11,7 +11,7 @@ import Foundation
 enum Operation {
     
     // Values
-    case addition, subtraction, multiplication, division
+    case addition, subtraction, multiplication, division, power
     
     // Convert to string
     func toString() -> String {
@@ -24,12 +24,14 @@ enum Operation {
             return "*"
         case .division:
             return "/"
+        case .power:
+            return "^"
         }
     }
     
     // Get precedence
     func getPrecedence() -> Int {
-        if self == .multiplication || self == .division {
+        if self == .multiplication || self == .division || self == .power {
             return 2
         }
         return 1

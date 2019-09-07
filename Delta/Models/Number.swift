@@ -51,6 +51,11 @@ struct Number: Token {
             return Number(value: self.value / right.value)
         }
         
+        // Power
+        if operation == .power {
+            return Number(value: self.value ^ right.value)
+        }
+        
         return Expression(left: self, right: right, operation: operation)
     }
     

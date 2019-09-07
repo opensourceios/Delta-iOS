@@ -36,7 +36,7 @@ class HomeTableViewController: UITableViewController {
         
         // Initialize features
         features = [
-            Feature(name: "Second degree equation", inputs: ["a =", "b =", "c ="], outputs: ["Canonical form: -"])
+            .secondDegreeEquation
         ]
     }
 

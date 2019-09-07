@@ -11,7 +11,7 @@ import Foundation
 struct Feature {
     
     var name: String
-    var inputs: [String]
-    var outputs: [String]
+    var inputs: [Input]
+    var outputs: [Output]
     
 }

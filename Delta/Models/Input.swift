@@ -8,9 +8,18 @@
 
 import Foundation
 
-struct Input {
+class Input {
     
     var name: String
     var expression: Token
+    
+    init(name: String, expression: Token) {
+        self.name = name
+        self.expression = expression
+    }
+    
+    func toString() -> String {
+        return "\(name) ="
+    }
     
 }

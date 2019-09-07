@@ -54,8 +54,8 @@ class Parser {
                 else if "abcdefghijklmnopqrstuvwxyz".contains(current) {
                     let variable = Variable(name: current)
                     
-                    // Check if we have a token before
-                    if values.count > 0 {
+                    // Check if we have a token before without operator
+                    if values.count > 0 && ops.count == values.count - 1 {
                         // Concatenate them
                         let left = try values.getFirstTokenAndRemove()
                         values.insert(Expression(left: left, right: variable, operation: .multiplication), at: 0)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FeatureTableViewController: UITableViewController, FeatureSelectionDelegate {
+class FeatureTableViewController: UITableViewController, FeatureSelectionDelegate, InputChangedDelegate {
     
     var feature: Feature?
 
@@ -26,6 +26,20 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
         navigationItem.title = feature?.name
         
         tableView.reloadData()
+    }
+    
+    func inputChanged(_ input: Input?) {
+        // Update the input
+        if let feature = feature, let input = input {
+            for i in feature.inputs {
+                if input.name == i.name {
+                    i.expression = input.expression
+                }
+            }
+        }
+        
+        // Refresh the output section
+        tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
     }
 
     // TableView management
@@ -47,22 +61,30 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Check section
-        if indexPath.section == 0 {
-            // Get input
-            if let input = feature?.inputs[indexPath.row] {
+        if let feature = feature {
+            // Check section
+            if indexPath.section == 0 {
+                // Get input
+                let input = feature.inputs[indexPath.row]
+                
                 // Create the cell
-                return (tableView.dequeueReusableCell(withIdentifier: "inputCell", for: indexPath) as! InputTableViewCell).with(text: input)
-            }
-        } else {
-            // Get output
-            if let output = feature?.outputs[indexPath.row] {
+                return (tableView.dequeueReusableCell(withIdentifier: "inputCell", for: indexPath) as! InputTableViewCell).with(input: input, delegate: self)
+            } else {
+                // Get output
+                let output = feature.outputs[indexPath.row]
+                
                 // Create the cell
-                return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! LabelTableViewCell).with(text: output)
+                return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! LabelTableViewCell).with(text: output.toString(with: feature.inputs))
             }
         }
 
         return UITableViewCell()
     }
 
+}
+
+protocol InputChangedDelegate: class {
+    
+    func inputChanged(_ input: Input?)
+    
 }
