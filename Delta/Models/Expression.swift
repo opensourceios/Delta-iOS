@@ -111,4 +111,28 @@ struct Expression: Token {
         return Expression(left: left, right: right, operation: operation)
     }
     
+    func times(_ right: String) -> Expression {
+        return Expression(left: self, right: Variable(name: right), operation: .multiplication)
+    }
+    
+    func plus(_ right: String) -> Expression {
+        return Expression(left: self, right: Variable(name: right), operation: .addition)
+    }
+    
+    func plus(_ right: Token) -> Expression {
+        return Expression(left: self, right: right, operation: .addition)
+    }
+    
+    func minus(_ right: Token) -> Expression {
+        return Expression(left: self, right: right, operation: .subtraction)
+    }
+    
+    func divides(_ right: Token) -> Expression {
+        return Expression(left: self, right: right, operation: .division)
+    }
+    
+    func power(_ right: Int) -> Expression {
+        return Expression(left: self, right: Number(value: right), operation: .power)
+    }
+    
 }

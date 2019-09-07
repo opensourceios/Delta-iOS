@@ -53,7 +53,7 @@ struct Number: Token {
         
         // Power
         if operation == .power {
-            return Number(value: self.value ^ right.value)
+            return Number(value: Int(pow(Double(self.value), Double(right.value))))
         }
         
         return Expression(left: self, right: right, operation: operation)

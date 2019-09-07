@@ -49,21 +49,6 @@ class Parser {
                     // Remove one, else current caracter is skept
                     i -= 1
                 }
-                    
-                // Variable
-                else if "abcdefghijklmnopqrstuvwxyz".contains(current) {
-                    let variable = Variable(name: current)
-                    
-                    // Check if we have a token before without operator
-                    if values.count > 0 && ops.count == values.count - 1 {
-                        // Concatenate them
-                        let left = try values.getFirstTokenAndRemove()
-                        values.insert(Expression(left: left, right: variable, operation: .multiplication), at: 0)
-                    } else {
-                        // Insert into values
-                        values.insert(variable, at: 0)
-                    }
-                }
                 
                 // Closing brace
                 else if current == ")" {

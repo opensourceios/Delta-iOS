@@ -12,6 +12,11 @@ struct Feature {
     
     var name: String
     var inputs: [Input]
+    var intermediates: [Intermediate]
     var outputs: [Output]
+    
+    func getAllInputs() -> [Input] {
+        return inputs + intermediates
+    }
     
 }

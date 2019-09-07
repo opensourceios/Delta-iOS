@@ -29,6 +29,8 @@
 		6A0A8CD12323FDB700F0C41C /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CD02323FDB700F0C41C /* Variable.swift */; };
 		6A0A8CD32323FEBC00F0C41C /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CD22323FEBC00F0C41C /* Input.swift */; };
 		6A0A8CD52324057800F0C41C /* FeatureExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CD42324057800F0C41C /* FeatureExtension.swift */; };
+		6A0A8CD92324353400F0C41C /* Intermediate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CD82324353400F0C41C /* Intermediate.swift */; };
+		6A0A8CDB23244BB500F0C41C /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0A8CDA23244BB500F0C41C /* IntExtension.swift */; };
 		6A0E7B5121BD956E00A16F99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6A0E7B4F21BD956E00A16F99 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,8 @@
 		6A0A8CD02323FDB700F0C41C /* Variable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
 		6A0A8CD22323FEBC00F0C41C /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		6A0A8CD42324057800F0C41C /* FeatureExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureExtension.swift; sourceTree = "<group>"; };
+		6A0A8CD82324353400F0C41C /* Intermediate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intermediate.swift; sourceTree = "<group>"; };
+		6A0A8CDA23244BB500F0C41C /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 		6A0E7B5021BD956E00A16F99 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,6 +150,7 @@
 				6A0A8CC02323CD6800F0C41C /* Expression.swift */,
 				6A0A8CBA2323B08D00F0C41C /* Feature.swift */,
 				6A0A8CD22323FEBC00F0C41C /* Input.swift */,
+				6A0A8CD82324353400F0C41C /* Intermediate.swift */,
 				6A0A8CC42323CEA300F0C41C /* Number.swift */,
 				6A0A8CC62323CECF00F0C41C /* Operation.swift */,
 				6A0A8CBE2323CC4600F0C41C /* Output.swift */,
@@ -162,6 +167,7 @@
 			children = (
 				6A0A8CCC2323EBE800F0C41C /* ArrayExtension.swift */,
 				6A0A8CD42324057800F0C41C /* FeatureExtension.swift */,
+				6A0A8CDA23244BB500F0C41C /* IntExtension.swift */,
 				6A0A8CB12323A93C00F0C41C /* StringExtension.swift */,
 			);
 			path = Extensions;
@@ -260,7 +266,9 @@
 				6A0A8CCD2323EBE800F0C41C /* ArrayExtension.swift in Sources */,
 				6A0A8CB22323A93C00F0C41C /* StringExtension.swift in Sources */,
 				6A0A8CC92323D89C00F0C41C /* Parser.swift in Sources */,
+				6A0A8CDB23244BB500F0C41C /* IntExtension.swift in Sources */,
 				6A0A8CB92323AF2900F0C41C /* SplitViewController.swift in Sources */,
+				6A0A8CD92324353400F0C41C /* Intermediate.swift in Sources */,
 				6A0A8CC32323CE6D00F0C41C /* Token.swift in Sources */,
 				6A0A8CD32323FEBC00F0C41C /* Input.swift in Sources */,
 				6A0A8CB42323A99500F0C41C /* FeatureTableViewController.swift in Sources */,

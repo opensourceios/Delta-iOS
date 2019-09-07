@@ -23,23 +23,44 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
     func selectFeature(_ feature: Feature?) {
         self.feature = feature
         
+        // Update title
         navigationItem.title = feature?.name
         
+        // Update inputs
         tableView.reloadData()
+        
+        // Update result shown on screen
+        updateResult()
     }
     
     func inputChanged(_ input: Input?) {
-        // Update the input
+        // Get vars
         if let feature = feature, let input = input {
+            // Update the input
             for i in feature.inputs {
                 if input.name == i.name {
                     i.expression = input.expression
                 }
             }
+            
+            // Update result shown on screen
+            updateResult()
         }
-        
-        // Refresh the output section
-        tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+    }
+    
+    func updateResult() {
+        if let feature = feature {
+            // Update intermediates
+            for i in feature.intermediates {
+                i.clear()
+            }
+            for i in feature.intermediates {
+                i.update(with: feature.getAllInputs())
+            }
+            
+            // Refresh the output section
+            tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+        }
     }
 
     // TableView management
@@ -74,7 +95,7 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
                 let output = feature.outputs[indexPath.row]
                 
                 // Create the cell
-                return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! LabelTableViewCell).with(text: output.toString(with: feature.inputs))
+                return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! LabelTableViewCell).with(text: output.toString(with: feature.getAllInputs()))
             }
         }
 

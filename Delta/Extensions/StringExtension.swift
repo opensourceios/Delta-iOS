@@ -24,6 +24,28 @@ extension String {
         return String(format: self, locale: .current, arguments: args)
     }
     
+    // Custom operations
+    
+    func minus(_ right: String) -> Expression {
+        return Expression(left: Variable(name: self), right: Variable(name: right), operation: .subtraction)
+    }
+    
+    func times(_ right: String) -> Expression {
+        return Expression(left: Variable(name: self), right: Variable(name: right), operation: .multiplication)
+    }
+    
+    func times(_ right: Token) -> Expression {
+        return Expression(left: Variable(name: self), right: right, operation: .multiplication)
+    }
+    
+    func power(_ right: Int) -> Expression {
+        return Expression(left: Variable(name: self), right: Number(value: right), operation: .power)
+    }
+    
+    func power(_ right: Token) -> Expression {
+        return Expression(left: Variable(name: self), right: right, operation: .power)
+    }
+    
     // Operation
     
     func toOperation() -> Operation? {
