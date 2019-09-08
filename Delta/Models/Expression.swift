@@ -112,6 +112,11 @@ struct Expression: Token {
             }
         }
         
+        // If left is a set, right too and multiplication
+        if let left = left as? Set, let right = right as? Set, operation == .multiplication {
+            return left.multiply(by: right)
+        }
+        
         // Can't join left and right, return it
         return Expression(left: left, right: right, operation: operation)
     }

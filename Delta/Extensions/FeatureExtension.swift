@@ -12,7 +12,8 @@ extension Feature {
     
     // Array of all features
     static let array: [Feature] = [
-        .secondDegreeEquation
+        .secondDegreeEquation,
+        .vectors
     ]
     
     // 2nd degree equation
@@ -37,6 +38,17 @@ extension Feature {
         let factorized2 = Output(name: "f1_factorized".localized(), expression: "x".minus("g").times("x".minus("h")), conditions: ["d".greaterThan(0), "a".inequals(0)])
         
         return Feature(name: "f1_name".localized(), inputs: [a, b, c], intermediates: [d, e, f, g, h], outputs: [developed, canonical, delta, x0, x1, x2, factorized1, factorized2])
+    }()
+    
+    // Vector
+    static let vectors: Feature = {
+        let u = Input(name: "u", expression: Set(values: [Number(value: 1), Number(value: 2)])) // u
+        let v = Input(name: "v", expression: Set(values: [Number(value: 3), Number(value: 4)])) // v
+        let w = Input(name: "w", expression: "u".plus("v")) // w
+        
+        let result = Output(name: "w =", expression: Variable(name: "w"))
+        
+        return Feature(name: "Vectors", inputs: [u, v, w], intermediates: [], outputs: [result])
     }()
     
 }

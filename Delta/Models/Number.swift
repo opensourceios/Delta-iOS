@@ -60,6 +60,11 @@ struct Number: Token {
             }
         }
         
+        // Right is a set
+        if let right = right as? Set {
+            return right.multiply(by: self)
+        }
+        
         return Expression(left: self, right: right, operation: operation)
     }
     

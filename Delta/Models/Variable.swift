@@ -20,7 +20,7 @@ struct Variable: Token {
         // Chech if an input corresponds to this variable
         for input in inputs {
             if name == input.name {
-                return input.expression.compute(with: [])
+                return input.expression.compute(with: inputs)
             }
         }
         

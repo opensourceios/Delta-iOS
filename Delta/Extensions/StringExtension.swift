@@ -26,6 +26,10 @@ extension String {
     
     // Custom operations
     
+    func plus(_ right: String) -> Expression {
+        return Expression(left: Variable(name: self), right: Variable(name: right), operation: .addition)
+    }
+    
     func minus(_ right: String) -> Expression {
         return Expression(left: Variable(name: self), right: Variable(name: right), operation: .subtraction)
     }
@@ -188,7 +192,7 @@ extension String {
     
     func toOperation() -> Operation? {
         // Iterate values
-        for value in [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.power] {
+        for value in [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.power, Operation.set] {
             // If it's the value we want
             if self == value.toString() {
                 return value
