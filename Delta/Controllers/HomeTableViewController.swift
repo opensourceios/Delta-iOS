@@ -11,16 +11,7 @@ import UIKit
 class HomeTableViewController: UITableViewController {
     
     weak var delegate: FeatureSelectionDelegate?
-    var features: [Feature]
-    
-    init() {
-        self.features = []
-        super.init(style: .grouped)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var features = Feature.array
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,15 +20,10 @@ class HomeTableViewController: UITableViewController {
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
         }
-        navigationItem.title = "Delta"
+        navigationItem.title = "name".localized()
         
         // Register cells
         tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: "labelCell")
-        
-        // Initialize features
-        features = [
-            .secondDegreeEquation
-        ]
     }
 
     // TableView management
@@ -55,7 +41,7 @@ class HomeTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Tools" : "About"
+        return section == 0 ? "tools".localized() : "about".localized()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -68,7 +54,7 @@ class HomeTableViewController: UITableViewController {
             return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: feature.name, accessory: .disclosureIndicator)
         }
         
-        return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "About", accessory: .disclosureIndicator)
+        return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "about".localized(), accessory: .disclosureIndicator)
     }
     
     // Navigation management
@@ -87,8 +73,10 @@ class HomeTableViewController: UITableViewController {
                 splitViewController?.showDetailViewController(featureNavigation, sender: nil)
             }
         } else {
-            // Other section, clear content
-            delegate?.selectFeature(nil)
+            // About
+            let alert = UIAlertController(title: "about".localized(), message: "about_text".localized(), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "ok".localized(), style: .default, handler: nil))
+            UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
         }
     }
     

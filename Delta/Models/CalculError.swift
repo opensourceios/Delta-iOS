@@ -11,7 +11,7 @@ import Foundation
 struct CalculError: Token, Error {
     
     func toString() -> String {
-        return "Calcul error"
+        return "error_calcul".localized()
     }
     
     func compute(with inputs: [Input]) -> Token {

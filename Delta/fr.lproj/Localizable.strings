@@ -1,19 +1,19 @@
-/* Canonical form */
-"canonical" = "Forme canonique : %@";
 
-/* Developed form */
-"developed" = "Forme développée : %@";
+// General part
 
-/* Factorized form */
-"factorized" = "Forme factorisée : %@";
+"name" = "Delta: Math helper";
+"tools" = "Outils";
+"about" = "A propos";
+"about_text" = "Application développé par Nathan Fallet\n\nCette application a été développée par des développeurs indépendants et est fournie gratuitement sans aucune garantie.\n\n© 2019 Groupe MINASTE";
+"ok" = "OK";
+"inputs" = "Entrées";
+"outputs" = "Sorties";
+"error_calcul" = "Erreur de calcul";
+"error_syntax" = "Erreur de syntaxe";
 
-/* Factorized form like canonical */
-"factorized2" = "Forme factorisée comme forme canonique";
+// 2nd degree equation (feature 1)
 
-/* No roots - No factorized form */
-"factorized3" = "Pas de racine
-Pas de forme factorisée";
-
-/* First degree */
-"first_degree" = "a = 0, problème du premier degré !";
-
+"f1_name" = "Equation de 2nd degré";
+"f1_developed" = "Forme développée :";
+"f1_canonical" = "Forme canonique :";
+"f1_factorized" = "Forme factorisée :";

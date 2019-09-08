@@ -82,7 +82,7 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Inputs" : "Outputs"
+        return section == 0 ? "inputs".localized() : "outputs".localized()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

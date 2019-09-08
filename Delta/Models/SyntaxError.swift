@@ -11,7 +11,7 @@ import Foundation
 struct SyntaxError: Token, Error {
     
     func toString() -> String {
-        return "Syntax error"
+        return "error_syntax".localized()
     }
     
     func compute(with inputs: [Input]) -> Token {

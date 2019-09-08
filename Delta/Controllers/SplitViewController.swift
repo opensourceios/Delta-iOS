@@ -10,7 +10,7 @@ import UIKit
 
 class SplitViewController: UISplitViewController, UISplitViewControllerDelegate {
     
-    let leftViewController = HomeTableViewController()
+    let leftViewController = HomeTableViewController(style: .grouped)
     let rightViewController = FeatureTableViewController(style: .grouped)
 
     override func viewDidLoad() {
