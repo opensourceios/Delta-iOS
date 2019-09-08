@@ -68,6 +68,13 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
         delegate?.inputChanged(input)
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let cs = NSCharacterSet(charactersIn: " 0123456789abcdefghijklmnopqrstuvwxyz+-*/^()").inverted
+        let filtered = string.components(separatedBy: cs).joined(separator: "")
+
+        return (string == filtered)
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         field.endEditing(true)
         return false
