@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InputTableViewCell: UITableViewCell {
+class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     var label: UILabel = UILabel()
     var field: UITextField = UITextField()
@@ -38,6 +38,8 @@ class InputTableViewCell: UITableViewCell {
         field.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor).isActive = true
         field.setContentCompressionResistancePriority(.required, for: .horizontal)
         field.autocapitalizationType = .none
+        field.returnKeyType = .done
+        field.delegate = self
         field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
     
@@ -62,8 +64,13 @@ class InputTableViewCell: UITableViewCell {
     }
     
     @objc func editingChanged(_ sender: Any) {
-        input?.expression = Parser.parseExpression(tokens: field.text ?? "")
+        input?.expression = (field.text ?? "").parseExpression()
         delegate?.inputChanged(input)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        field.endEditing(true)
+        return false
     }
 
 }

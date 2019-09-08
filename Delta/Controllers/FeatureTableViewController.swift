@@ -11,6 +11,7 @@ import UIKit
 class FeatureTableViewController: UITableViewController, FeatureSelectionDelegate, InputChangedDelegate {
     
     var feature: Feature?
+    var currentOutputs = [Output]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +59,9 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
                 i.update(with: feature.getAllInputs())
             }
             
+            // Update current outputs list
+            currentOutputs = feature.outputs.filter{ return $0.checkConditions(with: feature.getAllInputs()) }
+            
             // Refresh the output section
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
         }
@@ -74,7 +78,7 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? feature?.inputs.count ?? 0 : feature?.outputs.count ?? 0
+        return section == 0 ? feature?.inputs.count ?? 0 : currentOutputs.count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -92,7 +96,7 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
                 return (tableView.dequeueReusableCell(withIdentifier: "inputCell", for: indexPath) as! InputTableViewCell).with(input: input, delegate: self)
             } else {
                 // Get output
-                let output = feature.outputs[indexPath.row]
+                let output = currentOutputs[indexPath.row]
                 
                 // Create the cell
                 return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! LabelTableViewCell).with(text: output.toString(with: feature.getAllInputs()))

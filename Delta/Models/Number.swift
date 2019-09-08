@@ -50,7 +50,13 @@ struct Number: Token {
             
             // Power
             if operation == .power && right.operation == .division {
-                return Number(value: Int(pow(Double(self.value), Double(uleft.value) / Double(uright.value))))
+                let value = pow(Double(self.value), Double(uleft.value) / Double(uright.value))
+                
+                if value == .infinity || value.isNaN {
+                    return CalculError()
+                } else {
+                    return Number(value: Int(value))
+                }
             }
         }
         

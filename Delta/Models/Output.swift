@@ -12,10 +12,26 @@ class Output {
     
     var name: String
     var expression: Token
+    var conditions: [Equation]
     
-    init(name: String, expression: Token) {
+    init(name: String, expression: Token, conditions: [Equation] = []) {
         self.name = name
         self.expression = expression
+        self.conditions = conditions
+    }
+    
+    func checkConditions(with inputs: [Input]) -> Bool {
+        // Iterate all conditions
+        for equation in conditions {
+            // If the equation is false
+            if !equation.isTrue(with: inputs) {
+                // Condition are not respected
+                return false
+            }
+        }
+        
+        // All conditions are respected
+        return true
     }
     
     func toString(with inputs: [Input]) -> String {

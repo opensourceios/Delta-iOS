@@ -99,7 +99,7 @@ struct Expression: Token {
                 }
                 // x / 0 is error
                 if operation == .division {
-                    return SyntaxError()
+                    return CalculError()
                 }
                 // x ^ 0 is 1
                 if operation == .power {
