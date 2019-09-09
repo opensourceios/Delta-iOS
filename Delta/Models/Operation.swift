@@ -39,7 +39,7 @@ enum Operation {
         case .lessOrEquals:
             return "<="
         case .set:
-            return ";"
+            return ","
         }
     }
     
@@ -59,10 +59,10 @@ enum Operation {
         if self == .addition || self == .subtraction || self == .multiplication || self == .division || self == .power {
             return Expression(left: left, right: right, operation: self)
         } else if self == .set {
-            if let set = left as? Set {
-                return Set(values: set.values + [right])
+            if let set = left as? Vector {
+                return Vector(values: set.values + [right])
             } else {
-                return Set(values: [left, right])
+                return Vector(values: [left, right])
             }
         } else {
             return Equation(left: left, right: right, operation: self)

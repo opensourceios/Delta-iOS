@@ -18,6 +18,10 @@ struct SyntaxError: Token, Error {
         return self
     }
     
+    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
+        return self
+    }
+    
     func getSign() -> FloatingPointSign {
         return .plus
     }

@@ -64,12 +64,12 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     @objc func editingChanged(_ sender: Any) {
-        input?.expression = (field.text ?? "").parseExpression()
+        input?.expression = Parser(field.text).execute()
         delegate?.inputChanged(input)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let cs = NSCharacterSet(charactersIn: " 0123456789abcdefghijklmnopqrstuvwxyz+-*/^;()").inverted
+        let cs = NSCharacterSet(charactersIn: " 0123456789abcdefghijklmnopqrstuvwxyz+-*/^,()").inverted
         let filtered = string.components(separatedBy: cs).joined(separator: "")
 
         return (string == filtered)

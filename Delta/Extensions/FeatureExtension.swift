@@ -13,7 +13,8 @@ extension Feature {
     // Array of all features
     static let array: [Feature] = [
         .secondDegreeEquation,
-        .vectors
+        .vectors,
+        .test
     ]
     
     // 2nd degree equation
@@ -42,13 +43,21 @@ extension Feature {
     
     // Vector
     static let vectors: Feature = {
-        let u = Input(name: "u", expression: Set(values: [Number(value: 1), Number(value: 2)])) // u
-        let v = Input(name: "v", expression: Set(values: [Number(value: 3), Number(value: 4)])) // v
+        let u = Input(name: "u", expression: Vector(values: [Number(value: 1), Number(value: 2)])) // u
+        let v = Input(name: "v", expression: Vector(values: [Number(value: 3), Number(value: 4)])) // v
         let w = Input(name: "w", expression: "u".plus("v")) // w
         
         let result = Output(name: "w =", expression: Variable(name: "w"))
         
         return Feature(name: "Vectors", inputs: [u, v, w], intermediates: [], outputs: [result])
+    }()
+    
+    // Parse testing
+    static let test: Feature = {
+        let a = Input(name: "a", expression: Number(value: 0))
+        let result = Output(name: "a =", expression: Variable(name: "a"))
+        
+        return Feature(name: "Test", inputs: [a], intermediates: [], outputs: [result])
     }()
     
 }

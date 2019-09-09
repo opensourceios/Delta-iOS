@@ -80,7 +80,7 @@ struct Expression: Token {
             }
             
             // Apply right to left
-            return left.applyToken(operation: operation, right: right)
+            return left.apply(operation: operation, right: right, with: inputs)
         }
         
         // Check if right is a number
@@ -113,12 +113,21 @@ struct Expression: Token {
         }
         
         // If left is a set, right too and multiplication
-        if let left = left as? Set, let right = right as? Set, operation == .multiplication {
+        if let left = left as? Vector, let right = right as? Vector, operation == .multiplication {
             return left.multiply(by: right)
         }
         
         // Can't join left and right, return it
         return Expression(left: left, right: right, operation: operation)
+    }
+    
+    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
+        // Right is a number
+        if let right = right as? Number {
+            
+        }
+        
+        return Expression(left: self, right: right, operation: operation)
     }
     
     func getSign() -> FloatingPointSign {

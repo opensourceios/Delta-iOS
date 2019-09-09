@@ -48,6 +48,10 @@ struct Equation: Token {
         return Equation(left: left, right: right, operation: operation)
     }
     
+    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
+        return Expression(left: self, right: right, operation: operation)
+    }
+    
     func getSign() -> FloatingPointSign {
         return .plus
     }

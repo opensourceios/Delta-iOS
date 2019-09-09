@@ -1,5 +1,5 @@
 //
-//  Set.swift
+//  Vector.swift
 //  Delta
 //
 //  Created by Nathan FALLET on 08/09/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Set: Token {
+struct Vector: Token {
     
     var values: [Token]
     
@@ -20,6 +20,10 @@ struct Set: Token {
         return self
     }
     
+    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
+        return Expression(left: self, right: right, operation: operation)
+    }
+    
     func getSign() -> FloatingPointSign {
         return .plus
     }
@@ -28,17 +32,17 @@ struct Set: Token {
         return false
     }
     
-    func multiply(by number: Number) -> Set {
-        var new = Set(values: [])
+    func multiply(by number: Number) -> Vector {
+        var new = Vector(values: [])
         
         for i in values {
-            new.values += [number.applyToken(operation: .multiplication, right: i)]
+            new.values += [number.apply(operation: .multiplication, right: i, with: [])]
         }
         
         return new
     }
     
-    func multiply(by set: Set) -> Token {
+    func multiply(by set: Vector) -> Token {
         if values.count != set.values.count {
             return CalculError()
         }

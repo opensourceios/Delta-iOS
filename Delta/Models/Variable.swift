@@ -28,6 +28,10 @@ struct Variable: Token {
         return self
     }
     
+    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
+        return Expression(left: self, right: right, operation: operation)
+    }
+    
     func getSign() -> FloatingPointSign {
         return .plus
     }

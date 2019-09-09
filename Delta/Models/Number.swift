@@ -20,27 +20,66 @@ struct Number: Token {
         return self
     }
     
-    func getSign() -> FloatingPointSign {
-        return value >= 0 ? .plus : .minus
-    }
-    
-    mutating func changedSign() -> Bool {
-        self.value = -1 * value
-        return true
-    }
-    
-    func applyToken(operation: Operation, right: Token) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
+        // Compute right
+        let right = right.compute(with: inputs)
+        
         // Rigth is number
         if let right = right as? Number {
-            // Apply a number
-            return applyNumber(operation: operation, right: right)
+            // Addition
+            if operation == .addition {
+                return Number(value: self.value + right.value)
+            }
+            
+            // Subtraction
+            if operation == .subtraction {
+                return Number(value: self.value - right.value)
+            }
+            
+            // Multiplication
+            if operation == .multiplication {
+                return Number(value: self.value * right.value)
+            }
+            
+            // Division
+            if operation == .division && self.value.isMultiple(of: right.value) {
+                return Number(value: self.value / right.value)
+            }
+            
+            // Power
+            if operation == .power {
+                return Number(value: Int(pow(Double(self.value), Double(right.value))))
+            }
+        }
+        
+        // Right is an expression
+        if let right = right as? Expression {
+            // Addition and multiplication
+            if operation == .addition || operation == .multiplication {
+                return right.apply(operation: operation, right: self, with: inputs)
+            }
+            
+            // Subtraction
+            if operation == .subtraction {
+                return apply(operation: .addition, right: Number(value: -1).apply(operation: .multiplication, right: right, with: inputs), with: inputs)
+            }
+            
+            // Division
+            if operation == .division {
+                // ?
+            }
+            
+            // Power
+            if operation == .power {
+                // ?
+            }
         }
         
         // Right is an expression with two numbers
         if let right = right as? Expression, let uleft = right.left as? Number, let uright = right.right as? Number {
             // Multiply to this expression
-            if operation != .division, operation != .power, operation.getPrecedence() >= right.operation.getPrecedence(), let newLeft = applyNumber(operation: operation, right: uleft) as? Number {
-                return newLeft.applyNumber(operation: right.operation, right: uright)
+            if operation != .division, operation != .power, operation.getPrecedence() >= right.operation.getPrecedence(), let newLeft = apply(operation: operation, right: uleft, with: inputs) as? Number {
+                return newLeft.apply(operation: right.operation, right: uright, with: inputs)
             }
             
             // Add or subtract
@@ -61,40 +100,20 @@ struct Number: Token {
         }
         
         // Right is a set
-        if let right = right as? Set {
+        if let right = right as? Vector {
             return right.multiply(by: self)
         }
         
         return Expression(left: self, right: right, operation: operation)
     }
     
-    func applyNumber(operation: Operation, right: Number) -> Token {
-        // Addition
-        if operation == .addition {
-            return Number(value: self.value + right.value)
-        }
-        
-        // Subtraction
-        if operation == .subtraction {
-            return Number(value: self.value - right.value)
-        }
-        
-        // Multiplication
-        if operation == .multiplication {
-            return Number(value: self.value * right.value)
-        }
-        
-        // Division
-        if operation == .division && self.value.isMultiple(of: right.value) {
-            return Number(value: self.value / right.value)
-        }
-        
-        // Power
-        if operation == .power {
-            return Number(value: Int(pow(Double(self.value), Double(right.value))))
-        }
-        
-        return Expression(left: self, right: right, operation: operation)
+    func getSign() -> FloatingPointSign {
+        return value >= 0 ? .plus : .minus
+    }
+    
+    mutating func changedSign() -> Bool {
+        self.value = -1 * value
+        return true
     }
     
 }
