@@ -52,6 +52,14 @@ struct Equation: Token {
         return Expression(left: self, right: right, operation: operation)
     }
     
+    func needBrackets(for operation: Operation) -> Bool {
+        return false
+    }
+    
+    func getMultiplicationPriority() -> Int {
+        return 1
+    }
+    
     func getSign() -> FloatingPointSign {
         return .plus
     }

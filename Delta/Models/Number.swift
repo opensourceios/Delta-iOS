@@ -24,6 +24,28 @@ struct Number: Token {
         // Compute right
         let right = right.compute(with: inputs)
         
+        // If value is 1
+        if value == 1 && operation == .multiplication {
+            // It's 1 time right, return right
+            return right
+        }
+        
+        // If value is 0
+        if value == 0 {
+            // 0 * x or 0 / x is 0
+            if operation == .multiplication || operation == .division {
+                return Number(value: 0)
+            }
+            // 0 + x is x
+            if operation == .addition {
+                return right
+            }
+            // 0 - x is -x
+            if operation == .subtraction {
+                return Number(value: -1).apply(operation: .multiplication, right: right, with: inputs)
+            }
+        }
+        
         // Rigth is number
         if let right = right as? Number {
             // Addition
@@ -56,55 +78,62 @@ struct Number: Token {
         if let right = right as? Expression {
             // Addition and multiplication
             if operation == .addition || operation == .multiplication {
+                // It's permutative
                 return right.apply(operation: operation, right: self, with: inputs)
             }
             
             // Subtraction
             if operation == .subtraction {
+                // Multiply expression by -1 and add self
                 return apply(operation: .addition, right: Number(value: -1).apply(operation: .multiplication, right: right, with: inputs), with: inputs)
             }
             
             // Division
             if operation == .division {
-                // ?
+                // If expression is a fraction
+                if right.operation == .division {
+                    // Multiply by its inverse
+                    return apply(operation: .multiplication, right: right.right.apply(operation: .division, right: right.left, with: inputs), with: inputs)
+                }
             }
             
             // Power
             if operation == .power {
-                // ?
-            }
-        }
-        
-        // Right is an expression with two numbers
-        if let right = right as? Expression, let uleft = right.left as? Number, let uright = right.right as? Number {
-            // Multiply to this expression
-            if operation != .division, operation != .power, operation.getPrecedence() >= right.operation.getPrecedence(), let newLeft = apply(operation: operation, right: uleft, with: inputs) as? Number {
-                return newLeft.apply(operation: right.operation, right: uright, with: inputs)
-            }
-            
-            // Add or subtract
-            if (operation == .addition || operation == .subtraction) && right.operation == .division {
-                return Expression(left: Expression(left: value.times(uright), right: uleft, operation: operation), right: uright, operation: .division)
-            }
-            
-            // Power
-            if operation == .power && right.operation == .division {
-                let value = pow(Double(self.value), Double(uleft.value) / Double(uright.value))
-                
-                if value == .infinity || value.isNaN {
-                    return CalculError()
-                } else {
-                    return Number(value: Int(value))
+                if right.operation == .division, let uleft = right.left as? Number, let uright = right.right as? Number {
+                    let value = pow(Double(self.value), Double(uleft.value) / Double(uright.value))
+                    
+                    if value == .infinity || value.isNaN {
+                        return CalculError()
+                    } else {
+                        return Number(value: Int(value))
+                    }
                 }
             }
         }
         
-        // Right is a set
+        // Right is a vector
         if let right = right as? Vector {
-            return right.multiply(by: self)
+            // Addition, subtraction, division or power
+            if operation == .addition || operation == .subtraction || operation == .division || operation == .power {
+                // You can add numbers and vectors
+                return CalculError()
+            }
+            
+            // Multiplication
+            if operation == .multiplication {
+                return right.apply(operation: operation, right: self, with: inputs)
+            }
         }
         
         return Expression(left: self, right: right, operation: operation)
+    }
+    
+    func needBrackets(for operation: Operation) -> Bool {
+        return false
+    }
+    
+    func getMultiplicationPriority() -> Int {
+        return 3
     }
     
     func getSign() -> FloatingPointSign {

@@ -41,6 +41,12 @@ class Parser {
                 
                 // Opening brace
                 else if current == "(" {
+                    // Check if we have a token before without operator
+                    if values.count > 0 && ops.count == values.count - 1 {
+                        // Add a multiplication operator
+                        ops.insert("*", at: 0)
+                    }
+                    
                     // Add it to operations
                     ops.insert(current, at: 0)
                 }

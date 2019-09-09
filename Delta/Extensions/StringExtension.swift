@@ -98,6 +98,7 @@ extension String {
         // Final string and current char status
         var newStr = ""
         var isExp = false
+        var isNum = false
         
         // Iterate string
         for char in self {
@@ -120,7 +121,8 @@ extension String {
                     if supers.keys.contains(key) {
                         // Replace by character
                         newStr.append(Character(supers[key]!))
-                    } else if key != " " {
+                        isNum = true
+                    } else if isNum {
                         // End of number, go back to normal
                         isExp = false
                         newStr.append(char)

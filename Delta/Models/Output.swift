@@ -35,7 +35,7 @@ class Output {
     }
     
     func toString(with inputs: [Input]) -> String {
-        return "\(name) \(expression.compute(with: inputs).toString())"
+        return "\(name) \(expression.compute(with: inputs).toString().exponentize())"
     }
     
 }

@@ -14,10 +14,45 @@ struct Expression: Token {
     var right: Token
     var operation: Operation
     
+    func shouldInvert() -> Bool {
+        return operation == .multiplication && self.right.getMultiplicationPriority() > self.left.getMultiplicationPriority()
+    }
+    
     func toString() -> String {
-        // Check if there is a variable
+        // Definition
+        let left = shouldInvert() ? self.right : self.left
+        let right = shouldInvert() ? self.left : self.right
+        
+        let bleft = left.needBrackets(for: operation)
+        let bright = right.needBrackets(for: operation)
+        
+        var result = ""
+        
+        // Brackets on the left
+        if bleft {
+            result += "(\(left.toString()))"
+        } else {
+            result += "\(left.toString())"
+        }
+        
+        // Operation
+        result += " \(operation.toString()) "
+        
+        // Brackets on the right
+        if bright {
+            result += "(\(right.toString()))"
+        } else {
+            result += "\(right.toString())"
+        }
+        
+        /*/ Check if there is a variable
         if right as? Variable != nil, operation == .multiplication {
             return "\(left.toString())\(right.toString())"
+        }
+        
+        // Check if there is a variable
+        if left as? Variable != nil, operation == .multiplication {
+            return "\(right.toString())\(left.toString())"
         }
         
         // Check for brackets on both sides
@@ -33,10 +68,10 @@ struct Expression: Token {
         // Check for brackets on the right
         if let expr = right as? Expression, operation.getPrecedence() > expr.operation.getPrecedence() {
             return "\(left.toString()) \(operation.toString()) (\(right.toString()))".exponentize()
-        }
+        }*/
         
-        // No brackets required
-        return "\(left.toString()) \(operation.toString()) \(right.toString())".exponentize()
+        // Return result
+        return result
     }
     
     func compute(with inputs: [Input]) -> Token {
@@ -55,40 +90,20 @@ struct Expression: Token {
             return Expression(left: left, right: right, operation: operation == .addition ? .subtraction : .addition).compute(with: inputs)
         }
         
-        // Check if left is a number
-        if let left = left as? Number {
-            // If left is 1
-            if left.value == 1 && operation == .multiplication {
-                // It's 1 time right, return right
-                return right
-            }
-            
-            // If left is 0
-            if left.value == 0 {
-                // 0 * x or 0 / x is 0
-                if operation == .multiplication || operation == .division {
-                    return Number(value: 0)
-                }
-                // 0 + x is x
-                if operation == .addition {
-                    return right
-                }
-                // 0 - x is -x
-                if operation == .subtraction {
-                    return Expression(left: Number(value: -1), right: right, operation: .multiplication).compute(with: inputs)
-                }
-            }
-            
-            // Apply right to left
-            return left.apply(operation: operation, right: right, with: inputs)
-        }
+        // Can't join left and right, return it
+        return left.apply(operation: operation, right: right, with: inputs)
+    }
+    
+    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
+        // Compute right
+        let right = right.compute(with: inputs)
         
-        // Check if right is a number
+        // Right is a number
         if let right = right as? Number {
             // If right is 1
             if right.value == 1 && (operation == .multiplication || operation == .division || operation == .power) {
-                // It's 1 time left, return left
-                return left
+                // It's 1 time self, return self
+                return self
             }
             
             // If right is 0
@@ -107,27 +122,20 @@ struct Expression: Token {
                 }
                 // x + 0 or x - 0 is x
                 if operation == .addition || operation == .subtraction {
-                    return left
+                    return self
                 }
             }
         }
         
-        // If left is a set, right too and multiplication
-        if let left = left as? Vector, let right = right as? Vector, operation == .multiplication {
-            return left.multiply(by: right)
-        }
-        
-        // Can't join left and right, return it
-        return Expression(left: left, right: right, operation: operation)
+        return Expression(left: self, right: right, operation: operation)
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
-        // Right is a number
-        if let right = right as? Number {
-            
-        }
-        
-        return Expression(left: self, right: right, operation: operation)
+    func needBrackets(for operation: Operation) -> Bool {
+        return operation.getPrecedence() > self.operation.getPrecedence()
+    }
+    
+    func getMultiplicationPriority() -> Int {
+        return 1
     }
     
     func getSign() -> FloatingPointSign {
