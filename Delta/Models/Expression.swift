@@ -36,7 +36,19 @@ struct Expression: Token {
         }
         
         // Operation
-        result += " \(operation.toString()) "
+        if operation == .multiplication {
+            if bright {
+                // Don't add it
+            } else if right as? Variable != nil {
+                // Don't add it
+            } else {
+                // We need it
+                result += " \(operation.toString()) "
+            }
+        } else {
+            // Add operation
+            result += " \(operation.toString()) "
+        }
         
         // Brackets on the right
         if bright {
@@ -45,39 +57,14 @@ struct Expression: Token {
             result += "\(right.toString())"
         }
         
-        /*/ Check if there is a variable
-        if right as? Variable != nil, operation == .multiplication {
-            return "\(left.toString())\(right.toString())"
-        }
-        
-        // Check if there is a variable
-        if left as? Variable != nil, operation == .multiplication {
-            return "\(right.toString())\(left.toString())"
-        }
-        
-        // Check for brackets on both sides
-        if let expr1 = left as? Expression, let expr2 = right as? Expression, operation.getPrecedence() > expr1.operation.getPrecedence(), operation.getPrecedence() > expr2.operation.getPrecedence() {
-            return "(\(left.toString())) \(operation.toString()) (\(right.toString()))".exponentize()
-        }
-        
-        // Check for brackets on the left
-        if let expr = left as? Expression, operation.getPrecedence() > expr.operation.getPrecedence() {
-            return "(\(left.toString())) \(operation.toString()) \(right.toString())".exponentize()
-        }
-        
-        // Check for brackets on the right
-        if let expr = right as? Expression, operation.getPrecedence() > expr.operation.getPrecedence() {
-            return "\(left.toString()) \(operation.toString()) (\(right.toString()))".exponentize()
-        }*/
-        
         // Return result
         return result
     }
     
     func compute(with inputs: [Input]) -> Token {
         // Compute expression terms
-        let left = self.left.compute(with: inputs)
-        var right = self.right.compute(with: inputs)
+        let left = shouldInvert() ? self.right.compute(with: inputs) : self.left.compute(with: inputs)
+        var right = shouldInvert() ? self.left.compute(with: inputs) : self.right.compute(with: inputs)
         
         // Check if any error
         if left as? SyntaxError != nil || right as? SyntaxError != nil {
@@ -124,6 +111,47 @@ struct Expression: Token {
                 if operation == .addition || operation == .subtraction {
                     return self
                 }
+            }
+            
+            // Addition
+            if operation == .addition {
+                // On addition
+                if self.operation == .addition {
+                    // Check which one can be added
+                    
+                }
+                
+                // On subtraction
+                if self.operation == .subtraction {
+                    // Check which one can be added (or removed)
+                    
+                }
+                
+                // On division
+                if self.operation == .division {
+                    // Check and multiply by bottom and add to top
+                    
+                }
+            }
+            
+            // Subtraction
+            if operation == .subtraction {
+                
+            }
+            
+            // Multiplication
+            if operation == .multiplication {
+                
+            }
+            
+            // Division
+            if operation == .division {
+                
+            }
+            
+            // Power
+            if operation == .power {
+                
             }
         }
         
