@@ -35,8 +35,8 @@ extension Feature {
         let x0 = Output(name: "x0 =", expression: Variable(name: "e"), conditions: ["d".equals(0), "a".inequals(0)])
         let x1 = Output(name: "x1 =", expression: Variable(name: "g"), conditions: ["d".greaterThan(0), "a".inequals(0)])
         let x2 = Output(name: "x2 =", expression: Variable(name: "h"), conditions: ["d".greaterThan(0), "a".inequals(0)])
-        let factorized1 = Output(name: "f1_factorized".localized(), expression: "x".minus("e").power(2), conditions: ["d".equals(0), "a".inequals(0)])
-        let factorized2 = Output(name: "f1_factorized".localized(), expression: "x".minus("g").times("x".minus("h")), conditions: ["d".greaterThan(0), "a".inequals(0)])
+        let factorized1 = Output(name: "f1_factorized".localized(), expression: "a".times("x".minus("e").power(2)), conditions: ["d".equals(0), "a".inequals(0)])
+        let factorized2 = Output(name: "f1_factorized".localized(), expression: "a".times("x".minus("g")).times("x".minus("h")), conditions: ["d".greaterThan(0), "a".inequals(0)])
         
         return Feature(name: "f1_name".localized(), inputs: [a, b, c], intermediates: [d, e, f, g, h], outputs: [developed, canonical, delta, x0, x1, x2, factorized1, factorized2])
     }()

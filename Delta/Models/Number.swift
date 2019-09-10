@@ -104,7 +104,7 @@ struct Number: Token {
                     
                     if value == .infinity || value.isNaN {
                         return CalculError()
-                    } else {
+                    } else if value == floor(value) {
                         return Number(value: Int(value))
                     }
                 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension String {
 
@@ -22,6 +23,26 @@ extension String {
 
     func format(_ args : [String]) -> String {
         return String(format: self, locale: .current, arguments: args)
+    }
+    
+    func groups(for regexPattern: String) -> [[String]] {
+        do {
+            let text = self
+            let regex = try NSRegularExpression(pattern: regexPattern)
+            let matches = regex.matches(in: text, range: NSRange(text.startIndex..., in: text))
+            return matches.map { match in
+                return (0 ..< match.numberOfRanges).map {
+                    let rangeBounds = match.range(at: $0)
+                    guard let range = Range(rangeBounds, in: text) else {
+                        return ""
+                    }
+                    return String(text[range])
+                }
+            }
+        } catch let error {
+            print("invalid regex: \(error.localizedDescription)")
+            return []
+        }
     }
     
     // Custom operations
@@ -81,61 +102,27 @@ extension String {
         return nil
     }
     
-    func exponentize() -> String {
-        // Define characters
-        let supers = [
-            "1": "\u{00B9}",
-            "2": "\u{00B2}",
-            "3": "\u{00B3}",
-            "4": "\u{2074}",
-            "5": "\u{2075}",
-            "6": "\u{2076}",
-            "7": "\u{2077}",
-            "8": "\u{2078}",
-            "9": "\u{2079}"
-        ]
-
-        // Final string and current char status
-        var newStr = ""
-        var isExp = false
-        var isNum = false
+    func attributedMath() -> NSAttributedString {
+        let workspace = NSMutableAttributedString(string: self)
+        let power: [NSAttributedString.Key: Any] = [.font:UIFont.systemFont(ofSize: 10),.baselineOffset:8]
         
-        // Iterate string
-        for char in self {
-            // If exp character
-            if char == "^" {
-                // Clear space before
-                if let last = newStr.last, last == " " {
-                    newStr.removeLast()
-                }
-                
-                // Set current as exp
-                isExp = true
-            } else {
-                // If last was exp
-                if isExp {
-                    // Get character as string
-                    let key = String(char)
-                    
-                    // Check if it's a numpber
-                    if supers.keys.contains(key) {
-                        // Replace by character
-                        newStr.append(Character(supers[key]!))
-                        isNum = true
-                    } else if isNum {
-                        // End of number, go back to normal
-                        isExp = false
-                        newStr.append(char)
-                    }
-                } else {
-                    // Normal state
-                    newStr.append(char)
-                }
-            }
+        // Powers (numbers)
+        let numbers = String(workspace.mutableString).groups(for: " \\^ [0-9]+")
+        for group in numbers {
+            let range = workspace.mutableString.range(of: group[0])
+            workspace.addAttributes(power, range: range)
+            workspace.replaceCharacters(in: range, with: group[0][3 ..< group[0].count])
         }
         
-        // Return final string
-        return newStr
+        // Powers (expressions)
+        let expressions = String(workspace.mutableString).groups(for: " \\^ \\([0-9a-z*\\+\\-/ ]+\\)")
+        for group in expressions {
+            let range = workspace.mutableString.range(of: group[0])
+            workspace.addAttributes(power, range: range)
+            workspace.replaceCharacters(in: range, with: group[0][4 ..< group[0].count-1])
+        }
+        
+        return workspace
     }
     
     // Subscript

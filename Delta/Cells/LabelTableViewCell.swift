@@ -32,7 +32,7 @@ class LabelTableViewCell: UITableViewCell {
     }
     
     func with(text: String, accessory: UITableViewCell.AccessoryType = .none) -> LabelTableViewCell {
-        label.text = text
+        label.attributedText = text.attributedMath()
         accessoryType = accessory
         
         return self

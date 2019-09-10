@@ -36,17 +36,28 @@ struct Expression: Token {
         }
         
         // Operation
+        var op = true
         if operation == .multiplication {
             if bright {
                 // Don't add it
+                op = false
             } else if right as? Variable != nil {
                 // Don't add it
-            } else {
-                // We need it
-                result += " \(operation.toString()) "
+                op = false
+            } else if let right = right as? Expression {
+                if right.operation == .power {
+                    // Don't add it
+                    op = false
+                }
+                if right.operation == .multiplication && right.left as? Variable != nil {
+                    // Don't add it
+                    op = false
+                }
             }
-        } else {
-            // Add operation
+        }
+        
+        // Add it
+        if op {
             result += " \(operation.toString()) "
         }
         
