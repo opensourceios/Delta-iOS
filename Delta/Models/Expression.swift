@@ -45,7 +45,7 @@ struct Expression: Token {
                 // Don't add it
                 op = false
             } else if let right = right as? Expression {
-                if right.operation == .power {
+                if right.operation == .power && right.left as? Number == nil {
                     // Don't add it
                     op = false
                 }

@@ -24,4 +24,17 @@ extension Int {
         return Expression(left: Number(value: self), right: Number(value: right), operation: .division)
     }
     
+    // Greatest common divisor
+    
+    func greatestCommonDivisor(with number: Int) -> Int {
+        var a = self
+        var b = number
+        
+        while b != 0 {
+            (a, b) = (b, a % b)
+        }
+        
+        return a
+    }
+    
 }

@@ -64,8 +64,23 @@ struct Number: Token {
             }
             
             // Division
-            if operation == .division && self.value.isMultiple(of: right.value) {
-                return Number(value: self.value / right.value)
+            if operation == .division {
+                // Multiple so division is an integer
+                if self.value.isMultiple(of: right.value) {
+                    return Number(value: self.value / right.value)
+                }
+                
+                // Get the greatest common divisor
+                let gcd = self.value.greatestCommonDivisor(with: right.value)
+                
+                // If it's greater than one
+                if gcd > 1 {
+                    let numerator = self.value / gcd
+                    let denominator = right.value / gcd
+                    
+                    // Return simplified fraction
+                    return Expression(left: Number(value: numerator), right: Number(value: denominator), operation: operation)
+                }
             }
             
             // Power

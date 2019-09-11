@@ -37,7 +37,7 @@ class HomeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? features.count : 1
+        return section == 0 ? features.count + 1 : 2
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -47,14 +47,27 @@ class HomeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Check for section
         if indexPath.section == 0 {
+            // More cell
+            if indexPath.row == features.count {
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "more_soon".localized())
+            }
+            
             // Get feature
             let feature = features[indexPath.row]
             
             // Create cell
             return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: feature.name, accessory: .disclosureIndicator)
+        } else if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                // About
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "about".localized(), accessory: .disclosureIndicator)
+            } else if indexPath.row == 1 {
+                // More apps
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "moreApps".localized(), accessory: .disclosureIndicator)
+            }
         }
         
-        return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "about".localized(), accessory: .disclosureIndicator)
+        fatalError("Unknown cell!")
     }
     
     // Navigation management
@@ -62,6 +75,11 @@ class HomeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Check for section
         if indexPath.section == 0 {
+            // More cell
+            if indexPath.row == features.count {
+                return
+            }
+            
             // Get selected feature
             let feature = features[indexPath.row]
             
@@ -72,11 +90,22 @@ class HomeTableViewController: UITableViewController {
             if let featureVC = delegate as? FeatureTableViewController, let featureNavigation = featureVC.navigationController {
                 splitViewController?.showDetailViewController(featureNavigation, sender: nil)
             }
-        } else {
-            // About
-            let alert = UIAlertController(title: "about".localized(), message: "about_text".localized(), preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "ok".localized(), style: .default, handler: nil))
-            UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+        } else if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                // About
+                let alert = UIAlertController(title: "about".localized(), message: "about_text".localized(), preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "ok".localized(), style: .default, handler: nil))
+                UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+            } else if indexPath.row == 1 {
+                // More apps
+                if let url = URL(string: "https://itunes.apple.com/us/developer/groupe-minaste/id1378426984") {
+                    if #available(iOS 10.0, *) {
+                        UIApplication.shared.open(url)
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
+                }
+            }
         }
     }
     

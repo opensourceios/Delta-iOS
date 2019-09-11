@@ -12,9 +12,7 @@ extension Feature {
     
     // Array of all features
     static let array: [Feature] = [
-        .secondDegreeEquation,
-        .vectors,
-        .test
+        .secondDegreeEquation
     ]
     
     // 2nd degree equation
