@@ -37,21 +37,20 @@ class HomeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? features.count + 1 : 2
+        return section == 0 ? features.count : 3
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return section == 0 ? "tools".localized() : "about".localized()
     }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return section == 0 ? "more_soon".localized() : "donate_description".localized()
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Check for section
         if indexPath.section == 0 {
-            // More cell
-            if indexPath.row == features.count {
-                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "more_soon".localized())
-            }
-            
             // Get feature
             let feature = features[indexPath.row]
             
@@ -64,6 +63,9 @@ class HomeTableViewController: UITableViewController {
             } else if indexPath.row == 1 {
                 // More apps
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "moreApps".localized(), accessory: .disclosureIndicator)
+            } else if indexPath.row == 2 {
+                // Donate
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "donate".localized(), accessory: .disclosureIndicator)
             }
         }
         
@@ -75,11 +77,6 @@ class HomeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Check for section
         if indexPath.section == 0 {
-            // More cell
-            if indexPath.row == features.count {
-                return
-            }
-            
             // Get selected feature
             let feature = features[indexPath.row]
             
@@ -99,6 +96,15 @@ class HomeTableViewController: UITableViewController {
             } else if indexPath.row == 1 {
                 // More apps
                 if let url = URL(string: "https://itunes.apple.com/us/developer/groupe-minaste/id1378426984") {
+                    if #available(iOS 10.0, *) {
+                        UIApplication.shared.open(url)
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
+                }
+            } else if indexPath.row == 2 {
+                // Donate
+                if let url = URL(string: "https://www.paypal.me/NathanFallet") {
                     if #available(iOS 10.0, *) {
                         UIApplication.shared.open(url)
                     } else {
