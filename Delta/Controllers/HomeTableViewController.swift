@@ -37,7 +37,7 @@ class HomeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? features.count : 3
+        return section == 0 ? features.count : 4
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -56,7 +56,7 @@ class HomeTableViewController: UITableViewController {
             
             // Create cell
             return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: feature.name, accessory: .disclosureIndicator)
-        } else if indexPath.section == 1 {
+        } else {
             if indexPath.row == 0 {
                 // About
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "about".localized(), accessory: .disclosureIndicator)
@@ -64,6 +64,9 @@ class HomeTableViewController: UITableViewController {
                 // More apps
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "moreApps".localized(), accessory: .disclosureIndicator)
             } else if indexPath.row == 2 {
+                // Follow us on social networks
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "followUs".localized(), accessory: .disclosureIndicator)
+            } else if indexPath.row == 3 {
                 // Donate
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "donate".localized(), accessory: .disclosureIndicator)
             }
@@ -87,7 +90,7 @@ class HomeTableViewController: UITableViewController {
             if let featureVC = delegate as? FeatureTableViewController, let featureNavigation = featureVC.navigationController {
                 splitViewController?.showDetailViewController(featureNavigation, sender: nil)
             }
-        } else if indexPath.section == 1 {
+        } else {
             if indexPath.row == 0 {
                 // About
                 let alert = UIAlertController(title: "about".localized(), message: "about_text".localized(), preferredStyle: .alert)
@@ -103,6 +106,15 @@ class HomeTableViewController: UITableViewController {
                     }
                 }
             } else if indexPath.row == 2 {
+                // Follow us on social networks
+                if let url = URL(string: "https://www.twitter.com/DeltaMathHelper") {
+                    if #available(iOS 10.0, *) {
+                        UIApplication.shared.open(url)
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
+                }
+            } else if indexPath.row == 3 {
                 // Donate
                 if let url = URL(string: "https://www.paypal.me/NathanFallet") {
                     if #available(iOS 10.0, *) {

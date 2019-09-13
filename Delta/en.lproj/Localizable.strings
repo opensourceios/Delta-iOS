@@ -4,8 +4,9 @@
 "name" = "Delta: Math helper";
 "tools" = "Tools";
 "about" = "About";
-"more_soon" = "More tools are coming soon!";
+"more_soon" = "More tools are coming soon! Feel free to contact us on social networks if you have any suggestion or if you found any bug.";
 "moreApps" = "More apps by our team";
+"followUs" = "Follow us on social networks";
 "donate" = "Donate";
 "donate_description" = "No matter what, Delta will stay free and ad-free. The donation is a way to thank us for the app. You will contribute to the funding of our Extopy project. Please make sure you want to leave us a tip before doing so.";
 "about_text" = "Application developed by Nathan Fallet\n\nThis application has been developed by independent developers, and is provided for free without any warranty.\n\n© 2019 Groupe MINASTE";
