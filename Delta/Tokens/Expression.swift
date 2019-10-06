@@ -243,4 +243,8 @@ struct Expression: Token {
         return Expression(left: self, right: Number(value: right), operation: .power)
     }
     
+    func sqrt() -> Expression {
+        return Expression(left: self, right: Expression(left: Number(value: 1), right: Number(value: 2), operation: .division), operation: .power)
+    }
+    
 }

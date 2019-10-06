@@ -43,8 +43,8 @@ extension Algorithm {
                 // If delta is positive
                 IfAction("Δ".greaterThan(0), do: [
                     // Print roots
-                    SetAction("x1", to: (-1).times("b").minus("Δ".power(1.divides(2))).divides(2.times("a"))),
-                    SetAction("x2", to: (-1).times("b").plus("Δ".power(1.divides(2))).divides(2.times("a"))),
+                    SetAction("x1", to: (-1).times("b").minus("Δ".sqrt()).divides(2.times("a"))),
+                    SetAction("x2", to: (-1).times("b").plus("Δ".sqrt()).divides(2.times("a"))),
                     PrintAction("x1"),
                     PrintAction("x2"),
                     
@@ -62,7 +62,20 @@ extension Algorithm {
                     // Factorized form
                     SetAction("f(x)", to: "a".times("x".minus("x0").power(2))),
                     PrintAction("f(x)"),
-                ])
+                ]),
+                
+                // If delta is negative
+                IfAction("Δ".lessThan(0), do: [
+                    // Print roots
+                    SetAction("x1", to: (-1).times("b").minus("i".times((-1).times("Δ").sqrt())).divides(2.times("a"))),
+                    SetAction("x2", to: (-1).times("b").plus("i".times((-1).times("Δ").sqrt())).divides(2.times("a"))),
+                    PrintAction("x1"),
+                    PrintAction("x2"),
+                    
+                    // Factorized form
+                    SetAction("f(x)", to: "a".times("x".minus("x1")).times("x".minus("x2"))),
+                    PrintAction("f(x)"),
+                ]),
             ])
         ]
         

@@ -71,6 +71,10 @@ extension String {
         return Expression(left: Variable(name: self), right: right, operation: .power)
     }
     
+    func sqrt() -> Expression {
+        return Expression(left: Variable(name: self), right: Expression(left: Number(value: 1), right: Number(value: 2), operation: .division), operation: .power)
+    }
+    
     func equals(_ right: Int) -> Equation {
         return Equation(left: Variable(name: self), right: Number(value: right), operation: .equals)
     }
