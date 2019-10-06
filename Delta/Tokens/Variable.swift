@@ -16,19 +16,17 @@ struct Variable: Token {
         return "\(name)"
     }
     
-    func compute(with inputs: [Input]) -> Token {
+    func compute(with inputs: [String: Token]) -> Token {
         // Chech if an input corresponds to this variable
-        for input in inputs {
-            if name == input.name {
-                return input.expression.compute(with: inputs)
-            }
+        if let value = inputs[name] {
+            return value
         }
         
         // No input found
         return self
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
         return Expression(left: self, right: right, operation: operation)
     }
     

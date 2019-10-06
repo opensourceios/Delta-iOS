@@ -1,5 +1,5 @@
 //
-//  FeatureTableViewController.swift
+//  AlgorithmTableViewController.swift
 //  Delta
 //
 //  Created by Nathan FALLET on 07/09/2019.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class FeatureTableViewController: UITableViewController, FeatureSelectionDelegate, InputChangedDelegate {
+class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDelegate, InputChangedDelegate {
     
-    var feature: Feature?
-    var currentOutputs = [Output]()
+    var algorithm: Algorithm?
+    var currentOutputs = [Any]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,11 +21,11 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
         tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: "outputCell")
     }
     
-    func selectFeature(_ feature: Feature?) {
-        self.feature = feature
+    func selectAlgorithm(_ algorithm: Algorithm?) {
+        self.algorithm = algorithm
         
         // Update title
-        navigationItem.title = feature?.name
+        navigationItem.title = algorithm?.name
         
         // Update inputs
         tableView.reloadData()
@@ -36,13 +36,9 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
     
     func inputChanged(_ input: Input?) {
         // Get vars
-        if let feature = feature, let input = input {
+        if let algorithm = algorithm, let input = input {
             // Update the input
-            for i in feature.inputs {
-                if input.name == i.name {
-                    i.expression = input.expression
-                }
-            }
+            algorithm.inputs[input.name] = input.expression
             
             // Update result shown on screen
             updateResult()
@@ -50,17 +46,10 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
     }
     
     func updateResult() {
-        if let feature = feature {
-            // Update intermediates
-            for i in feature.intermediates {
-                i.clear()
-            }
-            for i in feature.intermediates {
-                i.update(with: feature.getAllInputs())
-            }
-            
-            // Update current outputs list
-            currentOutputs = feature.outputs.filter{ return $0.checkConditions(with: feature.getAllInputs()) }
+        if let algorithm = algorithm {
+            // Execute algorithm
+            let process = algorithm.execute()
+            currentOutputs = process.outputs
             
             // Refresh the output section
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
@@ -74,11 +63,11 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return feature != nil ? 2 : 0
+        return algorithm != nil ? 2 : 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? feature?.inputs.count ?? 0 : currentOutputs.count
+        return section == 0 ? algorithm?.inputs.count ?? 0 : currentOutputs.count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -86,20 +75,24 @@ class FeatureTableViewController: UITableViewController, FeatureSelectionDelegat
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let feature = feature {
+        if let algorithm = algorithm {
             // Check section
             if indexPath.section == 0 {
                 // Get input
-                let input = feature.inputs[indexPath.row]
+                let variable = Array(algorithm.inputs.sorted{ return $0.key < $1.key })[indexPath.row]
                 
                 // Create the cell
-                return (tableView.dequeueReusableCell(withIdentifier: "inputCell", for: indexPath) as! InputTableViewCell).with(input: input, delegate: self)
+                return (tableView.dequeueReusableCell(withIdentifier: "inputCell", for: indexPath) as! InputTableViewCell).with(input: Input(name: variable.key, expression: variable.value ), delegate: self)
             } else {
                 // Get output
                 let output = currentOutputs[indexPath.row]
                 
                 // Create the cell
-                return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! LabelTableViewCell).with(text: output.toString(with: feature.getAllInputs()))
+                if let output = output as? Output {
+                    return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! LabelTableViewCell).with(text: output.toString(with: [:]))
+                } else if let output = output as? String {
+                    return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! LabelTableViewCell).with(text: output)
+                }
             }
         }
 

@@ -20,7 +20,7 @@ class Output {
         self.conditions = conditions
     }
     
-    func checkConditions(with inputs: [Input]) -> Bool {
+    func checkConditions(with inputs: [String: Token]) -> Bool {
         // Iterate all conditions
         for equation in conditions {
             // If the equation is false
@@ -34,7 +34,7 @@ class Output {
         return true
     }
     
-    func toString(with inputs: [Input]) -> String {
+    func toString(with inputs: [String: Token]) -> String {
         return "\(name) \(expression.compute(with: inputs).toString())"
     }
     

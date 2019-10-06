@@ -16,11 +16,11 @@ struct Vector: Token {
         return "(\(values.map { $0.toString() }.joined(separator: " ; ")))"
     }
     
-    func compute(with inputs: [Input]) -> Token {
+    func compute(with inputs: [String: Token]) -> Token {
         return self
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
         return Expression(left: self, right: right, operation: operation)
     }
     
@@ -44,7 +44,7 @@ struct Vector: Token {
         var new = Vector(values: [])
         
         for i in values {
-            new.values += [number.apply(operation: .multiplication, right: i, with: [])]
+            new.values += [number.apply(operation: .multiplication, right: i, with: [:])]
         }
         
         return new
@@ -69,7 +69,7 @@ struct Vector: Token {
                 news.insert(Expression(left: left, right: right, operation: .addition), at: 0)
             }
             
-            return news.first!.compute(with: [])
+            return news.first!.compute(with: [:])
         } catch {
             // Error, do nothing
         }

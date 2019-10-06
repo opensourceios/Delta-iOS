@@ -16,7 +16,7 @@
 "error_calcul" = "Calcul error";
 "error_syntax" = "Syntax error";
 
-// 2nd degree equation (feature 1)
+// 2nd degree equation (algorithm 1)
 
 "f1_name" = "2nd degree equation";
 "f1_developed" = "Developed form:";

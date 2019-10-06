@@ -52,7 +52,7 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.delegate = delegate
         
         label.text = input.toString()
-        field.text = input.expression.compute(with: []).toString()
+        field.text = input.expression.compute(with: [:]).toString()
         
         return self
     }

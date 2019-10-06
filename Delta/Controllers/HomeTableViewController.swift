@@ -10,8 +10,8 @@ import UIKit
 
 class HomeTableViewController: UITableViewController {
     
-    weak var delegate: FeatureSelectionDelegate?
-    var features = Feature.array
+    weak var delegate: AlgorithmSelectionDelegate?
+    var algorithmes = Algorithm.array
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +37,7 @@ class HomeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? features.count : 4
+        return section == 0 ? algorithmes.count : 4
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -51,11 +51,11 @@ class HomeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Check for section
         if indexPath.section == 0 {
-            // Get feature
-            let feature = features[indexPath.row]
+            // Get algorithm
+            let algorithm = algorithmes[indexPath.row]
             
             // Create cell
-            return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: feature.name, accessory: .disclosureIndicator)
+            return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: algorithm.name, accessory: .disclosureIndicator)
         } else {
             if indexPath.row == 0 {
                 // About
@@ -80,15 +80,15 @@ class HomeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Check for section
         if indexPath.section == 0 {
-            // Get selected feature
-            let feature = features[indexPath.row]
+            // Get selected algorithm
+            let algorithm = algorithmes[indexPath.row]
             
             // Update the delegate
-            delegate?.selectFeature(feature)
+            delegate?.selectAlgorithm(algorithm)
             
             // Show view controller
-            if let featureVC = delegate as? FeatureTableViewController, let featureNavigation = featureVC.navigationController {
-                splitViewController?.showDetailViewController(featureNavigation, sender: nil)
+            if let algorithmVC = delegate as? AlgorithmTableViewController, let algorithmNavigation = algorithmVC.navigationController {
+                splitViewController?.showDetailViewController(algorithmNavigation, sender: nil)
             }
         } else {
             if indexPath.row == 0 {
@@ -166,8 +166,8 @@ class HomeTableViewController: UITableViewController {
 
 }
 
-protocol FeatureSelectionDelegate: class {
+protocol AlgorithmSelectionDelegate: class {
     
-    func selectFeature(_ feature: Feature?)
+    func selectAlgorithm(_ algorithm: Algorithm?)
     
 }

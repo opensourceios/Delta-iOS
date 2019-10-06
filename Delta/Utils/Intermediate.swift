@@ -21,7 +21,7 @@ class Intermediate: Input {
         expression = original
     }
     
-    func update(with inputs: [Input]) {
+    func update(with inputs: [String: Token]) {
         expression = original.compute(with: inputs)
     }
     

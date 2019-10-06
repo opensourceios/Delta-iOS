@@ -11,7 +11,7 @@ import UIKit
 class SplitViewController: UISplitViewController, UISplitViewControllerDelegate {
     
     let leftViewController = HomeTableViewController(style: .grouped)
-    let rightViewController = FeatureTableViewController(style: .grouped)
+    let rightViewController = AlgorithmTableViewController(style: .grouped)
 
     override func viewDidLoad() {
         super.viewDidLoad()

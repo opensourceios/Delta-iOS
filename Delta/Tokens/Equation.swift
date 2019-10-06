@@ -14,7 +14,7 @@ struct Equation: Token {
     var right: Token
     var operation: Operation
     
-    func isTrue(with inputs: [Input]) -> Bool {
+    func isTrue(with inputs: [String: Token]) -> Bool {
         let left = self.left.compute(with: inputs)
         let right = self.right.compute(with: inputs)
         
@@ -41,14 +41,14 @@ struct Equation: Token {
         return "\(left.toString()) \(operation.toString()) \(right.toString())"
     }
     
-    func compute(with inputs: [Input]) -> Token {
+    func compute(with inputs: [String: Token]) -> Token {
         let left = self.left.compute(with: inputs)
         let right = self.right.compute(with: inputs)
         
         return Equation(left: left, right: right, operation: operation)
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
         return Expression(left: self, right: right, operation: operation)
     }
     

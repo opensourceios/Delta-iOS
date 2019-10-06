@@ -72,7 +72,7 @@ struct Expression: Token {
         return result
     }
     
-    func compute(with inputs: [Input]) -> Token {
+    func compute(with inputs: [String: Token]) -> Token {
         // Compute expression terms
         let left = shouldInvert() ? self.right.compute(with: inputs) : self.left.compute(with: inputs)
         var right = shouldInvert() ? self.left.compute(with: inputs) : self.right.compute(with: inputs)
@@ -92,7 +92,7 @@ struct Expression: Token {
         return left.apply(operation: operation, right: right, with: inputs)
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
         // Compute right
         let right = right.compute(with: inputs)
         

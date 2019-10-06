@@ -16,11 +16,11 @@ struct Number: Token {
         return "\(value)"
     }
     
-    func compute(with inputs: [Input]) -> Token {
+    func compute(with inputs: [String: Token]) -> Token {
         return self
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [Input]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
         // Compute right
         let right = right.compute(with: inputs)
         
