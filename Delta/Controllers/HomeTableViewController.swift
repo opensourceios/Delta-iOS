@@ -11,7 +11,7 @@ import UIKit
 class HomeTableViewController: UITableViewController {
     
     weak var delegate: AlgorithmSelectionDelegate?
-    var algorithmes = Algorithm.array
+    var algorithms = Algorithm.array
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,11 +37,11 @@ class HomeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? algorithmes.count : 4
+        return section == 0 ? algorithms.count : 4
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "tools".localized() : "about".localized()
+        return section == 0 ? "algorithms".localized() : "about".localized()
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
@@ -52,7 +52,7 @@ class HomeTableViewController: UITableViewController {
         // Check for section
         if indexPath.section == 0 {
             // Get algorithm
-            let algorithm = algorithmes[indexPath.row]
+            let algorithm = algorithms[indexPath.row]
             
             // Create cell
             return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: algorithm.name, accessory: .disclosureIndicator)
@@ -81,7 +81,7 @@ class HomeTableViewController: UITableViewController {
         // Check for section
         if indexPath.section == 0 {
             // Get selected algorithm
-            let algorithm = algorithmes[indexPath.row]
+            let algorithm = algorithms[indexPath.row]
             
             // Update the delegate
             delegate?.selectAlgorithm(algorithm)
@@ -127,7 +127,7 @@ class HomeTableViewController: UITableViewController {
         }
     }
     
-    // Editing support for custom tools
+    // Editing support for custom algorithms
 
     /*
     // Override to support conditional editing of the table view.

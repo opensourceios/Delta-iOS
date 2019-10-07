@@ -10,9 +10,11 @@ import Foundation
 
 extension Algorithm {
     
-    // Array of all algorithmes
+    // Array of all algorithms
     static let array: [Algorithm] = [
-        .secondDegreeEquation
+        .secondDegreeEquation,
+        .vectors,
+        .statistics
     ]
     
     // 2nd degree equation
@@ -50,7 +52,7 @@ extension Algorithm {
                     
                     // Factorized form
                     SetAction("f(x)", to: "a".times("x".minus("x1")).times("x".minus("x2"))),
-                    PrintAction("f(x)"),
+                    PrintAction("f(x)")
                 ]),
                 
                 // If delta is zero
@@ -61,7 +63,7 @@ extension Algorithm {
                     
                     // Factorized form
                     SetAction("f(x)", to: "a".times("x".minus("x0").power(2))),
-                    PrintAction("f(x)"),
+                    PrintAction("f(x)")
                 ]),
                 
                 // If delta is negative
@@ -74,26 +76,39 @@ extension Algorithm {
                     
                     // Factorized form
                     SetAction("f(x)", to: "a".times("x".minus("x1")).times("x".minus("x2"))),
-                    PrintAction("f(x)"),
-                ]),
+                    PrintAction("f(x)")
+                ])
             ])
         ]
         
-        return Algorithm(name: "f1_name".localized(), inputs: ["a": a, "b": b, "c": c], actions: actions)
+        return Algorithm(name: "algo1_name".localized(), inputs: ["a": a, "b": b, "c": c], actions: actions)
+    }()
+    
+    // Vectors
+    static let vectors: Algorithm = {
+        let u = Vector(values: [Number(value: 1), Number(value: 2)])
+        let v = Vector(values: [Number(value: 3), Number(value: 4)])
+        let w = "u".plus("v")
+        
+        let actions: [Action] = [
+            PrintAction("w")
+        ]
+        
+        return Algorithm(name: "algo2_name".localized(), inputs: ["u": u, "v": v, "w": w], actions: actions)
+    }()
+    
+    // Statistics
+    static let statistics: Algorithm = {
+        let list = List(values: [Number(value: 1), Number(value: 2), Number(value: 3), Number(value: 4)])
+        
+        let actions: [Action] = [
+            
+        ]
+        
+        return Algorithm(name: "", inputs: ["L": list], actions: actions)
     }()
     
     /*
-    // Vector
-    static let vectors: Algorithm = {
-        let u = Input(name: "u", expression: Vector(values: [Number(value: 1), Number(value: 2)])) // u
-        let v = Input(name: "v", expression: Vector(values: [Number(value: 3), Number(value: 4)])) // v
-        let w = Input(name: "w", expression: "u".plus("v")) // w
-        
-        let result = Output(name: "w =", expression: Variable(name: "w"))
-        
-        return Algorithm(name: "Vectors", inputs: [u, v, w], actions: [])
-    }()
-    
     // Parse testing
     static let test: Algorithm = {
         let a = Input(name: "a", expression: Number(value: 0))

@@ -2,7 +2,7 @@
 // General part
 
 "name" = "Delta: Math helper";
-"tools" = "Outils";
+"algorithms" = "Algorithmes";
 "about" = "A propos";
 "more_soon" = "Plus d'outils arrivent bientôt ! N'hésitez pas à nous contacter sur les réseaux sociaux si vous avez une suggestion ou si vous avez rencontré un bug.";
 "moreApps" = "Plus d'apps de notre groupe";
@@ -16,9 +16,7 @@
 "error_calcul" = "Erreur de calcul";
 "error_syntax" = "Erreur de syntaxe";
 
-// 2nd degree equation (algorithm 1)
+// Algorithm strings
 
-"f1_name" = "Equation de 2nd degré";
-"f1_developed" = "Forme développée :";
-"f1_canonical" = "Forme canonique :";
-"f1_factorized" = "Forme factorisée :";
+"algo1_name" = "Equation de 2nd degré";
+"algo2_name" = "Vecteurs";
