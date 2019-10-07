@@ -51,6 +51,10 @@ extension String {
         return Expression(left: Variable(name: self), right: Variable(name: right), operation: .addition)
     }
     
+    func plus(_ right: Int) -> Expression {
+        return Expression(left: Variable(name: self), right: Number(value: right), operation: .addition)
+    }
+    
     func minus(_ right: String) -> Expression {
         return Expression(left: Variable(name: self), right: Variable(name: right), operation: .subtraction)
     }
@@ -61,6 +65,10 @@ extension String {
     
     func times(_ right: Token) -> Expression {
         return Expression(left: Variable(name: self), right: right, operation: .multiplication)
+    }
+    
+    func divides(_ right: String) -> Expression {
+        return Expression(left: Variable(name: self), right: Variable(name: right), operation: .division)
     }
     
     func power(_ right: Int) -> Expression {
@@ -95,7 +103,7 @@ extension String {
     
     func toOperation() -> Operation? {
         // Iterate values
-        for value in [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.power, Operation.set] {
+        for value in [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.power] {
             // If it's the value we want
             if self == value.toString() {
                 return value

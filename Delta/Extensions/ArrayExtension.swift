@@ -22,3 +22,39 @@ extension Array {
     }
     
 }
+
+extension Array where Element: Equatable {
+    
+    mutating func getFirstOperationAndRemove() -> Operation? {
+        // Check if first is string
+        if let first = first as? String {
+            // Remove it
+            removeFirst()
+            
+            // Operator list
+            var operators = [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.power]
+            
+            // Check for vectors
+            if (self as! [String]).contains("(") {
+                operators.append(.vector)
+            }
+            
+            // Check for list
+            if (self as! [String]).contains("{") {
+                operators.append(.list)
+            }
+            
+            // Iterate values
+            for value in operators {
+                // If it's the value we want
+                if first == value.toString() {
+                    return value
+                }
+            }
+        }
+        
+        // Nothing found
+        return nil
+    }
+    
+}

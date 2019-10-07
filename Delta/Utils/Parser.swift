@@ -51,6 +51,12 @@ class Parser {
                     ops.insert(current, at: 0)
                 }
                 
+                // Other opening brace
+                else if current == "{" {
+                    // Add it to operations
+                    ops.insert(current, at: 0)
+                }
+                
                 // Number
                 else if Int(current) != nil {
                     var val = 0
@@ -89,7 +95,25 @@ class Parser {
                         let right = try values.getFirstTokenAndRemove()
                         let left = try values.getFirstTokenAndRemove()
                         
-                        if let op = ops.removeFirst().toOperation() {
+                        if let op = ops.getFirstOperationAndRemove() {
+                            values.insert(op.join(left: left, right: right), at: 0)
+                        }
+                    }
+                    
+                    // Remove opening brace
+                    if !ops.isEmpty {
+                        ops.removeFirst()
+                    }
+                }
+                
+                // Closing brace
+                else if current == "}" {
+                    // Create the token
+                    while !ops.isEmpty && ops.first != "{" {
+                        let right = try values.getFirstTokenAndRemove()
+                        let left = try values.getFirstTokenAndRemove()
+                        
+                        if let op = ops.getFirstOperationAndRemove() {
                             values.insert(op.join(left: left, right: right), at: 0)
                         }
                     }
@@ -107,7 +131,7 @@ class Parser {
                         let right = try values.getFirstTokenAndRemove()
                         let left = try values.getFirstTokenAndRemove()
                         
-                        if let op = ops.removeFirst().toOperation() {
+                        if let op = ops.getFirstOperationAndRemove() {
                             values.insert(op.join(left: left, right: right), at: 0)
                         }
                     }
@@ -130,7 +154,7 @@ class Parser {
                 let right = try values.getFirstTokenAndRemove()
                 let left = try values.getFirstTokenAndRemove()
                 
-                if let op = ops.removeFirst().toOperation() {
+                if let op = ops.getFirstOperationAndRemove() {
                     values.insert(op.join(left: left, right: right), at: 0)
                 }
             }

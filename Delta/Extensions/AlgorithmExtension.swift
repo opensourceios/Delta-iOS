@@ -104,17 +104,26 @@ extension Algorithm {
         let actions: [Action] = [
             // Set default values
             SetAction("x̅", to: Number(value: 0)),
+            SetAction("Σx", to: Number(value: 0)),
+            SetAction("n", to: Number(value: 0)),
             
             // Iterate list
             ForEachAction("L", as: "x", do: [
-                SetAction("x̅", to: "x̅".plus("x"))
+                SetAction("x̅", to: "x̅".plus("x")),
+                SetAction("Σx", to: "Σx".plus("x")),
+                SetAction("n", to: "n".plus(1))
             ]),
             
+            // Last calculs
+            SetAction("x̅", to: "x̅".divides("n")),
+            
             // Print values
-            PrintAction("x̅")
+            PrintAction("x̅"),
+            PrintAction("Σx"),
+            PrintAction("n")
         ]
         
-        return Algorithm(name: "", inputs: ["L": list], actions: actions)
+        return Algorithm(name: "algo3_name".localized(), inputs: ["L": list], actions: actions)
     }()
     
     /*

@@ -11,7 +11,7 @@ import Foundation
 enum Operation {
     
     // Values
-    case addition, subtraction, multiplication, division, power, equals, inequals, greaterThan, lessThan, greaterOrEquals, lessOrEquals, set
+    case addition, subtraction, multiplication, division, power, equals, inequals, greaterThan, lessThan, greaterOrEquals, lessOrEquals, list, vector
     
     // Convert to string
     func toString() -> String {
@@ -38,7 +38,9 @@ enum Operation {
             return ">="
         case .lessOrEquals:
             return "<="
-        case .set:
+        case .list:
+            return ","
+        case .vector:
             return ","
         }
     }
@@ -56,15 +58,30 @@ enum Operation {
     
     // Join with two tokens
     func join(left: Token, right: Token) -> Token {
+        // Check operation
         if self == .addition || self == .subtraction || self == .multiplication || self == .division || self == .power {
+            // Basic operation
             return Expression(left: left, right: right, operation: self)
-        } else if self == .set {
+        } else if self == .list {
+            // List
+            if let set = left as? List {
+                return List(values: set.values + [right])
+            } else if let set = right as? List {
+                return List(values: set.values + [left])
+            } else {
+                return List(values: [left, right])
+            }
+        } else if self == .vector {
+            // Vector
             if let set = left as? Vector {
                 return Vector(values: set.values + [right])
+            } else if let set = right as? Vector {
+                return Vector(values: set.values + [left])
             } else {
                 return Vector(values: [left, right])
             }
         } else {
+            // Equation
             return Equation(left: left, right: right, operation: self)
         }
     }
