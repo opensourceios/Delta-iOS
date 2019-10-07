@@ -102,7 +102,16 @@ extension Algorithm {
         let list = List(values: [Number(value: 1), Number(value: 2), Number(value: 3), Number(value: 4)])
         
         let actions: [Action] = [
+            // Set default values
+            SetAction("x̅", to: Number(value: 0)),
             
+            // Iterate list
+            ForEachAction("L", as: "x", do: [
+                SetAction("x̅", to: "x̅".plus("x"))
+            ]),
+            
+            // Print values
+            PrintAction("x̅")
         ]
         
         return Algorithm(name: "", inputs: ["L": list], actions: actions)

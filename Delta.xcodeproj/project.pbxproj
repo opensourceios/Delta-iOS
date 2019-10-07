@@ -39,6 +39,7 @@
 		6A32637B23250CE40056FA0E /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A32637A23250CE40056FA0E /* Vector.swift */; };
 		6A7F7890234B3E00002609EF /* WhileAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7F788F234B3E00002609EF /* WhileAction.swift */; };
 		6A7F7892234B412D002609EF /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7F7891234B412D002609EF /* List.swift */; };
+		6A7F7898234B7294002609EF /* ForEachAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7F7897234B7294002609EF /* ForEachAction.swift */; };
 		6AC40DAE2324DDC6003C8131 /* Equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC40DAD2324DDC6003C8131 /* Equation.swift */; };
 		6AC40DB02324E7E2003C8131 /* CalculError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC40DAF2324E7E2003C8131 /* CalculError.swift */; };
 /* End PBXBuildFile section */
@@ -94,6 +95,7 @@
 		6A32637A23250CE40056FA0E /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		6A7F788F234B3E00002609EF /* WhileAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhileAction.swift; sourceTree = "<group>"; };
 		6A7F7891234B412D002609EF /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		6A7F7897234B7294002609EF /* ForEachAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForEachAction.swift; sourceTree = "<group>"; };
 		6AC40DAD2324DDC6003C8131 /* Equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equation.swift; sourceTree = "<group>"; };
 		6AC40DAF2324E7E2003C8131 /* CalculError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -201,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				6A16E400234A4FB500089765 /* Action.swift */,
+				6A7F7897234B7294002609EF /* ForEachAction.swift */,
 				6A16E408234A60BB00089765 /* IfAction.swift */,
 				6A16E404234A532B00089765 /* PrintAction.swift */,
 				6A16E406234A547400089765 /* SetAction.swift */,
@@ -308,6 +311,7 @@
 				6A0A8CBF2323CC4600F0C41C /* Output.swift in Sources */,
 				6A0A8CD12323FDB700F0C41C /* Variable.swift in Sources */,
 				6A32637B23250CE40056FA0E /* Vector.swift in Sources */,
+				6A7F7898234B7294002609EF /* ForEachAction.swift in Sources */,
 				6A0A8CCD2323EBE800F0C41C /* ArrayExtension.swift in Sources */,
 				6A0A8CB22323A93C00F0C41C /* StringExtension.swift in Sources */,
 				6A0A8CDB23244BB500F0C41C /* IntExtension.swift in Sources */,
