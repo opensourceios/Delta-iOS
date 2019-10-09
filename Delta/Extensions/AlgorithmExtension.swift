@@ -108,7 +108,7 @@ extension Algorithm {
             SetAction("n", to: Number(value: 0)),
             
             // Iterate list
-            ForEachAction("L", as: "x", do: [
+            ForEachAction(Variable(name: "L"), as: "x", do: [
                 SetAction("x̅", to: "x̅".plus("x")),
                 SetAction("Σx", to: "Σx".plus("x")),
                 SetAction("n", to: "n".plus(1))

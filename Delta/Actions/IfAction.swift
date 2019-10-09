@@ -10,19 +10,19 @@ import Foundation
 
 class IfAction: Action {
     
-    var condition: Equation
+    var condition: Token
     var actions: [Action]
     var elseActions: [Action]
     
-    init(_ condition: Equation, do actions: [Action], else elseActions: [Action] = []) {
+    init(_ condition: Token, do actions: [Action], else elseActions: [Action] = []) {
         self.condition = condition
         self.actions = actions
         self.elseActions = elseActions
     }
     
     func execute(in process: Process) {
-        // Check if condition is true
-        if condition.isTrue(with: process.variables) {
+        // Get computed condition and check it
+        if let condition = self.condition.compute(with: process.variables) as? Equation, condition.isTrue(with: process.variables) {
             // Execute actions
             for action in actions {
                 action.execute(in: process)

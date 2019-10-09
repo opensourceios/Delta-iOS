@@ -10,19 +10,22 @@ import Foundation
 
 class ForEachAction: Action {
     
-    var list: String
+    var token: Token
     var identifier: String
     var actions: [Action]
     
-    init(_ list: String, as identifier: String, do actions: [Action]) {
-        self.list = list
+    init(_ token: Token, as identifier: String, do actions: [Action]) {
+        self.token = token
         self.identifier = identifier
         self.actions = actions
     }
     
     func execute(in process: Process) {
+        // Get computed token
+        let token = self.token.compute(with: process.variables)
+        
         // Get list
-        if let list = process.variables[list] as? List {
+        if let list = token as? List {
             // Iterate list
             for element in list.values {
                 // Set value
@@ -34,6 +37,9 @@ class ForEachAction: Action {
                 }
             }
         }
+        
+        // Get interval
+        // TODO
     }
     
 }
