@@ -18,16 +18,87 @@ struct Sum: Token {
     }
     
     func compute(with inputs: [String : Token]) -> Token {
+        // Compute all values
         var values = self.values.map{ $0.compute(with: inputs) }
         
-        // add values to themselves
+        // Some required vars
+        var index = 0
         
+        // Iterate values
+        while index < values.count {
+            // Get value
+            var value = values[index]
+            
+            // Iterate to add it to another value
+            var i = 0
+            while i < values.count {
+                // Check if it's not the same index
+                if i != index {
+                    // Get another value
+                    let otherValue = values[i]
+                    
+                    // Sum them
+                    let sum = value.apply(operation: .addition, right: otherValue, with: inputs)
+                    
+                    // If it is simpler than a sum
+                    if sum as? Sum == nil {
+                        // Update values
+                        value = sum
+                        values[index] = value
+                        
+                        // Remove otherValue
+                        values.remove(at: i)
+                        
+                        // Update indexes
+                        index -= index >= i ? 1 : 0
+                        i -= 1
+                    }
+                }
+                
+                // Increment i
+                i += 1
+            }
+            
+            // Check for zero (0 + x is x)
+            if let number = value as? Number, number.value == 0 {
+                // Remove zero
+                values.remove(at: index)
+                index -= 1
+            }
+            
+            // Increment index
+            index += 1
+        }
+        
+        // If only one value left
+        if values.count == 1 {
+            return values[0]
+        }
+        
+        // If empty
+        if values.isEmpty {
+            return Number(value: 0)
+        }
+        
+        // Return the simplified sum
         return Sum(values: values)
     }
     
     func apply(operation: Operation, right: Token, with inputs: [String : Token]) -> Token {
+        // If addition
+        if operation == .addition {
+            // Add token to sum
+            return Sum(values: values + [right])
+        }
         
-        return Expression(left: self, right: right, operation: .addition)
+        // If product
+        if operation == .multiplication {
+            // Add token to product
+            return Product(values: [self, right])
+        }
+        
+        // Unknown, return an exoression
+        return Expression(left: self, right: right, operation: operation)
     }
     
     func needBrackets(for operation: Operation) -> Bool {

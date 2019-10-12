@@ -27,6 +27,16 @@ struct Variable: Token {
     }
     
     func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
+        // Sum
+        if operation == .addition {
+            return Sum(values: [self, right])
+        }
+        
+        // Product
+        if operation == .multiplication {
+            return Product(values: [self, right])
+        }
+        
         return Expression(left: self, right: right, operation: operation)
     }
     

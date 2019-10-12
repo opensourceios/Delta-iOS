@@ -14,7 +14,8 @@ extension Algorithm {
     static let array: [Algorithm] = [
         .secondDegreeEquation,
         .vectors,
-        .statistics
+        .statistics,
+        .test
     ]
     
     // 2nd degree equation
@@ -126,14 +127,7 @@ extension Algorithm {
         return Algorithm(name: "algo3_name".localized(), inputs: ["L": list], actions: actions)
     }()
     
-    /*
     // Parse testing
-    static let test: Algorithm = {
-        let a = Input(name: "a", expression: Number(value: 0))
-        let result = Output(name: "a =", expression: Variable(name: "a"))
-        
-        return Algorithm(name: "Test", inputs: [a], actions: [])
-    }()
-    */
+    static let test: Algorithm = Algorithm(name: "Test", inputs: ["a": Number(value: 0)], actions: [PrintAction("a")])
     
 }

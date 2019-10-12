@@ -59,7 +59,25 @@ enum Operation {
     // Join with two tokens
     func join(left: Token, right: Token) -> Token {
         // Check operation
-        if self == .addition || self == .subtraction || self == .multiplication || self == .division || self == .power {
+        if self == .addition {
+            // Addition
+            if let sum = left as? Sum {
+                return Sum(values: sum.values + [right])
+            } else if let sum = right as? Sum {
+                return Sum(values: sum.values + [left])
+            } else {
+                return Sum(values: [left, right])
+            }
+        } else if self == .multiplication {
+            // Product
+            if let product = left as? Product {
+                return Product(values: product.values + [right])
+            } else if let product = right as? Product {
+                return Product(values: product.values + [left])
+            } else {
+                return Product(values: [left, right])
+            }
+        } else if self == .subtraction || self == .division || self == .power {
             // Basic operation
             return Expression(left: left, right: right, operation: self)
         } else if self == .list {

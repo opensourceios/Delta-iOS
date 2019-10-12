@@ -91,12 +91,6 @@ struct Number: Token {
         
         // Right is an expression
         if let right = right as? Expression {
-            // Addition and multiplication
-            if operation == .addition || operation == .multiplication {
-                // It's permutative
-                return right.apply(operation: operation, right: self, with: inputs)
-            }
-            
             // Subtraction
             if operation == .subtraction {
                 // Multiply expression by -1 and add self
@@ -138,6 +132,16 @@ struct Number: Token {
             if operation == .multiplication {
                 return right.apply(operation: operation, right: self, with: inputs)
             }
+        }
+        
+        // Sum
+        if operation == .addition {
+            return Sum(values: [self, right])
+        }
+        
+        // Product
+        if operation == .multiplication {
+            return Product(values: [self, right])
         }
         
         return Expression(left: self, right: right, operation: operation)
