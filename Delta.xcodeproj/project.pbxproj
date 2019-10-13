@@ -40,6 +40,8 @@
 		6A7F7890234B3E00002609EF /* WhileAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7F788F234B3E00002609EF /* WhileAction.swift */; };
 		6A7F7892234B412D002609EF /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7F7891234B412D002609EF /* List.swift */; };
 		6A7F7898234B7294002609EF /* ForEachAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7F7897234B7294002609EF /* ForEachAction.swift */; };
+		6AB41A4523531FF000A4F348 /* Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB41A4423531FF000A4F348 /* Power.swift */; };
+		6AB41A47235328C000A4F348 /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB41A46235328C000A4F348 /* Root.swift */; };
 		6AC40DAE2324DDC6003C8131 /* Equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC40DAD2324DDC6003C8131 /* Equation.swift */; };
 		6AC40DB02324E7E2003C8131 /* CalculError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC40DAF2324E7E2003C8131 /* CalculError.swift */; };
 		6AD2B136234E073900E75AAF /* Sum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD2B135234E073900E75AAF /* Sum.swift */; };
@@ -99,6 +101,8 @@
 		6A7F788F234B3E00002609EF /* WhileAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhileAction.swift; sourceTree = "<group>"; };
 		6A7F7891234B412D002609EF /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		6A7F7897234B7294002609EF /* ForEachAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForEachAction.swift; sourceTree = "<group>"; };
+		6AB41A4423531FF000A4F348 /* Power.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Power.swift; sourceTree = "<group>"; };
+		6AB41A46235328C000A4F348 /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
 		6AC40DAD2324DDC6003C8131 /* Equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equation.swift; sourceTree = "<group>"; };
 		6AC40DAF2324E7E2003C8131 /* CalculError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculError.swift; sourceTree = "<group>"; };
 		6AD2B135234E073900E75AAF /* Sum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sum.swift; sourceTree = "<group>"; };
@@ -224,15 +228,17 @@
 				6AC40DAF2324E7E2003C8131 /* CalculError.swift */,
 				6AC40DAD2324DDC6003C8131 /* Equation.swift */,
 				6A0A8CC02323CD6800F0C41C /* Expression.swift */,
+				6AD2B139234E08ED00E75AAF /* Fraction.swift */,
 				6A7F7891234B412D002609EF /* List.swift */,
 				6A0A8CC42323CEA300F0C41C /* Number.swift */,
+				6AB41A4423531FF000A4F348 /* Power.swift */,
 				6AD2B137234E08CD00E75AAF /* Product.swift */,
-				6AD2B139234E08ED00E75AAF /* Fraction.swift */,
-				6A32637A23250CE40056FA0E /* Vector.swift */,
+				6AB41A46235328C000A4F348 /* Root.swift */,
 				6AD2B135234E073900E75AAF /* Sum.swift */,
 				6A0A8CCE2323EFD600F0C41C /* SyntaxError.swift */,
 				6A0A8CC22323CE6D00F0C41C /* Token.swift */,
 				6A0A8CD02323FDB700F0C41C /* Variable.swift */,
+				6A32637A23250CE40056FA0E /* Vector.swift */,
 			);
 			path = Tokens;
 			sourceTree = "<group>";
@@ -323,6 +329,7 @@
 				6A7F7898234B7294002609EF /* ForEachAction.swift in Sources */,
 				6AD2B138234E08CD00E75AAF /* Product.swift in Sources */,
 				6AD2B136234E073900E75AAF /* Sum.swift in Sources */,
+				6AB41A4523531FF000A4F348 /* Power.swift in Sources */,
 				6A0A8CCD2323EBE800F0C41C /* ArrayExtension.swift in Sources */,
 				6A0A8CB22323A93C00F0C41C /* StringExtension.swift in Sources */,
 				6A0A8CDB23244BB500F0C41C /* IntExtension.swift in Sources */,
@@ -330,6 +337,7 @@
 				6A0A8CD92324353400F0C41C /* Intermediate.swift in Sources */,
 				6A16E407234A547400089765 /* SetAction.swift in Sources */,
 				6A0A8CC32323CE6D00F0C41C /* Token.swift in Sources */,
+				6AB41A47235328C000A4F348 /* Root.swift in Sources */,
 				6A0A8CD32323FEBC00F0C41C /* Input.swift in Sources */,
 				6A0A8CB42323A99500F0C41C /* AlgorithmTableViewController.swift in Sources */,
 				6A16E403234A4FE200089765 /* Process.swift in Sources */,

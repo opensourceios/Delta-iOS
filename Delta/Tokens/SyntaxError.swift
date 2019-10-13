@@ -30,12 +30,16 @@ struct SyntaxError: Token, Error {
         return 1
     }
     
-    func getSign() -> FloatingPointSign {
-        return .plus
+    func opposite() -> Token {
+        return self
     }
     
-    func changedSign() -> Bool {
-        return false
+    func inverse() -> Token {
+        return self
+    }
+    
+    func getSign() -> FloatingPointSign {
+        return .plus
     }
     
 }

@@ -75,17 +75,12 @@ struct Expression: Token {
     func compute(with inputs: [String: Token]) -> Token {
         // Compute expression terms
         let left = shouldInvert() ? self.right.compute(with: inputs) : self.left.compute(with: inputs)
-        var right = shouldInvert() ? self.left.compute(with: inputs) : self.right.compute(with: inputs)
+        let right = shouldInvert() ? self.left.compute(with: inputs) : self.right.compute(with: inputs)
         
         // Check if any error
         if left as? SyntaxError != nil || right as? SyntaxError != nil {
             // Return it
             return SyntaxError()
-        }
-        
-        // Right is negative and sign can be changed
-        if right.getSign() == .minus && (operation == .addition || operation == .subtraction) && right.changedSign() {
-            return Expression(left: left, right: right, operation: operation == .addition ? .subtraction : .addition).compute(with: inputs)
         }
         
         // Can't join left and right, return it
@@ -170,11 +165,19 @@ struct Expression: Token {
     }
     
     func needBrackets(for operation: Operation) -> Bool {
-        return operation.getPrecedence() > self.operation.getPrecedence()
+        return operation.getPrecedence() >= self.operation.getPrecedence()
     }
     
     func getMultiplicationPriority() -> Int {
         return 1
+    }
+    
+    func opposite() -> Token {
+        return Product(values: [self, Number(value: -1)])
+    }
+    
+    func inverse() -> Token {
+        return Fraction(numerator: Number(value: 1), denominator: self)
     }
     
     func getSign() -> FloatingPointSign {
@@ -201,18 +204,6 @@ struct Expression: Token {
         }
         
         return .plus
-    }
-    
-    mutating func changedSign() -> Bool {
-        if operation == .multiplication || operation == .division {
-            if left.changedSign() {
-                return true
-            } else if right.changedSign() {
-                return true
-            }
-        }
-        
-        return false
     }
     
     func plus(_ right: String) -> Expression {

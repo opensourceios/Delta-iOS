@@ -144,6 +144,33 @@ struct Number: Token {
             return Product(values: [self, right])
         }
         
+        // Fraction
+        if operation == .division {
+            return Fraction(numerator: self, denominator: right)
+        }
+        
+        // Power
+        if operation == .power {
+            return Power(token: self, power: right)
+        }
+        
+        // Root
+        if operation == .root {
+            // Apply root
+            if let power = right as? Number {
+                let value = pow(Double(self.value), 1/Double(power.value))
+                
+                if value == .infinity || value.isNaN {
+                    return CalculError()
+                } else if value == floor(value) {
+                    return Number(value: Int(value))
+                }
+            }
+            
+            // Return root
+            return Root(token: self, power: right)
+        }
+        
         return Expression(left: self, right: right, operation: operation)
     }
     
@@ -155,13 +182,16 @@ struct Number: Token {
         return 3
     }
     
-    func getSign() -> FloatingPointSign {
-        return value >= 0 ? .plus : .minus
+    func opposite() -> Token {
+        return Number(value: -value)
     }
     
-    mutating func changedSign() -> Bool {
-        self.value = -1 * value
-        return true
+    func inverse() -> Token {
+        return Fraction(numerator: Number(value: 1), denominator: self)
+    }
+    
+    func getSign() -> FloatingPointSign {
+        return value >= 0 ? .plus : .minus
     }
     
 }

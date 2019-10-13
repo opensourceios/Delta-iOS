@@ -32,12 +32,18 @@ struct List: Token {
         return 1
     }
     
-    func getSign() -> FloatingPointSign {
-        return .plus
+    func opposite() -> Token {
+        // Unknown
+        return self
     }
     
-    func changedSign() -> Bool {
-        return false
+    func inverse() -> Token {
+        // Unknown
+        return self
+    }
+    
+    func getSign() -> FloatingPointSign {
+        return .plus
     }
     
 }

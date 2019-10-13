@@ -1,32 +1,30 @@
 //
-//  Variable.swift
+//  Root.swift
 //  Delta
 //
-//  Created by Nathan FALLET on 07/09/2019.
+//  Created by Nathan FALLET on 13/10/2019.
 //  Copyright © 2019 Nathan FALLET. All rights reserved.
 //
 
 import Foundation
 
-struct Variable: Token {
-
-    var name: String
-
+struct Root: Token {
+    
+    var token: Token
+    var power: Token
+    
     func toString() -> String {
-        return "\(name)"
+        return "√(\(token.toString()))"
     }
     
-    func compute(with inputs: [String: Token]) -> Token {
-        // Chech if an input corresponds to this variable
-        if let value = inputs[name] {
-            return value
-        }
+    func compute(with inputs: [String : Token]) -> Token {
+        let token = self.token.compute(with: inputs)
+        let power = self.power.compute(with: inputs)
         
-        // No input found
-        return self
+        return token.apply(operation: .root, right: power, with: inputs)
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String : Token]) -> Token {
         // Sum
         if operation == .addition {
             return Sum(values: [self, right])
@@ -60,7 +58,7 @@ struct Variable: Token {
     }
     
     func getMultiplicationPriority() -> Int {
-        return 2
+        1
     }
     
     func opposite() -> Token {
@@ -74,5 +72,5 @@ struct Variable: Token {
     func getSign() -> FloatingPointSign {
         return .plus
     }
-
+    
 }

@@ -97,26 +97,45 @@ struct Sum: Token {
             return Product(values: [self, right])
         }
         
+        // If fraction
+        if operation == .division {
+            // Add token to fraction
+            return Fraction(numerator: self, denominator: right)
+        }
+        
+        // Power
+        if operation == .power {
+            return Power(token: self, power: right)
+        }
+        
+        // Root
+        if operation == .root {
+            return Root(token: self, power: right)
+        }
+        
         // Unknown, return an exoression
         return Expression(left: self, right: right, operation: operation)
     }
     
     func needBrackets(for operation: Operation) -> Bool {
-        return operation.getPrecedence() > Operation.addition.getPrecedence()
+        return operation.getPrecedence() >= Operation.addition.getPrecedence()
     }
     
     func getMultiplicationPriority() -> Int {
         1
     }
     
+    func opposite() -> Token {
+        return Sum(values: values.map{ $0.opposite() })
+    }
+    
+    func inverse() -> Token {
+        return Fraction(numerator: Number(value: 1), denominator: self)
+    }
+    
     func getSign() -> FloatingPointSign {
         // To be done
         return .plus
-    }
-    
-    func changedSign() -> Bool {
-        // To be done
-        return false
     }
     
 }

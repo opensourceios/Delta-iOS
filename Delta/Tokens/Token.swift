@@ -15,7 +15,9 @@ protocol Token {
     func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token
     func needBrackets(for operation: Operation) -> Bool
     func getMultiplicationPriority() -> Int
+    func opposite() -> Token
+    func inverse() -> Token
+    
     func getSign() -> FloatingPointSign
-    mutating func changedSign() -> Bool
     
 }

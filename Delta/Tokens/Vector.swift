@@ -32,12 +32,17 @@ struct Vector: Token {
         return 1
     }
     
-    func getSign() -> FloatingPointSign {
-        return .plus
+    func opposite() -> Token {
+        return Vector(values: values.map{ $0.opposite() })
     }
     
-    func changedSign() -> Bool {
-        return false
+    func inverse() -> Token {
+        // Unknown
+        return self
+    }
+    
+    func getSign() -> FloatingPointSign {
+        return .plus
     }
     
     func multiply(by number: Number) -> Vector {

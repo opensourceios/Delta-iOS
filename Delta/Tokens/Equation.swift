@@ -60,12 +60,16 @@ struct Equation: Token {
         return 1
     }
     
-    func getSign() -> FloatingPointSign {
-        return .plus
+    func opposite() -> Token {
+        return Equation(left: left.opposite(), right: right.opposite(), operation: operation)
     }
     
-    func changedSign() -> Bool {
-        return false
+    func inverse() -> Token {
+        return Equation(left: left.inverse(), right: right.inverse(), operation: operation)
+    }
+    
+    func getSign() -> FloatingPointSign {
+        return .plus
     }
     
 }

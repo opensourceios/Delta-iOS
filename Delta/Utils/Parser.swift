@@ -33,6 +33,7 @@ class Parser {
             // For each character of the string
             while i < tokens.count {
                 let current = tokens[i]
+                let previous = i > 0 ? tokens[i-1] : ""
                 
                 // Skip whitespace
                 if current == " " {
@@ -79,7 +80,7 @@ class Parser {
                     let variable = Variable(name: current)
 
                     // Check if we have a token before without operator
-                    if values.count > 0 && ops.count == values.count - 1 {
+                    if values.count > 0 && "abcdefghijklmnopqrstuvwxyz0123456789".contains(previous) {
                         // Add a multiplication operator
                         ops.insert("*", at: 0)
                     }
