@@ -14,6 +14,32 @@ struct Product: Token {
     
     func toString() -> String {
         // To be optimized (for minus, paranthesis, ...)
+        
+        /*
+         
+         // Operation
+         var op = true
+         if operation == .multiplication {
+             if bright {
+                 // Don't add it
+                 op = false
+             } else if right as? Variable != nil {
+                 // Don't add it
+                 op = false
+             } else if let right = right as? Expression {
+                 if right.operation == .power && right.left as? Number == nil {
+                     // Don't add it
+                     op = false
+                 }
+                 if right.operation == .multiplication && right.left as? Variable != nil {
+                     // Don't add it
+                     op = false
+                 }
+             }
+         }
+         
+         */
+        
         return values.map {
             if $0.needBrackets(for: .multiplication) {
                 return "(\($0.toString()))"
@@ -97,6 +123,9 @@ struct Product: Token {
     }
     
     func apply(operation: Operation, right: Token, with inputs: [String : Token]) -> Token {
+        // Compute right
+        let right = right.compute(with: inputs)
+        
         // If addition
         if operation == .addition {
             // TODO: Check for common factor

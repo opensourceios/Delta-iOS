@@ -85,6 +85,9 @@ struct Sum: Token {
     }
     
     func apply(operation: Operation, right: Token, with inputs: [String : Token]) -> Token {
+        // Compute right
+        let right = right.compute(with: inputs)
+        
         // If addition
         if operation == .addition {
             // Add token to sum

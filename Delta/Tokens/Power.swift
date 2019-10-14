@@ -27,11 +27,15 @@ struct Power: Token {
             if number.value == 1 {
                 return token
             }
+            // x^0 is 1
+            if number.value == 0 {
+                return Number(value: 1)
+            }
         }
         if let fraction = power as? Fraction {
             // x^1/y is ^y√(x)
             if let number = fraction.inverse().compute(with: inputs) as? Number {
-                return Root(token: token, power: number)
+                return Root(token: token, power: number).compute(with: inputs)
             }
         }
         
@@ -39,6 +43,9 @@ struct Power: Token {
     }
     
     func apply(operation: Operation, right: Token, with inputs: [String : Token]) -> Token {
+        // Compute right
+        let right = right.compute(with: inputs)
+        
         // Sum
         if operation == .addition {
             return Sum(values: [self, right])

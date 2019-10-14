@@ -27,6 +27,9 @@ struct Variable: Token {
     }
     
     func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
+        // Compute right
+        let right = right.compute(with: inputs)
+        
         // Sum
         if operation == .addition {
             return Sum(values: [self, right])

@@ -47,36 +47,53 @@ struct Fraction: Token {
     }
     
     func apply(operation: Operation, right: Token, with inputs: [String : Token]) -> Token {
+        // Compute right
+        let right = right.compute(with: inputs)
+        
         // If addition
         if operation == .addition {
-            // Add token to sum
-            return Sum(values: [self, right])
+            // Right is a fraction
+            if let right = right as? Fraction {
+                // a/b + c/d = (ad+cb)/bd
+                return Fraction(numerator: Sum(values: [Product(values: [self.numerator, right.denominator]), Product(values: [right.numerator, self.denominator])]), denominator: Product(values: [self.denominator, right.denominator])).compute(with: inputs)
+            }
+            
+            // Right is anything else
+            // a/b + c = (a+cb)/b
+            return Fraction(numerator: Sum(values: [self.numerator, Product(values: [right, self.denominator])]), denominator: denominator).compute(with: inputs)
         }
         
         // If product
         if operation == .multiplication {
-            // Add token to product
-            return Product(values: [self, right])
+            // Right is a fraction
+            if let right = right as? Fraction {
+                // a/b * c/d = ac/bd
+                return Fraction(numerator: Product(values: [self.numerator, right.numerator]), denominator: Product(values: [self.denominator, right.denominator])).compute(with: inputs)
+            }
+            
+            // Right is anything else
+            // a/b * c = ac/b
+            return Fraction(numerator: Product(values: [right, self.numerator]), denominator: denominator).compute(with: inputs).compute(with: inputs)
         }
         
         // If fraction
         if operation == .division {
             // Multiply by its inverse
-            return Product(values: [self, right.inverse()])
+            return Product(values: [self, right.inverse()]).compute(with: inputs)
         }
         
         // Power
         if operation == .power {
-            return Fraction(numerator: Power(token: numerator, power: right), denominator: Power(token: denominator, power: right))
+            return Fraction(numerator: Power(token: numerator, power: right), denominator: Power(token: denominator, power: right)).compute(with: inputs)
         }
         
         // Root
         if operation == .root {
-            return Fraction(numerator: Root(token: numerator, power: right), denominator: Root(token: denominator, power: right))
+            return Fraction(numerator: Root(token: numerator, power: right), denominator: Root(token: denominator, power: right)).compute(with: inputs)
         }
         
-        // Unknown, return an exoression
-        return Expression(left: self, right: right, operation: operation)
+        // Unknown, return a calcul error
+        return CalculError()
     }
     
     func needBrackets(for operation: Operation) -> Bool {
@@ -88,11 +105,11 @@ struct Fraction: Token {
     }
     
     func opposite() -> Token {
-        return Fraction(numerator: Product(values: [Number(value: -1), numerator]), denominator: denominator)
+        return Fraction(numerator: Product(values: [Number(value: -1), numerator]), denominator: denominator).compute(with: [:])
     }
     
     func inverse() -> Token {
-        return Fraction(numerator: denominator, denominator: numerator)
+        return Fraction(numerator: denominator, denominator: numerator).compute(with: [:])
     }
     
     func getSign() -> FloatingPointSign {

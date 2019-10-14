@@ -24,71 +24,6 @@ struct Number: Token {
         // Compute right
         let right = right.compute(with: inputs)
         
-        // If value is 1
-        if value == 1 && operation == .multiplication {
-            // It's 1 time right, return right
-            return right
-        }
-        
-        // If value is 0
-        if value == 0 {
-            // 0 * x or 0 / x is 0
-            if operation == .multiplication || operation == .division {
-                return Number(value: 0)
-            }
-            // 0 + x is x
-            if operation == .addition {
-                return right
-            }
-            // 0 - x is -x
-            if operation == .subtraction {
-                return Number(value: -1).apply(operation: .multiplication, right: right, with: inputs)
-            }
-        }
-        
-        // Rigth is number
-        if let right = right as? Number {
-            // Addition
-            if operation == .addition {
-                return Number(value: self.value + right.value)
-            }
-            
-            // Subtraction
-            if operation == .subtraction {
-                return Number(value: self.value - right.value)
-            }
-            
-            // Multiplication
-            if operation == .multiplication {
-                return Number(value: self.value * right.value)
-            }
-            
-            // Division
-            if operation == .division {
-                // Multiple so division is an integer
-                if self.value.isMultiple(of: right.value) {
-                    return Number(value: self.value / right.value)
-                }
-                
-                // Get the greatest common divisor
-                let gcd = self.value.greatestCommonDivisor(with: right.value)
-                
-                // If it's greater than one
-                if gcd > 1 {
-                    let numerator = self.value / gcd
-                    let denominator = right.value / gcd
-                    
-                    // Return simplified fraction
-                    return Expression(left: Number(value: numerator), right: Number(value: denominator), operation: operation)
-                }
-            }
-            
-            // Power
-            if operation == .power {
-                return Number(value: Int(pow(Double(self.value), Double(right.value))))
-            }
-        }
-        
         // Right is an expression
         if let right = right as? Expression {
             // Subtraction
@@ -120,37 +55,108 @@ struct Number: Token {
             }
         }
         
-        // Right is a vector
-        if let right = right as? Vector {
-            // Addition, subtraction, division or power
-            if operation == .addition || operation == .subtraction || operation == .division || operation == .power {
-                // You can add numbers and vectors
-                return CalculError()
-            }
-            
-            // Multiplication
-            if operation == .multiplication {
-                return right.apply(operation: operation, right: self, with: inputs)
-            }
-        }
-        
         // Sum
         if operation == .addition {
+            // If value is 0
+            if value == 0 {
+                // 0 + x is x
+                return right
+            }
+            
+            // Rigth is number
+            if let right = right as? Number {
+                return Number(value: self.value + right.value)
+            }
+            
+            // Return the sum
             return Sum(values: [self, right])
+        }
+        
+        // Difference
+        if operation == .subtraction {
+            // If value is 0
+            if value == 0 {
+                // 0 - x is - x
+                return right.opposite()
+            }
+            
+            // Rigth is number
+            if let right = right as? Number {
+                return Number(value: self.value - right.value)
+            }
+            
+            // Return the sum
+            return Sum(values: [self, right.opposite()])
         }
         
         // Product
         if operation == .multiplication {
+            // If value is 1
+            if value == 1 {
+                // It's 1 time right, return right
+                return right
+            }
+            
+            // If value is 0
+            if value == 0 {
+                // 0 * x is 0
+                return self
+            }
+            
+            // Rigth is number
+            if let right = right as? Number {
+                return Number(value: self.value * right.value)
+            }
+            
+            // Right is a vector
+            if let right = right as? Vector {
+                return right.apply(operation: operation, right: self, with: inputs)
+            }
+            
+            // Return the product
             return Product(values: [self, right])
         }
         
         // Fraction
         if operation == .division {
+            // If value is 0
+            if value == 0 {
+                // 0 / x is 0
+                return self
+            }
+            
+            // Rigth is number
+            if let right = right as? Number {
+                // Multiple so division is an integer
+                if self.value.isMultiple(of: right.value) {
+                    return Number(value: self.value / right.value)
+                }
+                
+                // Get the greatest common divisor
+                let gcd = self.value.greatestCommonDivisor(with: right.value)
+                
+                // If it's greater than one
+                if gcd > 1 {
+                    let numerator = self.value / gcd
+                    let denominator = right.value / gcd
+                    
+                    // Return simplified fraction
+                    return Fraction(numerator: Number(value: numerator), denominator: Number(value: denominator))
+                }
+            }
+            
+            // Return the fraction
             return Fraction(numerator: self, denominator: right)
         }
         
         // Power
         if operation == .power {
+            // Rigth is number
+            if let right = right as? Number {
+                return Number(value: Int(pow(Double(self.value), Double(right.value))))
+            }
+            
+            // Return the power
             return Power(token: self, power: right)
         }
         
@@ -171,7 +177,8 @@ struct Number: Token {
             return Root(token: self, power: right)
         }
         
-        return Expression(left: self, right: right, operation: operation)
+        // Unknown, return a calcul error
+        return CalculError()
     }
     
     func needBrackets(for operation: Operation) -> Bool {

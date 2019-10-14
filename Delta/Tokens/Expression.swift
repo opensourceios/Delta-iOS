@@ -36,30 +36,7 @@ struct Expression: Token {
         }
         
         // Operation
-        var op = true
-        if operation == .multiplication {
-            if bright {
-                // Don't add it
-                op = false
-            } else if right as? Variable != nil {
-                // Don't add it
-                op = false
-            } else if let right = right as? Expression {
-                if right.operation == .power && right.left as? Number == nil {
-                    // Don't add it
-                    op = false
-                }
-                if right.operation == .multiplication && right.left as? Variable != nil {
-                    // Don't add it
-                    op = false
-                }
-            }
-        }
-        
-        // Add it
-        if op {
-            result += " \(operation.toString()) "
-        }
+        result += " \(operation.toString()) "
         
         // Brackets on the right
         if bright {
@@ -91,76 +68,6 @@ struct Expression: Token {
         // Compute right
         let right = right.compute(with: inputs)
         
-        // Right is a number
-        if let right = right as? Number {
-            // If right is 1
-            if right.value == 1 && (operation == .multiplication || operation == .division || operation == .power) {
-                // It's 1 time self, return self
-                return self
-            }
-            
-            // If right is 0
-            if right.value == 0 {
-                // x * 0 is 0
-                if operation == .multiplication {
-                    return Number(value: 0)
-                }
-                // x / 0 is error
-                if operation == .division {
-                    return CalculError()
-                }
-                // x ^ 0 is 1
-                if operation == .power {
-                    return Number(value: 1)
-                }
-                // x + 0 or x - 0 is x
-                if operation == .addition || operation == .subtraction {
-                    return self
-                }
-            }
-            
-            // Addition
-            if operation == .addition {
-                // On addition
-                if self.operation == .addition {
-                    // Check which one can be added
-                    
-                }
-                
-                // On subtraction
-                if self.operation == .subtraction {
-                    // Check which one can be added (or removed)
-                    
-                }
-                
-                // On division
-                if self.operation == .division {
-                    // Check and multiply by bottom and add to top
-                    
-                }
-            }
-            
-            // Subtraction
-            if operation == .subtraction {
-                
-            }
-            
-            // Multiplication
-            if operation == .multiplication {
-                
-            }
-            
-            // Division
-            if operation == .division {
-                
-            }
-            
-            // Power
-            if operation == .power {
-                
-            }
-        }
-        
         return Expression(left: self, right: right, operation: operation)
     }
     
@@ -181,28 +88,6 @@ struct Expression: Token {
     }
     
     func getSign() -> FloatingPointSign {
-        if operation == .addition {
-            if left.getSign() == .plus && right.getSign() == .plus {
-                return .plus
-            }
-        } else if operation == .subtraction {
-            
-        } else if operation == .multiplication || operation == .division {
-            if (left.getSign() == .plus && right.getSign() == .plus) || (left.getSign() == .minus && right.getSign() == .minus) {
-                return .plus
-            } else {
-                return .minus
-            }
-        } else if operation == .power {
-            if left.getSign() == .plus {
-                return .plus
-            } else if left.getSign() == .minus, let right = right as? Number, right.value % 2 == 0 {
-                return .plus
-            } else {
-                return .minus
-            }
-        }
-        
         return .plus
     }
     
