@@ -22,9 +22,10 @@ struct List: Token {
     
     func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
         // Compute right
-        let right = right.compute(with: inputs)
+        //let right = right.compute(with: inputs)
         
-        return Expression(left: self, right: right, operation: operation)
+        // Unknown, return a calcul error
+        return CalculError()
     }
     
     func needBrackets(for operation: Operation) -> Bool {

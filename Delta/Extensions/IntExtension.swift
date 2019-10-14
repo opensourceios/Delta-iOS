@@ -10,20 +10,6 @@ import Foundation
 
 extension Int {
     
-    // Custom operations
-    
-    func times(_ right: String) -> Expression {
-        return Expression(left: Number(value: self), right: Variable(name: right), operation: .multiplication)
-    }
-    
-    func times(_ right: Token) -> Expression {
-        return Expression(left: Number(value: self), right: right, operation: .multiplication)
-    }
-    
-    func divides(_ right: Int) -> Expression {
-        return Expression(left: Number(value: self), right: Number(value: right), operation: .division)
-    }
-    
     // Greatest common divisor
     
     func greatestCommonDivisor(with number: Int) -> Int {

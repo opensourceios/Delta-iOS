@@ -28,16 +28,16 @@ extension Algorithm {
             // Check if a != 0
             IfAction("a".inequals(0), do: [
                 // Set main values
-                SetAction("Δ", to: "b".power(2).minus(4.times("a").times("c"))),
-                SetAction("α", to: (-1).times("b").divides(2.times("a"))),
-                SetAction("β", to: (-1).times("Δ").divides(4.times("a"))),
+                SetAction("Δ", to: Parser.init("b^2-4ac").execute()),
+                SetAction("α", to: Parser.init("(-b)/(2a)").execute()),
+                SetAction("β", to: Parser.init("(-Δ)/(4a)").execute()),
                 
                 // Developed form
-                SetAction("f(x)", to: "a".times("x".power(2)).plus("b".times("x")).plus("c")),
+                SetAction("f(x)", to: Parser.init("ax^2+bx+c").execute()),
                 PrintAction("f(x)"),
                 
                 // Canonical form
-                SetAction("f(x)", to: "a".times("x".minus("α").power(2)).plus("β")),
+                SetAction("f(x)", to: Parser.init("a(x-α)^2+β").execute()),
                 PrintAction("f(x)"),
                 
                 // Delta
@@ -46,13 +46,17 @@ extension Algorithm {
                 // If delta is positive
                 IfAction("Δ".greaterThan(0), do: [
                     // Print roots
-                    SetAction("x1", to: (-1).times("b").minus("Δ".sqrt()).divides(2.times("a"))),
-                    SetAction("x2", to: (-1).times("b").plus("Δ".sqrt()).divides(2.times("a"))),
+                    SetAction("x1", to: Parser.init("(-b-Δ^(1/2))/2a").execute()),
+                    SetAction("x2", to: Parser.init("(-b+Δ^(1/2))/2a").execute()),
                     PrintAction("x1"),
                     PrintAction("x2"),
                     
                     // Factorized form
-                    SetAction("f(x)", to: "a".times("x".minus("x1")).times("x".minus("x2"))),
+                    SetAction("f(x)", to: Product(values: [
+                        Variable(name: "a"),
+                        Sum(values: [Variable(name: "x"), Variable(name: "x1").opposite()]),
+                        Sum(values: [Variable(name: "x"), Variable(name: "x2").opposite()])
+                    ])),
                     PrintAction("f(x)")
                 ]),
                 
@@ -63,20 +67,27 @@ extension Algorithm {
                     PrintAction("x0"),
                     
                     // Factorized form
-                    SetAction("f(x)", to: "a".times("x".minus("x0").power(2))),
+                    SetAction("f(x)", to: Product(values: [
+                        Variable(name: "a"),
+                        Power(token: Sum(values: [Variable(name: "x"), Variable(name: "x0").opposite()]), power: Number(value: 2))
+                    ])),
                     PrintAction("f(x)")
                 ]),
                 
                 // If delta is negative
                 IfAction("Δ".lessThan(0), do: [
                     // Print roots
-                    SetAction("x1", to: (-1).times("b").minus("i".times((-1).times("Δ").sqrt())).divides(2.times("a"))),
-                    SetAction("x2", to: (-1).times("b").plus("i".times((-1).times("Δ").sqrt())).divides(2.times("a"))),
+                    SetAction("x1", to: Parser.init("(-b-i(-Δ)^(1/2))/2a").execute()),
+                    SetAction("x2", to: Parser.init("(-b+i(-Δ)^(1/2))/2a").execute()),
                     PrintAction("x1"),
                     PrintAction("x2"),
                     
                     // Factorized form
-                    SetAction("f(x)", to: "a".times("x".minus("x1")).times("x".minus("x2"))),
+                    SetAction("f(x)", to: Product(values: [
+                        Variable(name: "a"),
+                        Sum(values: [Variable(name: "x"), Variable(name: "x1").opposite()]),
+                        Sum(values: [Variable(name: "x"), Variable(name: "x2").opposite()])
+                    ])),
                     PrintAction("f(x)")
                 ])
             ])
@@ -89,7 +100,7 @@ extension Algorithm {
     static let vectors: Algorithm = {
         let u = Vector(values: [Number(value: 1), Number(value: 2)])
         let v = Vector(values: [Number(value: 3), Number(value: 4)])
-        let w = "u".plus("v")
+        let w = Parser.init("u+v").execute()
         
         let actions: [Action] = [
             PrintAction("w")
@@ -104,19 +115,17 @@ extension Algorithm {
         
         let actions: [Action] = [
             // Set default values
-            SetAction("x̅", to: Number(value: 0)),
             SetAction("Σx", to: Number(value: 0)),
             SetAction("n", to: Number(value: 0)),
             
             // Iterate list
             ForEachAction(Variable(name: "L"), as: "x", do: [
-                SetAction("x̅", to: "x̅".plus("x")),
-                SetAction("Σx", to: "Σx".plus("x")),
-                SetAction("n", to: "n".plus(1))
+                SetAction("Σx", to: Sum(values: [Variable(name: "Σx"), Variable(name: "x")])),
+                SetAction("n", to: Parser.init("n+1").execute())
             ]),
             
             // Last calculs
-            SetAction("x̅", to: "x̅".divides("n")),
+            SetAction("x̅", to: Fraction(numerator: Variable(name: "Σx"), denominator: Variable(name: "n"))),
             
             // Print values
             PrintAction("x̅"),

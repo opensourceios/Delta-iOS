@@ -156,8 +156,8 @@ struct Product: Token {
             return Product(values: values.map{ Root(token: $0, power: right) })
         }
         
-        // Unknown, return an exoression
-        return Expression(left: self, right: right, operation: operation)
+        // Unknown, return a calcul error
+        return CalculError()
     }
     
     func needBrackets(for operation: Operation) -> Bool {

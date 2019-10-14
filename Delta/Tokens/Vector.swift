@@ -22,9 +22,10 @@ struct Vector: Token {
     
     func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
         // Compute right
-        let right = right.compute(with: inputs)
+        //let right = right.compute(with: inputs)
         
-        return Expression(left: self, right: right, operation: operation)
+        // Unknown, return a calcul error
+        return CalculError()
     }
     
     func needBrackets(for operation: Operation) -> Bool {
@@ -66,7 +67,7 @@ struct Vector: Token {
         var news = [Token]()
         
         for i in 0 ..< values.count {
-            news.insert(Expression(left: values[i], right: set.values[i], operation: .multiplication), at: 0)
+            news.insert(Product(values: [values[i], set.values[i]]), at: 0)
         }
         
         do {
@@ -74,7 +75,7 @@ struct Vector: Token {
                 let left = try news.getFirstTokenAndRemove()
                 let right = try news.getFirstTokenAndRemove()
                 
-                news.insert(Expression(left: left, right: right, operation: .addition), at: 0)
+                news.insert(Sum(values: [left, right]), at: 0)
             }
             
             return news.first!.compute(with: [:])

@@ -47,42 +47,6 @@ extension String {
     
     // Custom operations
     
-    func plus(_ right: String) -> Expression {
-        return Expression(left: Variable(name: self), right: Variable(name: right), operation: .addition)
-    }
-    
-    func plus(_ right: Int) -> Expression {
-        return Expression(left: Variable(name: self), right: Number(value: right), operation: .addition)
-    }
-    
-    func minus(_ right: String) -> Expression {
-        return Expression(left: Variable(name: self), right: Variable(name: right), operation: .subtraction)
-    }
-    
-    func times(_ right: String) -> Expression {
-        return Expression(left: Variable(name: self), right: Variable(name: right), operation: .multiplication)
-    }
-    
-    func times(_ right: Token) -> Expression {
-        return Expression(left: Variable(name: self), right: right, operation: .multiplication)
-    }
-    
-    func divides(_ right: String) -> Expression {
-        return Expression(left: Variable(name: self), right: Variable(name: right), operation: .division)
-    }
-    
-    func power(_ right: Int) -> Expression {
-        return Expression(left: Variable(name: self), right: Number(value: right), operation: .power)
-    }
-    
-    func power(_ right: Token) -> Expression {
-        return Expression(left: Variable(name: self), right: right, operation: .power)
-    }
-    
-    func sqrt() -> Expression {
-        return Expression(left: Variable(name: self), right: Expression(left: Number(value: 1), right: Number(value: 2), operation: .division), operation: .power)
-    }
-    
     func equals(_ right: Int) -> Equation {
         return Equation(left: Variable(name: self), right: Number(value: right), operation: .equals)
     }

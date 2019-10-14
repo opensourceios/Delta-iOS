@@ -49,7 +49,8 @@ struct Equation: Token {
     }
     
     func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
-        return Expression(left: self, right: right, operation: operation)
+        // Unknown, return a calcul error
+        return CalculError()
     }
     
     func needBrackets(for operation: Operation) -> Bool {

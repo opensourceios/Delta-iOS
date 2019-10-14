@@ -10,6 +10,9 @@ import Foundation
 
 class Parser {
     
+    static let variables = "abcdefghijklmnopqrstuvwxyz"
+    static let variablesAndNumber = "abcdefghijklmnopqrstuvwxyz0123456789"
+    
     var tokens: String
     var values: [Token]
     var ops: [String]
@@ -43,7 +46,7 @@ class Parser {
                 // Opening brace
                 else if current == "(" {
                     // Check if we have a token before without operator
-                    if values.count > 0 && ops.count == values.count - 1 {
+                    if values.count > 0 && Parser.variablesAndNumber.contains(previous) {
                         // Add a multiplication operator
                         ops.insert("*", at: 0)
                     }
@@ -76,11 +79,11 @@ class Parser {
                 }
                 
                 // Variable
-                else if "abcdefghijklmnopqrstuvwxyz".contains(current) {
+                else if Parser.variables.contains(current) {
                     let variable = Variable(name: current)
 
                     // Check if we have a token before without operator
-                    if values.count > 0 && "abcdefghijklmnopqrstuvwxyz0123456789".contains(previous) {
+                    if values.count > 0 && Parser.variablesAndNumber.contains(previous) {
                         // Add a multiplication operator
                         ops.insert("*", at: 0)
                     }

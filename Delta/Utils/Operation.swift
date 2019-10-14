@@ -60,59 +60,7 @@ enum Operation {
     
     // Join with two tokens
     func join(left: Token, right: Token) -> Token {
-        // Check operation
-        if self == .addition {
-            // Addition
-            if let sum = left as? Sum {
-                return Sum(values: sum.values + [right])
-            } else if let sum = right as? Sum {
-                return Sum(values: sum.values + [left])
-            } else {
-                return Sum(values: [left, right])
-            }
-        } else if self == .multiplication {
-            // Product
-            if let product = left as? Product {
-                return Product(values: product.values + [right])
-            } else if let product = right as? Product {
-                return Product(values: product.values + [left])
-            } else {
-                return Product(values: [left, right])
-            }
-        } else if self == .division {
-            // Fraction
-            return Fraction(numerator: left, denominator: right)
-        } else if self == .power {
-            // Power
-            return Power(token: left, power: right)
-        } else if self == .root {
-            // Root
-            return Root(token: left, power: right)
-        } else if self == .subtraction {
-            // Basic operation
-            return Expression(left: left, right: right, operation: self)
-        } else if self == .list {
-            // List
-            if let set = left as? List {
-                return List(values: set.values + [right])
-            } else if let set = right as? List {
-                return List(values: set.values + [left])
-            } else {
-                return List(values: [left, right])
-            }
-        } else if self == .vector {
-            // Vector
-            if let set = left as? Vector {
-                return Vector(values: set.values + [right])
-            } else if let set = right as? Vector {
-                return Vector(values: set.values + [left])
-            } else {
-                return Vector(values: [left, right])
-            }
-        } else {
-            // Equation
-            return Equation(left: left, right: right, operation: self)
-        }
+        left.apply(operation: self, right: right, with: [:])
     }
     
 }

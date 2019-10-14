@@ -24,37 +24,6 @@ struct Number: Token {
         // Compute right
         let right = right.compute(with: inputs)
         
-        // Right is an expression
-        if let right = right as? Expression {
-            // Subtraction
-            if operation == .subtraction {
-                // Multiply expression by -1 and add self
-                return apply(operation: .addition, right: Number(value: -1).apply(operation: .multiplication, right: right, with: inputs), with: inputs)
-            }
-            
-            // Division
-            if operation == .division {
-                // If expression is a fraction
-                if right.operation == .division {
-                    // Multiply by its inverse
-                    return apply(operation: .multiplication, right: right.right.apply(operation: .division, right: right.left, with: inputs), with: inputs)
-                }
-            }
-            
-            // Power
-            if operation == .power {
-                if right.operation == .division, let uleft = right.left as? Number, let uright = right.right as? Number {
-                    let value = pow(Double(self.value), Double(uleft.value) / Double(uright.value))
-                    
-                    if value == .infinity || value.isNaN {
-                        return CalculError()
-                    } else if value == floor(value) {
-                        return Number(value: Int(value))
-                    }
-                }
-            }
-        }
-        
         // Sum
         if operation == .addition {
             // If value is 0

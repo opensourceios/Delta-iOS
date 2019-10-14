@@ -71,7 +71,8 @@ struct Power: Token {
             return Root(token: self, power: right)
         }
         
-        return Expression(left: self, right: right, operation: operation)
+        // Unknown, return a calcul error
+        return CalculError()
     }
     
     func needBrackets(for operation: Operation) -> Bool {

@@ -17,7 +17,6 @@ protocol Token {
     func getMultiplicationPriority() -> Int
     func opposite() -> Token
     func inverse() -> Token
-    
     func getSign() -> FloatingPointSign
     
 }
