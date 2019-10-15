@@ -43,19 +43,6 @@ extension Algorithm {
                 // Delta
                 PrintAction("Δ"),
                 
-                // If delta is positive
-                IfAction("Δ".greaterThan(0), do: [
-                    // Print roots
-                    SetAction("x_1", to: Parser.init("(-b-Δ^(1/2))/2a").execute()),
-                    SetAction("x_2", to: Parser.init("(-b+Δ^(1/2))/2a").execute()),
-                    PrintAction("x_1"),
-                    PrintAction("x_2"),
-                    
-                    // Factorized form
-                    SetAction("f(x)", to: Parser.init("a(x-x_1)(x-x_2)").execute()),
-                    PrintAction("f(x)")
-                ]),
-                
                 // If delta is zero
                 IfAction("Δ".equals(0), do: [
                     // Print root
@@ -65,13 +52,10 @@ extension Algorithm {
                     // Factorized form
                     SetAction("f(x)", to: Parser.init("a(x-x_0)^2").execute()),
                     PrintAction("f(x)")
-                ]),
-                
-                // If delta is negative
-                IfAction("Δ".lessThan(0), do: [
+                ], else: [
                     // Print roots
-                    SetAction("x_1", to: Parser.init("(-b-i(-Δ)^(1/2))/2a").execute()),
-                    SetAction("x_2", to: Parser.init("(-b+i(-Δ)^(1/2))/2a").execute()),
+                    SetAction("x_1", to: Parser.init("(-b-Δ^(1/2))/2a").execute()),
+                    SetAction("x_2", to: Parser.init("(-b+Δ^(1/2))/2a").execute()),
                     PrintAction("x_1"),
                     PrintAction("x_2"),
                     

@@ -133,12 +133,25 @@ struct Number: Token {
         if operation == .root {
             // Apply root
             if let power = right as? Number {
-                let value = pow(Double(self.value), 1/Double(power.value))
-                
-                if value == .infinity || value.isNaN {
-                    return CalculError()
-                } else if value == floor(value) {
-                    return Number(value: Int(value))
+                // Check sign
+                if value >= 0 {
+                    // Positive
+                    let value = pow(Double(self.value), 1/Double(power.value))
+                    
+                    if value == .infinity || value.isNaN {
+                        return CalculError()
+                    } else if value == floor(value) {
+                        return Number(value: Int(value))
+                    }
+                } else {
+                    // Negative
+                    let value = pow(Double(-self.value), 1/Double(power.value))
+                    
+                    if value == .infinity || value.isNaN {
+                        return CalculError()
+                    } else if value == floor(value) {
+                        return Product(values: [Number(value: Int(value)), Variable(name: "i")])
+                    }
                 }
             }
             
