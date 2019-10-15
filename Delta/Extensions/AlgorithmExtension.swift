@@ -46,48 +46,37 @@ extension Algorithm {
                 // If delta is positive
                 IfAction("Δ".greaterThan(0), do: [
                     // Print roots
-                    SetAction("x1", to: Parser.init("(-b-Δ^(1/2))/2a").execute()),
-                    SetAction("x2", to: Parser.init("(-b+Δ^(1/2))/2a").execute()),
-                    PrintAction("x1"),
-                    PrintAction("x2"),
+                    SetAction("x_1", to: Parser.init("(-b-Δ^(1/2))/2a").execute()),
+                    SetAction("x_2", to: Parser.init("(-b+Δ^(1/2))/2a").execute()),
+                    PrintAction("x_1"),
+                    PrintAction("x_2"),
                     
                     // Factorized form
-                    SetAction("f(x)", to: Product(values: [
-                        Variable(name: "a"),
-                        Sum(values: [Variable(name: "x"), Variable(name: "x1").opposite()]),
-                        Sum(values: [Variable(name: "x"), Variable(name: "x2").opposite()])
-                    ])),
+                    SetAction("f(x)", to: Parser.init("a(x-x_1)(x-x_2)").execute()),
                     PrintAction("f(x)")
                 ]),
                 
                 // If delta is zero
                 IfAction("Δ".equals(0), do: [
                     // Print root
-                    SetAction("x0", to: Variable(name: "α")),
-                    PrintAction("x0"),
+                    SetAction("x_0", to: Variable(name: "α")),
+                    PrintAction("x_0"),
                     
                     // Factorized form
-                    SetAction("f(x)", to: Product(values: [
-                        Variable(name: "a"),
-                        Power(token: Sum(values: [Variable(name: "x"), Variable(name: "x0").opposite()]), power: Number(value: 2))
-                    ])),
+                    SetAction("f(x)", to: Parser.init("a(x-x_0)^2").execute()),
                     PrintAction("f(x)")
                 ]),
                 
                 // If delta is negative
                 IfAction("Δ".lessThan(0), do: [
                     // Print roots
-                    SetAction("x1", to: Parser.init("(-b-i(-Δ)^(1/2))/2a").execute()),
-                    SetAction("x2", to: Parser.init("(-b+i(-Δ)^(1/2))/2a").execute()),
-                    PrintAction("x1"),
-                    PrintAction("x2"),
+                    SetAction("x_1", to: Parser.init("(-b-i(-Δ)^(1/2))/2a").execute()),
+                    SetAction("x_2", to: Parser.init("(-b+i(-Δ)^(1/2))/2a").execute()),
+                    PrintAction("x_1"),
+                    PrintAction("x_2"),
                     
                     // Factorized form
-                    SetAction("f(x)", to: Product(values: [
-                        Variable(name: "a"),
-                        Sum(values: [Variable(name: "x"), Variable(name: "x1").opposite()]),
-                        Sum(values: [Variable(name: "x"), Variable(name: "x2").opposite()])
-                    ])),
+                    SetAction("f(x)", to: Parser.init("a(x-x_1)(x-x_2)").execute()),
                     PrintAction("f(x)")
                 ])
             ])
@@ -137,6 +126,6 @@ extension Algorithm {
     }()
     
     // Parse testing
-    static let test: Algorithm = Algorithm(name: "Test", inputs: ["a": Number(value: 0)], actions: [PrintAction("a")])
+    static let test: Algorithm = Algorithm(name: "Test", inputs: ["λ": Number(value: 0)], actions: [PrintAction("λ")])
     
 }

@@ -94,6 +94,12 @@ struct Sum: Token {
             return Sum(values: values + [right])
         }
         
+        // If subtraction
+        if operation == .subtraction {
+            // Add token to sum
+            return Sum(values: values + [right.opposite()])
+        }
+        
         // If product
         if operation == .multiplication {
             // Add token to product

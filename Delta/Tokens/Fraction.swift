@@ -63,6 +63,19 @@ struct Fraction: Token {
             return Fraction(numerator: Sum(values: [self.numerator, Product(values: [right, self.denominator])]), denominator: denominator).compute(with: inputs)
         }
         
+        // If subtraction
+        if operation == .subtraction {
+            // Right is a fraction
+            if let right = right as? Fraction {
+                // a/b - c/d = (ad-cb)/bd
+                return Fraction(numerator: Sum(values: [Product(values: [self.numerator, right.denominator]), Product(values: [right.numerator, self.denominator]).opposite()]), denominator: Product(values: [self.denominator, right.denominator])).compute(with: inputs)
+            }
+            
+            // Right is anything else
+            // a/b - c = (a-cb)/b
+            return Fraction(numerator: Sum(values: [self.numerator, Product(values: [right, self.denominator]).opposite()]), denominator: denominator).compute(with: inputs)
+        }
+        
         // If product
         if operation == .multiplication {
             // Right is a fraction

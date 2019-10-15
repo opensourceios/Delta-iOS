@@ -134,6 +134,12 @@ struct Product: Token {
             return Sum(values: [self, right])
         }
         
+        // If subtraction
+        if operation == .subtraction {
+            // Add token to sum
+            return Sum(values: [self, right.opposite()]).compute(with: inputs)
+        }
+        
         // If product
         if operation == .multiplication {
             // Add token to product

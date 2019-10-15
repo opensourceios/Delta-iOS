@@ -10,8 +10,9 @@ import Foundation
 
 class Parser {
     
-    static let variables = "abcdefghijklmnopqrstuvwxyz"
-    static let variablesAndNumber = "abcdefghijklmnopqrstuvwxyz0123456789"
+    static let variables = "abcdefghijklmnopqrstuvwxyzΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΣσςϹϲΤτΥυΦφΧχΨψΩω"
+    static let variablesAndNumber = "\(variables)0123456789"
+    static let constants = "i"
     
     var tokens: String
     var values: [Token]
@@ -80,7 +81,21 @@ class Parser {
                 
                 // Variable
                 else if Parser.variables.contains(current) {
-                    let variable = Variable(name: current)
+                    // Check name
+                    var name = current
+                    
+                    // Check for an index
+                    if i < tokens.count-2 && tokens[i+1] == "_" && Parser.variablesAndNumber.contains(tokens[i+2]) {
+                        // Add index to variable
+                        let index = tokens[i+2]
+                        name += "_\(index)"
+                        
+                        // Increment i 2 times to skip index
+                        i += 2
+                    }
+                    
+                    // Init variable
+                    let variable = Variable(name: name)
 
                     // Check if we have a token before without operator
                     if values.count > 0 && Parser.variablesAndNumber.contains(previous) {

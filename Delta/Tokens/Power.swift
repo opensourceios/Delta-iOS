@@ -51,6 +51,11 @@ struct Power: Token {
             return Sum(values: [self, right])
         }
         
+        // Difference
+        if operation == .subtraction {
+            return Sum(values: [self, right.opposite()]).compute(with: inputs)
+        }
+        
         // Product
         if operation == .multiplication {
             return Product(values: [self, right])

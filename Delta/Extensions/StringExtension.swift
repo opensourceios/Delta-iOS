@@ -81,6 +81,7 @@ extension String {
     func attributedMath() -> NSAttributedString {
         let workspace = NSMutableAttributedString(string: self)
         let power: [NSAttributedString.Key: Any] = [.font:UIFont.systemFont(ofSize: 10),.baselineOffset:8]
+        let index: [NSAttributedString.Key: Any] = [.font:UIFont.systemFont(ofSize: 10),.baselineOffset:-5]
         
         // Powers (numbers)
         let numbers = String(workspace.mutableString).groups(for: " \\^ [0-9]+")
@@ -96,6 +97,14 @@ extension String {
             let range = workspace.mutableString.range(of: group[0])
             workspace.addAttributes(power, range: range)
             workspace.replaceCharacters(in: range, with: group[0][4 ..< group[0].count-1])
+        }
+        
+        // Indexes
+        let variables = String(workspace.mutableString).groups(for: "_[0-9a-z]")
+        for group in variables {
+            let range = workspace.mutableString.range(of: group[0])
+            workspace.addAttributes(index, range: range)
+            workspace.replaceCharacters(in: range, with: group[0][1 ..< group[0].count])
         }
         
         return workspace

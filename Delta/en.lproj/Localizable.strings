@@ -15,6 +15,7 @@
 "outputs" = "Outputs";
 "error_calcul" = "Calcul error";
 "error_syntax" = "Syntax error";
+"error_constant" = "Cannot set value: %@ is a constant";
 
 // Algorithm strings
 

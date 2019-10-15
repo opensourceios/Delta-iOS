@@ -15,6 +15,7 @@
 "outputs" = "Sorties";
 "error_calcul" = "Erreur de calcul";
 "error_syntax" = "Erreur de syntaxe";
+"error_constant" = "Impossible d'attribuer la valeur : %@ est une constante";
 
 // Algorithm strings
 

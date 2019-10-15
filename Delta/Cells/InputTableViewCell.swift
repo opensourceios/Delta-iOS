@@ -69,7 +69,7 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let cs = NSCharacterSet(charactersIn: " 0123456789abcdefghijklmnopqrstuvwxyz+-*/^,(){}").inverted
+        let cs = NSCharacterSet(charactersIn: " 0123456789abcdefghijklmnopqrstuvwxyz_+-*/^,(){}").inverted
         let filtered = string.components(separatedBy: cs).joined(separator: "")
 
         return (string == filtered)

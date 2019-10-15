@@ -19,6 +19,12 @@ class SetAction: Action {
     }
     
     func execute(in process: Process) {
+        // Check if variable is not a constant
+        if Parser.constants.contains(identifier) {
+            process.outputs.append("error_constant".localized().format(identifier))
+            return
+        }
+        
         // Set value with process environment
         process.variables[identifier] = value.compute(with: process.variables)
     }

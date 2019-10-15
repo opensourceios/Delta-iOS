@@ -35,6 +35,11 @@ struct Variable: Token {
             return Sum(values: [self, right])
         }
         
+        // Difference
+        if operation == .subtraction {
+            return Sum(values: [self, right.opposite()])
+        }
+        
         // Product
         if operation == .multiplication {
             return Product(values: [self, right])
@@ -47,6 +52,23 @@ struct Variable: Token {
         
         // Power
         if operation == .power {
+            // Check for i
+            if name == "i" {
+                // If right is a number
+                if let number = right as? Number {
+                    // i^2 = -1
+                    if number.value % 4 == 2 {
+                        return Number(value: -1)
+                    }
+                    // i^3 = -1
+                    if number.value % 4 == 3 {
+                        return Product(values: [Number(value: -1), self])
+                    }
+                    // Simplificated power of i
+                    return Power(token: self, power: Number(value: number.value % 4)).compute(with: inputs)
+                }
+            }
+            
             return Power(token: self, power: right)
         }
         
