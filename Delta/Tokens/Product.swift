@@ -13,45 +13,61 @@ struct Product: Token {
     var values: [Token]
     
     func toString() -> String {
-        // To be optimized (for minus, paranthesis, ...)
+        var string = ""
         
-        /*
-         
-         // Operation
-         var op = true
-         if operation == .multiplication {
-             if bright {
-                 // Don't add it
-                 op = false
-             } else if right as? Variable != nil {
-                 // Don't add it
-                 op = false
-             } else if let right = right as? Expression {
-                 if right.operation == .power && right.left as? Number == nil {
-                     // Don't add it
-                     op = false
-                 }
-                 if right.operation == .multiplication && right.left as? Variable != nil {
-                     // Don't add it
-                     op = false
-                 }
-             }
-         }
-         
-         */
-        
-        return values.map {
-            if $0.needBrackets(for: .multiplication) {
-                return "(\($0.toString()))"
-            } else {
-                return $0.toString()
+        for value in values {
+            // Initialization
+            let brackets = value.needBrackets(for: .multiplication)
+            var asString = value.toString()
+            var op = false
+            
+            // Check if not empty
+            if !string.isEmpty {
+                op = true
             }
-        }.joined(separator: " * ")
+            
+            // Check if we need to keep operator
+            if brackets {
+                // No operator if we already have brackets
+                op = false
+            } else if value as? Variable != nil {
+                // No operators for variables
+                op = false
+            } else if let power = value as? Power, power.token as? Number == nil {
+                // No operator if we have power of not a number
+                op = false
+            } else if value as? Root != nil {
+                // No operators for roots
+                op = false
+            }
+            
+            // Check for -1 and 1
+            if let number = value as? Number, (number.value == -1 || number.value == 1) {
+                // Remove the 1
+                asString = asString[0 ..< asString.count-1]
+            }
+            
+            // Add operator if required
+            if op {
+                string += " * "
+            }
+            
+            // Check for brackets
+            if brackets {
+                string += "(\(asString))"
+            } else {
+                string += asString
+            }
+        }
+        
+        return string
     }
     
     func compute(with inputs: [String : Token], format: Bool) -> Token {
         // Compute all values
         var values = self.values.map{ $0.compute(with: inputs, format: format) }.sorted{ $0.getMultiplicationPriority() > $1.getMultiplicationPriority() }
+        
+        // TODO: check if one of them is a product to add it to values
         
         // Some required vars
         var index = 0
@@ -167,7 +183,7 @@ struct Product: Token {
     }
     
     func needBrackets(for operation: Operation) -> Bool {
-        return operation.getPrecedence() >= Operation.addition.getPrecedence()
+        return operation.getPrecedence() > Operation.addition.getPrecedence()
     }
     
     func getMultiplicationPriority() -> Int {

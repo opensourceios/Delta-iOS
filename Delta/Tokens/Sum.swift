@@ -13,13 +13,47 @@ struct Sum: Token {
     var values: [Token]
     
     func toString() -> String {
-        // To be optimized (for minus)
-        return values.map{ $0.toString() }.joined(separator: " + ")
+        var string = ""
+        
+        for value in values {
+            // Initialization
+            var asString = value.toString()
+            var op = false
+            var minus = false
+            
+            // Check if not empty
+            if !string.isEmpty {
+                op = true
+            }
+            
+            // Check if we need to keep operator
+            if op && asString.starts(with: "-") {
+                // Remove minus from string to have it instead of plus
+                minus = true
+                asString = asString[1 ..< asString.count]
+            }
+            
+            // Add operator if required
+            if op {
+                if minus {
+                    string += " - "
+                } else {
+                    string += " + "
+                }
+            }
+            
+            // Check for brackets
+            string += asString
+        }
+        
+        return string
     }
     
     func compute(with inputs: [String : Token], format: Bool) -> Token {
         // Compute all values
         var values = self.values.map{ $0.compute(with: inputs, format: format) }
+        
+        // TODO: check if one of them is a sum to add it to values
         
         // Some required vars
         var index = 0
@@ -127,7 +161,7 @@ struct Sum: Token {
     }
     
     func needBrackets(for operation: Operation) -> Bool {
-        return operation.getPrecedence() >= Operation.addition.getPrecedence()
+        return operation.getPrecedence() > Operation.addition.getPrecedence()
     }
     
     func getMultiplicationPriority() -> Int {

@@ -139,8 +139,10 @@ struct Number: Token {
                     let value = pow(Double(self.value), 1/Double(power.value))
                     
                     if value == .infinity || value.isNaN {
+                        // Calcul error
                         return CalculError()
                     } else if value == floor(value) {
+                        // Simplified root
                         return Number(value: Int(value))
                     }
                 } else {
@@ -148,9 +150,14 @@ struct Number: Token {
                     let value = pow(Double(-self.value), 1/Double(power.value))
                     
                     if value == .infinity || value.isNaN {
+                        // Calcul error
                         return CalculError()
                     } else if value == floor(value) {
+                        // Simplified root
                         return Product(values: [Number(value: Int(value)), Variable(name: "i")])
+                    } else {
+                        // Root of negative as i * sqrt(-value)
+                        return Product(values: [Root(token: Number(value: -self.value), power: right), Variable(name: "i")])
                     }
                 }
             }
