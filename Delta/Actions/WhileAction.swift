@@ -20,7 +20,7 @@ class WhileAction: Action {
     
     func execute(in process: Process) {
         // Get computed condition
-        if let condition = self.condition.compute(with: process.variables) as? Equation {
+        if let condition = self.condition.compute(with: process.variables, format: false) as? Equation {
             // Check if condition is true
             while condition.isTrue(with: process.variables) {
                 // Execute actions

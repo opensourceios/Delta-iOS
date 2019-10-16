@@ -88,9 +88,7 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
                 let output = currentOutputs[indexPath.row]
                 
                 // Create the cell
-                if let output = output as? Output {
-                    return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! LabelTableViewCell).with(text: output.toString(with: [:]))
-                } else if let output = output as? String {
+                if let output = output as? String {
                     return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! LabelTableViewCell).with(text: output)
                 }
             }

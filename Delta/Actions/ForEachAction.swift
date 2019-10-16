@@ -22,7 +22,7 @@ class ForEachAction: Action {
     
     func execute(in process: Process) {
         // Get computed token
-        let token = self.token.compute(with: process.variables)
+        let token = self.token.compute(with: process.variables, format: false)
         
         // Get list
         if let list = token as? List {

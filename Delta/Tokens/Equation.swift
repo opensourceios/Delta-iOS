@@ -15,8 +15,8 @@ struct Equation: Token {
     var operation: Operation
     
     func isTrue(with inputs: [String: Token]) -> Bool {
-        let left = self.left.compute(with: inputs)
-        let right = self.right.compute(with: inputs)
+        let left = self.left.compute(with: inputs, format: false)
+        let right = self.right.compute(with: inputs, format: false)
         
         if let left = left as? Number, let right = right as? Number {
             if operation == .equals {
@@ -41,14 +41,14 @@ struct Equation: Token {
         return "\(left.toString()) \(operation.toString()) \(right.toString())"
     }
     
-    func compute(with inputs: [String: Token]) -> Token {
-        let left = self.left.compute(with: inputs)
-        let right = self.right.compute(with: inputs)
+    func compute(with inputs: [String: Token], format: Bool) -> Token {
+        let left = self.left.compute(with: inputs, format: format)
+        let right = self.right.compute(with: inputs, format: format)
         
         return Equation(left: left, right: right, operation: operation)
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String: Token], format: Bool) -> Token {
         // Unknown, return a calcul error
         return CalculError()
     }

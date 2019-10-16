@@ -17,16 +17,16 @@ struct Root: Token {
         return "√(\(token.toString()))"
     }
     
-    func compute(with inputs: [String : Token]) -> Token {
-        let token = self.token.compute(with: inputs)
-        let power = self.power.compute(with: inputs)
+    func compute(with inputs: [String : Token], format: Bool) -> Token {
+        let token = self.token.compute(with: inputs, format: format)
+        let power = self.power.compute(with: inputs, format: format)
         
-        return token.apply(operation: .root, right: power, with: inputs)
+        return token.apply(operation: .root, right: power, with: inputs, format: format)
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [String : Token]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String : Token], format: Bool) -> Token {
         // Compute right
-        let right = right.compute(with: inputs)
+        let right = right.compute(with: inputs, format: format)
         
         // Sum
         if operation == .addition {
@@ -35,7 +35,7 @@ struct Root: Token {
         
         // Difference
         if operation == .subtraction {
-            return Sum(values: [self, right.opposite()]).compute(with: inputs)
+            return Sum(values: [self, right.opposite()]).compute(with: inputs, format: format)
         }
         
         // Product

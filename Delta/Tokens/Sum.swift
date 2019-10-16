@@ -17,9 +17,9 @@ struct Sum: Token {
         return values.map{ $0.toString() }.joined(separator: " + ")
     }
     
-    func compute(with inputs: [String : Token]) -> Token {
+    func compute(with inputs: [String : Token], format: Bool) -> Token {
         // Compute all values
-        var values = self.values.map{ $0.compute(with: inputs) }
+        var values = self.values.map{ $0.compute(with: inputs, format: format) }
         
         // Some required vars
         var index = 0
@@ -38,7 +38,7 @@ struct Sum: Token {
                     let otherValue = values[i]
                     
                     // Sum them
-                    let sum = value.apply(operation: .addition, right: otherValue, with: inputs)
+                    let sum = value.apply(operation: .addition, right: otherValue, with: inputs, format: format)
                     
                     // If it is simpler than a sum
                     if sum as? Sum == nil {
@@ -84,9 +84,9 @@ struct Sum: Token {
         return Sum(values: values)
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [String : Token]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String : Token], format: Bool) -> Token {
         // Compute right
-        let right = right.compute(with: inputs)
+        let right = right.compute(with: inputs, format: format)
         
         // If addition
         if operation == .addition {

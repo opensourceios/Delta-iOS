@@ -13,8 +13,6 @@ extension Algorithm {
     // Array of all algorithms
     static let array: [Algorithm] = [
         .secondDegreeEquation,
-        .vectors,
-        .statistics,
         .test
     ]
     
@@ -33,11 +31,11 @@ extension Algorithm {
                 SetAction("β", to: Parser.init("(-Δ)/(4a)").execute()),
                 
                 // Developed form
-                SetAction("f(x)", to: Parser.init("ax^2+bx+c").execute()),
+                SetAction("f(x)", to: Parser.init("ax^2+bx+c").execute(), format: true),
                 PrintAction("f(x)"),
                 
                 // Canonical form
-                SetAction("f(x)", to: Parser.init("a(x-α)^2+β").execute()),
+                SetAction("f(x)", to: Parser.init("a(x-α)^2+β").execute(), format: true),
                 PrintAction("f(x)"),
                 
                 // Delta
@@ -50,7 +48,7 @@ extension Algorithm {
                     PrintAction("x_0"),
                     
                     // Factorized form
-                    SetAction("f(x)", to: Parser.init("a(x-x_0)^2").execute()),
+                    SetAction("f(x)", to: Parser.init("a(x-x_0)^2").execute(), format: true),
                     PrintAction("f(x)")
                 ], else: [
                     // Print roots
@@ -60,7 +58,7 @@ extension Algorithm {
                     PrintAction("x_2"),
                     
                     // Factorized form
-                    SetAction("f(x)", to: Parser.init("a(x-x_1)(x-x_2)").execute()),
+                    SetAction("f(x)", to: Parser.init("a(x-x_1)(x-x_2)").execute(), format: true),
                     PrintAction("f(x)")
                 ])
             ])

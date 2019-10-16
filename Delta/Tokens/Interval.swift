@@ -1,19 +1,22 @@
 //
-//  List.swift
+//  Interval.swift
 //  Delta
 //
-//  Created by Nathan FALLET on 07/10/2019.
+//  Created by Nathan FALLET on 16/10/2019.
 //  Copyright © 2019 Nathan FALLET. All rights reserved.
 //
 
 import Foundation
 
-struct List: Token {
+struct Interval: Token {
     
-    var values: [Token]
+    var left: Token
+    var right: Token
+    var left_closed: Bool
+    var right_closed: Bool
     
     func toString() -> String {
-        return "{\(values.map { $0.toString() }.joined(separator: " , "))}"
+        return "\(left_closed ? "[" : "]")\(left.toString()), \(right.toString())\(right_closed ? "]" : "[")"
     }
     
     func compute(with inputs: [String: Token], format: Bool) -> Token {

@@ -11,8 +11,8 @@ import Foundation
 protocol Token {
     
     func toString() -> String
-    func compute(with inputs: [String: Token]) -> Token
-    func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token
+    func compute(with inputs: [String: Token], format: Bool) -> Token
+    func apply(operation: Operation, right: Token, with inputs: [String: Token], format: Bool) -> Token
     func needBrackets(for operation: Operation) -> Bool
     func getMultiplicationPriority() -> Int
     func opposite() -> Token

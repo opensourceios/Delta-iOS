@@ -60,7 +60,7 @@ enum Operation {
     
     // Join with two tokens
     func join(left: Token, right: Token) -> Token {
-        left.apply(operation: self, right: right, with: [:])
+        left.apply(operation: self, right: right, with: [:], format: true)
     }
     
 }

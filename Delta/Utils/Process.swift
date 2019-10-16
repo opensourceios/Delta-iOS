@@ -14,7 +14,7 @@ class Process {
     var outputs = [String]()
     
     init(inputs: [String: Token]) {
-        variables = inputs.mapValues { $0.compute(with: inputs) }
+        variables = inputs.mapValues { $0.compute(with: inputs, format: false) }
     }
     
 }

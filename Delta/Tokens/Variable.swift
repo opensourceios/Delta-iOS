@@ -16,7 +16,7 @@ struct Variable: Token {
         return "\(name)"
     }
     
-    func compute(with inputs: [String: Token]) -> Token {
+    func compute(with inputs: [String: Token], format: Bool) -> Token {
         // Chech if an input corresponds to this variable
         if let value = inputs[name] {
             return value
@@ -26,9 +26,9 @@ struct Variable: Token {
         return self
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String: Token], format: Bool) -> Token {
         // Compute right
-        let right = right.compute(with: inputs)
+        let right = right.compute(with: inputs, format: format)
         
         // Sum
         if operation == .addition {
@@ -65,7 +65,7 @@ struct Variable: Token {
                         return Product(values: [Number(value: -1), self])
                     }
                     // Simplificated power of i
-                    return Power(token: self, power: Number(value: number.value % 4)).compute(with: inputs)
+                    return Power(token: self, power: Number(value: number.value % 4)).compute(with: inputs, format: format)
                 }
             }
             

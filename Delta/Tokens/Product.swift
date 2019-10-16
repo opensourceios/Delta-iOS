@@ -49,9 +49,9 @@ struct Product: Token {
         }.joined(separator: " * ")
     }
     
-    func compute(with inputs: [String : Token]) -> Token {
+    func compute(with inputs: [String : Token], format: Bool) -> Token {
         // Compute all values
-        var values = self.values.map{ $0.compute(with: inputs) }.sorted{ $0.getMultiplicationPriority() > $1.getMultiplicationPriority() }
+        var values = self.values.map{ $0.compute(with: inputs, format: format) }.sorted{ $0.getMultiplicationPriority() > $1.getMultiplicationPriority() }
         
         // Some required vars
         var index = 0
@@ -70,7 +70,7 @@ struct Product: Token {
                     let otherValue = values[i]
                     
                     // Multiply them
-                    let product = value.apply(operation: .multiplication, right: otherValue, with: inputs)
+                    let product = value.apply(operation: .multiplication, right: otherValue, with: inputs, format: format)
                     
                     // If it is simpler than a product
                     if product as? Product == nil {
@@ -122,9 +122,9 @@ struct Product: Token {
         return Product(values: values)
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [String : Token]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String : Token], format: Bool) -> Token {
         // Compute right
-        let right = right.compute(with: inputs)
+        let right = right.compute(with: inputs, format: format)
         
         // If addition
         if operation == .addition {
@@ -137,7 +137,7 @@ struct Product: Token {
         // If subtraction
         if operation == .subtraction {
             // Add token to sum
-            return Sum(values: [self, right.opposite()]).compute(with: inputs)
+            return Sum(values: [self, right.opposite()]).compute(with: inputs, format: format)
         }
         
         // If product

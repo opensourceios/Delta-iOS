@@ -12,10 +12,12 @@ class SetAction: Action {
     
     var identifier: String
     var value: Token
+    var format: Bool
     
-    init(_ identifier: String, to value: Token) {
+    init(_ identifier: String, to value: Token, format: Bool = false) {
         self.identifier = identifier
         self.value = value
+        self.format = format
     }
     
     func execute(in process: Process) {
@@ -26,7 +28,7 @@ class SetAction: Action {
         }
         
         // Set value with process environment
-        process.variables[identifier] = value.compute(with: process.variables)
+        process.variables[identifier] = value.compute(with: process.variables, format: format)
     }
     
 }

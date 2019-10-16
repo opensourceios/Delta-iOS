@@ -22,7 +22,7 @@ class IfAction: Action {
     
     func execute(in process: Process) {
         // Get computed condition and check it
-        if let condition = self.condition.compute(with: process.variables) as? Equation, condition.isTrue(with: process.variables) {
+        if let condition = self.condition.compute(with: process.variables, format: false) as? Equation, condition.isTrue(with: process.variables) {
             // Execute actions
             for action in actions {
                 action.execute(in: process)

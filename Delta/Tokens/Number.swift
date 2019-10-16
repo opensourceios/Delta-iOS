@@ -16,13 +16,13 @@ struct Number: Token {
         return "\(value)"
     }
     
-    func compute(with inputs: [String: Token]) -> Token {
+    func compute(with inputs: [String: Token], format: Bool) -> Token {
         return self
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String: Token], format: Bool) -> Token {
         // Compute right
-        let right = right.compute(with: inputs)
+        let right = right.compute(with: inputs, format: format)
         
         // Sum
         if operation == .addition {
@@ -79,7 +79,7 @@ struct Number: Token {
             
             // Right is a vector
             if let right = right as? Vector {
-                return right.apply(operation: operation, right: self, with: inputs)
+                return right.apply(operation: operation, right: self, with: inputs, format: format)
             }
             
             // Return the product

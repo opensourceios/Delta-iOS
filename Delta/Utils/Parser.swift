@@ -12,6 +12,7 @@ class Parser {
     
     static let variables = "abcdefghijklmnopqrstuvwxyzΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΣσςϹϲΤτΥυΦφΧχΨψΩω"
     static let variablesAndNumber = "\(variables)0123456789"
+    static let productCoefficients = "\(variablesAndNumber))"
     static let constants = "i"
     
     var tokens: String
@@ -47,7 +48,7 @@ class Parser {
                 // Opening brace
                 else if current == "(" {
                     // Check if we have a token before without operator
-                    if values.count > 0 && Parser.variablesAndNumber.contains(previous) {
+                    if values.count > 0 && Parser.productCoefficients.contains(previous) {
                         // Add a multiplication operator
                         ops.insert("*", at: 0)
                     }
@@ -98,7 +99,7 @@ class Parser {
                     let variable = Variable(name: name)
 
                     // Check if we have a token before without operator
-                    if values.count > 0 && Parser.variablesAndNumber.contains(previous) {
+                    if values.count > 0 && Parser.productCoefficients.contains(previous) {
                         // Add a multiplication operator
                         ops.insert("*", at: 0)
                     }

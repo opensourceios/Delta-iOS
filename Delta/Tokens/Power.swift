@@ -17,9 +17,9 @@ struct Power: Token {
         return "\(token.needBrackets(for: .power) ? "(\(token.toString()))" : token.toString()) ^ \(power.needBrackets(for: .power) ? "(\(power.toString()))" : power.toString())"
     }
     
-    func compute(with inputs: [String : Token]) -> Token {
-        let token = self.token.compute(with: inputs)
-        let power = self.power.compute(with: inputs)
+    func compute(with inputs: [String : Token], format: Bool) -> Token {
+        let token = self.token.compute(with: inputs, format: format)
+        let power = self.power.compute(with: inputs, format: format)
         
         // Check power
         if let number = power as? Number {
@@ -34,17 +34,17 @@ struct Power: Token {
         }
         if let fraction = power as? Fraction {
             // x^1/y is ^y√(x)
-            if let number = fraction.inverse().compute(with: inputs) as? Number {
-                return Root(token: token, power: number).compute(with: inputs)
+            if let number = fraction.inverse().compute(with: inputs, format: format) as? Number {
+                return Root(token: token, power: number).compute(with: inputs, format: format)
             }
         }
         
-        return token.apply(operation: .power, right: power, with: inputs)
+        return token.apply(operation: .power, right: power, with: inputs, format: format)
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [String : Token]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String : Token], format: Bool) -> Token {
         // Compute right
-        let right = right.compute(with: inputs)
+        let right = right.compute(with: inputs, format: format)
         
         // Sum
         if operation == .addition {
@@ -53,7 +53,7 @@ struct Power: Token {
         
         // Difference
         if operation == .subtraction {
-            return Sum(values: [self, right.opposite()]).compute(with: inputs)
+            return Sum(values: [self, right.opposite()]).compute(with: inputs, format: format)
         }
         
         // Product

@@ -14,11 +14,11 @@ struct SyntaxError: Token, Error {
         return "error_syntax".localized()
     }
     
-    func compute(with inputs: [String: Token]) -> Token {
+    func compute(with inputs: [String: Token], format: Bool) -> Token {
         return self
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [String: Token]) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String: Token], format: Bool) -> Token {
         return self
     }
     
