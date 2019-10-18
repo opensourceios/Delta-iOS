@@ -131,7 +131,7 @@ struct Product: Token {
         
         // If empty
         if values.isEmpty {
-            return Number(value: 0)
+            return Number(value: 1)
         }
         
         // Return the simplified product
