@@ -27,10 +27,6 @@ struct Power: Token {
             if number.value == 1 {
                 return token
             }
-            // x^0 is 1
-            if number.value == 0 {
-                return Number(value: 1)
-            }
         }
         if let fraction = power as? Fraction {
             // x^1/y is ^y√(x)

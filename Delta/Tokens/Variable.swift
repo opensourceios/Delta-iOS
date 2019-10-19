@@ -19,7 +19,7 @@ struct Variable: Token {
     func compute(with inputs: [String: Token], format: Bool) -> Token {
         // Chech if an input corresponds to this variable
         if let value = inputs[name] {
-            return value
+            return value.compute(with: inputs, format: false)
         }
         
         // No input found

@@ -27,6 +27,13 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
         // Update title
         navigationItem.title = algorithm?.name
         
+        // Deselect active fields
+        for cell in tableView.visibleCells {
+            if let inputCell = cell as? InputTableViewCell {
+                inputCell.endEditing(true)
+            }
+        }
+        
         // Update inputs
         tableView.reloadData()
         

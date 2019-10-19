@@ -63,41 +63,51 @@ struct Sum: Token {
             // Get value
             var value = values[index]
             
-            // Iterate to add it to another value
-            var i = 0
-            while i < values.count {
-                // Check if it's not the same index
-                if i != index {
-                    // Get another value
-                    let otherValue = values[i]
-                    
-                    // Sum them
-                    let sum = value.apply(operation: .addition, right: otherValue, with: inputs, format: format)
-                    
-                    // If it is simpler than a sum
-                    if sum as? Sum == nil {
-                        // Update values
-                        value = sum
-                        values[index] = value
-                        
-                        // Remove otherValue
-                        values.remove(at: i)
-                        
-                        // Update indexes
-                        index -= index >= i ? 1 : 0
-                        i -= 1
-                    }
-                }
+            // Check if value is a sum
+            if let product = value as? Sum {
+                // Add values to self
+                values += product.values
                 
-                // Increment i
-                i += 1
-            }
-            
-            // Check for zero (0 + x is x)
-            if let number = value as? Number, number.value == 0 {
-                // Remove zero
+                // Remove current value
                 values.remove(at: index)
                 index -= 1
+            } else {
+                // Iterate to add it to another value
+                var i = 0
+                while i < values.count {
+                    // Check if it's not the same index
+                    if i != index {
+                        // Get another value
+                        let otherValue = values[i]
+                        
+                        // Sum them
+                        let sum = value.apply(operation: .addition, right: otherValue, with: inputs, format: format)
+                        
+                        // If it is simpler than a sum
+                        if sum as? Sum == nil {
+                            // Update values
+                            value = sum
+                            values[index] = value
+                            
+                            // Remove otherValue
+                            values.remove(at: i)
+                            
+                            // Update indexes
+                            index -= index >= i ? 1 : 0
+                            i -= 1
+                        }
+                    }
+                    
+                    // Increment i
+                    i += 1
+                }
+                
+                // Check for zero (0 + x is x)
+                if let number = value as? Number, number.value == 0 {
+                    // Remove zero
+                    values.remove(at: index)
+                    index -= 1
+                }
             }
             
             // Increment index

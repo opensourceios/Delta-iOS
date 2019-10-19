@@ -67,8 +67,6 @@ struct Product: Token {
         // Compute all values
         var values = self.values.map{ $0.compute(with: inputs, format: format) }.sorted{ $0.getMultiplicationPriority() > $1.getMultiplicationPriority() }
         
-        // TODO: check if one of them is a product to add it to values
-        
         // Some required vars
         var index = 0
         
@@ -77,47 +75,57 @@ struct Product: Token {
             // Get value
             var value = values[index]
             
-            // Iterate to add it to another value
-            var i = 0
-            while i < values.count {
-                // Check if it's not the same index
-                if i != index {
-                    // Get another value
-                    let otherValue = values[i]
-                    
-                    // Multiply them
-                    let product = value.apply(operation: .multiplication, right: otherValue, with: inputs, format: format)
-                    
-                    // If it is simpler than a product
-                    if product as? Product == nil {
-                        // Update values
-                        value = product
-                        values[index] = value
-                        
-                        // Remove otherValue
-                        values.remove(at: i)
-                        
-                        // Update indexes
-                        index -= index >= i ? 1 : 0
-                        i -= 1
-                    }
-                }
+            // Check if value is a product
+            if let product = value as? Product {
+                // Add values to self
+                values += product.values
                 
-                // Increment i
-                i += 1
-            }
-            
-            // Check for one (1x is x)
-            if let number = value as? Number, number.value == 1 {
-                // Remove one
+                // Remove current value
                 values.remove(at: index)
                 index -= 1
-            }
-            
-            // Check for zero (0x is 0)
-            else if let number = value as? Number, number.value == 0 {
-                // Return zero
-                return number
+            } else {
+                // Iterate to add it to another value
+                var i = 0
+                while i < values.count {
+                    // Check if it's not the same index
+                    if i != index {
+                        // Get another value
+                        let otherValue = values[i]
+                        
+                        // Multiply them
+                        let product = value.apply(operation: .multiplication, right: otherValue, with: inputs, format: format)
+                        
+                        // If it is simpler than a product
+                        if product as? Product == nil {
+                            // Update values
+                            value = product
+                            values[index] = value
+                            
+                            // Remove otherValue
+                            values.remove(at: i)
+                            
+                            // Update indexes
+                            index -= index >= i ? 1 : 0
+                            i -= 1
+                        }
+                    }
+                    
+                    // Increment i
+                    i += 1
+                }
+                
+                // Check for one (1x is x)
+                if let number = value as? Number, number.value == 1 {
+                    // Remove one
+                    values.remove(at: index)
+                    index -= 1
+                }
+                
+                // Check for zero (0x is 0)
+                else if let number = value as? Number, number.value == 0 {
+                    // Return zero
+                    return number
+                }
             }
             
             // Increment index

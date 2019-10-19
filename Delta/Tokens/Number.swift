@@ -77,6 +77,12 @@ struct Number: Token {
                 return Number(value: self.value * right.value)
             }
             
+            // Right is a fraction
+            if let right = right as? Fraction {
+                // a/b * c = ac/b
+                return Fraction(numerator: Product(values: [self, right.numerator]), denominator: right.denominator).compute(with: inputs, format: format)
+            }
+            
             // Right is a vector
             if let right = right as? Vector {
                 return right.apply(operation: operation, right: self, with: inputs, format: format)
@@ -122,6 +128,12 @@ struct Number: Token {
         if operation == .power {
             // Rigth is number
             if let right = right as? Number {
+                // 0^0 is calcul error
+                if value == 0 && right.value == 0 {
+                    return CalculError()
+                }
+                
+                // Apply power to number
                 return Number(value: Int(pow(Double(self.value), Double(right.value))))
             }
             
