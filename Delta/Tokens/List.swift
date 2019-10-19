@@ -46,6 +46,10 @@ struct List: Token {
         return self
     }
     
+    func asDouble() -> Double? {
+        return nil
+    }
+    
     func getSign() -> FloatingPointSign {
         return .plus
     }

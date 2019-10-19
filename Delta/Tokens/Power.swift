@@ -92,6 +92,14 @@ struct Power: Token {
         return Fraction(numerator: Number(value: 1), denominator: self)
     }
     
+    func asDouble() -> Double? {
+        if let token = token.asDouble(), let power = power.asDouble() {
+            return pow(token, power)
+        }
+        
+        return nil
+    }
+    
     func getSign() -> FloatingPointSign {
         return .plus
     }

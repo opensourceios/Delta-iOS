@@ -45,6 +45,10 @@ struct Vector: Token {
         return self
     }
     
+    func asDouble() -> Double? {
+        return nil
+    }
+    
     func getSign() -> FloatingPointSign {
         return .plus
     }

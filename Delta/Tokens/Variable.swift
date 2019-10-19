@@ -97,6 +97,10 @@ struct Variable: Token {
         return Fraction(numerator: Number(value: 1), denominator: self)
     }
     
+    func asDouble() -> Double? {
+        return nil
+    }
+    
     func getSign() -> FloatingPointSign {
         return .plus
     }

@@ -73,6 +73,12 @@ class Parser {
                         i += 1
                     }
                     
+                    // Check if we have a token before without operator
+                    if values.count > 0 && Parser.productCoefficients.contains(previous) {
+                        // Add a multiplication operator
+                        ops.insert("*", at: 0)
+                    }
+                    
                     // Insert into values
                     values.insert(Number(value: val), at: 0)
                     

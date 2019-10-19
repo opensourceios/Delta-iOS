@@ -157,6 +157,14 @@ struct Fraction: Token {
         return Fraction(numerator: denominator, denominator: numerator).compute(with: [:], format: false)
     }
     
+    func asDouble() -> Double? {
+        if let numerator = numerator.asDouble(), let denominator = denominator.asDouble() {
+            return numerator/denominator
+        }
+        
+        return nil
+    }
+    
     func getSign() -> FloatingPointSign {
         return .plus
     }

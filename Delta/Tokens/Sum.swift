@@ -53,8 +53,6 @@ struct Sum: Token {
         // Compute all values
         var values = self.values.map{ $0.compute(with: inputs, format: format) }
         
-        // TODO: check if one of them is a sum to add it to values
-        
         // Some required vars
         var index = 0
         
@@ -184,6 +182,10 @@ struct Sum: Token {
     
     func inverse() -> Token {
         return Fraction(numerator: Number(value: 1), denominator: self)
+    }
+    
+    func asDouble() -> Double? {
+        return nil
     }
     
     func getSign() -> FloatingPointSign {

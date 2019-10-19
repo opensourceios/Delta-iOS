@@ -206,6 +206,10 @@ struct Product: Token {
         return Fraction(numerator: Number(value: 1), denominator: self)
     }
     
+    func asDouble() -> Double? {
+        return nil
+    }
+    
     func getSign() -> FloatingPointSign {
         // To be done
         return .plus

@@ -18,19 +18,19 @@ struct Equation: Token {
         let left = self.left.compute(with: inputs, format: false)
         let right = self.right.compute(with: inputs, format: false)
         
-        if let left = left as? Number, let right = right as? Number {
+        if let left = left.asDouble(), let right = right.asDouble() {
             if operation == .equals {
-                return left.value == right.value
+                return left == right
             } else if operation == .inequals {
-                return left.value != right.value
+                return left != right
             } else if operation == .greaterThan {
-                return left.value > right.value
+                return left > right
             } else if operation == .lessThan {
-                return left.value < right.value
+                return left < right
             } else if operation == .greaterOrEquals {
-                return left.value >= right.value
+                return left >= right
             } else if operation == .lessOrEquals {
-                return left.value <= right.value
+                return left <= right
             }
         }
         
@@ -67,6 +67,10 @@ struct Equation: Token {
     
     func inverse() -> Token {
         return Equation(left: left.inverse(), right: right.inverse(), operation: operation)
+    }
+    
+    func asDouble() -> Double? {
+        return nil
     }
     
     func getSign() -> FloatingPointSign {

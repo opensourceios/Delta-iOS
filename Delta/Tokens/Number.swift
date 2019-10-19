@@ -83,6 +83,11 @@ struct Number: Token {
                 return Fraction(numerator: Product(values: [self, right.numerator]), denominator: right.denominator).compute(with: inputs, format: format)
             }
             
+            // Right is a sum
+            if let right = right as? Sum {
+                return Sum(values: right.values.map{ Product(values: [$0, self]) }).compute(with: inputs, format: format)
+            }
+            
             // Right is a vector
             if let right = right as? Vector {
                 return right.apply(operation: operation, right: self, with: inputs, format: format)
@@ -196,6 +201,10 @@ struct Number: Token {
     
     func inverse() -> Token {
         return Fraction(numerator: Number(value: 1), denominator: self)
+    }
+    
+    func asDouble() -> Double? {
+        return Double(value)
     }
     
     func getSign() -> FloatingPointSign {
