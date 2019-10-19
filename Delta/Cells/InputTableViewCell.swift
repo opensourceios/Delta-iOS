@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
+class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractionDelegate {
 
     var label: UILabel = UILabel()
     var field: UITextField = UITextField()
@@ -41,6 +41,12 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
         field.returnKeyType = .done
         field.delegate = self
         field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        
+        if #available(iOS 11.0, macCatalyst 13.0, *) {
+            addInteraction(UIDropInteraction(delegate: self))
+            
+            pasteConfiguration = UIPasteConfiguration(forAccepting: NSString.self)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,6 +84,38 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         field.endEditing(true)
         return false
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: NSString.self)
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        return UIDropProposal(operation: .copy)
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        for item in session.items {
+            item.itemProvider.loadObject(ofClass: NSString.self) { object, error in
+                if let string = object as? NSString {
+                    DispatchQueue.main.async {
+                        self.field.insertText(string as String)
+                    }
+                }
+            }
+        }
+    }
+    
+    override func paste(itemProviders: [NSItemProvider]) {
+        for itemProvider in itemProviders {
+            itemProvider.loadObject(ofClass: NSString.self) { object, error in
+                if let string = object as? NSString {
+                    DispatchQueue.main.async {
+                        self.field.insertText(string as String)
+                    }
+                }
+            }
+        }
     }
 
 }

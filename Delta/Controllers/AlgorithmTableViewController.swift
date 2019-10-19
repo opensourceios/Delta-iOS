@@ -18,7 +18,7 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
         
         // Register cells
         tableView.register(InputTableViewCell.self, forCellReuseIdentifier: "inputCell")
-        tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: "outputCell")
+        tableView.register(OutputTableViewCell.self, forCellReuseIdentifier: "outputCell")
     }
     
     func selectAlgorithm(_ algorithm: Algorithm?) {
@@ -57,10 +57,6 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
     }
 
     // TableView management
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
-    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return algorithm != nil ? 2 : 0
@@ -89,7 +85,7 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
                 
                 // Create the cell
                 if let output = output as? String {
-                    return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! LabelTableViewCell).with(text: output)
+                    return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! OutputTableViewCell).with(text: output)
                 }
             }
         }

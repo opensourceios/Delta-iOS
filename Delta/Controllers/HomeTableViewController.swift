@@ -37,7 +37,7 @@ class HomeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? algorithms.count : 4
+        return section == 0 ? algorithms.count : 3
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -61,12 +61,9 @@ class HomeTableViewController: UITableViewController {
                 // About
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "about".localized(), accessory: .disclosureIndicator)
             } else if indexPath.row == 1 {
-                // More apps
-                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "moreApps".localized(), accessory: .disclosureIndicator)
+                // More about our team
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "moreAboutOurTeam".localized(), accessory: .disclosureIndicator)
             } else if indexPath.row == 2 {
-                // Follow us on social networks
-                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "followUs".localized(), accessory: .disclosureIndicator)
-            } else if indexPath.row == 3 {
                 // Donate
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "donate".localized(), accessory: .disclosureIndicator)
             }
@@ -97,8 +94,8 @@ class HomeTableViewController: UITableViewController {
                 alert.addAction(UIAlertAction(title: "ok".localized(), style: .default, handler: nil))
                 UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
             } else if indexPath.row == 1 {
-                // More apps
-                if let url = URL(string: "https://itunes.apple.com/us/developer/groupe-minaste/id1378426984") {
+                // More about our team
+                if let url = URL(string: "https://www.groupe-minaste.org") {
                     if #available(iOS 10.0, *) {
                         UIApplication.shared.open(url)
                     } else {
@@ -106,15 +103,6 @@ class HomeTableViewController: UITableViewController {
                     }
                 }
             } else if indexPath.row == 2 {
-                // Follow us on social networks
-                if let url = URL(string: "https://www.twitter.com/DeltaMathHelper") {
-                    if #available(iOS 10.0, *) {
-                        UIApplication.shared.open(url)
-                    } else {
-                        UIApplication.shared.openURL(url)
-                    }
-                }
-            } else if indexPath.row == 3 {
                 // Donate
                 if let url = URL(string: "https://www.paypal.me/NathanFallet") {
                     if #available(iOS 10.0, *) {
