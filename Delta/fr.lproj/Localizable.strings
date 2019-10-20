@@ -29,6 +29,6 @@
 
 // Algorithm strings
 
-"algo1_name" = "Equation de 2nd degré";
+"algo1_name" = "Equation du 2nd degré";
 "algo2_name" = "Vecteurs";
 "algo3_name" = "Statistiques";

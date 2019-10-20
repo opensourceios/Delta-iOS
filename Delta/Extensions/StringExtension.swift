@@ -45,6 +45,30 @@ extension String {
         }
     }
     
+    func cutEditorLine() -> [String] {
+        var parts = [String]()
+        var current = ""
+
+        for char in self {
+            current += String(char)
+            
+            if current.hasSuffix("%@") {
+                let previous = current[0 ..< current.count-2]
+                if !previous.isEmpty {
+                    parts.append(previous)
+                }
+                parts.append("%@")
+                current = ""
+            }
+        }
+
+        if !current.isEmpty {
+            parts.append(current)
+        }
+        
+        return parts
+    }
+    
     // Custom operations
     
     func equals(_ right: Int) -> Equation {

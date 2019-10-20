@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditorTableViewController: UITableViewController {
+class EditorTableViewController: UITableViewController, EditorLineChangedDelegate {
     
     let algorithm: Algorithm
     
@@ -37,6 +37,14 @@ class EditorTableViewController: UITableViewController {
         // Register cells
         tableView.register(EditorTableViewCell.self, forCellReuseIdentifier: "editorCell")
     }
+    
+    func editorLineChanged(_ line: EditorLine?) {
+        // Get vars
+        if let line = line {
+            // Update the input
+            
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -63,13 +71,13 @@ class EditorTableViewController: UITableViewController {
             let line = EditorLine(format: "%@ = %@", values: [variable.key, variable.value.toString()])
             
             // Return cell
-            return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line)
+            return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self)
         } else {
             // Get editor line
             let line = algorithm.toEditorLines()[indexPath.row]
             
             // Return cell
-            return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line)
+            return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self)
         }
     }
 
@@ -93,4 +101,10 @@ class EditorTableViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
 
+}
+
+protocol EditorLineChangedDelegate: class {
+    
+    func editorLineChanged(_ line: EditorLine?)
+    
 }

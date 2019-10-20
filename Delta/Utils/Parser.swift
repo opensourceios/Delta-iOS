@@ -14,6 +14,7 @@ class Parser {
     static let variablesAndNumber = "\(variables)0123456789"
     static let productCoefficients = "\(variablesAndNumber))"
     static let constants = "i"
+    static let input = " \(variablesAndNumber)_+-*/^,(){}"
     
     var tokens: String
     var values: [Token]
