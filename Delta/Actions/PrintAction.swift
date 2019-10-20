@@ -28,8 +28,8 @@ class PrintAction: Action {
         return "print \(identifier)"
     }
     
-    func toLocalizedStrings() -> [String] {
-        return ["action_print".localized().format(identifier)]
+    func toEditorLines() -> [EditorLine] {
+        return [EditorLine(format: "action_print".localized(), values: [identifier])]
     }
     
 }

@@ -35,8 +35,8 @@ class SetAction: Action {
         return "\(format ? "set_formatted" : "set") \(identifier) to \(value.toString())"
     }
     
-    func toLocalizedStrings() -> [String] {
-        return [(format ? "action_set_formatted" : "action_set").localized().format(identifier, value.toString())]
+    func toEditorLines() -> [EditorLine] {
+        return [EditorLine(format: (format ? "action_set_formatted" : "action_set").localized(), values: [identifier, value.toString()])]
     }
     
 }

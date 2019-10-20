@@ -54,23 +54,23 @@ class IfAction: Action {
         return string
     }
     
-    func toLocalizedStrings() -> [String] {
-        var strings = ["action_if".localized().format(condition.toString())]
+    func toEditorLines() -> [EditorLine] {
+        var lines = [EditorLine(format: "action_if".localized(), values: [condition.toString()])]
         
         for action in actions {
-            strings.append(contentsOf: action.toLocalizedStrings())
+            lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
         }
         
         if !elseActions.isEmpty {
-            strings.append("action_else".localized())
+            lines.append(EditorLine(format: "action_else".localized()))
             for action in elseActions {
-                strings.append(contentsOf: action.toLocalizedStrings())
+                lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
             }
         }
         
-        strings.append("action_endif".localized())
+        lines.append(EditorLine(format: "action_endif".localized()))
         
-        return strings
+        return lines
     }
     
 }

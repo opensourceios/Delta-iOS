@@ -54,16 +54,16 @@ class ForAction: Action {
         return string
     }
     
-    func toLocalizedStrings() -> [String] {
-        var strings = ["action_for".localized().format(identifier, token.toString())]
+    func toEditorLines() -> [EditorLine] {
+        var lines = [EditorLine(format: "action_for".localized(), values: [identifier, token.toString()])]
         
         for action in actions {
-            strings.append(contentsOf: action.toLocalizedStrings())
+            lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
         }
         
-        strings.append("action_endif".localized())
+        lines.append(EditorLine(format: "action_endif".localized()))
         
-        return strings
+        return lines
     }
     
 }

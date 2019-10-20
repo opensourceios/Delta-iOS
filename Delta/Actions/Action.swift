@@ -12,6 +12,6 @@ protocol Action {
     
     func execute(in process: Process)
     func toString() -> String
-    func toLocalizedStrings() -> [String]
+    func toEditorLines() -> [EditorLine]
     
 }

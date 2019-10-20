@@ -34,8 +34,8 @@ class Algorithm {
         return actions.map{ $0.toString() }.joined(separator: "\n")
     }
     
-    func toLocalizedStrings() -> [String] {
-        return actions.flatMap{ $0.toLocalizedStrings() }
+    func toEditorLines() -> [EditorLine] {
+        return actions.flatMap{ $0.toEditorLines() }
     }
     
 }

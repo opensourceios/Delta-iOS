@@ -14,12 +14,7 @@ class EditorTableViewController: UITableViewController {
     
     init(algorithm: Algorithm) {
         self.algorithm = algorithm
-        
-        if #available(iOS 13, *) {
-            super.init(style: .insetGrouped)
-        } else {
-            super.init(style: .grouped)
-        }
+        super.init(style: .grouped)
     }
     
     required init?(coder: NSCoder) {
@@ -36,8 +31,11 @@ class EditorTableViewController: UITableViewController {
         navigationItem.title = "editor".localized()
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "close".localized(), style: .plain, target: self, action: #selector(close(_:)))
         
+        // No separator
+        tableView.separatorStyle = .none
+        
         // Register cells
-        tableView.register(OutputTableViewCell.self, forCellReuseIdentifier: "outputCell")
+        tableView.register(EditorTableViewCell.self, forCellReuseIdentifier: "editorCell")
     }
 
     // MARK: - Table view data source
@@ -47,23 +45,31 @@ class EditorTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? algorithm.inputs.count : algorithm.toLocalizedStrings().count
+        return section == 0 ? algorithm.inputs.count : algorithm.toEditorLines().count
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             // Get input
             let variable = Array(algorithm.inputs.sorted{ return $0.key < $1.key })[indexPath.row]
-            let string = "\(variable.key) = \(variable.value.toString())"
+            let line = EditorLine(format: "%@ = %@", values: [variable.key, variable.value.toString()])
             
             // Return cell
-            return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! OutputTableViewCell).with(text: string)
+            return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line)
         } else {
-            // Get action
-            let string = algorithm.toLocalizedStrings()[indexPath.row]
+            // Get editor line
+            let line = algorithm.toEditorLines()[indexPath.row]
             
             // Return cell
-            return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! OutputTableViewCell).with(text: string)
+            return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line)
         }
     }
 
