@@ -25,6 +25,10 @@ class SplitViewController: UISplitViewController, UISplitViewControllerDelegate 
         
         preferredDisplayMode = .allVisible
         delegate = self
+        
+        if #available(iOS 13.0, *) {
+            primaryBackgroundStyle = .sidebar
+        }
     }
     
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {

@@ -44,9 +44,11 @@ class HomeTableViewController: UITableViewController {
         return section == 0 ? "algorithms".localized() : "about".localized()
     }
     
+    #if !targetEnvironment(macCatalyst)
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return section == 0 ? "more_soon".localized() : "donate_description".localized()
     }
+    #endif
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Check for section
