@@ -89,7 +89,7 @@ extension Algorithm {
             SetAction("n", to: Number(value: 0)),
             
             // Iterate list
-            ForEachAction(Variable(name: "L"), as: "x", do: [
+            ForAction("x", in: Variable(name: "L"), do: [
                 SetAction("Σx", to: Sum(values: [Variable(name: "Σx"), Variable(name: "x")])),
                 SetAction("n", to: Parser.init("n+1").execute())
             ]),

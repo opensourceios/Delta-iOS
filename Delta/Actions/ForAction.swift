@@ -1,5 +1,5 @@
 //
-//  ForEachAction.swift
+//  ForAction.swift
 //  Delta
 //
 //  Created by Nathan FALLET on 07/10/2019.
@@ -8,15 +8,15 @@
 
 import Foundation
 
-class ForEachAction: Action {
+class ForAction: Action {
     
-    var token: Token
     var identifier: String
+    var token: Token
     var actions: [Action]
     
-    init(_ token: Token, as identifier: String, do actions: [Action]) {
-        self.token = token
+    init(_ identifier: String, in token: Token, do actions: [Action]) {
         self.identifier = identifier
+        self.token = token
         self.actions = actions
     }
     
@@ -40,6 +40,30 @@ class ForEachAction: Action {
         
         // Get interval
         // TODO
+    }
+    
+    func toString() -> String {
+        var string = "for \(identifier) in \(token.toString()) {"
+        
+        for action in actions {
+            string += "\n\(action.toString())"
+        }
+        
+        string += "\n}"
+        
+        return string
+    }
+    
+    func toLocalizedStrings() -> [String] {
+        var strings = ["action_for".localized().format(identifier, token.toString())]
+        
+        for action in actions {
+            strings.append(contentsOf: action.toLocalizedStrings())
+        }
+        
+        strings.append("action_endif".localized())
+        
+        return strings
     }
     
 }

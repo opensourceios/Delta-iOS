@@ -35,4 +35,42 @@ class IfAction: Action {
         }
     }
     
+    func toString() -> String {
+        var string = "if \(condition.toString()) {"
+        
+        for action in actions {
+            string += "\n\(action.toString())"
+        }
+        
+        if !elseActions.isEmpty {
+            string += "\n} else {"
+            for action in elseActions {
+                string += "\n\(action.toString())"
+            }
+        }
+        
+        string += "\n}"
+        
+        return string
+    }
+    
+    func toLocalizedStrings() -> [String] {
+        var strings = ["action_if".localized().format(condition.toString())]
+        
+        for action in actions {
+            strings.append(contentsOf: action.toLocalizedStrings())
+        }
+        
+        if !elseActions.isEmpty {
+            strings.append("action_else".localized())
+            for action in elseActions {
+                strings.append(contentsOf: action.toLocalizedStrings())
+            }
+        }
+        
+        strings.append("action_endif".localized())
+        
+        return strings
+    }
+    
 }

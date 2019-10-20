@@ -24,4 +24,12 @@ class PrintAction: Action {
         }
     }
     
+    func toString() -> String {
+        return "print \(identifier)"
+    }
+    
+    func toLocalizedStrings() -> [String] {
+        return ["action_print".localized().format(identifier)]
+    }
+    
 }

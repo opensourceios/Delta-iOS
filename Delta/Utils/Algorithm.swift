@@ -30,4 +30,12 @@ class Algorithm {
         return process
     }
     
+    func toString() -> String {
+        return actions.map{ $0.toString() }.joined(separator: "\n")
+    }
+    
+    func toLocalizedStrings() -> [String] {
+        return actions.flatMap{ $0.toLocalizedStrings() }
+    }
+    
 }

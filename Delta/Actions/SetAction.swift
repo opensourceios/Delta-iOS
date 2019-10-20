@@ -31,4 +31,12 @@ class SetAction: Action {
         process.variables[identifier] = value.compute(with: process.variables, format: format)
     }
     
+    func toString() -> String {
+        return "\(format ? "set_formatted" : "set") \(identifier) to \(value.toString())"
+    }
+    
+    func toLocalizedStrings() -> [String] {
+        return [(format ? "action_set_formatted" : "action_set").localized().format(identifier, value.toString())]
+    }
+    
 }

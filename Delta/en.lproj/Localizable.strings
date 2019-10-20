@@ -12,9 +12,20 @@
 "ok" = "OK";
 "inputs" = "Inputs";
 "outputs" = "Outputs";
+"edit" = "Edit";
+"close" = "Close";
 "error_calcul" = "Calcul error";
 "error_syntax" = "Syntax error";
 "error_constant" = "Cannot set value: %@ is a constant";
+"editor" = "Algorithm editor";
+"action_print" = "Print %@";
+"action_set" = "Set %@ to %@";
+"action_set_formatted" = "Set %@ to %@ as format";
+"action_if" = "If %@";
+"action_else" = "Else";
+"action_endif" = "End";
+"action_while" = "While %@";
+"action_for" = "For %@ in %@";
 
 // Algorithm strings
 

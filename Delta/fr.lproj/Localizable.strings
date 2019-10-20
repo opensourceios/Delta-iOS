@@ -12,9 +12,20 @@
 "ok" = "OK";
 "inputs" = "Entrées";
 "outputs" = "Sorties";
+"edit" = "Modifier";
+"close" = "Fermer";
 "error_calcul" = "Erreur de calcul";
 "error_syntax" = "Erreur de syntaxe";
 "error_constant" = "Impossible d'attribuer la valeur : %@ est une constante";
+"editor" = "Editeur d'algorithme";
+"action_print" = "Afficher %@";
+"action_set" = "Définir %@ à %@";
+"action_set_formatted" = "Définir %@ à %@ comme format";
+"action_if" = "Si %@";
+"action_else" = "Sinon";
+"action_endif" = "Fin";
+"action_while" = "Tant que %@";
+"action_for" = "Pour tout %@ de %@";
 
 // Algorithm strings
 

@@ -19,13 +19,18 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
         // Register cells
         tableView.register(InputTableViewCell.self, forCellReuseIdentifier: "inputCell")
         tableView.register(OutputTableViewCell.self, forCellReuseIdentifier: "outputCell")
+        
+        // Add edit/view button
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "edit".localized(), style: .plain, target: self, action: #selector(showEditor(_:)))
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     func selectAlgorithm(_ algorithm: Algorithm?) {
         self.algorithm = algorithm
         
-        // Update title
+        // Update navigation bar
         navigationItem.title = algorithm?.name
+        navigationItem.rightBarButtonItem?.isEnabled = algorithm != nil
         
         // Deselect active fields
         for cell in tableView.visibleCells {
@@ -98,6 +103,15 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
         }
 
         return UITableViewCell()
+    }
+    
+    // Editor
+    
+    @objc func showEditor(_ sender: UIBarButtonItem) {
+        if let algorithm = algorithm {
+            let editor = EditorTableViewController(algorithm: algorithm)
+            present(UINavigationController(rootViewController: editor), animated: true, completion: nil)
+        }
     }
 
 }

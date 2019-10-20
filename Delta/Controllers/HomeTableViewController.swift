@@ -25,6 +25,14 @@ class HomeTableViewController: UITableViewController {
         // Register cells
         tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: "labelCell")
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
+            self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
+        }
+    }
 
     // TableView management
     
