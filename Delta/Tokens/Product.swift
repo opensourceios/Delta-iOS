@@ -15,7 +15,7 @@ struct Product: Token {
     func toString() -> String {
         var string = ""
         
-        for value in values {
+        for value in values.sorted(by: { $0.getMultiplicationPriority() > $1.getMultiplicationPriority() }) {
             // Initialization
             let brackets = value.needBrackets(for: .multiplication)
             var asString = value.toString()

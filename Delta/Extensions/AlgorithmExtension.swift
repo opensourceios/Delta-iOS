@@ -12,7 +12,7 @@ extension Algorithm {
     
     // Array of all algorithms
     static let array: [Algorithm] = [
-        .secondDegreeEquation
+        .secondDegreeEquation, .statistics
     ]
     
     // 2nd degree equation

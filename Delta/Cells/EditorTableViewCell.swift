@@ -14,6 +14,7 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
     let stack = UIStackView()
     var leadingConstraint: NSLayoutConstraint!
     var line: EditorLine?
+    var index: Int = 0
     weak var delegate: EditorLineChangedDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -54,10 +55,11 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func with(line: EditorLine, delegate: EditorLineChangedDelegate) -> EditorTableViewCell {
+    func with(line: EditorLine, delegate: EditorLineChangedDelegate, at index: Int) -> EditorTableViewCell {
         // Set editor line
         self.line = line
         self.delegate = delegate
+        self.index = index
         
         // Clear previous views
         while let view = stack.arrangedSubviews.first {
@@ -105,7 +107,7 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
     @objc func editingChanged(_ sender: UITextField) {
         // Update editor
         line?.values[sender.tag] = sender.text ?? ""
-        delegate?.editorLineChanged(line)
+        delegate?.editorLineChanged(line, at: index)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

@@ -39,4 +39,15 @@ class SetAction: Action {
         return [EditorLine(format: (format ? "action_set_formatted" : "action_set").localized(), values: [identifier, value.toString()])]
     }
     
+    func editorLinesCount() -> Int {
+        return 1
+    }
+    
+    func update(line: EditorLine, at index: Int) {
+        if line.values.count == 2 {
+            self.identifier = line.values[0]
+            self.value = Parser(line.values[1]).execute()
+        }
+    }
+    
 }

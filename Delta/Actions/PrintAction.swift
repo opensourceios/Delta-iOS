@@ -32,4 +32,14 @@ class PrintAction: Action {
         return [EditorLine(format: "action_print".localized(), values: [identifier])]
     }
     
+    func editorLinesCount() -> Int {
+        return 1
+    }
+    
+    func update(line: EditorLine, at index: Int) {
+        if line.values.count == 1 {
+            self.identifier = line.values[0]
+        }
+    }
+    
 }

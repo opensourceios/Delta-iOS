@@ -134,6 +134,10 @@ extension String {
         return workspace
     }
     
+    func indentLines() -> String {
+        return self.split(separator: "\n").map{ "    \($0)" }.joined(separator: "\n")
+    }
+    
     // Subscript
     
     subscript (i: Int) -> String {

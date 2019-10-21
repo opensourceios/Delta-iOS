@@ -39,13 +39,13 @@ class IfAction: Action {
         var string = "if \(condition.toString()) {"
         
         for action in actions {
-            string += "\n\(action.toString())"
+            string += "\n\(action.toString().indentLines())"
         }
         
         if !elseActions.isEmpty {
             string += "\n} else {"
             for action in elseActions {
-                string += "\n\(action.toString())"
+                string += "\n\(action.toString().indentLines())"
             }
         }
         
@@ -71,6 +71,51 @@ class IfAction: Action {
         lines.append(EditorLine(format: "action_endif".localized()))
         
         return lines
+    }
+    
+    func editorLinesCount() -> Int {
+        return actions.map{ $0.editorLinesCount() }.reduce(0, +) + 2 + (!elseActions.isEmpty ? elseActions.map{ $0.editorLinesCount() }.reduce(0, +) + 1 : 0)
+    }
+    
+    func update(line: EditorLine, at index: Int) {
+        if index == 0 && line.values.count == 1 {
+            // Get "if condition"
+            self.condition = Parser(line.values[0]).execute()
+        } else if index != 0 && index < editorLinesCount()-1 {
+            // Iterate actions
+            var i = 1
+            for action in actions {
+                // Get size
+                let size = action.editorLinesCount()
+                
+                // Check if index is in this action
+                if i + size > index {
+                    // Delegate to action
+                    action.update(line: line, at: index - i)
+                    return
+                } else {
+                    // Continue
+                    i += size
+                }
+            }
+            
+            // Iterate else actions
+            i += 1
+            for action in elseActions {
+                // Get size
+                let size = action.editorLinesCount()
+                
+                // Check if index is in this action
+                if i + size > index {
+                    // Delegate to action
+                    action.update(line: line, at: index - i)
+                    return
+                } else {
+                    // Continue
+                    i += size
+                }
+            }
+        }
     }
     
 }

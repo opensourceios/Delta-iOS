@@ -32,6 +32,11 @@ struct Variable: Token {
         
         // Sum
         if operation == .addition {
+            // Right is a sum
+            if let right = right as? Sum {
+                return Sum(values: right.values + [self])
+            }
+            
             return Sum(values: [self, right])
         }
         
@@ -42,6 +47,11 @@ struct Variable: Token {
         
         // Product
         if operation == .multiplication {
+            // Right is a product
+            if let right = right as? Product {
+                return Product(values: right.values + [self])
+            }
+            
             return Product(values: [self, right])
         }
         

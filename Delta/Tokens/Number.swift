@@ -37,6 +37,11 @@ struct Number: Token {
                 return Number(value: self.value + right.value)
             }
             
+            // Right is a sum
+            if let right = right as? Sum {
+                return Sum(values: right.values + [self])
+            }
+            
             // Return the sum
             return Sum(values: [self, right])
         }
@@ -75,6 +80,11 @@ struct Number: Token {
             // Rigth is number
             if let right = right as? Number {
                 return Number(value: self.value * right.value)
+            }
+            
+            // Right is a product
+            if let right = right as? Product {
+                return Product(values: right.values + [self])
             }
             
             // Right is a fraction

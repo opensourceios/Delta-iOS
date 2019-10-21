@@ -38,11 +38,11 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         tableView.register(EditorTableViewCell.self, forCellReuseIdentifier: "editorCell")
     }
     
-    func editorLineChanged(_ line: EditorLine?) {
+    func editorLineChanged(_ line: EditorLine?, at index: Int) {
         // Get vars
         if let line = line {
-            // Update the input
-            
+            // Update the line in algorithm
+            algorithm.update(line: line, at: index)
         }
     }
 
@@ -53,7 +53,7 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? algorithm.inputs.count : algorithm.toEditorLines().count
+        return section == 0 ? algorithm.toInputEditorLines().count : algorithm.editorLinesCount()
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -71,17 +71,16 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             // Get input
-            let variable = Array(algorithm.inputs.sorted{ return $0.key < $1.key })[indexPath.row]
-            let line = EditorLine(format: "%@ = %@", values: [variable.key, variable.value.toString()])
+            let line = algorithm.toInputEditorLines()[indexPath.row]
             
             // Return cell
-            return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self)
+            return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self, at: indexPath.row)
         } else {
             // Get editor line
             let line = algorithm.toEditorLines()[indexPath.row]
             
             // Return cell
-            return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self)
+            return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self, at: indexPath.row)
         }
     }
 
@@ -109,6 +108,6 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
 
 protocol EditorLineChangedDelegate: class {
     
-    func editorLineChanged(_ line: EditorLine?)
+    func editorLineChanged(_ line: EditorLine?, at index: Int)
     
 }

@@ -19,6 +19,7 @@
 "error_syntax" = "Syntax error";
 "error_constant" = "Cannot set value: %@ is a constant";
 "editor" = "Algorithm editor";
+"action_input" = "Ask for %@ with default %@";
 "action_print" = "Print %@";
 "action_set" = "Set %@ to %@";
 "action_set_formatted" = "Set %@ to %@ as format";

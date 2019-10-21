@@ -13,5 +13,7 @@ protocol Action {
     func execute(in process: Process)
     func toString() -> String
     func toEditorLines() -> [EditorLine]
+    func editorLinesCount() -> Int
+    func update(line: EditorLine, at index: Int)
     
 }
