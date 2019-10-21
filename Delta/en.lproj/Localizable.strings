@@ -12,6 +12,7 @@
 "ok" = "OK";
 "inputs" = "Inputs";
 "outputs" = "Outputs";
+"instructions" = "Instructions";
 "edit" = "Edit";
 "close" = "Close";
 "error_calcul" = "Calcul error";

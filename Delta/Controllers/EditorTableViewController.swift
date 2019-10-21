@@ -56,6 +56,10 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         return section == 0 ? algorithm.inputs.count : algorithm.toEditorLines().count
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "inputs".localized() : "instructions".localized()
+    }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

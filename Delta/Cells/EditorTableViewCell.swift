@@ -10,7 +10,7 @@ import UIKit
 
 class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
 
-    let bubble = UIView()
+    let bubble = UIScrollView()
     let stack = UIStackView()
     var leadingConstraint: NSLayoutConstraint!
     var line: EditorLine?
@@ -23,7 +23,7 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         backgroundColor = .clear
         
         contentView.addSubview(bubble)
-        contentView.addSubview(stack)
+        bubble.addSubview(stack)
         
         bubble.translatesAutoresizingMaskIntoConstraints = false
         bubble.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
@@ -37,9 +37,11 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.topAnchor.constraint(equalTo: bubble.topAnchor, constant: 10).isActive = true
         stack.leadingAnchor.constraint(equalTo: bubble.leadingAnchor, constant: 10).isActive = true
-        stack.trailingAnchor.constraint(equalTo: bubble.trailingAnchor, constant: -10).isActive = true
+        stack.trailingAnchor.constraint(lessThanOrEqualTo: bubble.trailingAnchor, constant: -10).isActive = true
         stack.bottomAnchor.constraint(equalTo: bubble.bottomAnchor, constant: -10).isActive = true
-        stack.axis = .vertical
+        stack.heightAnchor.constraint(equalTo: bubble.heightAnchor, constant: -20).isActive = true
+        stack.axis = .horizontal
+        stack.spacing = 10
         
         if #available(iOS 13.0, *) {
             bubble.backgroundColor = .secondarySystemGroupedBackground
@@ -65,15 +67,7 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         // Add parts to stackview
         var args = line.values
         var tag = 0
-        var currentStack: UIStackView?
         for part in line.format.cutEditorLine() {
-            // Create a line if needed
-            if currentStack == nil {
-                currentStack = UIStackView()
-                currentStack?.axis = .horizontal
-                currentStack?.distribution = .fillEqually
-            }
-            
             // Add current part to line
             if part == "%@" {
                 let field = UITextField()
@@ -83,31 +77,23 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
                 field.textAlignment = .center
                 field.delegate = self
                 field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+                field.backgroundColor = .groupTableViewBackground
+                field.addPadding()
+                field.layer.cornerRadius = 5
+                field.layer.masksToBounds = true
                 
                 if args.count > 0 {
                     field.text = args.removeFirst()
                 }
                 
-                currentStack?.addArrangedSubview(field)
+                stack.addArrangedSubview(field)
                 tag += 1
             } else {
                 let label = UILabel()
                 label.text = part.trimmingCharacters(in: CharacterSet(charactersIn: " "))
                 label.textAlignment = .center
-                currentStack?.addArrangedSubview(label)
+                stack.addArrangedSubview(label)
             }
-            
-            // If line is "full"
-            if let fullStack = currentStack, part == "%@", fullStack.arrangedSubviews.count > 1 {
-                stack.addArrangedSubview(fullStack)
-                currentStack = nil
-            }
-        }
-        
-        // If a line left
-        if let fullStack = currentStack {
-            stack.addArrangedSubview(fullStack)
-            currentStack = nil
         }
         
         // Update left space
