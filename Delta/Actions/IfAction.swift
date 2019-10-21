@@ -8,16 +8,24 @@
 
 import Foundation
 
-class IfAction: Action {
+class IfAction: ActionBlock {
     
     var condition: Token
     var actions: [Action]
-    var elseActions: [Action]
+    var elseAction: ElseAction?
     
-    init(_ condition: Token, do actions: [Action], else elseActions: [Action] = []) {
+    init(_ condition: Token, do actions: [Action], else elseAction: ElseAction? = nil) {
         self.condition = condition
         self.actions = actions
-        self.elseActions = elseActions
+        self.elseAction = elseAction
+    }
+    
+    func append(actions: [Action]) {
+        if let elseAction = elseAction {
+            elseAction.append(actions: actions)
+        } else {
+            self.actions.append(contentsOf: actions)
+        }
     }
     
     func execute(in process: Process) {
@@ -29,9 +37,7 @@ class IfAction: Action {
             }
         } else {
             // Execute else actions
-            for action in elseActions {
-                action.execute(in: process)
-            }
+            elseAction?.execute(in: process)
         }
     }
     
@@ -42,14 +48,11 @@ class IfAction: Action {
             string += "\n\(action.toString().indentLines())"
         }
         
-        if !elseActions.isEmpty {
-            string += "\n} else {"
-            for action in elseActions {
-                string += "\n\(action.toString().indentLines())"
-            }
-        }
-        
         string += "\n}"
+        
+        if let elseAction = elseAction {
+            string += elseAction.toString()
+        }
         
         return string
     }
@@ -61,11 +64,8 @@ class IfAction: Action {
             lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
         }
         
-        if !elseActions.isEmpty {
-            lines.append(EditorLine(format: "action_else".localized()))
-            for action in elseActions {
-                lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
-            }
+        if let elseAction = elseAction {
+            lines.append(contentsOf: elseAction.toEditorLines())
         }
         
         lines.append(EditorLine(format: "action_endif".localized()))
@@ -74,7 +74,13 @@ class IfAction: Action {
     }
     
     func editorLinesCount() -> Int {
-        return actions.map{ $0.editorLinesCount() }.reduce(0, +) + 2 + (!elseActions.isEmpty ? elseActions.map{ $0.editorLinesCount() }.reduce(0, +) + 1 : 0)
+        var count = actions.map{ $0.editorLinesCount() }.reduce(0, +) + 2
+        
+        if let elseAction = elseAction {
+            count += elseAction.editorLinesCount()
+        }
+        
+        return count
     }
     
     func update(line: EditorLine, at index: Int) {
@@ -99,21 +105,9 @@ class IfAction: Action {
                 }
             }
             
-            // Iterate else actions
-            i += 1
-            for action in elseActions {
-                // Get size
-                let size = action.editorLinesCount()
-                
-                // Check if index is in this action
-                if i + size > index {
-                    // Delegate to action
-                    action.update(line: line, at: index - i)
-                    return
-                } else {
-                    // Continue
-                    i += size
-                }
+            // Delegate to else actions
+            if let elseAction = elseAction {
+                elseAction.update(line: line, at: index - i)
             }
         }
     }

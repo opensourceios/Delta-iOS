@@ -49,7 +49,7 @@ extension Algorithm {
                     // Factorized form
                     SetAction("f(x)", to: TokenParser.init("a(x-x_0)^2").execute(), format: true),
                     PrintAction("f(x)")
-                ], else: [
+                ], else: ElseAction(do: [
                     // Print roots
                     SetAction("x_1", to: TokenParser.init("(-b-Δ^(1/2))/2a").execute()),
                     SetAction("x_2", to: TokenParser.init("(-b+Δ^(1/2))/2a").execute()),
@@ -59,7 +59,7 @@ extension Algorithm {
                     // Factorized form
                     SetAction("f(x)", to: TokenParser.init("a(x-x_1)(x-x_2)").execute(), format: true),
                     PrintAction("f(x)")
-                ])
+                ]))
             ])
         ]
         

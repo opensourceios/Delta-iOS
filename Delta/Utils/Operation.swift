@@ -8,44 +8,10 @@
 
 import Foundation
 
-enum Operation {
+enum Operation: String {
     
     // Values
-    case addition, subtraction, multiplication, division, power, root, equals, inequals, greaterThan, lessThan, greaterOrEquals, lessOrEquals, list, vector
-    
-    // Convert to string
-    func toString() -> String {
-        switch self {
-        case .addition:
-            return "+"
-        case .subtraction:
-            return "-"
-        case .multiplication:
-            return "*"
-        case .division:
-            return "/"
-        case .power:
-            return "^"
-        case .root:
-            return "√"
-        case .equals:
-            return "="
-        case .inequals:
-            return "≠"
-        case .greaterThan:
-            return ">"
-        case .lessThan:
-            return "<"
-        case .greaterOrEquals:
-            return ">="
-        case .lessOrEquals:
-            return "<="
-        case .list:
-            return ","
-        case .vector:
-            return ","
-        }
-    }
+    case addition = "+", subtraction = "-", multiplication = "*", division = "/", power = "^", root = "√", equals = "=", inequals = "!=", greaterThan = ">", lessThan = "<", greaterOrEquals = ">=", lessOrEquals = "<=", list = ",", vector = ";"
     
     // Get precedence
     func getPrecedence() -> Int {

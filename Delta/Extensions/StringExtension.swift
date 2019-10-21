@@ -93,7 +93,7 @@ extension String {
         // Iterate values
         for value in [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.power] {
             // If it's the value we want
-            if self == value.toString() {
+            if self == value.rawValue {
                 return value
             }
         }

@@ -38,7 +38,7 @@ struct Equation: Token {
     }
     
     func toString() -> String {
-        return "\(left.toString()) \(operation.toString()) \(right.toString())"
+        return "\(left.toString()) \(operation.rawValue) \(right.toString())"
     }
     
     func compute(with inputs: [String: Token], format: Bool) -> Token {

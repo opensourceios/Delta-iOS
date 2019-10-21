@@ -23,7 +23,7 @@ extension Array {
     
 }
 
-extension Array where Element: Equatable {
+extension Array where Element: StringProtocol {
     
     mutating func getFirstOperationAndRemove() -> Operation? {
         // Check if first is string
@@ -47,7 +47,7 @@ extension Array where Element: Equatable {
             // Iterate values
             for value in operators {
                 // If it's the value we want
-                if first == value.toString() {
+                if first == value.rawValue {
                     return value
                 }
             }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ForAction: Action {
+class ForAction: ActionBlock {
     
     var identifier: String
     var token: Token
@@ -18,6 +18,10 @@ class ForAction: Action {
         self.identifier = identifier
         self.token = token
         self.actions = actions
+    }
+    
+    func append(actions: [Action]) {
+        self.actions.append(contentsOf: actions)
     }
     
     func execute(in process: Process) {
