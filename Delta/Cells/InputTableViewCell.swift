@@ -70,12 +70,12 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractio
     }
     
     @objc func editingChanged(_ sender: Any) {
-        input?.expression = Parser(field.text).execute()
+        input?.expression = TokenParser(field.text).execute()
         delegate?.inputChanged(input)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let cs = NSCharacterSet(charactersIn: Parser.input).inverted
+        let cs = NSCharacterSet(charactersIn: TokenParser.input).inverted
         let filtered = string.components(separatedBy: cs).joined(separator: "")
 
         return (string == filtered)

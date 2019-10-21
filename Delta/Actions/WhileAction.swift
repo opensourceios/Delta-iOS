@@ -32,7 +32,7 @@ class WhileAction: Action {
     }
     
     func toString() -> String {
-        var string = "while \(condition.toString()) {"
+        var string = "while \"\(condition.toString())\" {"
         
         for action in actions {
             string += "\n\(action.toString().indentLines())"
@@ -62,7 +62,7 @@ class WhileAction: Action {
     func update(line: EditorLine, at index: Int) {
         if index == 0 && line.values.count == 1 {
             // Get "while condition"
-            self.condition = Parser(line.values[0]).execute()
+            self.condition = TokenParser(line.values[0]).execute()
         } else if index != 0 && index < editorLinesCount()-1 {
             // Iterate actions
             var i = 1

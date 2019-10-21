@@ -12,7 +12,7 @@ extension Algorithm {
     
     // Array of all algorithms
     static let array: [Algorithm] = [
-        .secondDegreeEquation, .statistics
+        .secondDegreeEquation
     ]
     
     // 2nd degree equation
@@ -25,16 +25,16 @@ extension Algorithm {
             // Check if a != 0
             IfAction("a".inequals(0), do: [
                 // Set main values
-                SetAction("Δ", to: Parser.init("b^2-4ac").execute()),
-                SetAction("α", to: Parser.init("(-b)/(2a)").execute()),
-                SetAction("β", to: Parser.init("(-Δ)/(4a)").execute()),
+                SetAction("Δ", to: TokenParser.init("b^2-4ac").execute()),
+                SetAction("α", to: TokenParser.init("(-b)/(2a)").execute()),
+                SetAction("β", to: TokenParser.init("(-Δ)/(4a)").execute()),
                 
                 // Developed form
-                SetAction("f(x)", to: Parser.init("ax^2+bx+c").execute(), format: true),
+                SetAction("f(x)", to: TokenParser.init("ax^2+bx+c").execute(), format: true),
                 PrintAction("f(x)"),
                 
                 // Canonical form
-                SetAction("f(x)", to: Parser.init("a(x-α)^2+β").execute(), format: true),
+                SetAction("f(x)", to: TokenParser.init("a(x-α)^2+β").execute(), format: true),
                 PrintAction("f(x)"),
                 
                 // Delta
@@ -47,17 +47,17 @@ extension Algorithm {
                     PrintAction("x_0"),
                     
                     // Factorized form
-                    SetAction("f(x)", to: Parser.init("a(x-x_0)^2").execute(), format: true),
+                    SetAction("f(x)", to: TokenParser.init("a(x-x_0)^2").execute(), format: true),
                     PrintAction("f(x)")
                 ], else: [
                     // Print roots
-                    SetAction("x_1", to: Parser.init("(-b-Δ^(1/2))/2a").execute()),
-                    SetAction("x_2", to: Parser.init("(-b+Δ^(1/2))/2a").execute()),
+                    SetAction("x_1", to: TokenParser.init("(-b-Δ^(1/2))/2a").execute()),
+                    SetAction("x_2", to: TokenParser.init("(-b+Δ^(1/2))/2a").execute()),
                     PrintAction("x_1"),
                     PrintAction("x_2"),
                     
                     // Factorized form
-                    SetAction("f(x)", to: Parser.init("a(x-x_1)(x-x_2)").execute(), format: true),
+                    SetAction("f(x)", to: TokenParser.init("a(x-x_1)(x-x_2)").execute(), format: true),
                     PrintAction("f(x)")
                 ])
             ])
@@ -70,7 +70,7 @@ extension Algorithm {
     static let vectors: Algorithm = {
         let u = Vector(values: [Number(value: 1), Number(value: 2)])
         let v = Vector(values: [Number(value: 3), Number(value: 4)])
-        let w = Parser.init("u+v").execute()
+        let w = TokenParser.init("u+v").execute()
         
         let actions: [Action] = [
             PrintAction("w")
@@ -91,7 +91,7 @@ extension Algorithm {
             // Iterate list
             ForAction("x", in: Variable(name: "L"), do: [
                 SetAction("Σx", to: Sum(values: [Variable(name: "Σx"), Variable(name: "x")])),
-                SetAction("n", to: Parser.init("n+1").execute())
+                SetAction("n", to: TokenParser.init("n+1").execute())
             ]),
             
             // Last calculs

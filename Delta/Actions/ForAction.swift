@@ -43,7 +43,7 @@ class ForAction: Action {
     }
     
     func toString() -> String {
-        var string = "for \(identifier) in \(token.toString()) {"
+        var string = "for \"\(identifier)\" in \"\(token.toString())\" {"
         
         for action in actions {
             string += "\n\(action.toString().indentLines())"
@@ -74,7 +74,7 @@ class ForAction: Action {
         if index == 0 && line.values.count == 2 {
             // Get "for identifier in token"
             self.identifier = line.values[0]
-            self.token = Parser(line.values[1]).execute()
+            self.token = TokenParser(line.values[1]).execute()
         } else if index != 0 && index < editorLinesCount()-1 {
             // Iterate actions
             var i = 1

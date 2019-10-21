@@ -111,7 +111,7 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let cs = NSCharacterSet(charactersIn: Parser.input).inverted
+        let cs = NSCharacterSet(charactersIn: TokenParser.input).inverted
         let filtered = string.components(separatedBy: cs).joined(separator: "")
 
         return (string == filtered)

@@ -1,5 +1,5 @@
 //
-//  Parser.swift
+//  TokenParser.swift
 //  Delta
 //
 //  Created by Nathan FALLET on 09/09/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Parser {
+class TokenParser {
     
     static let variables = "abcdefghijklmnopqrstuvwxyzΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΣσςϹϲΤτΥυΦφΧχΨψΩω"
     static let variablesAndNumber = "\(variables)0123456789"
@@ -22,7 +22,7 @@ class Parser {
     var i: Int
     
     init(_ tokens: String?) {
-        self.tokens = tokens ?? "0"
+        self.tokens = tokens ?? ""
         self.values = [Token]()
         self.ops = [String]()
         self.i = 0
@@ -49,7 +49,7 @@ class Parser {
                 // Opening brace
                 else if current == "(" {
                     // Check if we have a token before without operator
-                    if values.count > 0 && Parser.productCoefficients.contains(previous) {
+                    if values.count > 0 && TokenParser.productCoefficients.contains(previous) {
                         // Add a multiplication operator
                         ops.insert("*", at: 0)
                     }
@@ -75,7 +75,7 @@ class Parser {
                     }
                     
                     // Check if we have a token before without operator
-                    if values.count > 0 && Parser.productCoefficients.contains(previous) {
+                    if values.count > 0 && TokenParser.productCoefficients.contains(previous) {
                         // Add a multiplication operator
                         ops.insert("*", at: 0)
                     }
@@ -88,12 +88,12 @@ class Parser {
                 }
                 
                 // Variable
-                else if Parser.variables.contains(current) {
+                else if TokenParser.variables.contains(current) {
                     // Check name
                     var name = current
                     
                     // Check for an index
-                    if i < tokens.count-2 && tokens[i+1] == "_" && Parser.variablesAndNumber.contains(tokens[i+2]) {
+                    if i < tokens.count-2 && tokens[i+1] == "_" && TokenParser.variablesAndNumber.contains(tokens[i+2]) {
                         // Add index to variable
                         let index = tokens[i+2]
                         name += "_\(index)"
@@ -106,7 +106,7 @@ class Parser {
                     let variable = Variable(name: name)
 
                     // Check if we have a token before without operator
-                    if values.count > 0 && Parser.productCoefficients.contains(previous) {
+                    if values.count > 0 && TokenParser.productCoefficients.contains(previous) {
                         // Add a multiplication operator
                         ops.insert("*", at: 0)
                     }

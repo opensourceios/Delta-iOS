@@ -25,7 +25,7 @@ class PrintAction: Action {
     }
     
     func toString() -> String {
-        return "print \(identifier)"
+        return "print \"\(identifier)\""
     }
     
     func toEditorLines() -> [EditorLine] {

@@ -36,7 +36,7 @@ class IfAction: Action {
     }
     
     func toString() -> String {
-        var string = "if \(condition.toString()) {"
+        var string = "if \"\(condition.toString())\" {"
         
         for action in actions {
             string += "\n\(action.toString().indentLines())"
@@ -80,7 +80,7 @@ class IfAction: Action {
     func update(line: EditorLine, at index: Int) {
         if index == 0 && line.values.count == 1 {
             // Get "if condition"
-            self.condition = Parser(line.values[0]).execute()
+            self.condition = TokenParser(line.values[0]).execute()
         } else if index != 0 && index < editorLinesCount()-1 {
             // Iterate actions
             var i = 1

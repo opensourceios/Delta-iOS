@@ -22,7 +22,7 @@ class SetAction: Action {
     
     func execute(in process: Process) {
         // Check if variable is not a constant
-        if Parser.constants.contains(identifier) {
+        if TokenParser.constants.contains(identifier) {
             process.outputs.append("error_constant".localized().format(identifier))
             return
         }
@@ -32,7 +32,7 @@ class SetAction: Action {
     }
     
     func toString() -> String {
-        return "\(format ? "set_formatted" : "set") \(identifier) to \(value.toString())"
+        return "\(format ? "set_formatted" : "set") \"\(identifier)\" to \"\(value.toString())\""
     }
     
     func toEditorLines() -> [EditorLine] {
@@ -46,7 +46,7 @@ class SetAction: Action {
     func update(line: EditorLine, at index: Int) {
         if line.values.count == 2 {
             self.identifier = line.values[0]
-            self.value = Parser(line.values[1]).execute()
+            self.value = TokenParser(line.values[1]).execute()
         }
     }
     
