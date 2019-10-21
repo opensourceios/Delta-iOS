@@ -39,8 +39,50 @@ class AlgorithmParser {
             
             // Opening brace
             else if current == "{" {
-                // Add it to keywords
-                keywords.insert(current, at: 0)
+                // Some vars
+                i += 1
+                var content = ""
+                var count = 0
+                
+                // Get text until its closing brace
+                while lines[i] != "}" || count != 0 {
+                    // Add current
+                    content += lines[i]
+                    
+                    // Check for another opening brace
+                    if lines[i] == "{" {
+                        count += 1
+                    }
+                    
+                    // Closing
+                    if lines[i] == "}" {
+                        count -= 1
+                    }
+                    
+                    // Increment i
+                    i += 1
+                }
+                
+                // Parse block
+                let block = AlgorithmParser(content).execute()
+                
+                // Create an action from the line
+                if let action = createAction() as? ActionBlock {
+                    // Add braces actions
+                    action.append(actions: block)
+                    
+                    // If it is an ElseAction
+                    if let elseAction = action as? ElseAction {
+                        // Check for IfAction
+                        if let ifAction = actions.first as? IfAction {
+                            // Set elseAction
+                            ifAction.elseAction = elseAction
+                        }
+                    } else {
+                        // Add it to the list
+                        actions.insert(action, at: 0)
+                    }
+                }
             }
             
             // Characters
@@ -75,54 +117,12 @@ class AlgorithmParser {
                 tokens.insert(token, at: 0)
             }
             
-            // Closing brace
-            else if current == "}" {
-                // Store actions contained in braces
-                var inBraces = [Action]()
-                
-                // Create actions until opening brace
-                while !keywords.isEmpty && keywords.first != "{" {
-                    // Create an action from the line
-                    if let action = createAction() {
-                        // Add it to the list
-                        inBraces.insert(action, at: 0)
-                        print("\(action) from }")
-                    }
-                }
-                
-                // Remove opening brace and add block
-                if keywords.first == "{" {
-                    // Remove opening brace
-                    keywords.removeFirst()
-                    
-                    // Create an action from the line
-                    if let action = createAction() as? ActionBlock {
-                        // Add braces actions
-                        action.append(actions: inBraces)
-                        
-                        // If it is an ElseAction
-                        if let elseAction = action as? ElseAction {
-                            // Check for IfAction
-                            if let ifAction = actions.first as? IfAction {
-                                // Set elseAction
-                                ifAction.elseAction = elseAction
-                            }
-                        } else {
-                            // Add it to the list
-                            actions.insert(action, at: 0)
-                            print("\(action) from {")
-                        }
-                    }
-                }
-            }
-            
             // New line not in braces
             else if current == "\n" && !keywords.contains("{") {
                 // Create an action from the line
                 if let action = createAction() {
                     // Add it to the list
                     actions.insert(action, at: 0)
-                    print("\(action) from \\n")
                 }
             }
             

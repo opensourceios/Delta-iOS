@@ -26,7 +26,13 @@ enum Operation: String {
     
     // Join with two tokens
     func join(left: Token, right: Token) -> Token {
-        left.apply(operation: self, right: right, with: [:], format: true)
+        // Check for equations
+        if self == .equals || self == .inequals || self == .greaterThan || self == .lessThan || self == .greaterOrEquals || self == .lessOrEquals {
+            return Equation(left: left, right: right, operation: self)
+        }
+        
+        // Simple expression
+        return left.apply(operation: self, right: right, with: [:], format: true)
     }
     
 }

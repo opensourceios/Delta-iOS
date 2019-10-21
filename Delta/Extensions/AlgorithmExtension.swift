@@ -12,7 +12,7 @@ extension Algorithm {
     
     // Array of all algorithms
     static let array: [Algorithm] = [
-        .secondDegreeEquation, .test
+        .secondDegreeEquation
     ]
     
     // 2nd degree equation
@@ -22,9 +22,6 @@ extension Algorithm {
         let c = Number(value: 12)
         
         let actions = AlgorithmParser("""
-            print "a"
-            print "b"
-            print "c"
             if "a != 0" {
                 set "Δ" to "b ^ 2 - 4ac"
                 set "α" to "(-b) / (2a)"
