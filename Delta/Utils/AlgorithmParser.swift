@@ -97,10 +97,21 @@ class AlgorithmParser {
                     
                     // Create an action from the line
                     if let action = createAction() as? ActionBlock {
-                        // Add it to the list
+                        // Add braces actions
                         action.append(actions: inBraces)
-                        actions.insert(action, at: 0)
-                        print("\(action) from {")
+                        
+                        // If it is an ElseAction
+                        if let elseAction = action as? ElseAction {
+                            // Check for IfAction
+                            if let ifAction = actions.first as? IfAction {
+                                // Set elseAction
+                                ifAction.elseAction = elseAction
+                            }
+                        } else {
+                            // Add it to the list
+                            actions.insert(action, at: 0)
+                            print("\(action) from {")
+                        }
                     }
                 }
             }
