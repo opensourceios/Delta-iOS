@@ -12,7 +12,7 @@ extension Algorithm {
     
     // Array of all algorithms
     static let array: [Algorithm] = [
-        .secondDegreeEquation
+        .secondDegreeEquation, .test
     ]
     
     // 2nd degree equation
@@ -21,47 +21,34 @@ extension Algorithm {
         let b = Number(value: 7)
         let c = Number(value: 12)
         
-        let actions: [Action] = [
-            // Check if a != 0
-            IfAction("a".inequals(0), do: [
-                // Set main values
-                SetAction("Δ", to: TokenParser.init("b^2-4ac").execute()),
-                SetAction("α", to: TokenParser.init("(-b)/(2a)").execute()),
-                SetAction("β", to: TokenParser.init("(-Δ)/(4a)").execute()),
-                
-                // Developed form
-                SetAction("f(x)", to: TokenParser.init("ax^2+bx+c").execute(), format: true),
-                PrintAction("f(x)"),
-                
-                // Canonical form
-                SetAction("f(x)", to: TokenParser.init("a(x-α)^2+β").execute(), format: true),
-                PrintAction("f(x)"),
-                
-                // Delta
-                PrintAction("Δ"),
-                
-                // If delta is zero
-                IfAction("Δ".equals(0), do: [
-                    // Print root
-                    SetAction("x_0", to: Variable(name: "α")),
-                    PrintAction("x_0"),
-                    
-                    // Factorized form
-                    SetAction("f(x)", to: TokenParser.init("a(x-x_0)^2").execute(), format: true),
-                    PrintAction("f(x)")
-                ], else: ElseAction(do: [
-                    // Print roots
-                    SetAction("x_1", to: TokenParser.init("(-b-Δ^(1/2))/2a").execute()),
-                    SetAction("x_2", to: TokenParser.init("(-b+Δ^(1/2))/2a").execute()),
-                    PrintAction("x_1"),
-                    PrintAction("x_2"),
-                    
-                    // Factorized form
-                    SetAction("f(x)", to: TokenParser.init("a(x-x_1)(x-x_2)").execute(), format: true),
-                    PrintAction("f(x)")
-                ]))
-            ])
-        ]
+        let actions = AlgorithmParser("""
+            print "a"
+            print "b"
+            print "c"
+            if "a != 0" {
+                set "Δ" to "b ^ 2 - 4ac"
+                set "α" to "(-b) / (2a)"
+                set "β" to "(-Δ) / (4a)"
+                set_formatted "f(x)" to "ax ^ 2 + bx + c"
+                print "f(x)"
+                set_formatted "f(x)" to "a(x - α) ^ 2 + β"
+                print "f(x)"
+                print "Δ"
+                if "Δ = 0" {
+                    set "x_0" to "α"
+                    print "x_0"
+                    set_formatted "f(x)" to "a(x - x_0) ^ 2"
+                    print "f(x)"
+                } else {
+                    set "x_1" to "(-b - (Δ)^(1/2)) / (2a)"
+                    set "x_2" to "(-b + (Δ)^(1/2)) / (2a)"
+                    print "x_1"
+                    print "x_2"
+                    set_formatted "f(x)" to "a(x - x_1)(x - x_2)"
+                    print "f(x)"
+                }
+            }
+            """).execute()
         
         return Algorithm(name: "algo1_name".localized(), inputs: ["a": a, "b": b, "c": c], actions: actions)
     }()
@@ -107,6 +94,12 @@ extension Algorithm {
     }()
     
     // Parse testing
-    static let test: Algorithm = Algorithm(name: "Test", inputs: ["λ": Number(value: 0)], actions: [PrintAction("λ")])
+    static let test: Algorithm = {
+        let actions = AlgorithmParser("""
+            print "λ"
+            """).execute()
+        
+        return Algorithm(name: "Test", inputs: ["λ": Number(value: 0)], actions: actions)
+    }()
     
 }

@@ -163,8 +163,17 @@ class TokenParser {
                         }
                     }
                     
-                    // Add current operation
-                    ops.insert(current, at: 0)
+                    // If next if "="
+                    if i < tokens.count-1 && tokens[i+1] == "=" {
+                        // Add it
+                        ops.insert("\(current)=", at: 0)
+                        
+                        // Increment i
+                        i += 1
+                    } else {
+                        // Add current operation
+                        ops.insert(current, at: 0)
+                    }
                     
                     // If subtraction with no number before
                     if current == "-" && values.count == 0 {

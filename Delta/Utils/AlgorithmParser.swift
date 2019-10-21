@@ -63,18 +63,16 @@ class AlgorithmParser {
             // Tokens
             else if current == "\"" {
                 var token = ""
+                i += 1
                 
                 // Get all the characters
-                while i < lines.count && (lines[i] != "\"" || token.isEmpty) {
+                while i < lines.count && lines[i] != "\"" {
                     token += lines[i]
                     i += 1
                 }
                 
                 // Insert into tokens
                 tokens.insert(token, at: 0)
-                
-                // Remove one, else current caracter is skept
-                i -= 1
             }
             
             // Closing brace
@@ -88,29 +86,37 @@ class AlgorithmParser {
                     if let action = createAction() {
                         // Add it to the list
                         inBraces.insert(action, at: 0)
+                        print("\(action) from }")
                     }
                 }
                 
-                // Remove opening brace
-                if !keywords.isEmpty {
+                // Remove opening brace and add block
+                if keywords.first == "{" {
+                    // Remove opening brace
                     keywords.removeFirst()
-                }
-                
-                // Add the brace to the block
-                if let actionBlock = actions.first as? ActionBlock {
-                    // Add content to action
-                    actionBlock.append(actions: inBraces)
+                    
+                    // Create an action from the line
+                    if let action = createAction() as? ActionBlock {
+                        // Add it to the list
+                        action.append(actions: inBraces)
+                        actions.insert(action, at: 0)
+                        print("\(action) from {")
+                    }
                 }
             }
             
-            // New line
-            else if current == "\n" {
+            // New line not in braces
+            else if current == "\n" && !keywords.contains("{") {
                 // Create an action from the line
                 if let action = createAction() {
                     // Add it to the list
                     actions.insert(action, at: 0)
+                    print("\(action) from \\n")
                 }
             }
+            
+            // Increment i
+            i += 1
         }
         
         // If something left, add it
@@ -133,26 +139,38 @@ class AlgorithmParser {
             
             // Keyword list
             let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.While]
-            let grouped = [Keyword.In: Keyword.For, Keyword.To: Keyword.Set]
+            let grouped = [Keyword.In: [Keyword.For], Keyword.To: [Keyword.Set, Keyword.SetFormatted]]
             
             // Iterate values
-            for value in grouped {
+            for key in grouped {
                 // If it's the keyword we want
-                if first == value.key.rawValue {
+                if first == key.key.rawValue {
                     // Get the next one
                     if let second = keywords.first {
                         // Remove it too
                         keywords.removeFirst()
                         
-                        // Check if second is the correct value
-                        if second == value.value.rawValue {
-                            // Create action and return it
-                            if value.value == .For && tokens.count >= 2 {
-                                // For "identifier" in "token"
-                                return ForAction(tokens.removeFirst(), in: TokenParser(tokens.removeFirst()).execute(), do: [])
-                            } else if value.value == .Set && tokens.count >= 2 {
-                                // Set "identifier" to "token"
-                                return SetAction(tokens.removeFirst(), to: TokenParser(tokens.removeFirst()).execute())
+                        // Iterate values
+                        for value in key.value {
+                            // Check if second is the correct value
+                            if second == value.rawValue {
+                                // Create action and return it
+                                if value == .For && tokens.count >= 2 {
+                                    // For "identifier" in "token"
+                                    let token = TokenParser(tokens.removeFirst()).execute()
+                                    let identifier = tokens.removeFirst()
+                                    return ForAction(identifier, in: token, do: [])
+                                } else if value == .Set && tokens.count >= 2 {
+                                    // Set "identifier" to "token"
+                                    let token = TokenParser(tokens.removeFirst()).execute()
+                                    let identifier = tokens.removeFirst()
+                                    return SetAction(identifier, to: token)
+                                } else if value == .SetFormatted && tokens.count >= 2 {
+                                    // Set "identifier" to "token" as format
+                                    let token = TokenParser(tokens.removeFirst()).execute()
+                                    let identifier = tokens.removeFirst()
+                                    return SetAction(identifier, to: token, format: true)
+                                }
                             }
                         }
                     }
@@ -166,16 +184,19 @@ class AlgorithmParser {
                     // Create action and return it
                     if value == .If && tokens.count >= 1 {
                         // If "condition"
-                        return IfAction(TokenParser(tokens.removeFirst()).execute(), do: [])
+                        let condition = TokenParser(tokens.removeFirst()).execute()
+                        return IfAction(condition, do: [])
                     } else if value == .Else {
                         // Else
                         return ElseAction(do: [])
                     } else if value == .Print && tokens.count >= 1 {
                         // Print "identifier"
-                        return PrintAction(tokens.removeFirst())
+                        let identifier = tokens.removeFirst()
+                        return PrintAction(identifier)
                     } else if value == .While && tokens.count >= 1 {
                         // While "condition"
-                        return WhileAction(TokenParser(tokens.removeFirst()).execute(), do: [])
+                        let condition = TokenParser(tokens.removeFirst()).execute()
+                        return WhileAction(condition, do: [])
                     }
                 }
             }
