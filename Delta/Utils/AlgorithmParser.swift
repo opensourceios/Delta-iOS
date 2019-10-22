@@ -10,24 +10,35 @@ import Foundation
 
 class AlgorithmParser {
     
+    // Constants
     static let characters = "abcdefghijklmnopqrstuvwxyz_"
     
-    var lines: String
-    var actions: [Action]
-    var keywords: [String]
-    var tokens: [String]
-    var i: Int
+    // Parsing vars
+    private var lines: String
+    private var keywords: [String]
+    private var tokens: [String]
+    private var i: Int
     
-    init(_ lines: String?) {
+    // Algorithm vars
+    private var id: Int
+    private var name: String
+    private var actions: [Action]
+    private var inputs: [String: Token]
+    
+    init(_ id: Int, named name: String, with lines: String?) {
         self.lines = lines ?? ""
-        self.actions = [Action]()
         self.keywords = [String]()
         self.tokens = [String]()
         self.i = 0
+        
+        self.id = id
+        self.name = name
+        self.actions = [Action]()
+        self.inputs = [String: Token]()
     }
     
     // Parse an algorithm
-    func execute() -> [Action] {
+    func execute() -> Algorithm {
         // For each character of the string
         while i < lines.count {
             let current = lines[i]
@@ -64,7 +75,7 @@ class AlgorithmParser {
                 }
                 
                 // Parse block
-                let block = AlgorithmParser(content).execute()
+                let block = AlgorithmParser(0, named: "", with: content).execute().actions
                 
                 // Create an action from the line
                 if let action = createAction() as? ActionBlock {
@@ -80,7 +91,7 @@ class AlgorithmParser {
                         }
                     } else {
                         // Add it to the list
-                        actions.insert(action, at: 0)
+                        insertAction(action)
                     }
                 }
             }
@@ -122,7 +133,7 @@ class AlgorithmParser {
                 // Create an action from the line
                 if let action = createAction() {
                     // Add it to the list
-                    actions.insert(action, at: 0)
+                    insertAction(action)
                 }
             }
             
@@ -135,11 +146,22 @@ class AlgorithmParser {
             // Create an action from the line
             if let action = createAction() {
                 // Add it to the list
-                actions.insert(action, at: 0)
+                insertAction(action)
             }
         }
         
-        return actions.reversed()
+        // Create an algorithm with parsed data
+        return Algorithm(id: id, name: name, inputs: inputs, actions: actions.reversed())
+    }
+    
+    func insertAction(_ action: Action) {
+        if let input = action as? InputAction {
+            // Add to inputs
+            inputs[input.identifier] = input.value
+        } else {
+            // Insert into actions
+            actions.insert(action, at: 0)
+        }
     }
     
     func createAction() -> Action? {
@@ -150,7 +172,7 @@ class AlgorithmParser {
             
             // Keyword list
             let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.While]
-            let grouped = [Keyword.In: [Keyword.For], Keyword.To: [Keyword.Set, Keyword.SetFormatted]]
+            let grouped = [Keyword.Default: [Keyword.Input], Keyword.In: [Keyword.For], Keyword.To: [Keyword.Set, Keyword.SetFormatted]]
             
             // Iterate values
             for key in grouped {
@@ -166,7 +188,12 @@ class AlgorithmParser {
                             // Check if second is the correct value
                             if second == value.rawValue {
                                 // Create action and return it
-                                if value == .For && tokens.count >= 2 {
+                                if value == .Input && tokens.count >= 2 {
+                                    // Input "identifier" default "token"
+                                    let token = TokenParser(tokens.removeFirst()).execute()
+                                    let identifier = tokens.removeFirst()
+                                    return InputAction(identifier, default: token)
+                                } else if value == .For && tokens.count >= 2 {
                                     // For "identifier" in "token"
                                     let token = TokenParser(tokens.removeFirst()).execute()
                                     let identifier = tokens.removeFirst()

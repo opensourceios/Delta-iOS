@@ -16,16 +16,18 @@ class TokenParser {
     static let constants = "i"
     static let input = " \(variablesAndNumber)_+-*/^√,;(){}=<>!"
     
-    var tokens: String
-    var values: [Token]
-    var ops: [String]
-    var i: Int
+    private var tokens: String
+    private var ops: [String]
+    private var i: Int
+    
+    private var values: [Token]
     
     init(_ tokens: String?) {
         self.tokens = tokens ?? ""
-        self.values = [Token]()
         self.ops = [String]()
         self.i = 0
+        
+        self.values = [Token]()
     }
     
     // Parse an expression

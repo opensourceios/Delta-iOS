@@ -10,11 +10,13 @@ import Foundation
 
 class Algorithm {
     
+    var id: Int?
     var name: String
     var inputs: [String: Token]
     var actions: [Action]
     
-    init(name: String, inputs: [String: Token], actions: [Action]) {
+    init(id: Int, name: String, inputs: [String: Token], actions: [Action]) {
+        self.id = id
         self.name = name
         self.inputs = inputs
         self.actions = actions
