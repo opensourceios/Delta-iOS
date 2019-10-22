@@ -59,13 +59,13 @@ class ForAction: ActionBlock {
     }
     
     func toEditorLines() -> [EditorLine] {
-        var lines = [EditorLine(format: "action_for".localized(), values: [identifier, token.toString()])]
+        var lines = [EditorLine(format: "action_for".localized(), category: .structure, values: [identifier, token.toString()])]
         
         for action in actions {
             lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
         }
         
-        lines.append(EditorLine(format: "action_endif".localized()))
+        lines.append(EditorLine(format: "action_endif".localized(), category: .structure))
         
         return lines
     }

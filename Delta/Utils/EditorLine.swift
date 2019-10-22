@@ -11,11 +11,13 @@ import Foundation
 class EditorLine {
     
     var format: String
+    var category: EditorLineCategory
     var indentation: Int
     var values: [String]
     
-    init(format: String, indentation: Int = 0, values: [String] = []) {
+    init(format: String, category: EditorLineCategory, indentation: Int = 0, values: [String] = []) {
         self.format = format
+        self.category = category
         self.indentation = indentation
         self.values = values
     }

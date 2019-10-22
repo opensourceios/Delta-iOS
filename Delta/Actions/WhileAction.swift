@@ -48,13 +48,13 @@ class WhileAction: ActionBlock {
     }
     
     func toEditorLines() -> [EditorLine] {
-        var lines = [EditorLine(format: "action_while".localized(), values: [condition.toString()])]
+        var lines = [EditorLine(format: "action_while".localized(), category: .structure, values: [condition.toString()])]
         
         for action in actions {
             lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
         }
         
-        lines.append(EditorLine(format: "action_endif".localized()))
+        lines.append(EditorLine(format: "action_endif".localized(), category: .structure))
         
         return lines
     }

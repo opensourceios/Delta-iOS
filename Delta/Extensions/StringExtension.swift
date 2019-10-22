@@ -69,6 +69,10 @@ extension String {
         return parts
     }
     
+    func capitalizeFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+    
     // Custom operations
     
     func equals(_ right: Int) -> Equation {

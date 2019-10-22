@@ -36,7 +36,7 @@ class SetAction: Action {
     }
     
     func toEditorLines() -> [EditorLine] {
-        return [EditorLine(format: (format ? "action_set_formatted" : "action_set").localized(), values: [identifier, value.toString()])]
+        return [EditorLine(format: (format ? "action_set_formatted" : "action_set").localized(), category: .variable, values: [identifier, value.toString()])]
     }
     
     func editorLinesCount() -> Int {

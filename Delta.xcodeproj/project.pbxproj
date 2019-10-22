@@ -54,6 +54,7 @@
 		6AD2B13A234E08ED00E75AAF /* Fraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD2B139234E08ED00E75AAF /* Fraction.swift */; };
 		6AE83705235AED5000DBED51 /* OutputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE83704235AED5000DBED51 /* OutputTableViewCell.swift */; };
 		6AED92C1235EDB33009EEAFE /* InputAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AED92C0235EDB33009EEAFE /* InputAction.swift */; };
+		6AED92C3235F38BD009EEAFE /* EditorLineCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AED92C2235F38BD009EEAFE /* EditorLineCategory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -122,6 +123,7 @@
 		6AD2B139234E08ED00E75AAF /* Fraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fraction.swift; sourceTree = "<group>"; };
 		6AE83704235AED5000DBED51 /* OutputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputTableViewCell.swift; sourceTree = "<group>"; };
 		6AED92C0235EDB33009EEAFE /* InputAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAction.swift; sourceTree = "<group>"; };
+		6AED92C2235F38BD009EEAFE /* EditorLineCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorLineCategory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +221,7 @@
 				6ABC904B235DBDE800F07D6D /* AlgorithmParser.swift */,
 				3203EF69214FB132005C287C /* AppDelegate.swift */,
 				6AAE8BCB235CBAAF000634CA /* EditorLine.swift */,
+				6AED92C2235F38BD009EEAFE /* EditorLineCategory.swift */,
 				6ABC904D235DEFB400F07D6D /* Keyword.swift */,
 				6A0A8CC62323CECF00F0C41C /* Operation.swift */,
 				6A16E402234A4FE200089765 /* Process.swift */,
@@ -376,6 +379,7 @@
 				6A0A8CC72323CECF00F0C41C /* Operation.swift in Sources */,
 				6A0A8CCF2323EFD600F0C41C /* SyntaxError.swift in Sources */,
 				6A16E401234A4FB500089765 /* Action.swift in Sources */,
+				6AED92C3235F38BD009EEAFE /* EditorLineCategory.swift in Sources */,
 				6ABC9052235DFFA600F07D6D /* ActionBlock.swift in Sources */,
 				6AC40DAE2324DDC6003C8131 /* Equation.swift in Sources */,
 				6AC40DB02324E7E2003C8131 /* CalculError.swift in Sources */,

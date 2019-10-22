@@ -40,7 +40,7 @@ class ElseAction: ActionBlock {
     }
     
     func toEditorLines() -> [EditorLine] {
-        var lines = [EditorLine(format: "action_else".localized())]
+        var lines = [EditorLine(format: "action_else".localized(), category: .structure)]
         
         for action in actions {
             lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })

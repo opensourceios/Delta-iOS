@@ -29,7 +29,7 @@ class PrintAction: Action {
     }
     
     func toEditorLines() -> [EditorLine] {
-        return [EditorLine(format: "action_print".localized(), values: [identifier])]
+        return [EditorLine(format: "action_print".localized(), category: .output, values: [identifier])]
     }
     
     func editorLinesCount() -> Int {

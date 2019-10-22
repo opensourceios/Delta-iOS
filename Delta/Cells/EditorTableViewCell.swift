@@ -10,7 +10,10 @@ import UIKit
 
 class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
 
-    let bubble = UIScrollView()
+    let bubble = UIView()
+    let scroll = UIScrollView()
+    let icon = UIImageView()
+    let category = UILabel()
     let stack = UIStackView()
     var leadingConstraint: NSLayoutConstraint!
     var line: EditorLine?
@@ -24,7 +27,10 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         backgroundColor = .clear
         
         contentView.addSubview(bubble)
-        bubble.addSubview(stack)
+        contentView.addSubview(icon)
+        contentView.addSubview(category)
+        contentView.addSubview(scroll)
+        scroll.addSubview(stack)
         
         bubble.translatesAutoresizingMaskIntoConstraints = false
         bubble.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
@@ -35,14 +41,32 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         bubble.layer.cornerRadius = 10
         bubble.layer.masksToBounds = true
         
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.centerYAnchor.constraint(equalTo: category.centerYAnchor).isActive = true
+        icon.leadingAnchor.constraint(equalTo: bubble.leadingAnchor, constant: 10).isActive = true
+        icon.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        icon.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        category.translatesAutoresizingMaskIntoConstraints = false
+        category.topAnchor.constraint(equalTo: bubble.topAnchor, constant: 10).isActive = true
+        category.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 8).isActive = true
+        category.trailingAnchor.constraint(lessThanOrEqualTo: bubble.trailingAnchor, constant: -10).isActive = true
+        category.font = UIFont.boldSystemFont(ofSize: 17)
+        
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.topAnchor.constraint(equalTo: category.bottomAnchor).isActive = true
+        scroll.leadingAnchor.constraint(equalTo: bubble.leadingAnchor).isActive = true
+        scroll.trailingAnchor.constraint(equalTo: bubble.trailingAnchor).isActive = true
+        scroll.bottomAnchor.constraint(equalTo: bubble.bottomAnchor).isActive = true
+        
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.topAnchor.constraint(equalTo: bubble.topAnchor, constant: 10).isActive = true
-        stack.leadingAnchor.constraint(equalTo: bubble.leadingAnchor, constant: 10).isActive = true
-        stack.trailingAnchor.constraint(lessThanOrEqualTo: bubble.trailingAnchor, constant: -10).isActive = true
-        stack.bottomAnchor.constraint(equalTo: bubble.bottomAnchor, constant: -10).isActive = true
-        stack.heightAnchor.constraint(equalTo: bubble.heightAnchor, constant: -20).isActive = true
+        stack.topAnchor.constraint(equalTo: scroll.topAnchor, constant: 10).isActive = true
+        stack.leadingAnchor.constraint(equalTo: scroll.leadingAnchor, constant: 10).isActive = true
+        stack.trailingAnchor.constraint(lessThanOrEqualTo: scroll.trailingAnchor, constant: -10).isActive = true
+        stack.bottomAnchor.constraint(equalTo: scroll.bottomAnchor, constant: -10).isActive = true
+        stack.heightAnchor.constraint(equalTo: scroll.heightAnchor, constant: -20).isActive = true
         stack.axis = .horizontal
-        stack.spacing = 10
+        stack.spacing = 8
         
         if #available(iOS 13.0, *) {
             bubble.backgroundColor = .secondarySystemGroupedBackground
@@ -99,7 +123,11 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
         
         // Update left space
-        leadingConstraint.constant = CGFloat(line.indentation * 20)
+        leadingConstraint.constant = CGFloat(line.indentation * 30)
+        
+        // Update icon and category
+        icon.image = UIImage(named: line.category.rawValue.capitalizeFirstLetter())
+        category.text = "category_\(line.category.rawValue)".localized()
         
         return self
     }

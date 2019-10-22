@@ -28,6 +28,9 @@
 "action_endif" = "Fin";
 "action_while" = "Tant que %@";
 "action_for" = "Pour tout %@ de %@";
+"category_variable" = "Variable";
+"category_structure" = "Structure";
+"category_output" = "Sortie";
 
 // Algorithm strings
 
