@@ -32,6 +32,9 @@ class TokenParser {
     
     // Parse an expression
     func execute() -> Token {
+        // Remove whitespaces
+        tokens = tokens.replacingOccurrences(of: " ", with: "")
+        
         // Check if empty
         if tokens.isEmpty {
             return Number(value: 0)
@@ -43,13 +46,8 @@ class TokenParser {
                 let current = tokens[i]
                 let previous = i > 0 ? tokens[i-1] : ""
                 
-                // Skip whitespace
-                if current == " " {
-                    // Do nothing
-                }
-                
                 // Opening brace
-                else if current == "(" {
+                if current == "(" {
                     // Check if we have a token before without operator
                     if values.count > 0 && TokenParser.productCoefficients.contains(previous) {
                         // Add a multiplication operator
@@ -83,7 +81,7 @@ class TokenParser {
                     }
                     
                     // Insert into values
-                    values.insert(Number(value: val), at: 0)
+                    insertValue(Number(value: val))
                     
                     // Remove one, else current caracter is skept
                     i -= 1
@@ -114,18 +112,17 @@ class TokenParser {
                     }
                     
                     // Insert into values
-                    values.insert(variable, at: 0)
+                    insertValue(variable)
                 }
                 
                 // Closing brace
                 else if current == ")" {
                     // Create the token
                     while !ops.isEmpty && ops.first != "(" {
-                        let right = try values.getFirstTokenAndRemove()
-                        let left = try values.getFirstTokenAndRemove()
-                        
-                        if let op = ops.getFirstOperationAndRemove() {
-                            values.insert(op.join(left: left, right: right), at: 0)
+                        // Create a token
+                        if let value = try createValue() {
+                            // Insert it into the list
+                            insertValue(value)
                         }
                     }
                     
@@ -139,11 +136,10 @@ class TokenParser {
                 else if current == "}" {
                     // Create the token
                     while !ops.isEmpty && ops.first != "{" {
-                        let right = try values.getFirstTokenAndRemove()
-                        let left = try values.getFirstTokenAndRemove()
-                        
-                        if let op = ops.getFirstOperationAndRemove() {
-                            values.insert(op.join(left: left, right: right), at: 0)
+                        // Create a token
+                        if let value = try createValue() {
+                            // Insert it into the list
+                            insertValue(value)
                         }
                     }
                     
@@ -152,17 +148,36 @@ class TokenParser {
                         ops.removeFirst()
                     }
                 }
+                    
+                // Root
+                else if current == "√" {
+                    // Check if we have a token before without operator
+                    if values.count > 0 && TokenParser.productCoefficients.contains(previous) {
+                        // Add a multiplication operator
+                        ops.insert("*", at: 0)
+                    }
+                    
+                    // Insert the 2nd power
+                    insertValue(Number(value: 2))
+                    
+                    // Add current operation
+                    ops.insert(current, at: 0)
+                }
                 
                 // Operation
                 else {
                     // While first operation has same or greater precendence to current, apply to two first values
                     while !ops.isEmpty, let p1 = ops.first?.toOperation()?.getPrecedence(), let p2 = current.toOperation()?.getPrecedence(), p1 >= p2 {
-                        let right = try values.getFirstTokenAndRemove()
-                        let left = try values.getFirstTokenAndRemove()
-                        
-                        if let op = ops.getFirstOperationAndRemove() {
-                            values.insert(op.join(left: left, right: right), at: 0)
+                        // Create a token
+                        if let value = try createValue() {
+                            // Insert it into the list
+                            insertValue(value)
                         }
+                    }
+                    
+                    // If subtraction with no number before
+                    if current == "-" && values.count == 0 {
+                        insertValue(Number(value: 0))
                     }
                     
                     // If next if "="
@@ -176,11 +191,6 @@ class TokenParser {
                         // Add current operation
                         ops.insert(current, at: 0)
                     }
-                    
-                    // If subtraction with no number before
-                    if current == "-" && values.count == 0 {
-                        values.insert(Number(value: 0), at: 0)
-                    }
                 }
                 
                 // Increment i
@@ -189,11 +199,10 @@ class TokenParser {
             
             // Entire expression parsed, apply remaining values
             while !ops.isEmpty {
-                let right = try values.getFirstTokenAndRemove()
-                let left = try values.getFirstTokenAndRemove()
-                
-                if let op = ops.getFirstOperationAndRemove() {
-                    values.insert(op.join(left: left, right: right), at: 0)
+                // Create a token
+                if let value = try createValue() {
+                    // Insert it into the list
+                    insertValue(value)
                 }
             }
             
@@ -207,6 +216,29 @@ class TokenParser {
         
         // If the token is not valid
         return SyntaxError()
+    }
+    
+    func insertValue(_ value: Token) {
+        // Insert the value in the list
+        values.insert(value, at: 0)
+    }
+    
+    func createValue() throws -> Token? {
+        // Get tokens
+        let right = try values.getFirstTokenAndRemove()
+        let left = try values.getFirstTokenAndRemove()
+        
+        // Get operator and apply
+        if let op = ops.getFirstOperationAndRemove() {
+            if op == .root {
+                return op.join(left: right, right: left)
+            } else {
+                return op.join(left: left, right: right)
+            }
+        }
+        
+        // Nothing found
+        return nil
     }
     
 }

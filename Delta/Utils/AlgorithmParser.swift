@@ -39,17 +39,15 @@ class AlgorithmParser {
     
     // Parse an algorithm
     func execute() -> Algorithm {
+        // Remove whitespaces
+        lines = lines.replacingOccurrences(of: " ", with: "")
+        
         // For each character of the string
         while i < lines.count {
             let current = lines[i]
             
-            // skip whitespace
-            if current == " " {
-                // Do nothing
-            }
-            
             // Opening brace
-            else if current == "{" {
+            if current == "{" {
                 // Some vars
                 i += 1
                 var content = ""

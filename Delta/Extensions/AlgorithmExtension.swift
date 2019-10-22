@@ -35,8 +35,8 @@ extension Algorithm {
             set_formatted "f(x)" to "a(x - x_0) ^ 2"
             print "f(x)"
         } else {
-            set "x_1" to "(-b - (Δ)^(1/2)) / (2a)"
-            set "x_2" to "(-b + (Δ)^(1/2)) / (2a)"
+            set "x_1" to "(-b - √(Δ)) / (2a)"
+            set "x_2" to "(-b + √(Δ)) / (2a)"
             print "x_1"
             print "x_2"
             set_formatted "f(x)" to "a(x - x_1)(x - x_2)"

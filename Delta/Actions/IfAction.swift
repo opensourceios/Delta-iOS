@@ -21,11 +21,7 @@ class IfAction: ActionBlock {
     }
     
     func append(actions: [Action]) {
-        if let elseAction = elseAction {
-            elseAction.append(actions: actions)
-        } else {
-            self.actions.append(contentsOf: actions)
-        }
+        self.actions.append(contentsOf: actions)
     }
     
     func execute(in process: Process) {

@@ -33,11 +33,11 @@ class Algorithm {
     }
     
     func toString() -> String {
-        return actions.map{ $0.toString() }.joined(separator: "\n")
+        return "\(inputs.map{ "input \"\($0)\" default \"\($1.toString())\"" }.joined(separator: "\n"))\n\(actions.map{ $0.toString() }.joined(separator: "\n"))"
     }
     
     func toInputEditorLines() -> [EditorLine] {
-        return inputs.sorted{ return $0.key < $1.key }.map{ EditorLine(format: "action_input".localized(), values: [$0, $1.toString()], type: .input) }
+        return inputs.sorted{ $0.key < $1.key }.map{ EditorLine(format: "action_input".localized(), values: [$0, $1.toString()], type: .input) }
     }
     
     func toEditorLines() -> [EditorLine] {
