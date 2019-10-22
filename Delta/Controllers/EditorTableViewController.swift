@@ -49,15 +49,15 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? algorithm.toInputEditorLines().count : algorithm.editorLinesCount()
+        return algorithm.editorLinesCount()
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "inputs".localized() : "instructions".localized()
+        return "instructions".localized()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -69,19 +69,11 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            // Get input
-            let line = algorithm.toInputEditorLines()[indexPath.row]
-            
-            // Return cell
-            return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self, at: indexPath.row)
-        } else {
-            // Get editor line
-            let line = algorithm.toEditorLines()[indexPath.row]
-            
-            // Return cell
-            return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self, at: indexPath.row)
-        }
+        // Get editor line
+        let line = algorithm.toEditorLines()[indexPath.row]
+        
+        // Return cell
+        return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self, at: indexPath.row)
     }
 
     // Override to support conditional editing of the table view.

@@ -99,4 +99,8 @@ class ForAction: ActionBlock {
         }
     }
     
+    func extractInputs() -> [(String, Token)] {
+        return actions.flatMap{ $0.extractInputs() }
+    }
+    
 }

@@ -42,4 +42,8 @@ class PrintAction: Action {
         }
     }
     
+    func extractInputs() -> [(String, Token)] {
+        return []
+    }
+    
 }

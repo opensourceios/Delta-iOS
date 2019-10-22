@@ -108,4 +108,8 @@ class IfAction: ActionBlock {
         }
     }
     
+    func extractInputs() -> [(String, Token)] {
+        return actions.flatMap{ $0.extractInputs() } + (elseAction?.extractInputs() ?? [])
+    }
+    
 }

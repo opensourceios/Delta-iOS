@@ -15,29 +15,47 @@ class Algorithm {
     var inputs: [String: Token]
     var actions: [Action]
     
-    init(id: Int, name: String, inputs: [String: Token], actions: [Action]) {
+    init(id: Int, name: String, actions: [Action]) {
+        // Init values
         self.id = id
         self.name = name
-        self.inputs = inputs
+        self.inputs = [String: Token]()
         self.actions = actions
+        
+        // Extract inputs from actions
+        self.extractInputs()
+    }
+    
+    func extractInputs() {
+        // Clear inputs
+        self.inputs = [String: Token]()
+        
+        // Iterate actions
+        for action in actions {
+            // Iterate inputs found in this action
+            for input in action.extractInputs() {
+                // Add it to inputs
+                inputs[input.0] = input.1
+            }
+        }
     }
     
     func execute() -> Process {
+        // Create a process with inputs
         let process = Process(inputs: inputs)
         
+        // Iterate actions
         for action in actions {
+            // Execute them
             action.execute(in: process)
         }
         
+        // Return the process
         return process
     }
     
     func toString() -> String {
-        return "\(inputs.map{ "input \"\($0)\" default \"\($1.toString())\"" }.joined(separator: "\n"))\n\(actions.map{ $0.toString() }.joined(separator: "\n"))"
-    }
-    
-    func toInputEditorLines() -> [EditorLine] {
-        return inputs.sorted{ $0.key < $1.key }.map{ EditorLine(format: "action_input".localized(), values: [$0, $1.toString()], type: .input) }
+        return actions.map{ $0.toString() }.joined(separator: "\n")
     }
     
     func toEditorLines() -> [EditorLine] {
@@ -53,26 +71,26 @@ class Algorithm {
     }
     
     func update(line: EditorLine, at index: Int) {
-        if line.type == .action {
-            // Iterate actions
-            var i = 0
-            for action in actions {
-                // Get size
-                let size = action.editorLinesCount()
-                
-                // Check if index is in this action
-                if i + size > index {
-                    // Delegate to action
-                    action.update(line: line, at: index - i)
-                    return
-                } else {
-                    // Continue
-                    i += size
-                }
-            }
-        } else if line.type == .input {
-            // Iterate inputs
+        // Iterate actions
+        var i = 0
+        for action in actions {
+            // Get size
+            let size = action.editorLinesCount()
             
+            // Check if index is in this action
+            if i + size > index {
+                // Delegate to action
+                action.update(line: line, at: index - i)
+                
+                // Extract inputs again
+                extractInputs()
+                
+                // Stop here
+                return
+            } else {
+                // Continue
+                i += size
+            }
         }
     }
     

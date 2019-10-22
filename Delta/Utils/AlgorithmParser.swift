@@ -23,7 +23,6 @@ class AlgorithmParser {
     private var id: Int
     private var name: String
     private var actions: [Action]
-    private var inputs: [String: Token]
     
     init(_ id: Int, named name: String, with lines: String?) {
         self.lines = lines ?? ""
@@ -34,7 +33,6 @@ class AlgorithmParser {
         self.id = id
         self.name = name
         self.actions = [Action]()
-        self.inputs = [String: Token]()
     }
     
     // Parse an algorithm
@@ -149,17 +147,12 @@ class AlgorithmParser {
         }
         
         // Create an algorithm with parsed data
-        return Algorithm(id: id, name: name, inputs: inputs, actions: actions.reversed())
+        return Algorithm(id: id, name: name, actions: actions.reversed())
     }
     
     func insertAction(_ action: Action) {
-        if let input = action as? InputAction {
-            // Add to inputs
-            inputs[input.identifier] = input.value
-        } else {
-            // Insert into actions
-            actions.insert(action, at: 0)
-        }
+        // Insert into actions
+        actions.insert(action, at: 0)
     }
     
     func createAction() -> Action? {

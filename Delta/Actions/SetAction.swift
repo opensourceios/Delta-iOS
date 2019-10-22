@@ -50,4 +50,8 @@ class SetAction: Action {
         }
     }
     
+    func extractInputs() -> [(String, Token)] {
+        return []
+    }
+    
 }
