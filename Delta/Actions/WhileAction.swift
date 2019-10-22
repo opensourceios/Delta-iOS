@@ -23,14 +23,11 @@ class WhileAction: ActionBlock {
     }
     
     func execute(in process: Process) {
-        // Get computed condition
-        if let condition = self.condition.compute(with: process.variables, format: false) as? Equation {
-            // Check if condition is true
-            while condition.isTrue(with: process.variables) {
-                // Execute actions
-                for action in actions {
-                    action.execute(in: process)
-                }
+        // Check if condition is true
+        while (condition.compute(with: process.variables, format: false) as? Equation)?.isTrue(with: process.variables) ?? false {
+            // Execute actions
+            for action in actions {
+                action.execute(in: process)
             }
         }
     }
@@ -54,17 +51,18 @@ class WhileAction: ActionBlock {
             lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
         }
         
+        lines.append(EditorLine(format: "", category: .add, indentation: 1))
         lines.append(EditorLine(format: "action_endif".localized(), category: .structure))
         
         return lines
     }
     
     func editorLinesCount() -> Int {
-        return actions.map{ $0.editorLinesCount() }.reduce(0, +) + 2
+        return actions.map{ $0.editorLinesCount() }.reduce(0, +) + 3
     }
     
     func action(at index: Int) -> Action {
-        if index != 0 && index < editorLinesCount()-1 {
+        if index != 0 && index < editorLinesCount()-2 {
             // Iterate actions
             var i = 1
             for action in actions {

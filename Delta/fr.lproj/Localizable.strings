@@ -19,6 +19,7 @@
 "error_syntax" = "Erreur de syntaxe";
 "error_constant" = "Impossible d'attribuer la valeur : %@ est une constante";
 "editor" = "Editeur d'algorithme";
+"action_selector" = "Selectionner une action";
 "action_input" = "Demander %@ avec par défaut %@";
 "action_print" = "Afficher %@";
 "action_set" = "Définir %@ à %@";
@@ -31,6 +32,7 @@
 "category_variable" = "Variable";
 "category_structure" = "Structure";
 "category_output" = "Sortie";
+"category_add" = "Ajouter une action";
 
 // Algorithm strings
 

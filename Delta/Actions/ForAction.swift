@@ -25,6 +25,12 @@ class ForAction: ActionBlock {
     }
     
     func execute(in process: Process) {
+        // Check if variable is not a constant
+        if TokenParser.constants.contains(identifier) {
+            process.outputs.append("error_constant".localized().format(identifier))
+            return
+        }
+        
         // Get computed token
         let token = self.token.compute(with: process.variables, format: false)
         
@@ -65,17 +71,18 @@ class ForAction: ActionBlock {
             lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
         }
         
+        lines.append(EditorLine(format: "", category: .add, indentation: 1))
         lines.append(EditorLine(format: "action_endif".localized(), category: .structure))
         
         return lines
     }
     
     func editorLinesCount() -> Int {
-        return actions.map{ $0.editorLinesCount() }.reduce(0, +) + 2
+        return actions.map{ $0.editorLinesCount() }.reduce(0, +) + 3
     }
     
     func action(at index: Int) -> Action {
-        if index != 0 && index < editorLinesCount()-1 {
+        if index != 0 && index < editorLinesCount()-2 {
             // Iterate actions
             var i = 1
             for action in actions {

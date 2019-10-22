@@ -71,7 +71,7 @@ class AlgorithmParser {
                 }
                 
                 // Parse block
-                let block = AlgorithmParser(0, named: "", with: content).execute().actions
+                let block = AlgorithmParser(0, named: "", with: content).execute().root.actions
                 
                 // Create an action from the line
                 if let action = createAction() as? ActionBlock {
@@ -147,7 +147,7 @@ class AlgorithmParser {
         }
         
         // Create an algorithm with parsed data
-        return Algorithm(id: id, name: name, actions: actions.reversed())
+        return Algorithm(id: id, name: name, root: RootAction(actions.reversed()))
     }
     
     func insertAction(_ action: Action) {

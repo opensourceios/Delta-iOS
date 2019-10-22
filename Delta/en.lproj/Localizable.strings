@@ -19,6 +19,7 @@
 "error_syntax" = "Syntax error";
 "error_constant" = "Cannot set value: %@ is a constant";
 "editor" = "Algorithm editor";
+"action_selector" = "Select an action";
 "action_input" = "Ask for %@ with default %@";
 "action_print" = "Print %@";
 "action_set" = "Set %@ to %@";
@@ -31,6 +32,7 @@
 "category_variable" = "Variable";
 "category_structure" = "Structure";
 "category_output" = "Output";
+"category_add" = "Add an action";
 
 // Algorithm strings
 

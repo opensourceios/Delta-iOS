@@ -40,6 +40,7 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
         }
         
         // Update inputs
+        algorithm?.extractInputs()
         tableView.reloadData()
         
         // Update result shown on screen

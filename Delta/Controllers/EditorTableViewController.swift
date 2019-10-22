@@ -36,13 +36,38 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         
         // Register cells
         tableView.register(EditorTableViewCell.self, forCellReuseIdentifier: "editorCell")
+        tableView.register(EditorAddTableViewCell.self, forCellReuseIdentifier: "editorAddCell")
     }
     
     func editorLineChanged(_ line: EditorLine?, at index: Int) {
-        // Get vars
+        // Get line
         if let line = line {
-            // Update the line in algorithm
+            // Update the line into algorithm
             algorithm.update(line: line, at: index)
+        }
+    }
+    
+    func editorLineAdded(_ action: Action, at index: Int) {
+        // Add the line into algorithm
+        algorithm.insert(action: action, at: index)
+        
+        // Insert new rows
+        let count = action.editorLinesCount()
+        tableView.beginUpdates()
+        tableView.insertRows(at: (0 ..< count).map{ IndexPath(row: index + $0, section: 0) }, with: .automatic)
+        tableView.endUpdates()
+        
+        // Refresh all buttons
+        let lines = algorithm.toEditorLines()
+        for i in 0 ..< lines.count {
+            // Check if it is a button
+            if lines[i].category == .add {
+                // Get cell
+                if let cell = tableView.cellForRow(at: IndexPath(row: i, section: 0)) as? EditorAddTableViewCell {
+                    // Update index
+                    cell.index = i
+                }
+            }
         }
     }
 
@@ -71,6 +96,12 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Get editor line
         let line = algorithm.toEditorLines()[indexPath.row]
+        
+        // Check if add
+        if line.category == .add {
+            // Return cell
+            return (tableView.dequeueReusableCell(withIdentifier: "editorAddCell", for: indexPath) as! EditorAddTableViewCell).with(line: line, delegate: self, at: indexPath.row)
+        }
         
         // Return cell
         return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self, at: indexPath.row)
@@ -101,5 +132,6 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
 protocol EditorLineChangedDelegate: class {
     
     func editorLineChanged(_ line: EditorLine?, at index: Int)
+    func editorLineAdded(_ action: Action, at index: Int)
     
 }

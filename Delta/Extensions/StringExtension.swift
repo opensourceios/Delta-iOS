@@ -73,24 +73,6 @@ extension String {
         return prefix(1).capitalized + dropFirst()
     }
     
-    // Custom operations
-    
-    func equals(_ right: Int) -> Equation {
-        return Equation(left: Variable(name: self), right: Number(value: right), operation: .equals)
-    }
-    
-    func inequals(_ right: Int) -> Equation {
-        return Equation(left: Variable(name: self), right: Number(value: right), operation: .inequals)
-    }
-    
-    func greaterThan(_ right: Int) -> Equation {
-        return Equation(left: Variable(name: self), right: Number(value: right), operation: .greaterThan)
-    }
-    
-    func lessThan(_ right: Int) -> Equation {
-        return Equation(left: Variable(name: self), right: Number(value: right), operation: .lessThan)
-    }
-    
     // Operation
     
     func toOperation() -> Operation? {

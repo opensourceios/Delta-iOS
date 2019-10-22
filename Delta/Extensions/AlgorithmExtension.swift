@@ -12,7 +12,7 @@ extension Algorithm {
     
     // Array of all algorithms
     static let array: [Algorithm] = [
-        .secondDegreeEquation
+        .secondDegreeEquation, .test
     ]
     
     // 2nd degree equation
@@ -69,9 +69,6 @@ extension Algorithm {
     """).execute()
     
     // Parse testing
-    static let test = AlgorithmParser(-4, named: "Test", with: """
-    input "λ" default "0"
-    print "λ"
-    """).execute()
+    static let test = AlgorithmParser(-4, named: "Test", with: "").execute()
     
 }
