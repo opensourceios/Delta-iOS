@@ -14,7 +14,8 @@ protocol Action {
     func toString() -> String
     func toEditorLines() -> [EditorLine]
     func editorLinesCount() -> Int
-    func update(line: EditorLine, at index: Int)
+    func action(at index: Int) -> Action
+    func update(line: EditorLine)
     func extractInputs() -> [(String, Token)]
     
 }

@@ -66,11 +66,7 @@ class Algorithm {
         return actions.map{ $0.editorLinesCount() }.reduce(0, +)
     }
     
-    func insert(action: Action, at: Int) {
-        
-    }
-    
-    func update(line: EditorLine, at index: Int) {
+    func action(at index: Int) -> Action {
         // Iterate actions
         var i = 0
         for action in actions {
@@ -80,18 +76,22 @@ class Algorithm {
             // Check if index is in this action
             if i + size > index {
                 // Delegate to action
-                action.update(line: line, at: index - i)
-                
-                // Extract inputs again
-                extractInputs()
-                
-                // Stop here
-                return
+                return action.action(at: index - i)
             } else {
                 // Continue
                 i += size
             }
         }
+        
+        fatalError("Unknown line!")
+    }
+    
+    func insert(action: Action, at: Int) {
+        
+    }
+    
+    func update(line: EditorLine, at index: Int) {
+        action(at: index).update(line: line)
     }
     
 }

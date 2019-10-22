@@ -74,12 +74,8 @@ class ForAction: ActionBlock {
         return actions.map{ $0.editorLinesCount() }.reduce(0, +) + 2
     }
     
-    func update(line: EditorLine, at index: Int) {
-        if index == 0 && line.values.count == 2 {
-            // Get "for identifier in token"
-            self.identifier = line.values[0]
-            self.token = TokenParser(line.values[1]).execute()
-        } else if index != 0 && index < editorLinesCount()-1 {
+    func action(at index: Int) -> Action {
+        if index != 0 && index < editorLinesCount()-1 {
             // Iterate actions
             var i = 1
             for action in actions {
@@ -89,13 +85,22 @@ class ForAction: ActionBlock {
                 // Check if index is in this action
                 if i + size > index {
                     // Delegate to action
-                    action.update(line: line, at: index - i)
-                    return
+                    return action.action(at: index - i)
                 } else {
                     // Continue
                     i += size
                 }
             }
+        }
+        
+        return self
+    }
+    
+    func update(line: EditorLine) {
+        if line.values.count == 2 {
+            // Get "for identifier in token"
+            self.identifier = line.values[0]
+            self.token = TokenParser(line.values[1]).execute()
         }
     }
     

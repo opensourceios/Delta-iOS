@@ -46,7 +46,11 @@ class InputAction: Action {
         return 1
     }
     
-    func update(line: EditorLine, at index: Int) {
+    func action(at index: Int) -> Action {
+        return self
+    }
+    
+    func update(line: EditorLine) {
         if line.values.count == 2 {
             self.identifier = line.values[0]
             self.value = TokenParser(line.values[1]).execute()

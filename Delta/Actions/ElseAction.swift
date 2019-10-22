@@ -53,7 +53,7 @@ class ElseAction: ActionBlock {
         return actions.map{ $0.editorLinesCount() }.reduce(0, +) + 1
     }
     
-    func update(line: EditorLine, at index: Int) {
+    func action(at index: Int) -> Action {
         if index != 0 && index < editorLinesCount() {
             // Iterate actions
             var i = 1
@@ -64,14 +64,19 @@ class ElseAction: ActionBlock {
                 // Check if index is in this action
                 if i + size > index {
                     // Delegate to action
-                    action.update(line: line, at: index - i)
-                    return
+                    return action.action(at: index - i)
                 } else {
                     // Continue
                     i += size
                 }
             }
         }
+        
+        return self
+    }
+    
+    func update(line: EditorLine) {
+        // Nothing to update
     }
     
     func extractInputs() -> [(String, Token)] {
