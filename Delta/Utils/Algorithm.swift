@@ -12,14 +12,14 @@ class Algorithm {
     
     var id: Int?
     var name: String
-    var inputs: [String: Token]
+    var inputs: [(String, Token)]
     var actions: [Action]
     
     init(id: Int, name: String, actions: [Action]) {
         // Init values
         self.id = id
         self.name = name
-        self.inputs = [String: Token]()
+        self.inputs = []
         self.actions = actions
         
         // Extract inputs from actions
@@ -28,14 +28,14 @@ class Algorithm {
     
     func extractInputs() {
         // Clear inputs
-        self.inputs = [String: Token]()
+        self.inputs = []
         
         // Iterate actions
         for action in actions {
             // Iterate inputs found in this action
             for input in action.extractInputs() {
                 // Add it to inputs
-                inputs[input.0] = input.1
+                inputs.append(input)
             }
         }
     }

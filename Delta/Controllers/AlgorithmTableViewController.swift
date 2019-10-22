@@ -46,11 +46,17 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
         updateResult()
     }
     
-    func inputChanged(_ input: Input?) {
+    func inputChanged(_ input: (String, Token)?) {
         // Get vars
         if let algorithm = algorithm, let input = input {
             // Update the input
-            algorithm.inputs[input.name] = input.expression
+            for i in 0 ..< algorithm.inputs.count {
+                // Check key
+                if algorithm.inputs[i].0 == input.0 {
+                    // Set value
+                    algorithm.inputs[i].1 = input.1
+                }
+            }
             
             // Update result shown on screen
             updateResult()
@@ -87,10 +93,10 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
             // Check section
             if indexPath.section == 0 {
                 // Get input
-                let variable = Array(algorithm.inputs.sorted{ return $0.key < $1.key })[indexPath.row]
+                let input = algorithm.inputs[indexPath.row]
                 
                 // Create the cell
-                return (tableView.dequeueReusableCell(withIdentifier: "inputCell", for: indexPath) as! InputTableViewCell).with(input: Input(name: variable.key, expression: variable.value ), delegate: self)
+                return (tableView.dequeueReusableCell(withIdentifier: "inputCell", for: indexPath) as! InputTableViewCell).with(input: input, delegate: self)
             } else {
                 // Get output
                 let output = currentOutputs[indexPath.row]
@@ -118,6 +124,6 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
 
 protocol InputChangedDelegate: class {
     
-    func inputChanged(_ input: Input?)
+    func inputChanged(_ input: (String, Token)?)
     
 }

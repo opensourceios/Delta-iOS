@@ -10,11 +10,11 @@ import Foundation
 
 class Process {
     
-    var inputs = [String: Token]()
+    var inputs = [(String, Token)]()
     var variables = [String: Token]()
     var outputs = [String]()
     
-    init(inputs: [String: Token]) {
+    init(inputs: [(String, Token)]) {
         self.inputs = inputs
     }
     

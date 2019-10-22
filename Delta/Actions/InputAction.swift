@@ -26,7 +26,12 @@ class InputAction: Action {
         }
         
         // Set value with process environment
-        process.variables[identifier] = process.inputs[identifier]?.compute(with: process.variables, format: false)
+        for input in process.inputs {
+            // Check key
+            if input.0 == identifier {
+                process.variables[identifier] = input.1.compute(with: process.variables, format: false)
+            }
+        }
     }
     
     func toString() -> String {
