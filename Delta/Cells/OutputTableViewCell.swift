@@ -11,7 +11,7 @@ import UIKit
 class OutputTableViewCell: UITableViewCell, UIDragInteractionDelegate {
     
     var originalOutput: String?
-    var label: UILabel = UILabel()
+    var label = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

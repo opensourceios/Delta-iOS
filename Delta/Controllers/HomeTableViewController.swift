@@ -8,10 +8,11 @@
 
 import UIKit
 
-class HomeTableViewController: UITableViewController {
+class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate {
     
     weak var delegate: AlgorithmSelectionDelegate?
-    var algorithms = Algorithm.array
+    var myalgorithms = [Algorithm]()
+    var downloads = [Algorithm]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +24,11 @@ class HomeTableViewController: UITableViewController {
         navigationItem.title = "name".localized()
         
         // Register cells
+        tableView.register(AlgorithmTableViewCell.self, forCellReuseIdentifier: "algorithmCell")
         tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: "labelCell")
+        
+        // Load algorithms
+        loadAlgorithms()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,39 +38,88 @@ class HomeTableViewController: UITableViewController {
             self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
         }
     }
-
-    // TableView management
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+    func loadAlgorithms() {
+        // Clear previous data
+        myalgorithms = []
+        downloads = []
+        
+        // Retrieve algorithms from database
+        let algorithms = Database.current.getAlgorithms()
+        
+        // Iterate them
+        for algorithm in algorithms {
+            // Check if owned or downloaded
+            if algorithm.owner {
+                // Add to My algorithms
+                myalgorithms.append(algorithm)
+            } else {
+                // Add to Downloads
+                downloads.append(algorithm)
+            }
+        }
+        
+        // If downloads are empty, add defaults
+        if downloads.isEmpty {
+            // TODO: download them from API and save them
+            for algorithm in Algorithm.defaults {
+                // Save it locally
+                let _ = Database.current.addAlgorithm(algorithm)
+            }
+            
+            // Reload algorithms
+            loadAlgorithms()
+        }
+        
+        // Update tableView
+        tableView.reloadData()
+    }
+    
+    func algorithmsChanged() {
+        // Upload algorithm list
+        loadAlgorithms()
     }
 
+    // TableView management
+
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? algorithms.count : 4
+        return section == 0 ? myalgorithms.count + 1 : section == 1 ? downloads.count : 4
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "algorithms".localized() : "about".localized()
+        return section == 0 ? "myalgorithms".localized() : section == 1 ? "downloads".localized() : "about".localized()
     }
     
     #if !targetEnvironment(macCatalyst)
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return section == 0 ? "more_soon".localized() : "donate_description".localized()
+        return section == 2 ? "donate_description".localized() : ""
     }
     #endif
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Check for section
         if indexPath.section == 0 {
+            // Check for new cell
+            if indexPath.row == myalgorithms.count {
+                // Create new cell
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "new".localized(), accessory: .disclosureIndicator)
+            }
+            
             // Get algorithm
-            let algorithm = algorithms[indexPath.row]
+            let algorithm = myalgorithms[indexPath.row]
             
             // Create cell
-            return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: algorithm.name, accessory: .disclosureIndicator)
+            return (tableView.dequeueReusableCell(withIdentifier: "algorithmCell", for: indexPath) as! AlgorithmTableViewCell).with(algorithm: algorithm)
+        } else if indexPath.section == 1 {
+            // Get algorithm
+            let algorithm = downloads[indexPath.row]
+            
+            // Create cell
+            return (tableView.dequeueReusableCell(withIdentifier: "algorithmCell", for: indexPath) as! AlgorithmTableViewCell).with(algorithm: algorithm)
         } else {
             if indexPath.row == 0 {
                 // About
@@ -90,8 +144,34 @@ class HomeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Check for section
         if indexPath.section == 0 {
+            // Check for new cell
+            if indexPath.row == myalgorithms.count {
+                // Create an editor
+                let editor = EditorTableViewController(algorithm: Algorithm(local_id: 0, remote_id: nil, owner: true, name: "new".localized(), last_update: Date(), root: RootAction([]))) { newAlgorithm in
+                    // Update with new algorithm
+                    self.loadAlgorithms()
+                }
+                
+                // Show it
+                present(UINavigationController(rootViewController: editor), animated: true, completion: nil)
+                
+                // Stop here
+                return
+            }
+            
             // Get selected algorithm
-            let algorithm = algorithms[indexPath.row]
+            let algorithm = myalgorithms[indexPath.row]
+            
+            // Update the delegate
+            delegate?.selectAlgorithm(algorithm)
+            
+            // Show view controller
+            if let algorithmVC = delegate as? AlgorithmTableViewController, let algorithmNavigation = algorithmVC.navigationController {
+                splitViewController?.showDetailViewController(algorithmNavigation, sender: nil)
+            }
+        } else if indexPath.section == 1 {
+            // Get selected algorithm
+            let algorithm = downloads[indexPath.row]
             
             // Update the delegate
             delegate?.selectAlgorithm(algorithm)

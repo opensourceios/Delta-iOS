@@ -2,9 +2,12 @@
 // General part
 
 "name" = "Delta: Math helper";
-"algorithms" = "Algorithms";
+"myalgorithms" = "My algorithms";
+"downloads" = "Downloads";
+"new" = "New algorithm";
+"copy" = "%@ (copy)";
+"last_update" = "Updated on %@";
 "about" = "About";
-"more_soon" = "More algorithms are coming soon! Feel free to contact us on social networks if you have any suggestion or if you found any bug.";
 "moreAboutOurTeam" = "More about our team";
 "contactUs" = "Contact us on social networks";
 "donate" = "Donate";
@@ -15,6 +18,8 @@
 "outputs" = "Outputs";
 "instructions" = "Instructions";
 "edit" = "Edit";
+"save" = "Save";
+"cancel" = "Cancel";
 "close" = "Close";
 "error_calcul" = "Calcul error";
 "error_syntax" = "Syntax error";

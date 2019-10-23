@@ -20,26 +20,29 @@ class AlgorithmParser {
     private var i: Int
     
     // Algorithm vars
-    private var id: Int
+    private var local_id: Int64
+    private var remote_id: Int64?
+    private var owner: Bool
     private var name: String
+    private var last_update: Date
     private var actions: [Action]
     
-    init(_ id: Int, named name: String, with lines: String?) {
+    init(_ local_id: Int64, remote_id: Int64?, owned owner: Bool, named name: String, last_update: Date, with lines: String?) {
         self.lines = lines ?? ""
         self.keywords = [String]()
         self.tokens = [String]()
         self.i = 0
         
-        self.id = id
+        self.local_id = local_id
+        self.remote_id = remote_id
         self.name = name
+        self.owner = owner
+        self.last_update = last_update
         self.actions = [Action]()
     }
     
     // Parse an algorithm
     func execute() -> Algorithm {
-        // Remove whitespaces
-        lines = lines.replacingOccurrences(of: " ", with: "")
-        
         // For each character of the string
         while i < lines.count {
             let current = lines[i]
@@ -71,7 +74,7 @@ class AlgorithmParser {
                 }
                 
                 // Parse block
-                let block = AlgorithmParser(0, named: "", with: content).execute().root.actions
+                let block = AlgorithmParser(0, remote_id: nil, owned: false, named: "", last_update: Date(), with: content).execute().root.actions
                 
                 // Create an action from the line
                 if let action = createAction() as? ActionBlock {
@@ -147,7 +150,7 @@ class AlgorithmParser {
         }
         
         // Create an algorithm with parsed data
-        return Algorithm(id: id, name: name, root: RootAction(actions.reversed()))
+        return Algorithm(local_id: local_id, remote_id: remote_id, owner: owner, name: name, last_update: last_update, root: RootAction(actions.reversed()))
     }
     
     func insertAction(_ action: Action) {
@@ -162,7 +165,7 @@ class AlgorithmParser {
             keywords.removeFirst()
             
             // Keyword list
-            let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.While]
+            let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.PrintText, Keyword.While]
             let grouped = [Keyword.Default: [Keyword.Input], Keyword.In: [Keyword.For], Keyword.To: [Keyword.Set, Keyword.SetFormatted]]
             
             // Iterate values
@@ -219,9 +222,13 @@ class AlgorithmParser {
                         // Else
                         return ElseAction(do: [])
                     } else if value == .Print && tokens.count >= 1 {
-                        // Print "identifier"
+                        // Print variable "identifier"
                         let identifier = tokens.removeFirst()
                         return PrintAction(identifier)
+                    } else if value == .PrintText && tokens.count >= 1 {
+                        // Print text "text"
+                        let text = tokens.removeFirst()
+                        return PrintTextAction(text)
                     } else if value == .While && tokens.count >= 1 {
                         // While "condition"
                         let condition = TokenParser(tokens.removeFirst()).execute()

@@ -11,7 +11,7 @@ import Foundation
 enum Operation: String {
     
     // Values
-    case addition = "+", subtraction = "-", multiplication = "*", division = "/", modulo = "%", power = "^", root = "√", equals = "=", inequals = "!=", greaterThan = ">", lessThan = "<", greaterOrEquals = ">=", lessOrEquals = "<=", list = ",", vector = ";"
+    case addition = "+", subtraction = "-", multiplication = "*", division = "/", modulo = "%", power = "^", root = "√", equals = "=", unequals = "!=", greaterThan = ">", lessThan = "<", greaterOrEquals = ">=", lessOrEquals = "<=", list = ",", vector = ";"
     
     // Get precedence
     func getPrecedence() -> Int {
@@ -27,7 +27,7 @@ enum Operation: String {
     // Join with two tokens
     func join(left: Token, right: Token) -> Token {
         // Check for equations
-        if self == .equals || self == .inequals || self == .greaterThan || self == .lessThan || self == .greaterOrEquals || self == .lessOrEquals {
+        if self == .equals || self == .unequals || self == .greaterThan || self == .lessThan || self == .greaterOrEquals || self == .lessOrEquals {
             return Equation(left: left, right: right, operation: self)
         }
         

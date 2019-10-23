@@ -21,7 +21,7 @@ struct Equation: Token {
         if let left = left.asDouble(), let right = right.asDouble() {
             if operation == .equals {
                 return left == right
-            } else if operation == .inequals {
+            } else if operation == .unequals {
                 return left != right
             } else if operation == .greaterThan {
                 return left > right

@@ -10,10 +10,12 @@ import UIKit
 
 class LabelTableViewCell: UITableViewCell {
 
-    var label: UILabel = UILabel()
+    var label = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        selectionStyle = .none
         
         contentView.addSubview(label)
         

@@ -45,7 +45,7 @@ class ActionSelectorTableViewCell: UITableViewCell {
         category.topAnchor.constraint(equalTo: bubble.topAnchor, constant: 10).isActive = true
         category.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 8).isActive = true
         category.trailingAnchor.constraint(lessThanOrEqualTo: bubble.trailingAnchor, constant: -10).isActive = true
-        category.font = UIFont.boldSystemFont(ofSize: 17)
+        category.font = .boldSystemFont(ofSize: 17)
         
         label.translatesAutoresizingMaskIntoConstraints = false
         label.topAnchor.constraint(equalTo: category.bottomAnchor, constant: 10).isActive = true

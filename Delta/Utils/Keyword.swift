@@ -11,6 +11,6 @@ import Foundation
 enum Keyword: String {
     
     // Values
-    case Input = "input", Default = "default", For = "for", In = "in", If = "if", Else = "else", Print = "print", Set = "set", SetFormatted = "set_formatted", To = "to", While = "while", OpenBlock = "{", CloseBlock = "}"
+    case Input = "input", Default = "default", For = "for", In = "in", If = "if", Else = "else", Print = "print", PrintText = "print_text", Set = "set", SetFormatted = "set_formatted", To = "to", While = "while", OpenBlock = "{", CloseBlock = "}"
     
 }

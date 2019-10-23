@@ -77,7 +77,7 @@ extension String {
     
     func toOperation() -> Operation? {
         // Iterate values
-        for value in [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.modulo, Operation.power, Operation.root, Operation.equals, Operation.inequals, Operation.greaterThan, Operation.lessThan, Operation.greaterOrEquals, Operation.lessOrEquals] {
+        for value in [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.modulo, Operation.power, Operation.root, Operation.equals, Operation.unequals, Operation.greaterThan, Operation.lessThan, Operation.greaterOrEquals, Operation.lessOrEquals] {
             // If it's the value we want
             if self == value.rawValue {
                 return value
@@ -90,8 +90,8 @@ extension String {
     
     func attributedMath() -> NSAttributedString {
         let workspace = NSMutableAttributedString(string: self)
-        let power: [NSAttributedString.Key: Any] = [.font:UIFont.systemFont(ofSize: 10),.baselineOffset:8]
-        let index: [NSAttributedString.Key: Any] = [.font:UIFont.systemFont(ofSize: 10),.baselineOffset:-5]
+        let power: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 10), .baselineOffset: 8]
+        let index: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 10), .baselineOffset: -5]
         
         // Powers (numbers)
         let numbers = String(workspace.mutableString).groups(for: " \\^ [0-9]+")

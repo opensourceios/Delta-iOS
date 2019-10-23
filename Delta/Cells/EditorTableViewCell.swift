@@ -51,7 +51,7 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         category.topAnchor.constraint(equalTo: bubble.topAnchor, constant: 10).isActive = true
         category.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 8).isActive = true
         category.trailingAnchor.constraint(lessThanOrEqualTo: bubble.trailingAnchor, constant: -10).isActive = true
-        category.font = UIFont.boldSystemFont(ofSize: 17)
+        category.font = .boldSystemFont(ofSize: 17)
         
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.topAnchor.constraint(equalTo: category.bottomAnchor).isActive = true

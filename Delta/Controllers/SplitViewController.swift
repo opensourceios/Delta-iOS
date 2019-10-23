@@ -17,6 +17,7 @@ class SplitViewController: UISplitViewController, UISplitViewControllerDelegate 
         super.viewDidLoad()
         
         leftViewController.delegate = rightViewController
+        rightViewController.delegate = leftViewController
 
         viewControllers = [
             UINavigationController(rootViewController: leftViewController),

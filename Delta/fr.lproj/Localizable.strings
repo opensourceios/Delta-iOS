@@ -2,9 +2,12 @@
 // General part
 
 "name" = "Delta: Math helper";
-"algorithms" = "Algorithmes";
+"myalgorithms" = "Mes algorithmes";
+"downloads" = "Téléchargements";
+"new" = "Nouvel algorithme";
+"copy" = "%@ (copie)";
+"last_update" = "Mis à jour le %@";
 "about" = "A propos";
-"more_soon" = "Plus d'outils arrivent bientôt ! N'hésitez pas à nous contacter sur les réseaux sociaux si vous avez une suggestion ou si vous avez rencontré un bug.";
 "moreAboutOurTeam" = "Plus d'infos sur notre groupe";
 "contactUs" = "Nous contacter sur les réseaux sociaux";
 "donate" = "Faire un don";
@@ -15,6 +18,8 @@
 "outputs" = "Sorties";
 "instructions" = "Instructions";
 "edit" = "Modifier";
+"save" = "Enregistrer";
+"cancel" = "Annuler";
 "close" = "Fermer";
 "error_calcul" = "Erreur de calcul";
 "error_syntax" = "Erreur de syntaxe";

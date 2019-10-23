@@ -10,6 +10,7 @@ import UIKit
 
 class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDelegate, InputChangedDelegate {
     
+    weak var delegate: AlgorithmsChangedDelegate?
     var algorithm: Algorithm?
     var currentOutputs = [Any]()
 
@@ -116,7 +117,16 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
     
     @objc func showEditor(_ sender: UIBarButtonItem) {
         if let algorithm = algorithm {
-            let editor = EditorTableViewController(algorithm: algorithm)
+            // Create an editor
+            let editor = EditorTableViewController(algorithm: algorithm) { newAlgorithm in
+                // Update with new algorithm
+                self.selectAlgorithm(newAlgorithm)
+                
+                // Update home view controller list
+                self.delegate?.algorithmsChanged()
+            }
+            
+            // Show it
             present(UINavigationController(rootViewController: editor), animated: true, completion: nil)
         }
     }
@@ -126,5 +136,11 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
 protocol InputChangedDelegate: class {
     
     func inputChanged(_ input: (String, Token)?)
+    
+}
+
+protocol AlgorithmsChangedDelegate: class {
+    
+    func algorithmsChanged()
     
 }

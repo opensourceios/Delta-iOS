@@ -11,9 +11,11 @@ import UIKit
 class EditorTableViewController: UITableViewController, EditorLineChangedDelegate {
     
     let algorithm: Algorithm
+    let completionHandler: (Algorithm) -> ()
     
-    init(algorithm: Algorithm) {
-        self.algorithm = algorithm
+    init(algorithm: Algorithm, completionHandler: @escaping (Algorithm) -> ()) {
+        self.algorithm = algorithm.clone()
+        self.completionHandler = completionHandler
         super.init(style: .grouped)
     }
     
@@ -30,6 +32,7 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         // Navigation bar
         navigationItem.title = "editor".localized()
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "close".localized(), style: .plain, target: self, action: #selector(close(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "save".localized(), style: .plain, target: self, action: #selector(save(_:)))
         
         // No separator
         tableView.separatorStyle = .none
@@ -124,6 +127,18 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     }
 
     @objc func close(_ sender: UIBarButtonItem) {
+        // Dismiss view controller
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func save(_ sender: UIBarButtonItem) {
+        // Save algorithm to database
+        let newAlgorithm = Database.current.updateAlgorithm(algorithm)
+        
+        // Call completion handler
+        completionHandler(newAlgorithm)
+        
+        // Dismiss view controller
         dismiss(animated: true, completion: nil)
     }
 

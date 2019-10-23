@@ -10,15 +10,21 @@ import Foundation
 
 class Algorithm {
     
-    var id: Int?
+    var local_id: Int64
+    var remote_id: Int64?
+    var owner: Bool
     var name: String
+    var last_update: Date
     var inputs: [(String, Token)]
     var root: RootAction
     
-    init(id: Int, name: String, root: RootAction) {
+    init(local_id: Int64, remote_id: Int64?, owner: Bool, name: String, last_update: Date, root: RootAction) {
         // Init values
-        self.id = id
+        self.local_id = local_id
+        self.remote_id = remote_id
         self.name = name
+        self.owner = owner
+        self.last_update = last_update
         self.inputs = []
         self.root = root
         
@@ -72,6 +78,17 @@ class Algorithm {
     
     func update(line: EditorLine, at index: Int) {
         action(at: index).update(line: line)
+    }
+    
+    func clone() -> Algorithm {
+        // Check if is owned
+        if owner {
+            // Create an instance with same informations
+            return Algorithm(local_id: local_id, remote_id: remote_id, owner: owner, name: name, last_update: last_update, root: root)
+        } else {
+            // Create a copy
+            return Algorithm(local_id: 0, remote_id: nil, owner: true, name: "copy".localized().format(name), last_update: last_update, root: root)
+        }
     }
     
 }
