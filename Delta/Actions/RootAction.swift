@@ -39,7 +39,7 @@ class RootAction: ActionBlock {
         return actions.map{ $0.editorLinesCount() }.reduce(0, +) + 1
     }
     
-    func action(at index: Int) -> Action {
+    func action(at index: Int, parent: Action, parentIndex: Int) -> (Action, Action, Int) {
         if index < editorLinesCount()-1 {
             // Iterate actions
             var i = 0
@@ -50,7 +50,7 @@ class RootAction: ActionBlock {
                 // Check if index is in this action
                 if i + size > index {
                     // Delegate to action
-                    return action.action(at: index - i)
+                    return action.action(at: index - i, parent: self, parentIndex: index)
                 } else {
                     // Continue
                     i += size
@@ -58,7 +58,7 @@ class RootAction: ActionBlock {
             }
         }
         
-        return self
+        return (self, parent, parentIndex)
     }
     
     func update(line: EditorLine) {

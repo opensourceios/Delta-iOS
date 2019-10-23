@@ -26,9 +26,6 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Enable editing
-        tableView.setEditing(true, animated: false)
-        
         // Navigation bar
         navigationItem.title = "editor".localized()
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "cancel".localized(), style: .plain, target: self, action: #selector(close(_:)))
@@ -110,20 +107,17 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self, at: indexPath.row)
     }
 
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return false
-    }
-
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        let result = algorithm.action(at: indexPath.row)
+        let count = result.1.editorLinesCount()
+        
+        if count == result.2 {
+            return false
+        }
+        
+        print(result.0, result.1, result.2)
+        
+        return true
     }
 
     @objc func close(_ sender: UIBarButtonItem) {

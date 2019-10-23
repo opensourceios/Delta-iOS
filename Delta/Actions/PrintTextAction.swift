@@ -33,8 +33,8 @@ class PrintTextAction: Action {
         return 1
     }
     
-    func action(at index: Int) -> Action {
-        return self
+    func action(at index: Int, parent: Action, parentIndex: Int) -> (Action, Action, Int) {
+        return (self, parent, parentIndex)
     }
     
     func update(line: EditorLine) {

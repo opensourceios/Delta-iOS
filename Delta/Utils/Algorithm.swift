@@ -66,18 +66,19 @@ class Algorithm {
         return root.editorLinesCount()
     }
     
-    func action(at index: Int) -> Action {
-        return root.action(at: index)
+    func action(at index: Int) -> (Action, Action, Int) {
+        return root.action(at: index, parent: root, parentIndex: 0)
     }
     
     func insert(action: Action, at index: Int) {
-        if let block = self.action(at: index) as? ActionBlock {
+        let result = self.action(at: index)
+        if let block = result.1 as? ActionBlock {
             block.append(actions: [action])
         }
     }
     
     func update(line: EditorLine, at index: Int) {
-        action(at: index).update(line: line)
+        action(at: index).0.update(line: line)
     }
     
     func clone() -> Algorithm {

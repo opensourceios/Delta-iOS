@@ -81,7 +81,7 @@ class IfAction: ActionBlock {
         return count
     }
     
-    func action(at index: Int) -> Action {
+    func action(at index: Int, parent: Action, parentIndex: Int) -> (Action, Action, Int) {
         if index != 0 && index < editorLinesCount()-1 {
             // Iterate actions
             var i = 1
@@ -92,7 +92,7 @@ class IfAction: ActionBlock {
                 // Check if index is in this action
                 if i + size > index {
                     // Delegate to action
-                    return action.action(at: index - i)
+                    return action.action(at: index - i, parent: self, parentIndex: index)
                 } else {
                     // Continue
                     i += size
@@ -101,7 +101,7 @@ class IfAction: ActionBlock {
             
             // Check if button
             if index == i {
-                return self
+                return (self, self, parentIndex)
             }
             
             // Increment to skip add button
@@ -109,11 +109,11 @@ class IfAction: ActionBlock {
             
             // Delegate to else actions
             if let elseAction = elseAction {
-                return elseAction.action(at: index - i)
+                return elseAction.action(at: index - i, parent: self, parentIndex: index)
             }
         }
         
-        return self
+        return (self, index == 0 ? parent : self, parentIndex)
     }
     
     func update(line: EditorLine) {
