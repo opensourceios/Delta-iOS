@@ -82,7 +82,7 @@ class IfAction: ActionBlock {
     }
     
     func action(at index: Int) -> Action {
-        if index != 0 && index < editorLinesCount()-2 {
+        if index != 0 && index < editorLinesCount()-1 {
             // Iterate actions
             var i = 1
             for action in actions {

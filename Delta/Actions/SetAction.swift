@@ -28,7 +28,11 @@ class SetAction: Action {
         }
         
         // Set value with process environment
-        process.variables[identifier] = value.compute(with: process.variables, format: format)
+        if format {
+            process.variables[identifier] = FormattedToken(token: value)
+        } else {
+            process.variables[identifier] = value.compute(with: process.variables, format: format)
+        }
     }
     
     func toString() -> String {

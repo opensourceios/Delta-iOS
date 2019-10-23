@@ -1,62 +1,86 @@
 //
-//  Variable.swift
+//  Modulo.swift
 //  Delta
 //
-//  Created by Nathan FALLET on 07/09/2019.
+//  Created by Nathan FALLET on 23/10/2019.
 //  Copyright © 2019 Nathan FALLET. All rights reserved.
 //
 
 import Foundation
 
-struct Variable: Token {
-
-    var name: String
-
+struct Modulo: Token {
+    
+    var dividend: Token
+    var divisor: Token
+    
     func toString() -> String {
-        return "\(name)"
+        return "\(dividend.needBrackets(for: .division) ? "(\(dividend.toString()))" : dividend.toString()) % \(divisor.needBrackets(for: .division) ? "(\(divisor.toString()))" : divisor.toString())"
     }
     
-    func compute(with inputs: [String: Token], format: Bool) -> Token {
-        // Chech if an input corresponds to this variable
-        if let value = inputs[name] {
-            return value.compute(with: inputs, format: false)
+    func compute(with inputs: [String : Token], format: Bool) -> Token {
+        let dividend = self.dividend.compute(with: inputs, format: format)
+        let divisor = self.divisor.compute(with: inputs, format: format)
+        
+        // Check dividend
+        if let number = dividend as? Number {
+            // 0 % x is 0
+            if number.value == 0 {
+                return number
+            }
         }
         
-        // No input found
-        return self
+        // Check divisor
+        if let number = divisor as? Number {
+            // x % 1 is 0
+            if number.value == 1 {
+                return Number(value: 0)
+            }
+            
+            // x % 0 is calcul error
+            if number.value == 0 {
+                return CalculError()
+            }
+        }
+        
+        // Apply to simplify
+        return dividend.apply(operation: .modulo, right: divisor, with: inputs, format: format)
     }
     
-    func apply(operation: Operation, right: Token, with inputs: [String: Token], format: Bool) -> Token {
+    func apply(operation: Operation, right: Token, with inputs: [String : Token], format: Bool) -> Token {
         // Compute right
         let right = right.compute(with: inputs, format: format)
         
-        // Sum
+        // If addition
         if operation == .addition {
             // Right is a sum
             if let right = right as? Sum {
                 return Sum(values: right.values + [self])
             }
             
+            // Return the sum
             return Sum(values: [self, right])
         }
         
-        // Difference
+        // If subtraction
         if operation == .subtraction {
+            // Return the sum
             return Sum(values: [self, right.opposite()])
         }
         
-        // Product
+        // If product
         if operation == .multiplication {
             // Right is a product
             if let right = right as? Product {
                 return Product(values: right.values + [self])
             }
             
+            // Return the product
             return Product(values: [self, right])
         }
         
-        // Fraction
+        // If fraction
         if operation == .division {
+            // Return the fraction
             return Fraction(numerator: self, denominator: right)
         }
         
@@ -68,28 +92,13 @@ struct Variable: Token {
         
         // Power
         if operation == .power {
-            // Check for i
-            if name == "i" {
-                // If right is a number
-                if let number = right as? Number {
-                    // i^2 = -1
-                    if number.value % 4 == 2 {
-                        return Number(value: -1)
-                    }
-                    // i^3 = -1
-                    if number.value % 4 == 3 {
-                        return Product(values: [Number(value: -1), self])
-                    }
-                    // Simplificated power of i
-                    return Power(token: self, power: Number(value: number.value % 4)).compute(with: inputs, format: format)
-                }
-            }
-            
+            // Return the power
             return Power(token: self, power: right)
         }
         
         // Root
         if operation == .root {
+            // Return root
             return Root(token: self, power: right)
         }
         
@@ -98,11 +107,11 @@ struct Variable: Token {
     }
     
     func needBrackets(for operation: Operation) -> Bool {
-        return false
+        return operation.getPrecedence() >= Operation.division.getPrecedence()
     }
     
     func getMultiplicationPriority() -> Int {
-        return 2
+        return 1
     }
     
     func opposite() -> Token {
@@ -114,11 +123,15 @@ struct Variable: Token {
     }
     
     func asDouble() -> Double? {
+        if let dividend = dividend.asDouble(), let divisor = divisor.asDouble() {
+            return dividend/divisor
+        }
+        
         return nil
     }
     
     func getSign() -> FloatingPointSign {
         return .plus
     }
-
+    
 }

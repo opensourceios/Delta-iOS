@@ -20,7 +20,13 @@ class PrintAction: Action {
         // Get the value
         if let value = process.variables[identifier] {
             // Print it (add it to output)
-            process.outputs.append("\(identifier) = \(value.toString())")
+            if value as? FormattedToken != nil {
+                // Formatted
+                process.outputs.append("\(identifier) = \(value.compute(with: process.variables, format: true).toString())")
+            } else {
+                // Not formatted
+                process.outputs.append("\(identifier) = \(value.toString())")
+            }
         }
     }
     

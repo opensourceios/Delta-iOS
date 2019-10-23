@@ -19,9 +19,9 @@ enum EditorLineCategory: String {
         case .variable:
             return [InputAction("a", default: TokenParser("0").execute()), SetAction("a", to: TokenParser("0").execute()), SetAction("f(x)", to: TokenParser("ax+b").execute(), format: true)]
         case .structure:
-            return [IfAction(TokenParser("a=b").execute(), do: []), ElseAction(do: []), WhileAction(TokenParser("a=b").execute(), do: []), ForAction("a", in: TokenParser("b").execute(), do: [])]
+            return [IfAction(TokenParser("a=b").execute(), do: [], else: ElseAction(do: [])), WhileAction(TokenParser("a=b").execute(), do: []), ForAction("a", in: TokenParser("b").execute(), do: [])]
         case .output:
-            return [PrintAction("a")]
+            return [PrintAction("a"), PrintTextAction("Hello world!")]
         default:
             return []
         }

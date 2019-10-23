@@ -87,6 +87,11 @@ struct Number: Token {
                 return Product(values: right.values + [self])
             }
             
+            // If we keep format
+            if format {
+                return Product(values: [self, right])
+            }
+            
             // Right is a fraction
             if let right = right as? Fraction {
                 // a/b * c = ac/b
@@ -137,6 +142,17 @@ struct Number: Token {
             
             // Return the fraction
             return Fraction(numerator: self, denominator: right)
+        }
+        
+        // Modulo
+        if operation == .modulo {
+            // Rigth is number
+            if let right = right as? Number {
+                return Number(value: self.value % right.value)
+            }
+            
+            // Return the modulo
+            return Modulo(dividend: self, divisor: right)
         }
         
         // Power

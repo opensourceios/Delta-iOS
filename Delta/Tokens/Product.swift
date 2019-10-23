@@ -176,6 +176,12 @@ struct Product: Token {
             return Fraction(numerator: self, denominator: right)
         }
         
+        // Modulo
+        if operation == .modulo {
+            // Return the modulo
+            return Modulo(dividend: self, divisor: right)
+        }
+        
         // Power
         if operation == .power {
             return Product(values: values.map{ Power(token: $0, power: right) })

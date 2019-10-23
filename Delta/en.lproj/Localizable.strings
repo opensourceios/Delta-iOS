@@ -6,6 +6,7 @@
 "about" = "About";
 "more_soon" = "More algorithms are coming soon! Feel free to contact us on social networks if you have any suggestion or if you found any bug.";
 "moreAboutOurTeam" = "More about our team";
+"contactUs" = "Contact us on social networks";
 "donate" = "Donate";
 "donate_description" = "No matter what, Delta will stay free and ad-free. The donation is a way to thank us for the app. You will contribute to the funding of our Extopy project. Please make sure you want to leave us a tip before doing so.";
 "about_text" = "Application developed by Nathan Fallet\n\nThis application has been developed by independent developers, and is provided for free without any warranty.\n\n© 2019 Groupe MINASTE";
@@ -21,7 +22,8 @@
 "editor" = "Algorithm editor";
 "action_selector" = "Select an action";
 "action_input" = "Ask for %@ with default %@";
-"action_print" = "Print %@";
+"action_print" = "Print variable %@";
+"action_print_text" = "Print text %@";
 "action_set" = "Set %@ to %@";
 "action_set_formatted" = "Set %@ to %@ as format";
 "action_if" = "If %@";

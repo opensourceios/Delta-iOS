@@ -52,6 +52,11 @@ struct Fraction: Token {
         
         // If addition
         if operation == .addition {
+            // Right is a sum
+            if let right = right as? Sum {
+                return Sum(values: right.values + [self])
+            }
+            
             // If we keep format
             if format {
                 return Sum(values: [self, right])
@@ -88,6 +93,11 @@ struct Fraction: Token {
         
         // If product
         if operation == .multiplication {
+            // Right is a product
+            if let right = right as? Product {
+                return Product(values: right.values + [self])
+            }
+            
             // If we keep format
             if format {
                 return Product(values: [self, right])
@@ -113,6 +123,12 @@ struct Fraction: Token {
             
             // Multiply by its inverse
             return Product(values: [self, right.inverse()]).compute(with: inputs, format: format)
+        }
+        
+        // Modulo
+        if operation == .modulo {
+            // Return the modulo
+            return Modulo(dividend: self, divisor: right)
         }
         
         // Power

@@ -11,14 +11,14 @@ import Foundation
 enum Operation: String {
     
     // Values
-    case addition = "+", subtraction = "-", multiplication = "*", division = "/", power = "^", root = "√", equals = "=", inequals = "!=", greaterThan = ">", lessThan = "<", greaterOrEquals = ">=", lessOrEquals = "<=", list = ",", vector = ";"
+    case addition = "+", subtraction = "-", multiplication = "*", division = "/", modulo = "%", power = "^", root = "√", equals = "=", inequals = "!=", greaterThan = ">", lessThan = "<", greaterOrEquals = ">=", lessOrEquals = "<=", list = ",", vector = ";"
     
     // Get precedence
     func getPrecedence() -> Int {
         if self == .power {
             return 3
         }
-        if self == .multiplication || self == .division {
+        if self == .multiplication || self == .division || self == .modulo {
             return 2
         }
         return 1

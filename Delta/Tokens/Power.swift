@@ -62,6 +62,12 @@ struct Power: Token {
             return Fraction(numerator: self, denominator: right)
         }
         
+        // Modulo
+        if operation == .modulo {
+            // Return the modulo
+            return Modulo(dividend: self, divisor: right)
+        }
+        
         // Power
         if operation == .power {
             return Power(token: token, power: Product(values: [power, right]))

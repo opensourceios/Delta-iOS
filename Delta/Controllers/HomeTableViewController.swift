@@ -45,7 +45,7 @@ class HomeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? algorithms.count : 3
+        return section == 0 ? algorithms.count : 4
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -74,6 +74,9 @@ class HomeTableViewController: UITableViewController {
                 // More about our team
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "moreAboutOurTeam".localized(), accessory: .disclosureIndicator)
             } else if indexPath.row == 2 {
+                // Contact us on social networks
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "contactUs".localized(), accessory: .disclosureIndicator)
+            } else if indexPath.row == 3 {
                 // Donate
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "donate".localized(), accessory: .disclosureIndicator)
             }
@@ -113,6 +116,15 @@ class HomeTableViewController: UITableViewController {
                     }
                 }
             } else if indexPath.row == 2 {
+                // Contact us on social networks
+                if let url = URL(string: "https://www.twitter.com/DeltaMathHelper") {
+                    if #available(iOS 10.0, *) {
+                        UIApplication.shared.open(url)
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
+                }
+            } else if indexPath.row == 3 {
                 // Donate
                 if let url = URL(string: "https://www.paypal.me/NathanFallet") {
                     if #available(iOS 10.0, *) {
