@@ -31,7 +31,7 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         
         // Navigation bar
         navigationItem.title = "editor".localized()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "close".localized(), style: .plain, target: self, action: #selector(close(_:)))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "cancel".localized(), style: .plain, target: self, action: #selector(close(_:)))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "save".localized(), style: .plain, target: self, action: #selector(save(_:)))
         
         // No separator
@@ -132,14 +132,23 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     }
     
     @objc func save(_ sender: UIBarButtonItem) {
-        // Save algorithm to database
-        let newAlgorithm = Database.current.updateAlgorithm(algorithm)
+        // Disable button while saving
+        sender.isEnabled = false
         
-        // Call completion handler
-        completionHandler(newAlgorithm)
-        
-        // Dismiss view controller
-        dismiss(animated: true, completion: nil)
+        // Async call
+        DispatchQueue.global(qos: .background).async {
+            // Save algorithm to database
+            let newAlgorithm = Database.current.updateAlgorithm(self.algorithm)
+            
+            // UI call
+            DispatchQueue.main.async {
+                // Call completion handler
+                self.completionHandler(newAlgorithm)
+                
+                // Dismiss view controller
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 
 }

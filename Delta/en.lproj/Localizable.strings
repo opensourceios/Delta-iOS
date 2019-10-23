@@ -8,8 +8,7 @@
 "copy" = "%@ (copy)";
 "last_update" = "Updated on %@";
 "about" = "About";
-"moreAboutOurTeam" = "More about our team";
-"contactUs" = "Contact us on social networks";
+"help" = "Help and documentation";
 "donate" = "Donate";
 "donate_description" = "No matter what, Delta will stay free and ad-free. The donation is a way to thank us for the app. You will contribute to the funding of our Extopy project. Please make sure you want to leave us a tip before doing so.";
 "about_text" = "Application developed by Nathan Fallet\n\nThis application has been developed by independent developers, and is provided for free without any warranty.\n\n© 2019 Groupe MINASTE";
@@ -18,12 +17,13 @@
 "outputs" = "Outputs";
 "instructions" = "Instructions";
 "edit" = "Edit";
+"delete" = "Delete";
 "save" = "Save";
 "cancel" = "Cancel";
-"close" = "Close";
 "error_calcul" = "Calcul error";
 "error_syntax" = "Syntax error";
 "error_constant" = "Cannot set value: %@ is a constant";
+"error_while_limit" = "Stopped while statement: More than 1000 iterations";
 "editor" = "Algorithm editor";
 "action_selector" = "Select an action";
 "action_input" = "Ask for %@ with default %@";

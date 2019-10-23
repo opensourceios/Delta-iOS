@@ -26,7 +26,7 @@ class ActionSelectionTableViewController: UITableViewController {
 
         // Navigation bar
         navigationItem.title = "action_selector".localized()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "close".localized(), style: .plain, target: self, action: #selector(close(_:)))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "cancel".localized(), style: .plain, target: self, action: #selector(close(_:)))
         
         // No separator
         tableView.separatorStyle = .none

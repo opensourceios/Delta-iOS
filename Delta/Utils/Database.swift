@@ -109,8 +109,26 @@ class Database {
             print(error.localizedDescription)
         }
         
-        // Unable algorithm
+        // Return algorithm
         return algorithm
+    }
+    
+    // Delete an algorithm
+    func deleteAlgorithm(_ algorithm: Algorithm)  {
+        do {
+            // If id is 0
+            if algorithm.local_id == 0 {
+                return
+            }
+            
+            // Get line
+            let line = algorithms.filter(local_id == algorithm.local_id && owner == true)
+            
+            // Delete data
+            try db?.run(line.delete())
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
 }

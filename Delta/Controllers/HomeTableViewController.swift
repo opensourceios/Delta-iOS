@@ -87,7 +87,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? myalgorithms.count + 1 : section == 1 ? downloads.count : 4
+        return section == 0 ? myalgorithms.count + 1 : section == 1 ? downloads.count : 3
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -125,12 +125,9 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 // About
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "about".localized(), accessory: .disclosureIndicator)
             } else if indexPath.row == 1 {
-                // More about our team
-                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "moreAboutOurTeam".localized(), accessory: .disclosureIndicator)
+                // Help and documentation
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "help".localized(), accessory: .disclosureIndicator)
             } else if indexPath.row == 2 {
-                // Contact us on social networks
-                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "contactUs".localized(), accessory: .disclosureIndicator)
-            } else if indexPath.row == 3 {
                 // Donate
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "donate".localized(), accessory: .disclosureIndicator)
             }
@@ -187,8 +184,8 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 alert.addAction(UIAlertAction(title: "ok".localized(), style: .default, handler: nil))
                 UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
             } else if indexPath.row == 1 {
-                // More about our team
-                if let url = URL(string: "https://www.groupe-minaste.org") {
+                // Help and documentation
+                if let url = URL(string: "https://www.delta-math-helper.com") {
                     if #available(iOS 10.0, *) {
                         UIApplication.shared.open(url)
                     } else {
@@ -196,15 +193,6 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                     }
                 }
             } else if indexPath.row == 2 {
-                // Contact us on social networks
-                if let url = URL(string: "https://www.twitter.com/DeltaMathHelper") {
-                    if #available(iOS 10.0, *) {
-                        UIApplication.shared.open(url)
-                    } else {
-                        UIApplication.shared.openURL(url)
-                    }
-                }
-            } else if indexPath.row == 3 {
                 // Donate
                 if let url = URL(string: "https://www.paypal.me/NathanFallet") {
                     if #available(iOS 10.0, *) {
@@ -219,40 +207,58 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     
     // Editing support for custom algorithms
 
-    /*
-    // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+        return (indexPath.section == 0 && indexPath.row != myalgorithms.count) || (indexPath.section == 1 && indexPath.row != downloads.count)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .destructive, title: "delete".localized()) { (action, indexPath) in
+            // Define algorithm
+            let algorithm: Algorithm
+            
+            // Check for section
+            if indexPath.section == 0 {
+                // Get selected algorithm
+                algorithm = self.myalgorithms[indexPath.row]
+            } else {
+                // Get selected algorithm
+                algorithm = self.downloads[indexPath.row]
+            }
+            
+            // Delete it from database
+            Database.current.deleteAlgorithm(algorithm)
+            
+            // Update without algorithm
+            self.loadAlgorithms()
+        }
+        delete.backgroundColor = .systemRed
+        
+        let edit = UITableViewRowAction(style: .normal, title: "edit".localized()) { (action, indexPath) in
+            // Define algorithm
+            let algorithm: Algorithm
+            
+            // Check for section
+            if indexPath.section == 0 {
+                // Get selected algorithm
+                algorithm = self.myalgorithms[indexPath.row]
+            } else {
+                // Get selected algorithm
+                algorithm = self.downloads[indexPath.row]
+            }
+            
+            // Create an editor
+            let editor = EditorTableViewController(algorithm: algorithm) { newAlgorithm in
+                // Update with new algorithm
+                self.loadAlgorithms()
+            }
+            
+            // Show it
+            self.present(UINavigationController(rootViewController: editor), animated: true, completion: nil)
+        }
+        edit.backgroundColor = .systemBlue
+        
+        return [delete, edit]
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
 }
 

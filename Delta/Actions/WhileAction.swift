@@ -23,11 +23,26 @@ class WhileAction: ActionBlock {
     }
     
     func execute(in process: Process) {
+        // Counter
+        var i = 0
+        
         // Check if condition is true
         while (condition.compute(with: process.variables, format: false) as? Equation)?.isTrue(with: process.variables) ?? false {
             // Execute actions
             for action in actions {
                 action.execute(in: process)
+            }
+            
+            // Increment counter
+            i += 1
+            
+            // If we crossed the limit
+            if i > 1000 {
+                // Show an error
+                process.outputs.append("error_while_limit".localized())
+                
+                // And stop the while
+                return
             }
         }
     }

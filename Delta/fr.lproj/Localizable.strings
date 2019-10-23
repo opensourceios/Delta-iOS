@@ -8,8 +8,7 @@
 "copy" = "%@ (copie)";
 "last_update" = "Mis à jour le %@";
 "about" = "A propos";
-"moreAboutOurTeam" = "Plus d'infos sur notre groupe";
-"contactUs" = "Nous contacter sur les réseaux sociaux";
+"help" = "Aide et documentation";
 "donate" = "Faire un don";
 "donate_description" = "Quoi qu'il arrive, Delta restera gratuite et sans publicités. Le don est une manière de nous remercier pour l'app. Vous contribuerez au financement de notre projet Extopy. Soyez sûr et certain de vouloir nous laisser un tip avant de le faire.";
 "about_text" = "Application développé par Nathan Fallet\n\nCette application a été développée par des développeurs indépendants et est fournie gratuitement sans aucune garantie.\n\n© 2019 Groupe MINASTE";
@@ -18,12 +17,13 @@
 "outputs" = "Sorties";
 "instructions" = "Instructions";
 "edit" = "Modifier";
+"delete" = "Supprimer";
 "save" = "Enregistrer";
 "cancel" = "Annuler";
-"close" = "Fermer";
 "error_calcul" = "Erreur de calcul";
 "error_syntax" = "Erreur de syntaxe";
 "error_constant" = "Impossible d'attribuer la valeur : %@ est une constante";
+"error_while_limit" = "Arrêt de la boucle : Plus de 1000 itérations";
 "editor" = "Editeur d'algorithme";
 "action_selector" = "Selectionner une action";
 "action_input" = "Demander %@ avec par défaut %@";
