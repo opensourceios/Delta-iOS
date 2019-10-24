@@ -54,7 +54,7 @@ class Database {
         
         do {
             // Get algorithms data
-            if let result = try db?.prepare(algorithms) {
+            if let result = try db?.prepare(algorithms.order(last_update.desc)) {
                 // Iterate data
                 for line in result {
                     // Create algorithm in list
