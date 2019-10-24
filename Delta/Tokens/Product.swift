@@ -21,8 +21,8 @@ struct Product: Token {
             var asString = value.toString()
             var op = false
             
-            // Check if not empty
-            if !string.isEmpty {
+            // Check if not empty and not ending by a minus
+            if !string.isEmpty && string.prefix(1) != "-" {
                 op = true
             }
             
