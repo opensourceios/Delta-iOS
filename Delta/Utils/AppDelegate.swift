@@ -43,7 +43,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    
+    override func buildMenu(with builder: UIMenuBuilder) {
+        // Check if it's main menu
+        if builder.system == .main {
+            // Help feature
+            builder.replaceChildren(ofMenu: .help, from: helpMenu(elements:))
+        }
+    }
+    
+    func helpMenu(elements: [UIMenuElement]) -> [UIMenuElement] {
+        // Create a menu item
+        let help = UIKeyCommand(title: "help".localized(), image: nil, action: #selector(openHelp(_:)), input: "?", modifierFlags: .command, propertyList: nil, alternates: [], discoverabilityTitle: nil, attributes: .destructive, state: .off)
+        
+        // Return list
+        return [help]
+    }
+    
+    @objc func openHelp(_ sender: Any) {
+        // Help and documentation
+        if let url = URL(string: "https://www.delta-math-helper.com") {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
 
 }
 
