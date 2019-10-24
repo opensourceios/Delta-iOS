@@ -44,6 +44,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+}
+
+#if targetEnvironment(macCatalyst)
+extension AppDelegate {
+    
     override func buildMenu(with builder: UIMenuBuilder) {
         // Check if it's main menu
         if builder.system == .main {
@@ -63,13 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     @objc func openHelp(_ sender: Any) {
         // Help and documentation
         if let url = URL(string: "https://www.delta-math-helper.com") {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
+            UIApplication.shared.open(url)
         }
     }
 
 }
-
+#endif

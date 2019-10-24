@@ -16,18 +16,23 @@ class SplitViewController: UISplitViewController, UISplitViewControllerDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Give delegates
         leftViewController.delegate = rightViewController
         rightViewController.delegate = leftViewController
-
-        viewControllers = [
-            UINavigationController(rootViewController: leftViewController),
-            UINavigationController(rootViewController: rightViewController)
-        ]
         
+        // Create navigation controllers
+        let leftNavigationController = UINavigationController(rootViewController: leftViewController)
+        let rightNavigationController = UINavigationController(rootViewController: rightViewController)
+
+        // Assign them
+        viewControllers = [leftNavigationController, rightNavigationController]
+        
+        // Some configuration
         preferredDisplayMode = .allVisible
         delegate = self
         
         if #available(iOS 13.0, *) {
+            // Special color for Catalyst
             primaryBackgroundStyle = .sidebar
         }
     }

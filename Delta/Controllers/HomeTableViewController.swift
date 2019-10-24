@@ -211,6 +211,8 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         return (indexPath.section == 0 && indexPath.row != myalgorithms.count) || (indexPath.section == 1 && indexPath.row != downloads.count)
     }
     
+    #if !targetEnvironment(macCatalyst)
+    @available(iOS, obsoleted: 11.0)
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "delete".localized()) { (action, indexPath) in
             // Define algorithm
@@ -258,6 +260,59 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         edit.backgroundColor = .systemBlue
         
         return [delete, edit]
+    }
+    #endif
+    
+    @available(iOS 11.0, *)
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "delete".localized()) { (action, view, completionHandler) in
+            // Define algorithm
+            let algorithm: Algorithm
+            
+            // Check for section
+            if indexPath.section == 0 {
+                // Get selected algorithm
+                algorithm = self.myalgorithms[indexPath.row]
+            } else {
+                // Get selected algorithm
+                algorithm = self.downloads[indexPath.row]
+            }
+            
+            // Delete it from database
+            Database.current.deleteAlgorithm(algorithm)
+            
+            // Update without algorithm
+            self.loadAlgorithms()
+            completionHandler(true)
+        }
+        delete.backgroundColor = .systemRed
+        
+        let edit = UIContextualAction(style: .normal, title: "edit".localized()) { (action, view, completionHandler) in
+            // Define algorithm
+            let algorithm: Algorithm
+            
+            // Check for section
+            if indexPath.section == 0 {
+                // Get selected algorithm
+                algorithm = self.myalgorithms[indexPath.row]
+            } else {
+                // Get selected algorithm
+                algorithm = self.downloads[indexPath.row]
+            }
+            
+            // Create an editor
+            let editor = EditorTableViewController(algorithm: algorithm) { newAlgorithm in
+                // Update with new algorithm
+                self.loadAlgorithms()
+            }
+            
+            // Show it
+            self.present(UINavigationController(rootViewController: editor), animated: true, completion: nil)
+            completionHandler(true)
+        }
+        edit.backgroundColor = .systemBlue
+        
+        return UISwipeActionsConfiguration(actions: [delete, edit])
     }
 
 }
