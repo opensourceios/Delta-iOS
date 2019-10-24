@@ -58,7 +58,56 @@ class RootAction: ActionBlock {
             }
         }
         
-        return (self, parent, parentIndex)
+        return (self, self, index)
+    }
+    
+    func insert(action: Action, at index: Int) {
+        if index < editorLinesCount()-1 {
+            // Iterate actions
+            var i = 0
+            var ri = 0
+            for action in actions {
+                // Get size
+                let size = action.editorLinesCount()
+                
+                // Check if index is in this action
+                if i + size > index {
+                    // Add it here
+                    actions.insert(action, at: ri)
+                    return
+                } else {
+                    // Continue
+                    i += size
+                    ri += 1
+                }
+            }
+        }
+        
+        // No index found, add it at the end
+        actions.append(action)
+    }
+    
+    func delete(at index: Int) {
+        if index < editorLinesCount()-1 {
+            // Iterate actions
+            var i = 0
+            var ri = 0
+            for action in actions {
+                // Get size
+                let size = action.editorLinesCount()
+                
+                // Check if index is in this action
+                if i + size > index {
+                    // Delete this one
+                    actions.remove(at: ri)
+                    return
+                } else {
+                    // Continue
+                    i += size
+                    ri += 1
+                }
+            }
+        }
     }
     
     func update(line: EditorLine) {

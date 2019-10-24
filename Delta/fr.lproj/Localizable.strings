@@ -16,6 +16,7 @@
 "inputs" = "Entrées";
 "outputs" = "Sorties";
 "instructions" = "Instructions";
+"settings" = "Paramètres";
 "edit" = "Modifier";
 "delete" = "Supprimer";
 "save" = "Enregistrer";
@@ -33,12 +34,14 @@
 "action_set_formatted" = "Définir %@ à %@ comme format";
 "action_if" = "Si %@";
 "action_else" = "Sinon";
-"action_endif" = "Fin";
+"action_end" = "Fin";
 "action_while" = "Tant que %@";
 "action_for" = "Pour tout %@ de %@";
+"settings_name" = "Nom : %@";
 "category_variable" = "Variable";
 "category_structure" = "Structure";
 "category_output" = "Sortie";
+"category_settings" = "Paramètres";
 "category_add" = "Ajouter une action";
 
 // Algorithm strings

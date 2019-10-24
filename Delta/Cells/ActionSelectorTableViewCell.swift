@@ -71,7 +71,7 @@ class ActionSelectorTableViewCell: UITableViewCell {
         // Update icon, category and label
         icon.image = UIImage(named: line.category.rawValue.capitalizeFirstLetter())
         category.text = "category_\(line.category.rawValue)".localized()
-        label.text = line.format.format(line.values)
+        label.text = line.format.localized().format(line.values)
         
         return self
     }

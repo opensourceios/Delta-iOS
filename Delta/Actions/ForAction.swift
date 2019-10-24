@@ -65,14 +65,14 @@ class ForAction: ActionBlock {
     }
     
     func toEditorLines() -> [EditorLine] {
-        var lines = [EditorLine(format: "action_for".localized(), category: .structure, values: [identifier, token.toString()])]
+        var lines = [EditorLine(format: "action_for", category: .structure, values: [identifier, token.toString()])]
         
         for action in actions {
             lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
         }
         
         lines.append(EditorLine(format: "", category: .add, indentation: 1))
-        lines.append(EditorLine(format: "action_endif".localized(), category: .structure))
+        lines.append(EditorLine(format: "action_end", category: .structure))
         
         return lines
     }
@@ -100,7 +100,56 @@ class ForAction: ActionBlock {
             }
         }
         
-        return (self, index == 0 ? parent : self, parentIndex)
+        return (self, index == 0 ? parent : self, index == 0 ? parentIndex : index)
+    }
+    
+    func insert(action: Action, at index: Int) {
+        if index != 0 && index < editorLinesCount()-2 {
+            // Iterate actions
+            var i = 1
+            var ri = 0
+            for action in actions {
+                // Get size
+                let size = action.editorLinesCount()
+                
+                // Check if index is in this action
+                if i + size > index {
+                    // Add it here
+                    actions.insert(action, at: ri)
+                    return
+                } else {
+                    // Continue
+                    i += size
+                    ri += 1
+                }
+            }
+        }
+        
+        // No index found, add it at the end
+        actions.append(action)
+    }
+    
+    func delete(at index: Int) {
+        if index != 0 && index < editorLinesCount()-2 {
+            // Iterate actions
+            var i = 1
+            var ri = 0
+            for action in actions {
+                // Get size
+                let size = action.editorLinesCount()
+                
+                // Check if index is in this action
+                if i + size > index {
+                    // Delete this one
+                    actions.remove(at: ri)
+                    return
+                } else {
+                    // Continue
+                    i += size
+                    ri += 1
+                }
+            }
+        }
     }
     
     func update(line: EditorLine) {

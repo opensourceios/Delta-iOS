@@ -16,6 +16,7 @@
 "inputs" = "Inputs";
 "outputs" = "Outputs";
 "instructions" = "Instructions";
+"settings" = "Settings";
 "edit" = "Edit";
 "delete" = "Delete";
 "save" = "Save";
@@ -33,12 +34,14 @@
 "action_set_formatted" = "Set %@ to %@ as format";
 "action_if" = "If %@";
 "action_else" = "Else";
-"action_endif" = "End";
+"action_end" = "End";
 "action_while" = "While %@";
 "action_for" = "For %@ in %@";
+"settings_name" = "Name: %@";
 "category_variable" = "Variable";
 "category_structure" = "Structure";
 "category_output" = "Output";
+"category_settings" = "Settings";
 "category_add" = "Add an action";
 
 // Algorithm strings

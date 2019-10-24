@@ -13,6 +13,7 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
     let bubble = UIView()
     let scroll = UIScrollView()
     let icon = UIImageView()
+    let delete = UIButton(type: .custom)
     let category = UILabel()
     let stack = UIStackView()
     var leadingConstraint: NSLayoutConstraint!
@@ -28,6 +29,7 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         contentView.addSubview(bubble)
         contentView.addSubview(icon)
+        contentView.addSubview(delete)
         contentView.addSubview(category)
         contentView.addSubview(scroll)
         scroll.addSubview(stack)
@@ -47,10 +49,18 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         icon.widthAnchor.constraint(equalToConstant: 20).isActive = true
         icon.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
+        delete.translatesAutoresizingMaskIntoConstraints = false
+        delete.centerYAnchor.constraint(equalTo: category.centerYAnchor).isActive = true
+        delete.trailingAnchor.constraint(equalTo: bubble.trailingAnchor, constant: -10).isActive = true
+        delete.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        delete.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        delete.setTitle("✖", for: .normal)
+        delete.addTarget(self, action: #selector(deleteButton(_:)), for: .touchUpInside)
+        
         category.translatesAutoresizingMaskIntoConstraints = false
         category.topAnchor.constraint(equalTo: bubble.topAnchor, constant: 10).isActive = true
-        category.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 8).isActive = true
-        category.trailingAnchor.constraint(lessThanOrEqualTo: bubble.trailingAnchor, constant: -10).isActive = true
+        category.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 6).isActive = true
+        category.trailingAnchor.constraint(lessThanOrEqualTo: delete.leadingAnchor, constant: -6).isActive = true
         category.font = .boldSystemFont(ofSize: 17)
         
         scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +76,7 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         stack.bottomAnchor.constraint(equalTo: scroll.bottomAnchor, constant: -10).isActive = true
         stack.heightAnchor.constraint(equalTo: scroll.heightAnchor, constant: -20).isActive = true
         stack.axis = .horizontal
-        stack.spacing = 8
+        stack.spacing = 6
         
         if #available(iOS 13.0, *) {
             bubble.backgroundColor = .secondarySystemGroupedBackground
@@ -93,7 +103,7 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         // Add parts to stackview
         var args = line.values
         var tag = 0
-        for part in line.format.cutEditorLine() {
+        for part in line.format.localized().cutEditorLine() {
             // Add current part to line
             if part == "%@" {
                 let field = UITextField()
@@ -129,13 +139,29 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         icon.image = UIImage(named: line.category.rawValue.capitalizeFirstLetter())
         category.text = "category_\(line.category.rawValue)".localized()
         
+        // Delete button
+        if line.category == .settings || line.format == "action_else" || line.format == "action_end" {
+            // Hide button
+            delete.isHidden = true
+        } else {
+            // Show button
+            delete.isHidden = false
+        }
+        
         return self
     }
     
     @objc func editingChanged(_ sender: UITextField) {
         // Update editor
         line?.values[sender.tag] = sender.text ?? ""
+        
+        // Send it to delegate
         delegate?.editorLineChanged(line, at: index)
+    }
+    
+    @objc func deleteButton(_ sender: UIButton) {
+        // Send it to delegate
+        delegate?.editorLineDeleted(line, at: index)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

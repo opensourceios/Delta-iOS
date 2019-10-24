@@ -49,24 +49,47 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     
     func editorLineAdded(_ action: Action, at index: Int) {
         // Add the line into algorithm
-        algorithm.insert(action: action, at: index)
+        let range = algorithm.insert(action: action, at: index)
         
         // Insert new rows
-        let count = action.editorLinesCount()
         tableView.beginUpdates()
-        tableView.insertRows(at: (0 ..< count).map{ IndexPath(row: index + $0, section: 0) }, with: .automatic)
+        tableView.insertRows(at: range.map{ IndexPath(row: $0, section: 1) }, with: .automatic)
         tableView.endUpdates()
         
-        // Refresh all buttons
+        // Refresh lines
+        refreshLines()
+    }
+    
+    func editorLineDeleted(_ line: EditorLine?, at index: Int) {
+        // Get line
+        if let line = line {
+            // Delete the line into algorithm
+            let range = algorithm.delete(line: line, at: index)
+            
+            // Delete old rows
+            tableView.beginUpdates()
+            tableView.deleteRows(at: range.map{ IndexPath(row: $0, section: 1) }, with: .automatic)
+            tableView.endUpdates()
+            
+            // Refresh lines
+            refreshLines()
+        }
+    }
+    
+    func refreshLines() {
+        // Refresh lines
         let lines = algorithm.toEditorLines()
         for i in 0 ..< lines.count {
-            // Check if it is a button
-            if lines[i].category == .add {
-                // Get cell
-                if let cell = tableView.cellForRow(at: IndexPath(row: i, section: 0)) as? EditorAddTableViewCell {
-                    // Update index
-                    cell.index = i
-                }
+            // Get cell (classic line)
+            if let cell = tableView.cellForRow(at: IndexPath(row: i, section: 1)) as? EditorTableViewCell {
+                // Update index
+                cell.index = i
+            }
+            
+            // Get cell (add)
+            if let cell = tableView.cellForRow(at: IndexPath(row: i, section: 1)) as? EditorAddTableViewCell {
+                // Update index
+                cell.index = i
             }
         }
     }
@@ -74,15 +97,15 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return algorithm.editorLinesCount()
+        return section == 0 ? algorithm.settingsCount() : algorithm.editorLinesCount()
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "instructions".localized()
+        return section == 0 ? "settings".localized() : "instructions".localized()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -95,7 +118,7 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Get editor line
-        let line = algorithm.toEditorLines()[indexPath.row]
+        let line = indexPath.section == 0 ? algorithm.getSettings()[indexPath.row] : algorithm.toEditorLines()[indexPath.row]
         
         // Check if add
         if line.category == .add {
@@ -105,19 +128,6 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         
         // Return cell
         return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self, at: indexPath.row)
-    }
-
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        let result = algorithm.action(at: indexPath.row)
-        let count = result.1.editorLinesCount()
-        
-        if count == result.2 {
-            return false
-        }
-        
-        print(result.0, result.1, result.2)
-        
-        return true
     }
 
     @objc func close(_ sender: UIBarButtonItem) {
@@ -151,5 +161,6 @@ protocol EditorLineChangedDelegate: class {
     
     func editorLineChanged(_ line: EditorLine?, at index: Int)
     func editorLineAdded(_ action: Action, at index: Int)
+    func editorLineDeleted(_ line: EditorLine?, at index: Int)
     
 }

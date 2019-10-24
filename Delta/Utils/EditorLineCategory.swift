@@ -10,7 +10,7 @@ import Foundation
 
 enum EditorLineCategory: String {
     
-    case variable = "variable", structure = "structure", output = "output", add = "add"
+    case variable = "variable", structure = "structure", output = "output", settings = "settings", add = "add"
     
     static let list: [EditorLineCategory] = [.variable, .structure, .output]
     

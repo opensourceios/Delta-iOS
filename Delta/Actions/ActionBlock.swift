@@ -11,5 +11,7 @@ import Foundation
 protocol ActionBlock: Action {
     
     func append(actions: [Action])
+    func insert(action: Action, at index: Int)
+    func delete(at index: Int)
     
 }

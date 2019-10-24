@@ -10,6 +10,7 @@ import Foundation
 
 class Algorithm {
     
+    // Properties
     var local_id: Int64
     var remote_id: Int64?
     var owner: Bool
@@ -17,6 +18,8 @@ class Algorithm {
     var last_update: Date
     var inputs: [(String, Token)]
     var root: RootAction
+    
+    // Initializer
     
     init(local_id: Int64, remote_id: Int64?, owner: Bool, name: String, last_update: Date, root: RootAction) {
         // Init values
@@ -32,6 +35,8 @@ class Algorithm {
         self.extractInputs()
     }
     
+    // Inputs
+    
     func extractInputs() {
         // Clear inputs
         self.inputs = []
@@ -42,6 +47,8 @@ class Algorithm {
             inputs.append(input)
         }
     }
+    
+    // Execute
     
     func execute() -> Process {
         // Create a process with inputs
@@ -54,9 +61,13 @@ class Algorithm {
         return process
     }
     
+    // Export
+    
     func toString() -> String {
         return root.toString()
     }
+    
+    // Actions editor lines
     
     func toEditorLines() -> [EditorLine] {
         return root.toEditorLines()
@@ -70,16 +81,70 @@ class Algorithm {
         return root.action(at: index, parent: root, parentIndex: 0)
     }
     
-    func insert(action: Action, at index: Int) {
+    func insert(action: Action, at index: Int) -> Range<Int> {
+        // Get where to add it
         let result = self.action(at: index)
+        
+        // Check if we have a block to add it
         if let block = result.1 as? ActionBlock {
-            block.append(actions: [action])
+            // Add it
+            block.insert(action: action, at: result.2)
+            
+            // Return the range of new lines
+            return index ..< index + action.editorLinesCount()
         }
+        
+        // Not added
+        return 0 ..< 0
     }
     
     func update(line: EditorLine, at index: Int) {
-        action(at: index).0.update(line: line)
+        // Check settings
+        if line.category == .settings {
+            // Update settings
+            updateSettings(at: index, with: line.values)
+        } else {
+            // Update actions
+            action(at: index).0.update(line: line)
+        }
     }
+    
+    func delete(line: EditorLine, at index: Int) -> Range<Int> {
+        // Get where to delete it
+        let result = self.action(at: index)
+        
+        // Check if we have a block to delete it
+        if let block = result.1 as? ActionBlock {
+            // Delete it
+            block.delete(at: result.2)
+            
+            // Return the range of old lines
+            return index ..< index + result.0.editorLinesCount()
+        }
+        
+        // Not added
+        return 0 ..< 0
+    }
+    
+    // Settings editor lines
+    
+    func getSettings() -> [EditorLine] {
+        return [EditorLine(format: "settings_name", category: .settings, values: [name])]
+    }
+    
+    func settingsCount() -> Int {
+        return 1
+    }
+    
+    func updateSettings(at index: Int, with values: [String]) {
+        // Check index
+        if index == 0 && values.count == 1 {
+            // Index 0 - Algorithm's name
+            self.name = values[0]
+        }
+    }
+    
+    // Clone algorithm to edit
     
     func clone() -> Algorithm {
         // Check if is owned
