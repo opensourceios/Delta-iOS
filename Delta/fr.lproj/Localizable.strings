@@ -4,13 +4,11 @@
 "name" = "Delta: Math helper";
 "myalgorithms" = "Mes algorithmes";
 "downloads" = "Téléchargements";
-"new" = "Nouvel algorithme";
+"new_algorithm" = "Nouvel algorithme";
 "copy" = "%@ (copie)";
 "last_update" = "Mis à jour le %@";
 "about" = "A propos";
 "help" = "Aide et documentation";
-"donate" = "Faire un don";
-"donate_description" = "Quoi qu'il arrive, Delta restera gratuite et sans publicités. Le don est une manière de nous remercier pour l'app. Vous contribuerez au financement de notre projet Extopy. Soyez sûr et certain de vouloir nous laisser un tip avant de le faire.";
 "about_text" = "Application développé par Nathan Fallet\n\nCette application a été développée par des développeurs indépendants et est fournie gratuitement sans aucune garantie.\n\n© 2019 Groupe MINASTE";
 "ok" = "OK";
 "inputs" = "Entrées";
@@ -46,6 +44,4 @@
 
 // Algorithm strings
 
-"algo1_name" = "Equation du 2nd degré";
-"algo2_name" = "Vecteurs";
-"algo3_name" = "Statistiques";
+"algo1_name" = "Equations du 2nd degré";

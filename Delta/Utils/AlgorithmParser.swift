@@ -127,8 +127,8 @@ class AlgorithmParser {
                 tokens.insert(token, at: 0)
             }
             
-            // New line not in braces
-            else if current == "\n" && !keywords.contains("{") {
+            // New line
+            else if current == "\n" {
                 // Create an action from the line
                 if let action = createAction() {
                     // Add it to the list

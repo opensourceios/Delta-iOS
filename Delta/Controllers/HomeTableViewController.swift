@@ -87,18 +87,12 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? myalgorithms.count + 1 : section == 1 ? downloads.count : 3
+        return section == 0 ? myalgorithms.count + 1 : section == 1 ? downloads.count : 2
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return section == 0 ? "myalgorithms".localized() : section == 1 ? "downloads".localized() : "about".localized()
     }
-    
-    #if !targetEnvironment(macCatalyst)
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return section == 2 ? "donate_description".localized() : ""
-    }
-    #endif
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Check for section
@@ -106,7 +100,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             // Check for new cell
             if indexPath.row == myalgorithms.count {
                 // Create new cell
-                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "new".localized(), accessory: .disclosureIndicator)
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "new_algorithm".localized(), accessory: .disclosureIndicator)
             }
             
             // Get algorithm
@@ -127,9 +121,6 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             } else if indexPath.row == 1 {
                 // Help and documentation
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "help".localized(), accessory: .disclosureIndicator)
-            } else if indexPath.row == 2 {
-                // Donate
-                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "donate".localized(), accessory: .disclosureIndicator)
             }
         }
         
@@ -144,7 +135,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             // Check for new cell
             if indexPath.row == myalgorithms.count {
                 // Create an editor
-                let editor = EditorTableViewController(algorithm: Algorithm(local_id: 0, remote_id: nil, owner: true, name: "new".localized(), last_update: Date(), root: RootAction([]))) { newAlgorithm in
+                let editor = EditorTableViewController(algorithm: Algorithm(local_id: 0, remote_id: nil, owner: true, name: "new_algorithm".localized(), last_update: Date(), root: RootAction([]))) { newAlgorithm in
                     // Update with new algorithm
                     self.loadAlgorithms()
                 }
@@ -186,15 +177,6 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             } else if indexPath.row == 1 {
                 // Help and documentation
                 if let url = URL(string: "https://www.delta-math-helper.com") {
-                    if #available(iOS 10.0, *) {
-                        UIApplication.shared.open(url)
-                    } else {
-                        UIApplication.shared.openURL(url)
-                    }
-                }
-            } else if indexPath.row == 2 {
-                // Donate
-                if let url = URL(string: "https://www.paypal.me/NathanFallet") {
                     if #available(iOS 10.0, *) {
                         UIApplication.shared.open(url)
                     } else {

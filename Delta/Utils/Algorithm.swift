@@ -38,14 +38,8 @@ class Algorithm {
     // Inputs
     
     func extractInputs() {
-        // Clear inputs
-        self.inputs = []
-        
-        // Iterate inputs in root
-        for input in root.extractInputs() {
-            // Add it to inputs
-            inputs.append(input)
-        }
+        // Set inputs from root
+        self.inputs = root.extractInputs()
     }
     
     // Execute
@@ -150,7 +144,7 @@ class Algorithm {
         // Check if is owned
         if owner {
             // Create an instance with same informations
-            return Algorithm(local_id: local_id, remote_id: remote_id, owner: owner, name: name, last_update: last_update, root: root)
+            return Algorithm(local_id: local_id, remote_id: remote_id, owner: true, name: name, last_update: last_update, root: root)
         } else {
             // Create a copy
             return Algorithm(local_id: 0, remote_id: nil, owner: true, name: "copy".localized().format(name), last_update: last_update, root: root)
