@@ -108,9 +108,9 @@ class ForAction: ActionBlock {
             // Iterate actions
             var i = 1
             var ri = 0
-            for action in actions {
+            for action1 in actions {
                 // Get size
-                let size = action.editorLinesCount()
+                let size = action1.editorLinesCount()
                 
                 // Check if index is in this action
                 if i + size > index {

@@ -102,9 +102,6 @@ class TokenParser {
                         // Increment i 2 times to skip index
                         i += 2
                     }
-                    
-                    // Init variable
-                    let variable = Variable(name: name)
 
                     // Check if we have a token before without operator
                     if values.count > 0 && TokenParser.productCoefficients.contains(previous) {
@@ -113,7 +110,7 @@ class TokenParser {
                     }
                     
                     // Insert into values
-                    insertValue(variable)
+                    insertValue(Variable(name: name))
                 }
                 
                 // Closing brace
