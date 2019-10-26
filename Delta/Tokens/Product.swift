@@ -197,7 +197,7 @@ struct Product: Token {
     }
     
     func needBrackets(for operation: Operation) -> Bool {
-        return operation.getPrecedence() > Operation.addition.getPrecedence()
+        return operation.getPrecedence() >= Operation.multiplication.getPrecedence()
     }
     
     func getMultiplicationPriority() -> Int {
