@@ -115,13 +115,19 @@ struct Number: Token {
         // Fraction
         if operation == .division {
             // If value is 0
-            if value == 0 {
+            if value == 0 && right as? Number == nil {
                 // 0 / x is 0
                 return self
             }
             
             // Rigth is number
             if let right = right as? Number {
+                // If right is 0
+                if right.value == 0 {
+                    // x/0 is calcul error
+                    return CalculError()
+                }
+                
                 // Multiple so division is an integer
                 if self.value.isMultiple(of: right.value) {
                     return Number(value: self.value / right.value)
@@ -148,6 +154,12 @@ struct Number: Token {
         if operation == .modulo {
             // Rigth is number
             if let right = right as? Number {
+                // If right is 0
+                if right.value == 0 {
+                    // x/0 is calcul error
+                    return CalculError()
+                }
+                
                 return Number(value: self.value % right.value)
             }
             

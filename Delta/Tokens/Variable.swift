@@ -13,7 +13,7 @@ struct Variable: Token {
     var name: String
 
     func toString() -> String {
-        return "\(name)"
+        return name
     }
     
     func compute(with inputs: [String: Token], format: Bool) -> Token {
@@ -72,6 +72,10 @@ struct Variable: Token {
             if name == "i" {
                 // If right is a number
                 if let number = right as? Number {
+                    // i^0 = 1
+                    if number.value % 4 == 0 {
+                        return Number(value: 1)
+                    }
                     // i^2 = -1
                     if number.value % 4 == 2 {
                         return Number(value: -1)
