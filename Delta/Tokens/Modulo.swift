@@ -31,11 +31,6 @@ struct Modulo: Token {
         
         // Check divisor
         if let number = divisor as? Number {
-            // x % 1 is 0
-            if number.value == 1 {
-                return Number(value: 0)
-            }
-            
             // x % 0 is calcul error
             if number.value == 0 {
                 return CalculError()
@@ -107,7 +102,7 @@ struct Modulo: Token {
     }
     
     func needBrackets(for operation: Operation) -> Bool {
-        return operation.getPrecedence() >= Operation.division.getPrecedence()
+        return operation.getPrecedence() >= Operation.modulo.getPrecedence()
     }
     
     func getMultiplicationPriority() -> Int {
@@ -124,7 +119,7 @@ struct Modulo: Token {
     
     func asDouble() -> Double? {
         if let dividend = dividend.asDouble(), let divisor = divisor.asDouble() {
-            return dividend/divisor
+            return dividend.truncatingRemainder(dividingBy: divisor)
         }
         
         return nil

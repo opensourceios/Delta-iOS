@@ -80,7 +80,7 @@ struct Variable: Token {
                     if number.value % 4 == 2 {
                         return Number(value: -1)
                     }
-                    // i^3 = -1
+                    // i^3 = -i
                     if number.value % 4 == 3 {
                         return Product(values: [Number(value: -1), self])
                     }
