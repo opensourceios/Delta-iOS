@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // Check to update
-        if build_number < 12 {
+        if build_number < 13 {
             // Get all algorithms
             var algorithms = Database.current.getAlgorithms()
             

@@ -24,14 +24,16 @@ struct Function: Token {
         // Chech if an input corresponds to this variable
         if let value = inputs[name] as? FunctionDeclaration {
             expression = value.token
-            variable = value.variable
+            variable = value.variable.trimmingCharacters(in: CharacterSet(charactersIn: " "))
         } else {
            return CalculError()
         }
         
         // Get inputs and current parameter of function
         var values = inputs
-        values[variable] = parameter
+        if (parameter as? Variable)?.name ?? "" != variable {
+            values[variable] = parameter
+        }
         
         // Return computed expression
         return expression.compute(with: values, format: format)
