@@ -68,11 +68,25 @@ class TokenParser {
                 // Number
                 else if Int(current) != nil {
                     var val = 0
+                    var powerOfTen = 0
                     
                     // Get other digits
                     while i < tokens.count, let t = Int(tokens[i]) {
                         val = (val * 10) + t
                         i += 1
+                    }
+                    
+                    // If we have a dot
+                    if i < tokens.count-1 && tokens[i] == "." {
+                        // Pass the dot
+                        i += 1
+                        
+                        // And start getting numbers after the dot
+                        while i < tokens.count, let t = Int(tokens[i]) {
+                            val = (val * 10) + t
+                            i += 1
+                            powerOfTen += 1
+                        }
                     }
                     
                     // Check if we have a token before without operator
@@ -82,7 +96,11 @@ class TokenParser {
                     }
                     
                     // Insert into values
-                    insertValue(Number(value: val))
+                    if powerOfTen > 0 {
+                        insertValue(Fraction(numerator: Number(value: val), denominator: Power(token: Number(value: 10), power: Number(value: powerOfTen))))
+                    } else {
+                        insertValue(Number(value: val))
+                    }
                     
                     // Remove one, else current caracter is skept
                     i -= 1
@@ -229,9 +247,9 @@ class TokenParser {
         // Get operator and apply
         if let op = ops.getFirstOperationAndRemove() {
             if op == .root {
-                return op.join(left: right, right: left)
+                return op.join(left: right, right: left, ops: ops)
             } else {
-                return op.join(left: left, right: right)
+                return op.join(left: left, right: right, ops: ops)
             }
         }
         

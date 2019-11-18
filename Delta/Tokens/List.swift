@@ -13,7 +13,7 @@ struct List: Token {
     var values: [Token]
     
     func toString() -> String {
-        return "{\(values.map { $0.toString() }.joined(separator: " , "))}"
+        return "{\(values.map { $0.toString() }.joined(separator: ", "))}"
     }
     
     func compute(with inputs: [String: Token], format: Bool) -> Token {

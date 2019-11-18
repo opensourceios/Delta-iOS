@@ -14,6 +14,12 @@ struct Fraction: Token {
     var denominator: Token
     
     func toString() -> String {
+        if let number = numerator as? Number, let powerOfTen = denominator as? Number, powerOfTen.value.isPowerOfTen() {
+            // Print it as decimal
+            return "\(Double(number.value)/Double(powerOfTen.value))"
+        }
+        
+        // Print it as a fraction
         return "\(numerator.needBrackets(for: .division) ? "(\(numerator.toString()))" : numerator.toString()) / \(denominator.needBrackets(for: .division) ? "(\(denominator.toString()))" : denominator.toString())"
     }
     

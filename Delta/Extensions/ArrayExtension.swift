@@ -32,17 +32,7 @@ extension Array where Element: StringProtocol {
             removeFirst()
             
             // Operator list
-            var operators = [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.modulo, Operation.power, Operation.root, Operation.equals, Operation.unequals, Operation.greaterThan, Operation.lessThan, Operation.greaterOrEquals, Operation.lessOrEquals]
-            
-            // Check for vectors
-            if (self as! [String]).contains("(") {
-                operators.append(.vector)
-            }
-            
-            // Check for list
-            if (self as! [String]).contains("{") {
-                operators.append(.list)
-            }
+            let operators = [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.modulo, Operation.power, Operation.root, Operation.equals, Operation.unequals, Operation.greaterThan, Operation.lessThan, Operation.greaterOrEquals, Operation.lessOrEquals, Operation.list1, Operation.list2]
             
             // Iterate values
             for value in operators {

@@ -14,6 +14,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Get build numbers
+        let data = UserDefaults.standard
+        var build_number = 0
+        if let value = data.value(forKey: "build_number") as? Int {
+            build_number = value
+        }
+        
+        // Check to update
+        if build_number < 12 {
+            // Get all algorithms
+            var algorithms = Database.current.getAlgorithms()
+            
+            // Clear downloaded algorithms and save them again updated
+            for algorithm in algorithms {
+                // Check if it is a download
+                if !algorithm.owner {
+                    // Remove it
+                    Database.current.deleteAlgorithm(algorithm)
+                }
+            }
+            
+            // Add again downloads
+            for algorithm in Algorithm.defaults {
+                let _ = Database.current.addAlgorithm(algorithm)
+            }
+            
+            // Reload list
+            algorithms = Database.current.getAlgorithms()
+            
+            // Replace set_formatted by set in code
+            for algorithm in algorithms {
+                // Just save them again
+                let _ = Database.current.updateAlgorithm(algorithm)
+            }
+        }
+        
+        // Get current version and save it
+        let current_version = Int(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0") ?? 0
+        data.set(current_version, forKey: "build_number")
+        
         // Create view
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = SplitViewController()

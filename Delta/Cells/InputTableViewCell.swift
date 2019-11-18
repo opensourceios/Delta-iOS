@@ -57,7 +57,7 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractio
         self.input = input
         self.delegate = delegate
         
-        label.text = "\(input.0) ="
+        label.attributedText = "\(input.0) =".attributedMath()
         field.text = input.1.compute(with: [:], format: false).toString()
         
         return self
@@ -74,12 +74,12 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractio
         delegate?.inputChanged(input)
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    /*func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let cs = NSCharacterSet(charactersIn: TokenParser.input).inverted
         let filtered = string.components(separatedBy: cs).joined(separator: "")
 
         return (string == filtered)
-    }
+    }*/
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         field.endEditing(true)

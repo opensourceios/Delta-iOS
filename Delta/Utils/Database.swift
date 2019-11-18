@@ -122,7 +122,7 @@ class Database {
             }
             
             // Get line
-            let line = algorithms.filter(local_id == algorithm.local_id && owner == true)
+            let line = algorithms.filter(local_id == algorithm.local_id)
             
             // Delete data
             try db?.run(line.delete())

@@ -24,23 +24,19 @@ extension Algorithm {
         set "Δ" to "b ^ 2 - 4ac"
         set "α" to "(-b) / (2a)"
         set "β" to "(-Δ) / (4a)"
-        set_formatted "f(x)" to "ax ^ 2 + bx + c"
-        print "f(x)"
-        set_formatted "f(x)" to "a(x - α) ^ 2 + β"
-        print "f(x)"
+        print_text "f(x) = \\\"ax ^ 2 + bx + c\\\""
+        print_text "f(x) = \\\"a(x - α) ^ 2 + β\\\""
         print "Δ"
         if "Δ = 0" {
             set "x_0" to "α"
             print "x_0"
-            set_formatted "f(x)" to "a(x - x_0) ^ 2"
-            print "f(x)"
+            print_text "f(x) = \\\"a(x - x_0) ^ 2\\\""
         } else {
             set "x_1" to "(-b - √(Δ)) / (2a)"
             set "x_2" to "(-b + √(Δ)) / (2a)"
             print "x_1"
             print "x_2"
-            set_formatted "f(x)" to "a(x - x_1)(x - x_2)"
-            print "f(x)"
+            print_text "f(x) = \\\"a(x - x_1)(x - x_2)\\\""
         }
     }
     """).execute()

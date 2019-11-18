@@ -119,6 +119,13 @@ class AlgorithmParser {
                 
                 // Get all the characters
                 while i < lines.count && lines[i] != "\"" {
+                    // Check for \
+                    if lines[i] == "\\" && i < lines.count-1 {
+                        // Skip it and get next character
+                        i += 1
+                    }
+                    
+                    // Add chararcter to string
                     token += lines[i]
                     i += 1
                 }
@@ -192,16 +199,11 @@ class AlgorithmParser {
                                     let token = TokenParser(tokens.removeFirst()).execute()
                                     let identifier = tokens.removeFirst()
                                     return ForAction(identifier, in: token, do: [])
-                                } else if value == .Set && tokens.count >= 2 {
+                                } else if (value == .Set || value == .SetFormatted) && tokens.count >= 2 {
                                     // Set "identifier" to "token"
                                     let token = TokenParser(tokens.removeFirst()).execute()
                                     let identifier = tokens.removeFirst()
                                     return SetAction(identifier, to: token)
-                                } else if value == .SetFormatted && tokens.count >= 2 {
-                                    // Set "identifier" to "token" as format
-                                    let token = TokenParser(tokens.removeFirst()).execute()
-                                    let identifier = tokens.removeFirst()
-                                    return SetAction(identifier, to: token, format: true)
                                 }
                             }
                         }

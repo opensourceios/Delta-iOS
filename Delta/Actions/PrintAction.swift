@@ -18,16 +18,10 @@ class PrintAction: Action {
     
     func execute(in process: Process) {
         // Get the value
-        if let value = process.variables[identifier] {
-            // Print it (add it to output)
-            if value as? FormattedToken != nil {
-                // Formatted
-                process.outputs.append("\(identifier) = \(value.compute(with: process.variables, format: true).toString())")
-            } else {
-                // Not formatted
-                process.outputs.append("\(identifier) = \(value.toString())")
-            }
-        }
+        let value = TokenParser(identifier).execute()
+        
+        // Print it (add it to output)
+        process.outputs.append("\(identifier) = \(value.compute(with: process.variables, format: true).toString())")
     }
     
     func toString() -> String {

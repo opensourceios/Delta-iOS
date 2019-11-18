@@ -11,7 +11,7 @@ import Foundation
 enum Operation: String {
     
     // Values
-    case addition = "+", subtraction = "-", multiplication = "*", division = "/", modulo = "%", power = "^", root = "√", equals = "=", unequals = "!=", greaterThan = ">", lessThan = "<", greaterOrEquals = ">=", lessOrEquals = "<=", list = ",", vector = ";"
+    case addition = "+", subtraction = "-", multiplication = "*", division = "/", modulo = "%", power = "^", root = "√", equals = "=", unequals = "!=", greaterThan = ">", lessThan = "<", greaterOrEquals = ">=", lessOrEquals = "<=", list1 = ",", list2 = ";"
     
     // Get precedence
     func getPrecedence() -> Int {
@@ -25,10 +25,38 @@ enum Operation: String {
     }
     
     // Join with two tokens
-    func join(left: Token, right: Token) -> Token {
+    func join(left: Token, right: Token, ops: [String]) -> Token {
         // Check for equations
         if self == .equals || self == .unequals || self == .greaterThan || self == .lessThan || self == .greaterOrEquals || self == .lessOrEquals {
             return Equation(left: left, right: right, operation: self)
+        }
+        
+        // Check for lists
+        if ops.contains("{") && (self == .list1 || self == .list2) {
+            if let list = left as? List {
+                // From left
+                return List(values: list.values + [right])
+            } else if let list = right as? List {
+                // From right
+                return List(values: list.values + [left])
+            } else {
+                // From new tokens
+                return List(values: [left, right])
+            }
+        }
+        
+        // Check for vectors
+        if ops.contains("(") && (self == .list1 || self == .list2) {
+            if let vector = left as? Vector {
+                // From left
+                return Vector(values: vector.values + [right])
+            } else if let vector = right as? Vector {
+                // From right
+                return Vector(values: vector.values + [left])
+            } else {
+                // From new tokens
+                return Vector(values: [left, right])
+            }
         }
         
         // Simple expression

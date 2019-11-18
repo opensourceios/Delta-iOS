@@ -23,4 +23,16 @@ extension Int {
         return a
     }
     
+    // Check for power of ten
+    
+    func isPowerOfTen() -> Bool {
+        var input = self
+        
+        while input > 9 && input % 10 == 0 {
+            input /= 10
+        }
+        
+        return input == 1;
+    }
+    
 }
