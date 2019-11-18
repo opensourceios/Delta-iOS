@@ -191,17 +191,17 @@ class AlgorithmParser {
                                 // Create action and return it
                                 if value == .Input && tokens.count >= 2 {
                                     // Input "identifier" default "token"
-                                    let token = TokenParser(tokens.removeFirst()).execute()
+                                    let token = tokens.removeFirst()
                                     let identifier = tokens.removeFirst()
                                     return InputAction(identifier, default: token)
                                 } else if value == .For && tokens.count >= 2 {
                                     // For "identifier" in "token"
-                                    let token = TokenParser(tokens.removeFirst()).execute()
+                                    let token = tokens.removeFirst()
                                     let identifier = tokens.removeFirst()
                                     return ForAction(identifier, in: token, do: [])
                                 } else if (value == .Set || value == .SetFormatted) && tokens.count >= 2 {
                                     // Set "identifier" to "token"
-                                    let token = TokenParser(tokens.removeFirst()).execute()
+                                    let token = tokens.removeFirst()
                                     let identifier = tokens.removeFirst()
                                     return SetAction(identifier, to: token)
                                 }
@@ -218,7 +218,7 @@ class AlgorithmParser {
                     // Create action and return it
                     if value == .If && tokens.count >= 1 {
                         // If "condition"
-                        let condition = TokenParser(tokens.removeFirst()).execute()
+                        let condition = tokens.removeFirst()
                         return IfAction(condition, do: [])
                     } else if value == .Else {
                         // Else
@@ -233,7 +233,7 @@ class AlgorithmParser {
                         return PrintTextAction(text)
                     } else if value == .While && tokens.count >= 1 {
                         // While "condition"
-                        let condition = TokenParser(tokens.removeFirst()).execute()
+                        let condition = tokens.removeFirst()
                         return WhileAction(condition, do: [])
                     }
                 }

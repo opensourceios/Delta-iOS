@@ -17,9 +17,9 @@ enum EditorLineCategory: String {
     func catalog() -> [Action] {
         switch self {
         case .variable:
-            return [InputAction("a", default: TokenParser("0").execute()), SetAction("a", to: TokenParser("0").execute())]
+            return [InputAction("a", default: "0"), SetAction("a", to: "0")]
         case .structure:
-            return [IfAction(TokenParser("a=b").execute(), do: [], else: ElseAction(do: [])), WhileAction(TokenParser("a=b").execute(), do: []), ForAction("a", in: TokenParser("b").execute(), do: [])]
+            return [IfAction("a = b", do: [], else: ElseAction(do: [])), WhileAction("a = b", do: []), ForAction("a", in: "b", do: [])]
         case .output:
             return [PrintAction("a"), PrintTextAction("Hello world!")]
         default:

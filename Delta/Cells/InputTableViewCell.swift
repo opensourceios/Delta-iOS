@@ -12,7 +12,7 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractio
 
     var label = UILabel()
     var field = UITextField()
-    var input: (String, Token)?
+    var input: (String, String)?
     weak var delegate: InputChangedDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -53,12 +53,12 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractio
         fatalError("init(coder:) has not been implemented")
     }
     
-    func with(input: (String, Token), delegate: InputChangedDelegate) -> InputTableViewCell {
+    func with(input: (String, String), delegate: InputChangedDelegate) -> InputTableViewCell {
         self.input = input
         self.delegate = delegate
         
         label.attributedText = "\(input.0) =".attributedMath()
-        field.text = input.1.compute(with: [:], format: false).toString()
+        field.text = input.1
         
         return self
     }
@@ -70,7 +70,7 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractio
     }
     
     @objc func editingChanged(_ sender: Any) {
-        input?.1 = TokenParser(field.text).execute()
+        input?.1 = field.text ?? ""
         delegate?.inputChanged(input)
     }
     

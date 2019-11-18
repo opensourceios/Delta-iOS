@@ -11,13 +11,11 @@ import Foundation
 class SetAction: Action {
     
     var identifier: String
-    var value: Token
-    var format: Bool
+    var value: String
     
-    init(_ identifier: String, to value: Token, format: Bool = false) {
+    init(_ identifier: String, to value: String) {
         self.identifier = identifier
         self.value = value
-        self.format = format
     }
     
     func execute(in process: Process) {
@@ -28,19 +26,15 @@ class SetAction: Action {
         }
         
         // Set value with process environment
-        if format {
-            process.variables[identifier] = FormattedToken(token: value)
-        } else {
-            process.variables[identifier] = value.compute(with: process.variables, format: format)
-        }
+        process.set(identifier: identifier, to: TokenParser(value, in: process).execute())
     }
     
     func toString() -> String {
-        return "\(format ? "set_formatted" : "set") \"\(identifier)\" to \"\(value.toString())\""
+        return "\("set") \"\(identifier)\" to \"\(value)\""
     }
     
     func toEditorLines() -> [EditorLine] {
-        return [EditorLine(format: format ? "action_set_formatted" : "action_set", category: .variable, values: [identifier, value.toString()])]
+        return [EditorLine(format: "action_set", category: .variable, values: [identifier, value])]
     }
     
     func editorLinesCount() -> Int {
@@ -54,11 +48,11 @@ class SetAction: Action {
     func update(line: EditorLine) {
         if line.values.count == 2 {
             self.identifier = line.values[0]
-            self.value = TokenParser(line.values[1]).execute()
+            self.value = line.values[1]
         }
     }
     
-    func extractInputs() -> [(String, Token)] {
+    func extractInputs() -> [(String, String)] {
         return []
     }
     

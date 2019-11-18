@@ -48,7 +48,7 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
         updateResult()
     }
     
-    func inputChanged(_ input: (String, Token)?) {
+    func inputChanged(_ input: (String, String)?) {
         // Get vars
         if let algorithm = algorithm, let input = input {
             // Update the input
@@ -135,7 +135,7 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
 
 protocol InputChangedDelegate: class {
     
-    func inputChanged(_ input: (String, Token)?)
+    func inputChanged(_ input: (String, String)?)
     
 }
 

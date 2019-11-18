@@ -10,10 +10,10 @@ import Foundation
 
 class WhileAction: ActionBlock {
     
-    var condition: Token
+    var condition: String
     var actions: [Action]
     
-    init(_ condition: Token, do actions: [Action]) {
+    init(_ condition: String, do actions: [Action]) {
         self.condition = condition
         self.actions = actions
     }
@@ -25,6 +25,9 @@ class WhileAction: ActionBlock {
     func execute(in process: Process) {
         // Counter
         var i = 0
+        
+        // Parse condition
+        let condition = TokenParser(self.condition, in: process).execute()
         
         // Check if condition is true
         while (condition.compute(with: process.variables, format: false) as? Equation)?.isTrue(with: process.variables) ?? false {
@@ -48,7 +51,7 @@ class WhileAction: ActionBlock {
     }
     
     func toString() -> String {
-        var string = "while \"\(condition.toString())\" {"
+        var string = "while \"\(condition)\" {"
         
         for action in actions {
             string += "\n\(action.toString().indentLines())"
@@ -60,7 +63,7 @@ class WhileAction: ActionBlock {
     }
     
     func toEditorLines() -> [EditorLine] {
-        var lines = [EditorLine(format: "action_while", category: .structure, values: [condition.toString()])]
+        var lines = [EditorLine(format: "action_while", category: .structure, values: [condition])]
         
         for action in actions {
             lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
@@ -150,11 +153,11 @@ class WhileAction: ActionBlock {
     func update(line: EditorLine) {
         if line.values.count == 1 {
             // Get "while condition"
-            self.condition = TokenParser(line.values[0]).execute()
+            self.condition = line.values[0]
         }
     }
     
-    func extractInputs() -> [(String, Token)] {
+    func extractInputs() -> [(String, String)] {
         return actions.flatMap{ $0.extractInputs() }
     }
     

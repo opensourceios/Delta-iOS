@@ -11,10 +11,10 @@ import Foundation
 class ForAction: ActionBlock {
     
     var identifier: String
-    var token: Token
+    var token: String
     var actions: [Action]
     
-    init(_ identifier: String, in token: Token, do actions: [Action]) {
+    init(_ identifier: String, in token: String, do actions: [Action]) {
         self.identifier = identifier
         self.token = token
         self.actions = actions
@@ -32,7 +32,7 @@ class ForAction: ActionBlock {
         }
         
         // Get computed token
-        let token = self.token.compute(with: process.variables, format: false)
+        let token = TokenParser(self.token, in: process).execute().compute(with: process.variables, format: false)
         
         // Get list
         if let list = token as? List {
@@ -53,7 +53,7 @@ class ForAction: ActionBlock {
     }
     
     func toString() -> String {
-        var string = "for \"\(identifier)\" in \"\(token.toString())\" {"
+        var string = "for \"\(identifier)\" in \"\(token)\" {"
         
         for action in actions {
             string += "\n\(action.toString().indentLines())"
@@ -65,7 +65,7 @@ class ForAction: ActionBlock {
     }
     
     func toEditorLines() -> [EditorLine] {
-        var lines = [EditorLine(format: "action_for", category: .structure, values: [identifier, token.toString()])]
+        var lines = [EditorLine(format: "action_for", category: .structure, values: [identifier, token])]
         
         for action in actions {
             lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
@@ -156,11 +156,11 @@ class ForAction: ActionBlock {
         if line.values.count == 2 {
             // Get "for identifier in token"
             self.identifier = line.values[0]
-            self.token = TokenParser(line.values[1]).execute()
+            self.token = line.values[1]
         }
     }
     
-    func extractInputs() -> [(String, Token)] {
+    func extractInputs() -> [(String, String)] {
         return actions.flatMap{ $0.extractInputs() }
     }
     

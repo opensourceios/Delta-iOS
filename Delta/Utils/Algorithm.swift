@@ -16,7 +16,7 @@ class Algorithm {
     var owner: Bool
     var name: String
     var last_update: Date
-    var inputs: [(String, Token)]
+    var inputs: [(String, String)]
     var root: RootAction
     
     // Initializer

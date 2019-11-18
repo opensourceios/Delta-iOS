@@ -10,11 +10,11 @@ import Foundation
 
 class IfAction: ActionBlock {
     
-    var condition: Token
+    var condition: String
     var actions: [Action]
     var elseAction: ElseAction?
     
-    init(_ condition: Token, do actions: [Action], else elseAction: ElseAction? = nil) {
+    init(_ condition: String, do actions: [Action], else elseAction: ElseAction? = nil) {
         self.condition = condition
         self.actions = actions
         self.elseAction = elseAction
@@ -26,7 +26,7 @@ class IfAction: ActionBlock {
     
     func execute(in process: Process) {
         // Get computed condition and check it
-        if let condition = self.condition.compute(with: process.variables, format: false) as? Equation, condition.isTrue(with: process.variables) {
+        if let condition = TokenParser(self.condition, in: process).execute().compute(with: process.variables, format: false) as? Equation, condition.isTrue(with: process.variables) {
             // Execute actions
             for action in actions {
                 action.execute(in: process)
@@ -38,7 +38,7 @@ class IfAction: ActionBlock {
     }
     
     func toString() -> String {
-        var string = "if \"\(condition.toString())\" {"
+        var string = "if \"\(condition)\" {"
         
         for action in actions {
             string += "\n\(action.toString().indentLines())"
@@ -54,7 +54,7 @@ class IfAction: ActionBlock {
     }
     
     func toEditorLines() -> [EditorLine] {
-        var lines = [EditorLine(format: "action_if", category: .structure, values: [condition.toString()])]
+        var lines = [EditorLine(format: "action_if", category: .structure, values: [condition])]
         
         for action in actions {
             lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
@@ -168,11 +168,11 @@ class IfAction: ActionBlock {
     func update(line: EditorLine) {
         if line.values.count == 1 {
             // Get "if condition"
-            self.condition = TokenParser(line.values[0]).execute()
+            self.condition = line.values[0]
         }
     }
     
-    func extractInputs() -> [(String, Token)] {
+    func extractInputs() -> [(String, String)] {
         return actions.flatMap{ $0.extractInputs() } + (elseAction?.extractInputs() ?? [])
     }
     

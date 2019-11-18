@@ -23,7 +23,7 @@ class PrintTextAction: Action {
         // Get "" to interprete them
         for group in output.groups(for: "\".*\"") {
             // Get token based on string
-            let token = TokenParser(group[0][1 ..< group[0].count-1]).execute()
+            let token = TokenParser(group[0][1 ..< group[0].count-1], in: process).execute()
             
             // Replace with tokens
             if let range = output.range(of: group[0]) {
@@ -57,7 +57,7 @@ class PrintTextAction: Action {
         }
     }
     
-    func extractInputs() -> [(String, Token)] {
+    func extractInputs() -> [(String, String)] {
         return []
     }
     

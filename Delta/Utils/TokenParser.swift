@@ -23,12 +23,16 @@ class TokenParser {
     
     private var values: [Token]
     
-    init(_ tokens: String?) {
+    private var process: Process?
+    
+    init(_ tokens: String?, in process: Process? = nil) {
         self.tokens = tokens ?? ""
         self.ops = [String]()
         self.i = 0
         
         self.values = [Token]()
+        
+        self.process = process
     }
     
     // Parse an expression
@@ -51,8 +55,14 @@ class TokenParser {
                 if current == "(" {
                     // Check if we have a token before without operator
                     if values.count > 0 && TokenParser.productCoefficients.contains(previous) {
-                        // Add a multiplication operator
-                        ops.insert("*", at: 0)
+                        // Check if last token is a function
+                        if let prevar = values.first as? Variable, process?.variables[prevar.name] as? FunctionDeclaration != nil {
+                            // Add a function operator
+                            ops.insert("f", at: 0)
+                        } else {
+                            // Add a multiplication operator
+                            ops.insert("*", at: 0)
+                        }
                     }
                     
                     // Add it to operations

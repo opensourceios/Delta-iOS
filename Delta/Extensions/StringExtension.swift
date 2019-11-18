@@ -77,7 +77,7 @@ extension String {
     
     func toOperation() -> Operation? {
         // Iterate values
-        for value in [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.modulo, Operation.power, Operation.root, Operation.equals, Operation.unequals, Operation.greaterThan, Operation.lessThan, Operation.greaterOrEquals, Operation.lessOrEquals, Operation.list1, Operation.list2] {
+        for value in [Operation.addition, Operation.subtraction, Operation.multiplication, Operation.division, Operation.modulo, Operation.power, Operation.root, Operation.equals, Operation.unequals, Operation.greaterThan, Operation.lessThan, Operation.greaterOrEquals, Operation.lessOrEquals, Operation.list1, Operation.list2, Operation.function] {
             // If it's the value we want
             if self == value.rawValue {
                 return value

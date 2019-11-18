@@ -114,7 +114,7 @@ class RootAction: ActionBlock {
         // Nothing to update
     }
     
-    func extractInputs() -> [(String, Token)] {
+    func extractInputs() -> [(String, String)] {
         return actions.flatMap{ $0.extractInputs() }
     }
     

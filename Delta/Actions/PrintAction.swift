@@ -18,7 +18,7 @@ class PrintAction: Action {
     
     func execute(in process: Process) {
         // Get the value
-        let value = TokenParser(identifier).execute()
+        let value = TokenParser(identifier, in: process).execute()
         
         // Print it (add it to output)
         process.outputs.append("\(identifier) = \(value.compute(with: process.variables, format: true).toString())")
@@ -46,7 +46,7 @@ class PrintAction: Action {
         }
     }
     
-    func extractInputs() -> [(String, Token)] {
+    func extractInputs() -> [(String, String)] {
         return []
     }
     

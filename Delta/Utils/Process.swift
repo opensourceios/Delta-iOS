@@ -10,12 +10,23 @@ import Foundation
 
 class Process {
     
-    var inputs = [(String, Token)]()
+    var inputs = [(String, String)]()
     var variables = [String: Token]()
     var outputs = [String]()
     
-    init(inputs: [(String, Token)]) {
+    init(inputs: [(String, String)]) {
         self.inputs = inputs
+    }
+    
+    func set(identifier: String, to value: Token) {
+        let f = identifier.groups(for: "([a-zA-Z])\\((.+)\\)")
+        if !f.isEmpty {
+            // Take it as a function
+            variables[f[0][1]] = FunctionDeclaration(variable: f[0][2], token: value)
+        } else {
+            // Set it as a variable
+            variables[identifier] = value.compute(with: variables, format: false)
+        }
     }
     
 }

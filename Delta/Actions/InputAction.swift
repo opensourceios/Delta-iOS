@@ -11,9 +11,9 @@ import Foundation
 class InputAction: Action {
     
     var identifier: String
-    var value: Token
+    var value: String
     
-    init(_ identifier: String, default value: Token) {
+    init(_ identifier: String, default value: String) {
         self.identifier = identifier
         self.value = value
     }
@@ -29,17 +29,17 @@ class InputAction: Action {
         for input in process.inputs {
             // Check key
             if input.0 == identifier {
-                process.variables[identifier] = input.1.compute(with: process.variables, format: false)
+                process.set(identifier: identifier, to: TokenParser(input.1, in: process).execute())
             }
         }
     }
     
     func toString() -> String {
-        return "input \"\(identifier)\" default \"\(value.toString())\""
+        return "input \"\(identifier)\" default \"\(value)\""
     }
     
     func toEditorLines() -> [EditorLine] {
-        return [EditorLine(format: "action_input", category: .variable, values: [identifier, value.toString()])]
+        return [EditorLine(format: "action_input", category: .variable, values: [identifier, value])]
     }
     
     func editorLinesCount() -> Int {
@@ -53,11 +53,11 @@ class InputAction: Action {
     func update(line: EditorLine) {
         if line.values.count == 2 {
             self.identifier = line.values[0]
-            self.value = TokenParser(line.values[1]).execute()
+            self.value = line.values[1]
         }
     }
     
-    func extractInputs() -> [(String, Token)] {
+    func extractInputs() -> [(String, String)] {
         return [(identifier, value)]
     }
     

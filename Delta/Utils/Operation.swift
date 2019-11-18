@@ -11,7 +11,7 @@ import Foundation
 enum Operation: String {
     
     // Values
-    case addition = "+", subtraction = "-", multiplication = "*", division = "/", modulo = "%", power = "^", root = "√", equals = "=", unequals = "!=", greaterThan = ">", lessThan = "<", greaterOrEquals = ">=", lessOrEquals = "<=", list1 = ",", list2 = ";"
+    case addition = "+", subtraction = "-", multiplication = "*", division = "/", modulo = "%", power = "^", root = "√", equals = "=", unequals = "!=", greaterThan = ">", lessThan = "<", greaterOrEquals = ">=", lessOrEquals = "<=", list1 = ",", list2 = ";", function = "f"
     
     // Get precedence
     func getPrecedence() -> Int {
@@ -29,6 +29,14 @@ enum Operation: String {
         // Check for equations
         if self == .equals || self == .unequals || self == .greaterThan || self == .lessThan || self == .greaterOrEquals || self == .lessOrEquals {
             return Equation(left: left, right: right, operation: self)
+        }
+        
+        // Check for function
+        if self == .function {
+            if let function = left as? Variable {
+                // From left
+                return Function(name: function.name, parameter: right)
+            }
         }
         
         // Check for lists
