@@ -29,7 +29,6 @@
 "action_print" = "Afficher la variable %@";
 "action_print_text" = "Afficher le texte %@";
 "action_set" = "Définir %@ à %@";
-"action_set_formatted" = "Définir %@ à %@ comme format";
 "action_if" = "Si %@";
 "action_else" = "Sinon";
 "action_end" = "Fin";

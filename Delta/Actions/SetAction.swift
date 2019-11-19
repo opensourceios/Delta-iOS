@@ -30,7 +30,7 @@ class SetAction: Action {
     }
     
     func toString() -> String {
-        return "\("set") \"\(identifier)\" to \"\(value)\""
+        return "set \"\(identifier)\" to \"\(value)\""
     }
     
     func toEditorLines() -> [EditorLine] {
