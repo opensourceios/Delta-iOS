@@ -19,13 +19,13 @@ class Process {
     }
     
     func set(identifier: String, to value: Token) {
-        let f = identifier.groups(for: "([a-zA-Z])\\((.+)\\)")
+        let f = identifier.trimmingCharacters(in: CharacterSet(charactersIn: " ")).groups(for: "([\(TokenParser.variables)])\\( *([\(TokenParser.variables)]) *\\)")
         if !f.isEmpty {
             // Take it as a function
             variables[f[0][1]] = FunctionDeclaration(variable: f[0][2], token: value)
         } else {
             // Set it as a variable
-            variables[identifier] = value.compute(with: variables, format: false)
+            variables[identifier.trimmingCharacters(in: CharacterSet(charactersIn: " "))] = value.compute(with: variables, format: false)
         }
     }
     

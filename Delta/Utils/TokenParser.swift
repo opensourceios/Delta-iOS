@@ -10,12 +10,11 @@ import Foundation
 
 class TokenParser {
     
-    static let variables = "abcdefghijklmnopqrstuvwxyzΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΣσςϹϲΤτΥυΦφΧχΨψΩω"
-    static let functions = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    static let variables = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΣσςϹϲΤτΥυΦφΧχΨψΩω"
     static let variablesAndNumber = "\(variables)0123456789"
     static let productCoefficients = "\(variablesAndNumber))"
     static let constants = "i"
-    static let input = " \(variablesAndNumber)\(functions)_+-*/%^√,;(){}=<>!"
+    static let input = " \(variablesAndNumber)_+-*/%^√,;(){}=<>!"
     
     private var tokens: String
     private var ops: [String]

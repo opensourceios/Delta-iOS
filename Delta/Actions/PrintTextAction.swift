@@ -21,7 +21,7 @@ class PrintTextAction: Action {
         var output = text
         
         // Get "" to interprete them
-        for group in output.groups(for: "\".*\"") {
+        for group in output.groups(for: "\"[^\"]*\"") {
             // Get token based on string
             let token = TokenParser(group[0][1 ..< group[0].count-1], in: process).execute()
             
