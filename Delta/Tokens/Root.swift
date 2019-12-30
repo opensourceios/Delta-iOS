@@ -56,6 +56,12 @@ struct Root: Token {
         
         // Power
         if operation == .power {
+            // Check if power is the same
+            if let right = right as? Number, let power = power as? Number, right.value == power.value {
+                // Undo the root
+                return token
+            }
+            
             return Power(token: self, power: right)
         }
         

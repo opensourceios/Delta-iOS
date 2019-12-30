@@ -15,7 +15,10 @@ enum Operation: String {
     
     // Get precedence
     func getPrecedence() -> Int {
-        if self == .power {
+        if self == .function {
+            return 4
+        }
+        if self == .power || self == .root {
             return 3
         }
         if self == .multiplication || self == .division || self == .modulo {
@@ -25,7 +28,7 @@ enum Operation: String {
     }
     
     // Join with two tokens
-    func join(left: Token, right: Token, ops: [String]) -> Token {
+    func join(left: Token, right: Token, ops: [String], with inputs: [String: Token]) -> Token {
         // Check for equations
         if self == .equals || self == .unequals || self == .greaterThan || self == .lessThan || self == .greaterOrEquals || self == .lessOrEquals {
             return Equation(left: left, right: right, operation: self)
@@ -68,7 +71,7 @@ enum Operation: String {
         }
         
         // Simple expression
-        return left.apply(operation: self, right: right, with: [:], format: true)
+        return left.apply(operation: self, right: right, with: inputs, format: true)
     }
     
 }

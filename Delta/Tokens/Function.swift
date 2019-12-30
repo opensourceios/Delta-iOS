@@ -22,11 +22,42 @@ struct Function: Token {
         var variable: String
         
         // Chech if an input corresponds to this variable
-        if let value = inputs[name] as? FunctionDeclaration {
+        if TokenParser.funcs.contains(name) {
+            // Universal func
+            
+            // Sin
+            
+            // Cos
+            
+            // Tan
+            
+            // Sqrt
+            if name == "sqrt" {
+                expression = Root(token: Variable(name: "x"), power: Number(value: 2))
+                variable = "x"
+            }
+            
+            // Exp
+            else if name == "exp" {
+                expression = Power(token: Variable(name: "e"), power: Variable(name: "x"))
+                variable = "x"
+            }
+            
+            // Log
+            
+            // Ln
+            
+            // Cannot be simplified
+            else {
+                return self
+            }
+        } else if let value = inputs[name] as? FunctionDeclaration {
+            // Custom func
             expression = value.token
             variable = value.variable.trimmingCharacters(in: CharacterSet(charactersIn: " "))
         } else {
-           return CalculError()
+            // Unknown func
+            return CalculError()
         }
         
         // Get inputs and current parameter of function

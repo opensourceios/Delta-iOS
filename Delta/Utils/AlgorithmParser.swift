@@ -173,7 +173,7 @@ class AlgorithmParser {
             
             // Keyword list
             let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.PrintText, Keyword.While]
-            let grouped = [Keyword.Default: [Keyword.Input], Keyword.In: [Keyword.For], Keyword.To: [Keyword.Set, Keyword.SetFormatted]]
+            let grouped = [Keyword.Default: [Keyword.Input], Keyword.In: [Keyword.For], Keyword.To: [Keyword.Set]]
             
             // Iterate values
             for key in grouped {
@@ -199,7 +199,7 @@ class AlgorithmParser {
                                     let token = tokens.removeFirst()
                                     let identifier = tokens.removeFirst()
                                     return ForAction(identifier, in: token, do: [])
-                                } else if (value == .Set || value == .SetFormatted) && tokens.count >= 2 {
+                                } else if value == .Set && tokens.count >= 2 {
                                     // Set "identifier" to "token"
                                     let token = tokens.removeFirst()
                                     let identifier = tokens.removeFirst()

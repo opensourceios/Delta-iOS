@@ -88,6 +88,16 @@ struct Variable: Token {
                     return Power(token: self, power: Number(value: number.value % 4)).compute(with: inputs, format: format)
                 }
             }
+            // Check for e
+            if name == "e" {
+                // If right is a number
+                if let number = right as? Number {
+                    // e^0 = 1
+                    if number.value == 0 {
+                        return Number(value: 1)
+                    }
+                }
+            }
             
             return Power(token: self, power: right)
         }
@@ -118,6 +128,12 @@ struct Variable: Token {
     }
     
     func asDouble() -> Double? {
+        // Exp
+        if name == "e" {
+            // give an aproximated value
+            return exp(1)
+        }
+        
         return nil
     }
     

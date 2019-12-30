@@ -13,8 +13,9 @@ class TokenParser {
     static let variables = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΣσςϹϲΤτΥυΦφΧχΨψΩω"
     static let variablesAndNumber = "\(variables)0123456789"
     static let productCoefficients = "\(variablesAndNumber))"
-    static let constants = "i"
+    static let constants = "ie"
     static let input = " \(variablesAndNumber)_+-*/%^√,;(){}=<>!"
+    static let funcs = ["sin", "cos", "tan", "sqrt", "exp", "log", "ln"]
     
     private var tokens: String
     private var ops: [String]
@@ -55,12 +56,12 @@ class TokenParser {
                     // Check if we have a token before without operator
                     if values.count > 0 && TokenParser.productCoefficients.contains(previous) {
                         // Check if last token is a function
-                        if let prevar = values.first as? Variable, process?.variables[prevar.name] as? FunctionDeclaration != nil {
+                        if let prevar = values.first as? Variable, (process?.variables[prevar.name] as? FunctionDeclaration != nil || TokenParser.funcs.contains(prevar.name)) {
                             // Add a function operator
-                            ops.insert("f", at: 0)
+                            try insertOperation("f")
                         } else {
                             // Add a multiplication operator
-                            ops.insert("*", at: 0)
+                            try insertOperation("*")
                         }
                     }
                     
@@ -101,7 +102,7 @@ class TokenParser {
                     // Check if we have a token before without operator
                     if values.count > 0 && TokenParser.productCoefficients.contains(previous) {
                         // Add a multiplication operator
-                        ops.insert("*", at: 0)
+                        try insertOperation("*")
                     }
                     
                     // Insert into values
@@ -120,20 +121,42 @@ class TokenParser {
                     // Check name
                     var name = current
                     
-                    // Check for an index
-                    if i < tokens.count-2 && tokens[i+1] == "_" && TokenParser.variablesAndNumber.contains(tokens[i+2]) {
-                        // Add index to variable
-                        let index = tokens[i+2]
-                        name += "_\(index)"
+                    // Check for a function name
+                    var function = name
+                    var j = i
+                    while j < tokens.count-1 && TokenParser.variablesAndNumber.contains(tokens[j+1]) {
+                        // Add character to function name
+                        function += tokens[j+1]
                         
-                        // Increment i 2 times to skip index
-                        i += 2
+                        // Increment j to continue
+                        j += 1
+                    }
+                    
+                    // Check if a function is recognized
+                    if TokenParser.funcs.contains(function.lowercased()) {
+                        // We have a function
+                        name = function.lowercased()
+                        
+                        // Set i to j to skip function name
+                        i = j
+                    } else {
+                        // It is a classic variable, continue
+                        
+                        // Check for an index
+                        if i < tokens.count-2 && tokens[i+1] == "_" && TokenParser.variablesAndNumber.contains(tokens[i+2]) {
+                            // Add index to variable
+                            let index = tokens[i+2]
+                            name += "_\(index)"
+                            
+                            // Increment i 2 times to skip index
+                            i += 2
+                        }
                     }
 
                     // Check if we have a token before without operator
                     if values.count > 0 && TokenParser.productCoefficients.contains(previous) {
                         // Add a multiplication operator
-                        ops.insert("*", at: 0)
+                        try insertOperation("*")
                     }
                     
                     // Insert into values
@@ -179,43 +202,20 @@ class TokenParser {
                     // Check if we have a token before without operator
                     if values.count > 0 && TokenParser.productCoefficients.contains(previous) {
                         // Add a multiplication operator
-                        ops.insert("*", at: 0)
+                        try insertOperation("*")
                     }
                     
                     // Insert the 2nd power
                     insertValue(Number(value: 2))
                     
                     // Add current operation
-                    ops.insert(current, at: 0)
+                    try insertOperation(current)
                 }
                 
                 // Operation
                 else {
-                    // While first operation has same or greater precendence to current, apply to two first values
-                    while !ops.isEmpty, let p1 = ops.first?.toOperation()?.getPrecedence(), let p2 = current.toOperation()?.getPrecedence(), p1 >= p2 {
-                        // Create a token
-                        if let value = try createValue() {
-                            // Insert it into the list
-                            insertValue(value)
-                        }
-                    }
-                    
-                    // If subtraction with no number before
-                    if current == "-" && values.count == 0 {
-                        insertValue(Number(value: 0))
-                    }
-                    
-                    // If next if "="
-                    if i < tokens.count-1 && tokens[i+1] == "=" {
-                        // Add it
-                        ops.insert("\(current)=", at: 0)
-                        
-                        // Increment i
-                        i += 1
-                    } else {
-                        // Add current operation
-                        ops.insert(current, at: 0)
-                    }
+                    // Insert operation
+                    try insertOperation(current)
                 }
                 
                 // Increment i
@@ -248,6 +248,34 @@ class TokenParser {
         values.insert(value, at: 0)
     }
     
+    func insertOperation(_ op: String) throws {
+        // While first operation has same or greater precendence to current, apply to two first values
+        while !ops.isEmpty, let p1 = ops.first?.toOperation()?.getPrecedence(), let p2 = op.toOperation()?.getPrecedence(), p1 >= p2 {
+            // Create a token
+            if let value = try createValue() {
+                // Insert it into the list
+                insertValue(value)
+            }
+        }
+        
+        // If subtraction with no number before
+        if op == "-" && values.count == 0 {
+            insertValue(Number(value: 0))
+        }
+        
+        // If next if "="
+        if i < tokens.count-1 && tokens[i+1] == "=" {
+            // Add it
+            ops.insert("\(op)=", at: 0)
+            
+            // Increment i
+            i += 1
+        } else {
+            // Add current operation
+            ops.insert(op, at: 0)
+        }
+    }
+    
     func createValue() throws -> Token? {
         // Get tokens
         let right = try values.getFirstTokenAndRemove()
@@ -256,9 +284,9 @@ class TokenParser {
         // Get operator and apply
         if let op = ops.getFirstOperationAndRemove() {
             if op == .root {
-                return op.join(left: right, right: left, ops: ops)
+                return op.join(left: right, right: left, ops: ops, with: process?.variables ?? [:])
             } else {
-                return op.join(left: left, right: right, ops: ops)
+                return op.join(left: left, right: right, ops: ops, with: process?.variables ?? [:])
             }
         }
         
