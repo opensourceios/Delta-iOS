@@ -94,7 +94,7 @@ extension String {
         let index: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 10), .baselineOffset: -5]
         
         // Powers (numbers)
-        let numbers = String(workspace.mutableString).groups(for: " ?\\^ ?([0-9])+")
+        let numbers = String(workspace.mutableString).groups(for: " ?\\^ ?([0-9]+)")
         for group in numbers {
             let range = workspace.mutableString.range(of: group[0])
             workspace.addAttributes(power, range: range)
