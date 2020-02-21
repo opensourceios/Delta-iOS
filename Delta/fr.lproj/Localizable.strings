@@ -9,7 +9,9 @@
 "last_update" = "Mis à jour le %@";
 "about" = "A propos";
 "help" = "Aide et documentation";
-"about_text" = "Application développé par Nathan Fallet\n\nCette application a été développée par des développeurs indépendants et est fournie gratuitement sans aucune garantie.\n\n© 2019 Groupe MINASTE";
+"about_text" = "Application développé par Nathan Fallet\n\nCette application a été développée par des développeurs indépendants et est fournie gratuitement sans aucune garantie.\n\n© 2020 Groupe MINASTE";
+"partner_apps" = "Applications partenaires";
+"schoolassistant_desc" = "Puissante appli de planification scolaire";
 "ok" = "OK";
 "inputs" = "Entrées";
 "outputs" = "Sorties";

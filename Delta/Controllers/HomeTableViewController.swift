@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StoreKit
 
 class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate {
     
@@ -18,13 +19,12 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         super.viewDidLoad()
         
         // Navigation bar
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-        }
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "name".localized()
         
         // Register cells
         tableView.register(AlgorithmTableViewCell.self, forCellReuseIdentifier: "algorithmCell")
+        tableView.register(AppTableViewCell.self, forCellReuseIdentifier: "appCell")
         tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: "labelCell")
         
         // Load algorithms
@@ -83,44 +83,46 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     // TableView management
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 5
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? myalgorithms.count + 1 : section == 1 ? downloads.count : 2
+        return section == 0 ? 1 : section == 1 ? myalgorithms.count : section == 2 ? downloads.count : section == 3 ? 2 : 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "myalgorithms".localized() : section == 1 ? "downloads".localized() : "about".localized()
+        return section == 0 ? "new_algorithm".localized() : section == 1 ? "myalgorithms".localized() : section == 2 ? "downloads".localized() : section == 3 ?  "about".localized() : "partner_apps".localized()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Check for section
         if indexPath.section == 0 {
-            // Check for new cell
-            if indexPath.row == myalgorithms.count {
-                // Create new cell
-                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "new_algorithm".localized(), accessory: .disclosureIndicator)
-            }
-            
+            // Create new cell
+            return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "new_algorithm".localized(), accessory: .disclosureIndicator)
+        } else if indexPath.section == 1 {
             // Get algorithm
             let algorithm = myalgorithms[indexPath.row]
             
             // Create cell
             return (tableView.dequeueReusableCell(withIdentifier: "algorithmCell", for: indexPath) as! AlgorithmTableViewCell).with(algorithm: algorithm)
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 2 {
             // Get algorithm
             let algorithm = downloads[indexPath.row]
             
             // Create cell
             return (tableView.dequeueReusableCell(withIdentifier: "algorithmCell", for: indexPath) as! AlgorithmTableViewCell).with(algorithm: algorithm)
-        } else {
+        } else if indexPath.section == 3 {
             if indexPath.row == 0 {
                 // About
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "about".localized(), accessory: .disclosureIndicator)
             } else if indexPath.row == 1 {
                 // Help and documentation
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "help".localized(), accessory: .disclosureIndicator)
+            }
+        } else {
+            if indexPath.row == 0 {
+                // SchoolAssistant
+                return (tableView.dequeueReusableCell(withIdentifier: "appCell", for: indexPath) as! AppTableViewCell).with(name: "SchoolAssistant", desc: "schoolassistant_desc".localized(), icon: UIImage(named: "SchoolAssistant"))
             }
         }
         
@@ -132,21 +134,15 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Check for section
         if indexPath.section == 0 {
-            // Check for new cell
-            if indexPath.row == myalgorithms.count {
-                // Create an editor
-                let editor = EditorTableViewController(algorithm: Algorithm(local_id: 0, remote_id: nil, owner: true, name: "new_algorithm".localized(), last_update: Date(), root: RootAction([]))) { newAlgorithm in
-                    // Update with new algorithm
-                    self.loadAlgorithms()
-                }
-                
-                // Show it
-                present(UINavigationController(rootViewController: editor), animated: true, completion: nil)
-                
-                // Stop here
-                return
+            // Create an editor
+            let editor = EditorTableViewController(algorithm: Algorithm(local_id: 0, remote_id: nil, owner: true, name: "new_algorithm".localized(), last_update: Date(), root: RootAction([]))) { newAlgorithm in
+                // Update with new algorithm
+                self.loadAlgorithms()
             }
             
+            // Show it
+            present(UINavigationController(rootViewController: editor), animated: true, completion: nil)
+        } else if indexPath.section == 1 {
             // Get selected algorithm
             let algorithm = myalgorithms[indexPath.row]
             
@@ -157,7 +153,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             if let algorithmVC = delegate as? AlgorithmTableViewController, let algorithmNavigation = algorithmVC.navigationController {
                 splitViewController?.showDetailViewController(algorithmNavigation, sender: nil)
             }
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 2 {
             // Get selected algorithm
             let algorithm = downloads[indexPath.row]
             
@@ -168,7 +164,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             if let algorithmVC = delegate as? AlgorithmTableViewController, let algorithmNavigation = algorithmVC.navigationController {
                 splitViewController?.showDetailViewController(algorithmNavigation, sender: nil)
             }
-        } else {
+        } else if indexPath.section == 3 {
             if indexPath.row == 0 {
                 // About
                 let alert = UIAlertController(title: "about".localized(), message: "about_text".localized(), preferredStyle: .alert)
@@ -177,11 +173,14 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             } else if indexPath.row == 1 {
                 // Help and documentation
                 if let url = URL(string: "https://www.delta-math-helper.com") {
-                    if #available(iOS 10.0, *) {
-                        UIApplication.shared.open(url)
-                    } else {
-                        UIApplication.shared.openURL(url)
-                    }
+                    UIApplication.shared.open(url)
+                }
+            }
+        } else {
+            if indexPath.row == 0 {
+                // SchoolAssistant
+                if let url = URL(string: isRunningOnMac() ? "https://apps.apple.com/app/school-assistant-planner/id1489319800" : "https://apps.apple.com/app/school-assistant-planner/id1465687472") {
+                    UIApplication.shared.open(url)
                 }
             }
         }
@@ -190,69 +189,16 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     // Editing support for custom algorithms
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return (indexPath.section == 0 && indexPath.row != myalgorithms.count) || (indexPath.section == 1 && indexPath.row != downloads.count)
+        return indexPath.section == 1 || indexPath.section == 2
     }
     
-    #if !targetEnvironment(macCatalyst)
-    @available(iOS, obsoleted: 11.0)
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let delete = UITableViewRowAction(style: .destructive, title: "delete".localized()) { (action, indexPath) in
-            // Define algorithm
-            let algorithm: Algorithm
-            
-            // Check for section
-            if indexPath.section == 0 {
-                // Get selected algorithm
-                algorithm = self.myalgorithms[indexPath.row]
-            } else {
-                // Get selected algorithm
-                algorithm = self.downloads[indexPath.row]
-            }
-            
-            // Delete it from database
-            Database.current.deleteAlgorithm(algorithm)
-            
-            // Update without algorithm
-            self.loadAlgorithms()
-        }
-        delete.backgroundColor = .systemRed
-        
-        let edit = UITableViewRowAction(style: .normal, title: "edit".localized()) { (action, indexPath) in
-            // Define algorithm
-            let algorithm: Algorithm
-            
-            // Check for section
-            if indexPath.section == 0 {
-                // Get selected algorithm
-                algorithm = self.myalgorithms[indexPath.row]
-            } else {
-                // Get selected algorithm
-                algorithm = self.downloads[indexPath.row]
-            }
-            
-            // Create an editor
-            let editor = EditorTableViewController(algorithm: algorithm) { newAlgorithm in
-                // Update with new algorithm
-                self.loadAlgorithms()
-            }
-            
-            // Show it
-            self.present(UINavigationController(rootViewController: editor), animated: true, completion: nil)
-        }
-        edit.backgroundColor = .systemBlue
-        
-        return [delete, edit]
-    }
-    #endif
-    
-    @available(iOS 11.0, *)
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "delete".localized()) { (action, view, completionHandler) in
             // Define algorithm
             let algorithm: Algorithm
             
             // Check for section
-            if indexPath.section == 0 {
+            if indexPath.section == 1 {
                 // Get selected algorithm
                 algorithm = self.myalgorithms[indexPath.row]
             } else {
@@ -274,7 +220,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             let algorithm: Algorithm
             
             // Check for section
-            if indexPath.section == 0 {
+            if indexPath.section == 1 {
                 // Get selected algorithm
                 algorithm = self.myalgorithms[indexPath.row]
             } else {
@@ -295,6 +241,14 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         edit.backgroundColor = .systemBlue
         
         return UISwipeActionsConfiguration(actions: [delete, edit])
+    }
+    
+    func isRunningOnMac() -> Bool {
+        #if targetEnvironment(macCatalyst)
+            return true
+        #else
+            return false
+        #endif
     }
 
 }

@@ -143,13 +143,41 @@ class TokenParser {
                         // It is a classic variable, continue
                         
                         // Check for an index
-                        if i < tokens.count-2 && tokens[i+1] == "_" && TokenParser.variablesAndNumber.contains(tokens[i+2]) {
-                            // Add index to variable
-                            let index = tokens[i+2]
-                            name += "_\(index)"
-                            
-                            // Increment i 2 times to skip index
-                            i += 2
+                        if i < tokens.count-2 && tokens[i+1] == "_" {
+                            if tokens[i+2] == "(" {
+                                // Get everything until closing brace
+                                var index = ""
+                                var j = i+2
+                                while j < tokens.count-1 && TokenParser.input.contains(tokens[j+1]) && tokens[j+1] != ")" {
+                                    // Add character to function name
+                                    index += tokens[j+1]
+                                    
+                                    // Increment j to continue
+                                    j += 1
+                                }
+                                
+                                // Increment i to skip brace
+                                i = j+1
+                                
+                                // Trim
+                                index = index.trimmingCharacters(in: CharacterSet(charactersIn: " "))
+                                
+                                if !index.isEmpty {
+                                    // Add index to variable
+                                    if index.count == 1 {
+                                        name += "_\(index)"
+                                    } else {
+                                        name += "_(\(index))"
+                                    }
+                                }
+                            } else if TokenParser.variablesAndNumber.contains(tokens[i+2]) {
+                                // Add index to variable
+                                let index = tokens[i+2]
+                                name += "_\(index)"
+                                
+                                // Increment i 2 times to skip index
+                                i += 2
+                            }
                         }
                     }
 

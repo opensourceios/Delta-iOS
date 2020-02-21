@@ -94,7 +94,7 @@ extension String {
         let index: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 10), .baselineOffset: -5]
         
         // Powers (numbers)
-        let numbers = String(workspace.mutableString).groups(for: " ?\\^ ?([0-9]+)")
+        let numbers = String(workspace.mutableString).groups(for: " ?\\^ ?([0-9a-z]+)")
         for group in numbers {
             let range = workspace.mutableString.range(of: group[0])
             workspace.addAttributes(power, range: range)
@@ -109,9 +109,17 @@ extension String {
             workspace.replaceCharacters(in: range, with: group[1])
         }
         
-        // Indexes
+        // Indexes (variables)
         let variables = String(workspace.mutableString).groups(for: "_([0-9a-z])")
         for group in variables {
+            let range = workspace.mutableString.range(of: group[0])
+            workspace.addAttributes(index, range: range)
+            workspace.replaceCharacters(in: range, with: group[1])
+        }
+        
+        // Indexes (expressions)
+        let expressions2 = String(workspace.mutableString).groups(for: "_\\(([0-9a-z*\\+\\-/ ]+)\\)")
+        for group in expressions2 {
             let range = workspace.mutableString.range(of: group[0])
             workspace.addAttributes(index, range: range)
             workspace.replaceCharacters(in: range, with: group[1])
