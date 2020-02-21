@@ -177,7 +177,11 @@ struct Number: Token {
                 }
                 
                 // Apply power to number
-                return Number(value: Int(pow(Double(self.value), Double(right.value))))
+                if right.value >= 0 {
+                    return Number(value: Int(pow(Double(self.value), Double(right.value))))
+                } else {
+                    return Number(value: Int(pow(Double(self.value), Double(-right.value)))).inverse()
+                }
             }
             
             // Return the power

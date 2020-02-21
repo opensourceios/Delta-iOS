@@ -287,7 +287,7 @@ class TokenParser {
         }
         
         // If subtraction with no number before
-        if op == "-" && values.count == 0 {
+        if op == "-" && (values.count == 0 || (i > 0 && tokens[i-1] == "(")) {
             insertValue(Number(value: 0))
         }
         

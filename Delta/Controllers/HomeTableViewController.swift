@@ -87,7 +87,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : section == 1 ? myalgorithms.count : section == 2 ? downloads.count : section == 3 ? 2 : 1
+        return section == 0 ? 1 : section == 1 ? myalgorithms.count : section == 2 ? downloads.count : section == 3 ? 3 : 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -118,11 +118,14 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             } else if indexPath.row == 1 {
                 // Help and documentation
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "help".localized(), accessory: .disclosureIndicator)
+            } else if indexPath.row == 2 {
+                // Follow us on Twitter
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "follow_twitter".localized(), accessory: .disclosureIndicator)
             }
         } else {
             if indexPath.row == 0 {
                 // SchoolAssistant
-                return (tableView.dequeueReusableCell(withIdentifier: "appCell", for: indexPath) as! AppTableViewCell).with(name: "SchoolAssistant", desc: "schoolassistant_desc".localized(), icon: UIImage(named: "SchoolAssistant"))
+                return (tableView.dequeueReusableCell(withIdentifier: "appCell", for: indexPath) as! AppTableViewCell).with(name: "School Assistant", desc: "schoolassistant_desc".localized(), icon: UIImage(named: "SchoolAssistant"))
             }
         }
         
@@ -173,6 +176,11 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             } else if indexPath.row == 1 {
                 // Help and documentation
                 if let url = URL(string: "https://www.delta-math-helper.com") {
+                    UIApplication.shared.open(url)
+                }
+            } else if indexPath.row == 2 {
+                // Follow us on Twitter
+                if let url = URL(string: "https://twitter.com/DeltaMathHelper") {
                     UIApplication.shared.open(url)
                 }
             }
