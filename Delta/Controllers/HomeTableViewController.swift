@@ -87,7 +87,10 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : section == 1 ? myalgorithms.count : section == 2 ? downloads.count : section == 3 ? 3 : 1
+        return section == 0 ? 1 :
+            section == 1 ? myalgorithms.count == 0 ? 1 : myalgorithms.count :
+            section == 2 ? downloads.count == 0 ? 1 : downloads.count :
+            section == 3 ? 3 : 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -100,12 +103,22 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             // Create new cell
             return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "new_algorithm".localized(), accessory: .disclosureIndicator)
         } else if indexPath.section == 1 {
+            // Check for empty section
+            if myalgorithms.count == 0 {
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "no_algorithm".localized(), accessory: .none)
+            }
+            
             // Get algorithm
             let algorithm = myalgorithms[indexPath.row]
             
             // Create cell
             return (tableView.dequeueReusableCell(withIdentifier: "algorithmCell", for: indexPath) as! AlgorithmTableViewCell).with(algorithm: algorithm)
         } else if indexPath.section == 2 {
+            // Check for empty section
+            if downloads.count == 0 {
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "no_algorithm".localized(), accessory: .none)
+            }
+            
             // Get algorithm
             let algorithm = downloads[indexPath.row]
             
@@ -150,6 +163,11 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             // Show it
             present(navigationController, animated: true, completion: nil)
         } else if indexPath.section == 1 {
+            // Check for empty section
+            if myalgorithms.count == 0 {
+                return
+            }
+            
             // Get selected algorithm
             let algorithm = myalgorithms[indexPath.row]
             
@@ -161,6 +179,11 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 splitViewController?.showDetailViewController(algorithmNavigation, sender: nil)
             }
         } else if indexPath.section == 2 {
+            // Check for empty section
+            if downloads.count == 0 {
+                return
+            }
+            
             // Get selected algorithm
             let algorithm = downloads[indexPath.row]
             

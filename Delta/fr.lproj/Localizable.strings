@@ -5,6 +5,7 @@
 "myalgorithms" = "Mes algorithmes";
 "downloads" = "Téléchargements";
 "new_algorithm" = "Nouvel algorithme";
+"no_algorithm" = "Pas encore d'algorithme ici !";
 "copy" = "%@ (copie)";
 "last_update" = "Mis à jour le %@";
 "about" = "A propos";
@@ -30,6 +31,7 @@
 "action_selector" = "Selectionner une action";
 "action_input" = "Demander %@ avec par défaut %@";
 "action_print" = "Afficher la variable %@";
+"action_print_approximated" = "Afficher la valeur approchée de %@";
 "action_print_text" = "Afficher le texte %@";
 "action_set" = "Définir %@ à %@";
 "action_unset" = "Supprimer %@";

@@ -142,6 +142,36 @@ struct Function: Token {
     }
     
     func asDouble() -> Double? {
+        // Chech if an input corresponds to this variable
+        if TokenParser.funcs.contains(name), let paramDouble = parameter.asDouble() {
+            // Universal func
+            
+            // Sin
+            if name == "sin" {
+                return sin(paramDouble)
+            }
+            
+            // Cos
+            if name == "cos" {
+                return cos(paramDouble)
+            }
+            
+            // Tan
+            if name == "tan" {
+                return tan(paramDouble)
+            }
+            
+            // Log
+            if name == "log" {
+                return log10(paramDouble)
+            }
+            
+            // Ln
+            if name == "ln" {
+                return log(paramDouble)
+            }
+        }
+        
         return nil
     }
     

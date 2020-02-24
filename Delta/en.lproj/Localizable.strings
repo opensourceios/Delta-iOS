@@ -5,6 +5,7 @@
 "myalgorithms" = "My algorithms";
 "downloads" = "Downloads";
 "new_algorithm" = "New algorithm";
+"no_algorithm" = "No algorithm here yet!";
 "copy" = "%@ (copy)";
 "last_update" = "Updated on %@";
 "about" = "About";
@@ -30,6 +31,7 @@
 "action_selector" = "Select an action";
 "action_input" = "Ask for %@ with default %@";
 "action_print" = "Print variable %@";
+"action_print_approximated" = "Print approximated value of %@";
 "action_print_text" = "Print text %@";
 "action_set" = "Set %@ to %@";
 "action_unset" = "Unset %@";

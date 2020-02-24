@@ -172,7 +172,7 @@ class AlgorithmParser {
             keywords.removeFirst()
             
             // Keyword list
-            let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.PrintText, Keyword.Unset, Keyword.While]
+            let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.PrintApproximated, Keyword.PrintText, Keyword.Unset, Keyword.While]
             let grouped = [Keyword.Default: [Keyword.Input], Keyword.In: [Keyword.For], Keyword.To: [Keyword.Set]]
             
             // Iterate values
@@ -227,6 +227,10 @@ class AlgorithmParser {
                         // Print variable "identifier"
                         let identifier = tokens.removeFirst()
                         return PrintAction(identifier)
+                    } else if value == .PrintApproximated && tokens.count >= 1 {
+                        // Print approximated value of "identifier"
+                        let identifier = tokens.removeFirst()
+                        return PrintAction(identifier, approximated: true)
                     } else if value == .PrintText && tokens.count >= 1 {
                         // Print text "text"
                         let text = tokens.removeFirst()

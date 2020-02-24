@@ -21,7 +21,7 @@ enum EditorLineCategory: String {
         case .structure:
             return [IfAction("a = b", do: [], else: ElseAction(do: [])), WhileAction("a = b", do: []), ForAction("a", in: "b", do: [])]
         case .output:
-            return [PrintAction("a"), PrintTextAction("Hello world!")]
+            return [PrintAction("a"), PrintAction("a", approximated: true), PrintTextAction("Hello world!")]
         default:
             return []
         }

@@ -11,9 +11,11 @@ import Foundation
 class PrintAction: Action {
     
     var identifier: String
+    var approximated: Bool
     
-    init(_ identifier: String) {
+    init(_ identifier: String, approximated: Bool = false) {
         self.identifier = identifier
+        self.approximated = approximated
     }
     
     func execute(in process: Process) {
@@ -21,15 +23,19 @@ class PrintAction: Action {
         let value = TokenParser(identifier, in: process).execute()
         
         // Print it (add it to output)
-        process.outputs.append("\(identifier) = \(value.compute(with: process.variables, format: true).toString())")
+        if approximated, let asDouble = value.compute(with: process.variables, format: false).asDouble() {
+            process.outputs.append("\(identifier) = \(asDouble)")
+        } else {
+            process.outputs.append("\(identifier) = \(value.compute(with: process.variables, format: true).toString())")
+        }
     }
     
     func toString() -> String {
-        return "print \"\(identifier)\""
+        return "\(approximated ? "print_approximated" : "print") \"\(identifier)\""
     }
     
     func toEditorLines() -> [EditorLine] {
-        return [EditorLine(format: "action_print", category: .output, values: [identifier], movable: true)]
+        return [EditorLine(format: approximated ? "action_print_approximated" : "action_print", category: .output, values: [identifier], movable: true)]
     }
     
     func editorLinesCount() -> Int {
