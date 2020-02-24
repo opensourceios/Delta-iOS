@@ -32,6 +32,7 @@
 "action_print" = "Print variable %@";
 "action_print_text" = "Print text %@";
 "action_set" = "Set %@ to %@";
+"action_unset" = "Unset %@";
 "action_if" = "If %@";
 "action_else" = "Else";
 "action_end" = "End";

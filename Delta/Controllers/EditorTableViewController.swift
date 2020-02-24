@@ -227,6 +227,18 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         return session.items.count > 1 ? UITableViewDropProposal(operation: .cancel) : UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
     
+    func tableView(_ tableView: UITableView, dragPreviewParametersForRowAt indexPath: IndexPath) -> UIDragPreviewParameters? {
+        let previewParameters = UIDragPreviewParameters()
+        
+        if let cell = tableView.cellForRow(at: indexPath) as? EditorTableViewCell {
+            let path = UIBezierPath(roundedRect: cell.bubble.frame, cornerRadius: 10.0)
+            previewParameters.visiblePath = path
+            previewParameters.backgroundColor = .clear
+        }
+        
+        return previewParameters
+    }
+    
 }
 
 protocol EditorLineChangedDelegate: class {

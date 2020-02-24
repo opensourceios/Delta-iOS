@@ -19,13 +19,28 @@ class Process {
     }
     
     func set(identifier: String, to value: Token) {
-        let f = identifier.trimmingCharacters(in: CharacterSet(charactersIn: " ")).groups(for: "([\(TokenParser.variables)])\\( *([\(TokenParser.variables)]) *\\)")
+        let trimmed = identifier.trimmingCharacters(in: CharacterSet(charactersIn: " "))
+        let f = trimmed.groups(for: "([\(TokenParser.variables)])\\( *([\(TokenParser.variables)]) *\\)")
+        
         if !f.isEmpty {
             // Take it as a function
             variables[f[0][1]] = FunctionDeclaration(variable: f[0][2], token: value)
         } else {
             // Set it as a variable
-            variables[identifier.trimmingCharacters(in: CharacterSet(charactersIn: " "))] = value.compute(with: variables, format: false)
+            variables[trimmed] = value.compute(with: variables, format: false)
+        }
+    }
+    
+    func unset(identifier: String) {
+        let trimmed = identifier.trimmingCharacters(in: CharacterSet(charactersIn: " "))
+        let f = trimmed.groups(for: "([\(TokenParser.variables)])\\( *([\(TokenParser.variables)]) *\\)")
+        
+        if !f.isEmpty {
+            // Take it as a function
+            variables.removeValue(forKey: f[0][1])
+        } else {
+            // Unset it as a variable
+            variables.removeValue(forKey: trimmed)
         }
     }
     

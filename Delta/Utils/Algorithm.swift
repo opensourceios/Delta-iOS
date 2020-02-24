@@ -130,10 +130,12 @@ class Algorithm {
             var destination = toIndex < fromIndex ? toIndex : toIndex - range.count + 1
             
             // Get action at destination
-            let currentDestination = self.root.toEditorLines()[destination-1]
-            if currentDestination.category == .add {
-                // Remove one to skip add button
-                destination -= 1
+            if destination > 0 {
+                let currentDestination = self.root.toEditorLines()[destination-1]
+                if currentDestination.category == .add {
+                    // Remove one to skip add button
+                    destination -= 1
+                }
             }
             
             // Add the new line

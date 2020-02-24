@@ -94,7 +94,7 @@ extension String {
         let index: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 10), .baselineOffset: -5]
         
         // Powers (numbers)
-        let numbers = String(workspace.mutableString).groups(for: " ?\\^ ?([0-9a-z]+)")
+        let numbers = String(workspace.mutableString).groups(for: " ?\\^ ?([0-9a-zA-Z]+)")
         for group in numbers {
             let range = workspace.mutableString.range(of: group[0])
             workspace.addAttributes(power, range: range)
@@ -102,7 +102,7 @@ extension String {
         }
         
         // Powers (expressions)
-        let expressions = String(workspace.mutableString).groups(for: " ?\\^ ?\\(([0-9a-z*\\+\\-/ ]+)\\)")
+        let expressions = String(workspace.mutableString).groups(for: " ?\\^ ?\\(([0-9a-zA-Z*\\+\\-/ ]+)\\)")
         for group in expressions {
             let range = workspace.mutableString.range(of: group[0])
             workspace.addAttributes(power, range: range)
@@ -110,7 +110,7 @@ extension String {
         }
         
         // Indexes (variables)
-        let variables = String(workspace.mutableString).groups(for: "_([0-9a-z])")
+        let variables = String(workspace.mutableString).groups(for: "_([0-9a-zA-Z])")
         for group in variables {
             let range = workspace.mutableString.range(of: group[0])
             workspace.addAttributes(index, range: range)
@@ -118,7 +118,7 @@ extension String {
         }
         
         // Indexes (expressions)
-        let expressions2 = String(workspace.mutableString).groups(for: "_\\(([0-9a-z*\\+\\-/ ]+)\\)")
+        let expressions2 = String(workspace.mutableString).groups(for: "_\\(([0-9a-zA-Z*\\+\\-/ ]+)\\)")
         for group in expressions2 {
             let range = workspace.mutableString.range(of: group[0])
             workspace.addAttributes(index, range: range)

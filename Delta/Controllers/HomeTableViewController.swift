@@ -143,8 +143,12 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 self.loadAlgorithms()
             }
             
+            // Create the navigation controller
+            let navigationController = UINavigationController(rootViewController: editor)
+            navigationController.modalPresentationStyle = .fullScreen
+            
             // Show it
-            present(UINavigationController(rootViewController: editor), animated: true, completion: nil)
+            present(navigationController, animated: true, completion: nil)
         } else if indexPath.section == 1 {
             // Get selected algorithm
             let algorithm = myalgorithms[indexPath.row]
@@ -242,8 +246,12 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 self.loadAlgorithms()
             }
             
+            // Create the navigation controller
+            let navigationController = UINavigationController(rootViewController: editor)
+            navigationController.modalPresentationStyle = .fullScreen
+            
             // Show it
-            self.present(UINavigationController(rootViewController: editor), animated: true, completion: nil)
+            self.present(navigationController, animated: true, completion: nil)
             completionHandler(true)
         }
         edit.backgroundColor = .systemBlue

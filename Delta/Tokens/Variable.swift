@@ -133,6 +133,11 @@ struct Variable: Token {
             // give an aproximated value
             return exp(1)
         }
+        // Pi
+        if name == "π" {
+            // Value of pi
+            return Double.pi
+        }
         
         return nil
     }

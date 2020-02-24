@@ -172,7 +172,7 @@ class AlgorithmParser {
             keywords.removeFirst()
             
             // Keyword list
-            let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.PrintText, Keyword.While]
+            let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.PrintText, Keyword.Unset, Keyword.While]
             let grouped = [Keyword.Default: [Keyword.Input], Keyword.In: [Keyword.For], Keyword.To: [Keyword.Set]]
             
             // Iterate values
@@ -231,6 +231,10 @@ class AlgorithmParser {
                         // Print text "text"
                         let text = tokens.removeFirst()
                         return PrintTextAction(text)
+                    }  else if value == .Unset && tokens.count >= 1 {
+                        // Unset "identifier"
+                        let identifier = tokens.removeFirst()
+                        return UnsetAction(identifier)
                     } else if value == .While && tokens.count >= 1 {
                         // While "condition"
                         let condition = tokens.removeFirst()

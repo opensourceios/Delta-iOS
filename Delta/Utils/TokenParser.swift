@@ -13,7 +13,7 @@ class TokenParser {
     static let variables = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΣσςϹϲΤτΥυΦφΧχΨψΩω"
     static let variablesAndNumber = "\(variables)0123456789"
     static let productCoefficients = "\(variablesAndNumber))"
-    static let constants = "ie"
+    static let constants = "ieπ"
     static let input = " \(variablesAndNumber)_+-*/%^√,;(){}=<>!"
     static let funcs = ["sin", "cos", "tan", "sqrt", "exp", "log", "ln"]
     
