@@ -138,7 +138,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         // Check for section
         if indexPath.section == 0 {
             // Create an editor
-            let editor = EditorTableViewController(algorithm: Algorithm(local_id: 0, remote_id: nil, owner: true, name: "new_algorithm".localized(), last_update: Date(), root: RootAction([]))) { newAlgorithm in
+            let editor = EditorTableViewController(algorithm: nil) { newAlgorithm in
                 // Update with new algorithm
                 self.loadAlgorithms()
             }
@@ -237,7 +237,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             }
             
             // Create an editor
-            let editor = EditorTableViewController(algorithm: algorithm) { newAlgorithm in
+            let editor = EditorTableViewController(algorithm: Database.current.getAlgorithm(id: algorithm.local_id)) { newAlgorithm in
                 // Update with new algorithm
                 self.loadAlgorithms()
             }

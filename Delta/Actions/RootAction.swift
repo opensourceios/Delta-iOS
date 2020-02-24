@@ -32,7 +32,7 @@ class RootAction: ActionBlock {
     }
     
     func toEditorLines() -> [EditorLine] {
-        return actions.flatMap{ $0.toEditorLines() } + [EditorLine(format: "", category: .add)]
+        return actions.flatMap{ $0.toEditorLines() } + [EditorLine(format: "", category: .add, movable: false)]
     }
     
     func editorLinesCount() -> Int {

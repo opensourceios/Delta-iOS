@@ -8,13 +8,13 @@
 
 import UIKit
 
-class EditorTableViewController: UITableViewController, EditorLineChangedDelegate {
+class EditorTableViewController: UITableViewController, EditorLineChangedDelegate, UITableViewDragDelegate, UITableViewDropDelegate {
     
     let algorithm: Algorithm
     let completionHandler: (Algorithm) -> ()
     
-    init(algorithm: Algorithm, completionHandler: @escaping (Algorithm) -> ()) {
-        self.algorithm = algorithm.clone()
+    init(algorithm: Algorithm?, completionHandler: @escaping (Algorithm) -> ()) {
+        self.algorithm = algorithm?.clone() ?? Algorithm(local_id: 0, remote_id: nil, owner: true, name: "new_algorithm".localized(), last_update: Date(), root: RootAction([]))
         self.completionHandler = completionHandler
         super.init(style: .grouped)
     }
@@ -37,6 +37,11 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         // Register cells
         tableView.register(EditorTableViewCell.self, forCellReuseIdentifier: "editorCell")
         tableView.register(EditorAddTableViewCell.self, forCellReuseIdentifier: "editorAddCell")
+        
+        // Support for drag and drop
+        tableView.dragInteractionEnabled = true
+        tableView.dragDelegate = self
+        tableView.dropDelegate = self
     }
     
     func editorLineChanged(_ line: EditorLine?, at index: Int) {
@@ -61,14 +66,28 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     }
     
     func editorLineDeleted(_ line: EditorLine?, at index: Int) {
+        // Delete the line into algorithm
+        let range = algorithm.delete(at: index)
+        
+        // Delete old rows
+        tableView.beginUpdates()
+        tableView.deleteRows(at: range.map{ IndexPath(row: $0, section: 1) }, with: .automatic)
+        tableView.endUpdates()
+        
+        // Refresh lines
+        refreshLines()
+    }
+    
+    func editorLineMoved(_ action: Action?, from fromIndex: Int, to toIndex: Int) {
         // Get line
-        if let line = line {
+        if let action = action {
             // Delete the line into algorithm
-            let range = algorithm.delete(line: line, at: index)
+            let (range, newRange) = algorithm.move(action: action, from: fromIndex, to: toIndex)
             
             // Delete old rows
             tableView.beginUpdates()
             tableView.deleteRows(at: range.map{ IndexPath(row: $0, section: 1) }, with: .automatic)
+            tableView.insertRows(at: newRange.map{ IndexPath(row: $0, section: 1) }, with: .automatic)
             tableView.endUpdates()
             
             // Refresh lines
@@ -154,7 +173,60 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
             }
         }
     }
-
+    
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        // Get editor line
+        let line = indexPath.section == 0 ? algorithm.getSettings()[indexPath.row] : algorithm.toEditorLines()[indexPath.row]
+        
+        return line.category != .settings && line.category != .add
+    }
+    
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        // Get editor line
+        let line = indexPath.section == 0 ? algorithm.getSettings()[indexPath.row] : algorithm.toEditorLines()[indexPath.row]
+        
+        // Disable drag for settings, add buttons, else, and end lines
+        if !line.movable {
+            return []
+        }
+        
+        // Create a provider
+        let itemProvider = NSItemProvider()
+        itemProvider.registerDataRepresentation(forTypeIdentifier: "fr.zabricraft.Delta.ActionMoveRequest", visibility: .all) { completion in
+            var index = indexPath.row
+            completion(Data(bytes: &index, count: MemoryLayout.size(ofValue: index)), nil)
+            return nil
+        }
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        return [dragItem]
+    }
+    
+    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
+        session.hasItemsConforming(toTypeIdentifiers: ["fr.zabricraft.Delta.ActionMoveRequest"]) && session.items.count == 1
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        // Check if data can be decoded
+        if coordinator.session.hasItemsConforming(toTypeIdentifiers: ["fr.zabricraft.Delta.ActionMoveRequest"]) {
+            // Get item
+            for item in coordinator.session.items {
+                // Load the line
+                item.itemProvider.loadDataRepresentation(forTypeIdentifier: "fr.zabricraft.Delta.ActionMoveRequest") { data, error in
+                    if let index = data?.withUnsafeBytes({ $0.load(as: Int.self) }), let destination = coordinator.destinationIndexPath, destination.section == 1 {
+                        // Remove original line to move it to destination
+                        DispatchQueue.main.sync {
+                            self.editorLineMoved(self.algorithm.action(at: index).0, from: index, to: destination.row)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        return session.items.count > 1 ? UITableViewDropProposal(operation: .cancel) : UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+    
 }
 
 protocol EditorLineChangedDelegate: class {

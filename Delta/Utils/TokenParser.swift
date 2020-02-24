@@ -149,7 +149,7 @@ class TokenParser {
                                 var index = ""
                                 var j = i+2
                                 while j < tokens.count-1 && TokenParser.input.contains(tokens[j+1]) && tokens[j+1] != ")" {
-                                    // Add character to function name
+                                    // Add character to index
                                     index += tokens[j+1]
                                     
                                     // Increment j to continue

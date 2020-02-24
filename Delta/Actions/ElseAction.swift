@@ -40,13 +40,13 @@ class ElseAction: ActionBlock {
     }
     
     func toEditorLines() -> [EditorLine] {
-        var lines = [EditorLine(format: "action_else", category: .structure)]
+        var lines = [EditorLine(format: "action_else", category: .structure, movable: false)]
         
         for action in actions {
             lines.append(contentsOf: action.toEditorLines().map{ $0.incrementIndentation() })
         }
         
-        lines.append(EditorLine(format: "", category: .add, indentation: 1))
+        lines.append(EditorLine(format: "", category: .add, indentation: 1, movable: false))
         
         return lines
     }

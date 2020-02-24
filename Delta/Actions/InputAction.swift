@@ -39,7 +39,7 @@ class InputAction: Action {
     }
     
     func toEditorLines() -> [EditorLine] {
-        return [EditorLine(format: "action_input", category: .variable, values: [identifier, value])]
+        return [EditorLine(format: "action_input", category: .variable, values: [identifier, value], movable: true)]
     }
     
     func editorLinesCount() -> Int {

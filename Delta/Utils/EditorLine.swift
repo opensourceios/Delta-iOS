@@ -14,12 +14,14 @@ class EditorLine {
     var category: EditorLineCategory
     var indentation: Int
     var values: [String]
+    var movable: Bool
     
-    init(format: String, category: EditorLineCategory, indentation: Int = 0, values: [String] = []) {
+    init(format: String, category: EditorLineCategory, indentation: Int = 0, values: [String] = [], movable: Bool) {
         self.format = format
         self.category = category
         self.indentation = indentation
         self.values = values
+        self.movable = movable
     }
     
     func incrementIndentation() -> EditorLine {

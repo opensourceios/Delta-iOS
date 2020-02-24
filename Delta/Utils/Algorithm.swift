@@ -103,7 +103,7 @@ class Algorithm {
         }
     }
     
-    func delete(line: EditorLine, at index: Int) -> Range<Int> {
+    func delete(at index: Int) -> Range<Int> {
         // Get where to delete it
         let result = self.action(at: index)
         
@@ -116,14 +116,41 @@ class Algorithm {
             return index ..< index + result.0.editorLinesCount()
         }
         
-        // Not added
+        // Not deleted
         return 0 ..< 0
+    }
+    
+    func move(action: Action, from fromIndex: Int, to toIndex: Int) -> (Range<Int>, Range<Int>) {
+        // Check that index is different
+        if fromIndex != toIndex {
+            // Delete the old line
+            let range = delete(at: fromIndex)
+            
+            // Calculate new destination index
+            var destination = toIndex < fromIndex ? toIndex : toIndex - range.count + 1
+            
+            // Get action at destination
+            let currentDestination = self.root.toEditorLines()[destination-1]
+            if currentDestination.category == .add {
+                // Remove one to skip add button
+                destination -= 1
+            }
+            
+            // Add the new line
+            let newRange = insert(action: action, at: destination)
+            
+            // Return modified ranges
+            return (range, newRange)
+        }
+        
+        // Not moved
+        return (0 ..< 0, 0 ..< 0)
     }
     
     // Settings editor lines
     
     func getSettings() -> [EditorLine] {
-        return [EditorLine(format: "settings_name", category: .settings, values: [name])]
+        return [EditorLine(format: "settings_name", category: .settings, values: [name], movable: false)]
     }
     
     func settingsCount() -> Int {

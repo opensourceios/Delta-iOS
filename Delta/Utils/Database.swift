@@ -69,6 +69,25 @@ class Database {
         return list
     }
     
+    // Get algorithm by id
+    func getAlgorithm(id: Int64) -> Algorithm? {
+        do {
+            // Get algorithm data
+            if let result = try db?.prepare(algorithms.filter(local_id == id)) {
+                // Iterate data
+                for line in result {
+                    // Create the algorithm
+                    return AlgorithmParser(try line.get(local_id), remote_id: try line.get(remote_id), owned: try line.get(owner), named: try line.get(name), last_update: try line.get(last_update), with: try line.get(lines)).execute()
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        // No algorithm found
+        return nil
+    }
+    
     // Add an algorithm into database
     func addAlgorithm(_ algorithm: Algorithm) -> Algorithm {
         do {

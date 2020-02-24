@@ -40,7 +40,7 @@ class PrintTextAction: Action {
     }
     
     func toEditorLines() -> [EditorLine] {
-        return [EditorLine(format: "action_print_text", category: .output, values: [text])]
+        return [EditorLine(format: "action_print_text", category: .output, values: [text], movable: true)]
     }
     
     func editorLinesCount() -> Int {
