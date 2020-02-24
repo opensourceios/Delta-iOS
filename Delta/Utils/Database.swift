@@ -8,6 +8,7 @@
 
 import Foundation
 import SQLite
+import StoreKit
 
 class Database {
     
@@ -103,6 +104,9 @@ class Database {
             print(error.localizedDescription)
         }
         
+        // Check number of saves to ask for a review
+        checkForReview()
+        
         // Return algorithm
         return algorithm
     }
@@ -128,6 +132,9 @@ class Database {
             print(error.localizedDescription)
         }
         
+        // Check number of saves to ask for a review
+        checkForReview()
+        
         // Return algorithm
         return algorithm
     }
@@ -147,6 +154,19 @@ class Database {
             try db?.run(line.delete())
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    // Check for review
+    func checkForReview() {
+        // Check number of saves to ask for a review
+        let datas = UserDefaults.standard
+        let savesCount = datas.integer(forKey: "savesCount") + 1
+        datas.set(savesCount, forKey: "savesCount")
+        datas.synchronize()
+        
+        if savesCount == 10 || savesCount == 50 || savesCount % 100 == 0 {
+            SKStoreReviewController.requestReview()
         }
     }
     
