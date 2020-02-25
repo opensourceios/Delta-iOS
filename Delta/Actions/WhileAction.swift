@@ -26,11 +26,8 @@ class WhileAction: ActionBlock {
         // Counter
         var i = 0
         
-        // Parse condition
-        let condition = TokenParser(self.condition, in: process).execute()
-        
         // Check if condition is true
-        while (condition.compute(with: process.variables, format: false) as? Equation)?.isTrue(with: process.variables) ?? false {
+        while (TokenParser(self.condition, in: process).execute().compute(with: process.variables, format: false) as? Equation)?.isTrue(with: process.variables) ?? false {
             // Execute actions
             for action in actions {
                 action.execute(in: process)
