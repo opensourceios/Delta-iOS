@@ -123,26 +123,31 @@ class Algorithm {
     func move(action: Action, from fromIndex: Int, to toIndex: Int) -> (Range<Int>, Range<Int>) {
         // Check that index is different
         if fromIndex != toIndex {
-            // Delete the old line
-            let range = delete(at: fromIndex)
-            
-            // Calculate new destination index
-            var destination = toIndex < fromIndex ? toIndex : toIndex - range.count + 1
-            
-            // Get action at destination
-            if destination > 0 {
-                let currentDestination = self.root.toEditorLines()[destination-1]
-                if currentDestination.category == .add {
-                    // Remove one to skip add button
-                    destination -= 1
+            // Check if destination is not in the deleted range
+            let sourceAction = self.action(at: fromIndex)
+            let sourceRange = fromIndex ..< fromIndex + sourceAction.0.editorLinesCount()
+            if !sourceRange.contains(toIndex) {
+                // Delete the old line
+                let range = delete(at: fromIndex)
+                
+                // Calculate new destination index
+                var destination = toIndex < fromIndex ? toIndex : toIndex - range.count + 1
+                
+                // Get action at destination
+                if destination > 0 {
+                    let currentDestination = self.root.toEditorLines()[destination-1]
+                    if currentDestination.category == .add {
+                        // Remove one to skip add button
+                        destination -= 1
+                    }
                 }
+                
+                // Add the new line
+                let newRange = insert(action: action, at: destination)
+                
+                // Return modified ranges
+                return (range, newRange)
             }
-            
-            // Add the new line
-            let newRange = insert(action: action, at: destination)
-            
-            // Return modified ranges
-            return (range, newRange)
         }
         
         // Not moved
