@@ -120,7 +120,7 @@ class Algorithm {
         return 0 ..< 0
     }
     
-    func move(action: Action, from fromIndex: Int, to toIndex: Int) -> (Range<Int>, Range<Int>) {
+    func move(from fromIndex: Int, to toIndex: Int) -> (Range<Int>, Range<Int>) {
         // Check that index is different
         if fromIndex != toIndex {
             // Check if destination is not in the deleted range
@@ -143,7 +143,7 @@ class Algorithm {
                 }
                 
                 // Add the new line
-                let newRange = insert(action: action, at: destination)
+                let newRange = insert(action: sourceAction.0, at: destination)
                 
                 // Return modified ranges
                 return (range, newRange)

@@ -78,27 +78,24 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         refreshLines()
     }
     
-    func editorLineMoved(_ action: Action?, from fromIndex: Int, to toIndex: Int) {
-        // Get line
-        if let action = action {
-            // Delete the line into algorithm
-            let (range, newRange) = algorithm.move(action: action, from: fromIndex, to: toIndex)
-            
-            // Delete old rows
-            tableView.beginUpdates()
-            tableView.deleteRows(at: range.map{ IndexPath(row: $0, section: 1) }, with: .automatic)
-            tableView.insertRows(at: newRange.map{ IndexPath(row: $0, section: 1) }, with: .automatic)
-            tableView.endUpdates()
-            
-            // Refresh lines
-            refreshLines()
-        }
+    func editorLineMoved(from fromIndex: Int, to toIndex: Int) {
+        // Delete the line into algorithm
+        let (range, newRange) = algorithm.move(from: fromIndex, to: toIndex)
+        
+        // Delete old rows
+        tableView.beginUpdates()
+        tableView.deleteRows(at: range.map{ IndexPath(row: $0, section: 1) }, with: .automatic)
+        tableView.insertRows(at: newRange.map{ IndexPath(row: $0, section: 1) }, with: .automatic)
+        tableView.endUpdates()
+        
+        // Refresh lines
+        refreshLines()
     }
     
     func refreshLines() {
         // Refresh lines
-        let lines = algorithm.toEditorLines()
-        for i in 0 ..< lines.count {
+        let lines = algorithm.editorLinesCount()
+        for i in 0 ..< lines {
             // Get cell (classic line)
             if let cell = tableView.cellForRow(at: IndexPath(row: i, section: 1)) as? EditorTableViewCell {
                 // Update index
@@ -215,7 +212,7 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
                     if let index = data?.withUnsafeBytes({ $0.load(as: Int.self) }), let destination = coordinator.destinationIndexPath, destination.section == 1 {
                         // Remove original line to move it to destination
                         DispatchQueue.main.sync {
-                            self.editorLineMoved(self.algorithm.action(at: index).0, from: index, to: destination.row)
+                            self.editorLineMoved(from: index, to: destination.row)
                         }
                     }
                 }
