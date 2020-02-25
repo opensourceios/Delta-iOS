@@ -33,6 +33,9 @@ struct Product: Token {
             } else if value as? Variable != nil {
                 // No operators for variables
                 op = false
+            } else if value as? Function != nil {
+                // No operators for functions
+                op = false
             } else if let power = value as? Power, power.token as? Number == nil {
                 // No operator if we have power of not a number
                 op = false
@@ -213,7 +216,17 @@ struct Product: Token {
     }
     
     func asDouble() -> Double? {
-        return nil
+        var val = 1.0
+        
+        for token in values {
+            if let asDouble = token.asDouble() {
+                val *= asDouble
+            } else {
+                return nil
+            }
+        }
+        
+        return val
     }
     
     func getSign() -> FloatingPointSign {

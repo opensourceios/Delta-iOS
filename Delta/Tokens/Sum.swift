@@ -191,7 +191,17 @@ struct Sum: Token {
     }
     
     func asDouble() -> Double? {
-        return nil
+        var val = 0.0
+        
+        for token in values {
+            if let asDouble = token.asDouble() {
+                val += asDouble
+            } else {
+                return nil
+            }
+        }
+        
+        return val
     }
     
     func getSign() -> FloatingPointSign {
