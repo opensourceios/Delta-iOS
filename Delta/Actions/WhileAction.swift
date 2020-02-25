@@ -27,7 +27,7 @@ class WhileAction: ActionBlock {
         var i = 0
         
         // Check if condition is true
-        while (TokenParser(self.condition, in: process).execute().compute(with: process.variables, format: false) as? Equation)?.isTrue(with: process.variables) ?? false {
+        while checkCondition(in: process) {
             // Execute actions
             for action in actions {
                 action.execute(in: process)
@@ -45,6 +45,10 @@ class WhileAction: ActionBlock {
                 return
             }
         }
+    }
+    
+    func checkCondition(in process: Process) -> Bool {
+        return (TokenParser(self.condition, in: process).execute().compute(with: process.variables, format: false) as? Equation)?.isTrue(with: process.variables) ?? false
     }
     
     func toString() -> String {
