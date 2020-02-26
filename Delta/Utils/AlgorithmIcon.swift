@@ -22,7 +22,7 @@ class AlgorithmIcon {
     }
     
     func getUIImage() -> UIImage? {
-        return UIImage(named: "Icon\(icon.capitalizeFirstLetter())")
+        return UIImage(named: "Icon\(icon.capitalizeFirstLetter())") ?? UIImage(named: "Icon\(AlgorithmIcon.defaultIcon.capitalizeFirstLetter())")
     }
     
 }

@@ -77,11 +77,11 @@ class TokenParser {
                 
                 // Number
                 else if Int(current) != nil {
-                    var val = 0
-                    var powerOfTen = 0
+                    var val: Int64 = 0
+                    var powerOfTen: Int64 = 0
                     
                     // Get other digits
-                    while i < tokens.count, let t = Int(tokens[i]) {
+                    while i < tokens.count, let t = Int64(tokens[i]) {
                         val = (val * 10) + t
                         i += 1
                     }
@@ -92,7 +92,7 @@ class TokenParser {
                         i += 1
                         
                         // And start getting numbers after the dot
-                        while i < tokens.count, let t = Int(tokens[i]) {
+                        while i < tokens.count, let t = Int64(tokens[i]) {
                             val = (val * 10) + t
                             i += 1
                             powerOfTen += 1

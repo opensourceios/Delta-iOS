@@ -1,5 +1,5 @@
 //
-//  IntExtension.swift
+//  Int64Extension.swift
 //  Delta
 //
 //  Created by Nathan FALLET on 07/09/2019.
@@ -8,11 +8,11 @@
 
 import Foundation
 
-extension Int {
+extension Int64 {
     
     // Greatest common divisor
     
-    func greatestCommonDivisor(with number: Int) -> Int {
+    func greatestCommonDivisor(with number: Int64) -> Int64 {
         var a = self
         var b = number
         

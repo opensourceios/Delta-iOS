@@ -140,13 +140,7 @@ class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         category.text = "category_\(line.category.rawValue)".localized()
         
         // Delete button
-        if line.category == .settings || line.format == "action_else" || line.format == "action_end" {
-            // Hide button
-            delete.isHidden = true
-        } else {
-            // Show button
-            delete.isHidden = false
-        }
+        delete.isHidden = !line.movable
         
         return self
     }

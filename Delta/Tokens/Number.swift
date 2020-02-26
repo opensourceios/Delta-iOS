@@ -10,7 +10,7 @@ import Foundation
 
 struct Number: Token {
     
-    var value: Int
+    var value: Int64
     
     func toString() -> String {
         return "\(value)"
@@ -178,9 +178,9 @@ struct Number: Token {
                 
                 // Apply power to number
                 if right.value >= 0 {
-                    return Number(value: Int(pow(Double(self.value), Double(right.value))))
+                    return Number(value: Int64(pow(Double(self.value), Double(right.value))))
                 } else {
-                    return Number(value: Int(pow(Double(self.value), Double(-right.value)))).inverse()
+                    return Number(value: Int64(pow(Double(self.value), Double(-right.value)))).inverse()
                 }
             }
             
@@ -202,7 +202,7 @@ struct Number: Token {
                         return CalculError()
                     } else if value == floor(value) {
                         // Simplified root
-                        return Number(value: Int(value))
+                        return Number(value: Int64(value))
                     }
                 } else {
                     // Negative
@@ -213,7 +213,7 @@ struct Number: Token {
                         return CalculError()
                     } else if value == floor(value) {
                         // Simplified root
-                        return Product(values: [Number(value: Int(value)), Variable(name: "i")])
+                        return Product(values: [Number(value: Int64(value)), Variable(name: "i")])
                     } else {
                         // Root of negative as i * sqrt(-value)
                         return Product(values: [Root(token: Number(value: -self.value), power: right), Variable(name: "i")])

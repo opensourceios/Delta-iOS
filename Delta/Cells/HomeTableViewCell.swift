@@ -1,14 +1,14 @@
 //
-//  AppTableViewCell.swift
+//  HomeTableViewCell.swift
 //  Delta
 //
-//  Created by Nathan FALLET on 21/02/2020.
-//  Copyright © 2020 Nathan FALLET. All rights reserved.
+//  Created by Nathan FALLET on 23/10/2019.
+//  Copyright © 2019 Nathan FALLET. All rights reserved.
 //
 
 import UIKit
 
-class AppTableViewCell: UITableViewCell {
+class HomeTableViewCell: UITableViewCell {
 
     var icon = UIImageView()
     var name = UILabel()
@@ -51,10 +51,20 @@ class AppTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func with(name: String, desc: String, icon: UIImage?) -> AppTableViewCell {
+    func with(algorithm: Algorithm) -> HomeTableViewCell {
+        self.name.text = algorithm.name
+        self.desc.text = "last_update".localized().format(algorithm.last_update.toRenderedString())
+        self.icon.image = algorithm.icon.getUIImage()
+        self.icon.backgroundColor = algorithm.icon.color.toColor()
+        
+        return self
+    }
+    
+    func with(name: String, desc: String, icon: UIImage?) -> HomeTableViewCell {
         self.name.text = name
         self.desc.text = desc
         self.icon.image = icon
+        self.icon.backgroundColor = .clear
         
         return self
     }

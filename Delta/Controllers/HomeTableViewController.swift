@@ -23,8 +23,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         navigationItem.title = "name".localized()
         
         // Register cells
-        tableView.register(AlgorithmTableViewCell.self, forCellReuseIdentifier: "algorithmCell")
-        tableView.register(AppTableViewCell.self, forCellReuseIdentifier: "appCell")
+        tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "homeCell")
         tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: "labelCell")
         
         // Load algorithms
@@ -112,7 +111,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             let algorithm = myalgorithms[indexPath.row]
             
             // Create cell
-            return (tableView.dequeueReusableCell(withIdentifier: "algorithmCell", for: indexPath) as! AlgorithmTableViewCell).with(algorithm: algorithm)
+            return (tableView.dequeueReusableCell(withIdentifier: "homeCell", for: indexPath) as! HomeTableViewCell).with(algorithm: algorithm)
         } else if indexPath.section == 2 {
             // Check for empty section
             if downloads.count == 0 {
@@ -123,7 +122,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             let algorithm = downloads[indexPath.row]
             
             // Create cell
-            return (tableView.dequeueReusableCell(withIdentifier: "algorithmCell", for: indexPath) as! AlgorithmTableViewCell).with(algorithm: algorithm)
+            return (tableView.dequeueReusableCell(withIdentifier: "homeCell", for: indexPath) as! HomeTableViewCell).with(algorithm: algorithm)
         } else if indexPath.section == 3 {
             if indexPath.row == 0 {
                 // About
@@ -138,7 +137,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         } else {
             if indexPath.row == 0 {
                 // SchoolAssistant
-                return (tableView.dequeueReusableCell(withIdentifier: "appCell", for: indexPath) as! AppTableViewCell).with(name: "School Assistant", desc: "schoolassistant_desc".localized(), icon: UIImage(named: "SchoolAssistant"))
+                return (tableView.dequeueReusableCell(withIdentifier: "homeCell", for: indexPath) as! HomeTableViewCell).with(name: "School Assistant", desc: "schoolassistant_desc".localized(), icon: UIImage(named: "SchoolAssistant"))
             }
         }
         
