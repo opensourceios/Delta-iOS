@@ -56,11 +56,6 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 // Add to Downloads
                 downloads.append(algorithm)
             }
-            
-            // Check for update
-            algorithm.checkForUpdate() { updatedAlgorithm in
-                self.algorithmChanged(updatedAlgorithm: updatedAlgorithm)
-            }
         }
         
         // If downloads are empty, add defaults
@@ -72,16 +67,19 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 
                 // Add to Downloads
                 downloads.append(algorithm)
-                
-                // And update it
-                algorithm.checkForUpdate() { updatedAlgorithm in
-                    self.algorithmChanged(updatedAlgorithm: updatedAlgorithm)
-                }
             }
         }
         
         // Update tableView
         tableView.reloadData()
+        
+        // Check for update for all algorithms
+        for algorithm in myalgorithms + downloads {
+            // Check for update
+            algorithm.checkForUpdate() { updatedAlgorithm in
+                self.algorithmChanged(updatedAlgorithm: updatedAlgorithm)
+            }
+        }
     }
     
     func algorithmsChanged() {

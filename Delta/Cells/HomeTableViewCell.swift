@@ -10,9 +10,9 @@ import UIKit
 
 class HomeTableViewCell: UITableViewCell {
 
-    var icon = UIImageView()
-    var name = UILabel()
-    var desc = UILabel()
+    let icon = UIImageView()
+    let name = UILabel()
+    let desc = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

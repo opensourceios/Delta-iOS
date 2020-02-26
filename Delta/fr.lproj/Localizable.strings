@@ -9,6 +9,9 @@
 "download_algorithm" = "Télécharger depuis le Cloud";
 "cloud" = "Cloud";
 "cloud_algorithms" = "Algorithmes sur le Cloud";
+"cloud_details" = "Détails de l'algoritme sélectionné";
+"cloud_preview" = "Aperçu de cet algorithme";
+"cloud_no_notes" = "Aucune note n'a été écrite pour cet algorithme.";
 "copy" = "%@ (copie)";
 "about" = "A propos";
 "help" = "Aide et documentation";
@@ -25,6 +28,9 @@
 "delete" = "Supprimer";
 "save" = "Enregistrer";
 "cancel" = "Annuler";
+"download" = "Télécharger";
+"update" = "Mettre à jour";
+"open" = "Ouvrir";
 "status_local" = "Sauvegardé localement";
 "status_synchronized" = "Synchronisé";
 "status_checkingforupdate" = "Recherche de mise à jour...";

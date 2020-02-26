@@ -10,8 +10,8 @@ import UIKit
 
 class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractionDelegate {
 
-    var label = UILabel()
-    var field = UITextField()
+    let label = UILabel()
+    let field = UITextField()
     var input: (String, String)?
     weak var delegate: InputChangedDelegate?
     

@@ -15,11 +15,16 @@ struct APIAlgorithm: Codable {
     var owner: APIUser?
     var last_update: String?
     var lines: String?
+    var notes: String?
     var icon: AlgorithmIcon?
+    
+    func toAlgorithm() -> Algorithm {
+        return AlgorithmParser(0, remote_id: id, owned: false, named: name ?? "new_algorithm".localized(), last_update: last_update?.toDate() ?? Date(), icon: icon ?? AlgorithmIcon(), with: lines).execute()
+    }
     
     func saveToDatabase() -> Algorithm {
         // Parse algorithm from downloaded data
-        let algorithm = AlgorithmParser(0, remote_id: id, owned: false, named: name ?? "new_algorithm".localized(), last_update: last_update?.toDate() ?? Date(), icon: icon ?? AlgorithmIcon(), with: lines).execute()
+        let algorithm = toAlgorithm()
         
         // Check if algorithm is already in database
         let fromDatabase = Database.current.getAlgorithm(id_remote: id ?? -1)

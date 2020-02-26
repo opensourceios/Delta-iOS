@@ -32,7 +32,7 @@ class ActionSelectionTableViewController: UITableViewController {
         tableView.separatorStyle = .none
         
         // Register cells
-        tableView.register(ActionSelectorTableViewCell.self, forCellReuseIdentifier: "actionSelectorCell")
+        tableView.register(EditorPreviewTableViewCell.self, forCellReuseIdentifier: "editorLockedCell")
     }
 
     // MARK: - Table view data source
@@ -53,7 +53,7 @@ class ActionSelectionTableViewController: UITableViewController {
         // Get first line
         if let line = EditorLineCategory.list[indexPath.section].catalog()[indexPath.row].toEditorLines().first {
             // Return cell
-            return (tableView.dequeueReusableCell(withIdentifier: "actionSelectorCell", for: indexPath) as! ActionSelectorTableViewCell).with(line: line)
+            return (tableView.dequeueReusableCell(withIdentifier: "editorLockedCell", for: indexPath) as! EditorPreviewTableViewCell).with(line: line)
         }
         
         fatalError("Unknown cell")

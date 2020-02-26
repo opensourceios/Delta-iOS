@@ -9,6 +9,9 @@
 "download_algorithm" = "Download from Cloud";
 "cloud" = "Cloud";
 "cloud_algorithms" = "Algorithms on the Cloud";
+"cloud_details" = "Details of selected algoritm";
+"cloud_preview" = "Preview of this algorithm";
+"cloud_no_notes" = "No notes were written for this algorithm.";
 "copy" = "%@ (copy)";
 "about" = "About";
 "help" = "Help and documentation";
@@ -25,6 +28,9 @@
 "delete" = "Delete";
 "save" = "Save";
 "cancel" = "Cancel";
+"download" = "Download";
+"update" = "Update";
+"open" = "Open";
 "status_local" = "Saved locally";
 "status_synchronized" = "Synchronized";
 "status_checkingforupdate" = "Checking for update...";

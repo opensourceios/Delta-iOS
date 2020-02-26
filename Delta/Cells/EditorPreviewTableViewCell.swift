@@ -1,5 +1,5 @@
 //
-//  ActionSelectorTableViewCell.swift
+//  EditorPreviewTableViewCell.swift
 //  Delta
 //
 //  Created by Nathan FALLET on 22/10/2019.
@@ -8,12 +8,13 @@
 
 import UIKit
 
-class ActionSelectorTableViewCell: UITableViewCell {
+class EditorPreviewTableViewCell: UITableViewCell {
 
     let bubble = UIView()
     let icon = UIImageView()
     let category = UILabel()
     let label = UILabel()
+    var leadingConstraint: NSLayoutConstraint!
     var line: EditorLine?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -29,7 +30,8 @@ class ActionSelectorTableViewCell: UITableViewCell {
         
         bubble.translatesAutoresizingMaskIntoConstraints = false
         bubble.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        bubble.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor).isActive = true
+        leadingConstraint = bubble.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor)
+        leadingConstraint.isActive = true
         bubble.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor).isActive = true
         bubble.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
         bubble.layer.cornerRadius = 10
@@ -64,7 +66,7 @@ class ActionSelectorTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func with(line: EditorLine) -> ActionSelectorTableViewCell {
+    func with(line: EditorLine) -> EditorPreviewTableViewCell {
         // Set editor line
         self.line = line
         
@@ -72,6 +74,9 @@ class ActionSelectorTableViewCell: UITableViewCell {
         icon.image = UIImage(named: line.category.rawValue.capitalizeFirstLetter())
         category.text = "category_\(line.category.rawValue)".localized()
         label.text = line.format.localized().format(line.values)
+        
+        // Update left space
+        leadingConstraint.constant = CGFloat(line.indentation * 30)
         
         return self
     }
