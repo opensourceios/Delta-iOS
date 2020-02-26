@@ -12,7 +12,7 @@ struct APIAlgorithm: Codable {
     
     var id: Int64?
     var name: String?
-    
+    var owner: APIUser?
     var last_update: String?
     var lines: String?
     var icon: AlgorithmIcon?
@@ -30,6 +30,11 @@ struct APIAlgorithm: Codable {
         
         // Update (or insert) this algorithm
         return Database.current.updateAlgorithm(algorithm)
+    }
+    
+    func fetchMissingData(completionHandler: @escaping (APIAlgorithm?, APIResponseStatus) -> Void) {
+        // Make a request to API
+        APIRequest("GET", path: "/algorithm/algorithm.php").with(name: "id", value: id ?? 0).execute(APIAlgorithm.self, completionHandler: completionHandler)
     }
     
 }

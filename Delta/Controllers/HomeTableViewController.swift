@@ -123,7 +123,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 :
+        return section == 0 ? 2 :
             section == 1 ? myalgorithms.count == 0 ? 1 : myalgorithms.count :
             section == 2 ? downloads.count == 0 ? 1 : downloads.count :
             section == 3 ? 3 : 1
@@ -137,7 +137,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         // Check for section
         if indexPath.section == 0 {
             // Create new cell
-            return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "new_algorithm".localized(), accessory: .disclosureIndicator)
+            return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: indexPath.row == 0 ? "new_algorithm".localized() : "download_algorithm".localized(), accessory: .disclosureIndicator)
         } else if indexPath.section == 1 {
             // Check for empty section
             if myalgorithms.count == 0 {
@@ -186,18 +186,27 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Check for section
         if indexPath.section == 0 {
-            // Create an editor
-            let editor = EditorTableViewController(algorithm: nil) { newAlgorithm in
-                // Update with new algorithm
-                self.loadAlgorithms()
+            if indexPath.row == 0 {
+                // Create an editor
+                let editor = EditorTableViewController(algorithm: nil) { newAlgorithm in
+                    // Update with new algorithm
+                    self.loadAlgorithms()
+                }
+                
+                // Create the navigation controller
+                let navigationController = UINavigationController(rootViewController: editor)
+                navigationController.modalPresentationStyle = .fullScreen
+                
+                // Show it
+                present(navigationController, animated: true, completion: nil)
+            } else {
+                // Open the cloud
+                let cloudVC = CloudSplitViewController()
+                cloudVC.modalPresentationStyle = .fullScreen
+                
+                // Show it
+                present(cloudVC, animated: true, completion: nil)
             }
-            
-            // Create the navigation controller
-            let navigationController = UINavigationController(rootViewController: editor)
-            navigationController.modalPresentationStyle = .fullScreen
-            
-            // Show it
-            present(navigationController, animated: true, completion: nil)
         } else if indexPath.section == 1 {
             // Check for empty section
             if myalgorithms.count == 0 {

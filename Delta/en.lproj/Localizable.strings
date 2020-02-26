@@ -6,6 +6,9 @@
 "downloads" = "Downloads";
 "new_algorithm" = "New algorithm";
 "no_algorithm" = "No algorithm here yet!";
+"download_algorithm" = "Download from Cloud";
+"cloud" = "Cloud";
+"cloud_algorithms" = "Algorithms on the Cloud";
 "copy" = "%@ (copy)";
 "about" = "About";
 "help" = "Help and documentation";

@@ -60,6 +60,16 @@ class HomeTableViewCell: UITableViewCell {
         return self
     }
     
+    func with(algorithm: APIAlgorithm) -> HomeTableViewCell {
+        self.name.text = algorithm.name
+        self.desc.text = algorithm.owner?.name
+        self.desc.textColor = .systemGray
+        self.icon.image = algorithm.icon?.getUIImage()
+        self.icon.backgroundColor = algorithm.icon?.color.toColor()
+        
+        return self
+    }
+    
     func with(name: String, desc: String, icon: UIImage?) -> HomeTableViewCell {
         self.name.text = name
         self.desc.text = desc

@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             build_number = value
         }
         
+        // Update database
+        Database.current.updateDatabase(build_number: build_number)
+        
         // Check to update
         if build_number < 24 {
             // Get all algorithms
@@ -36,9 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
-        
-        // Update database
-        Database.current.updateDatabase(build_number: build_number)
         
         // Get current version and save it
         data.set(current_version, forKey: "build_number")
