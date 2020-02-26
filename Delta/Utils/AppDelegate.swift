@@ -23,7 +23,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // Check to update
-        //if build_number < X {}
+        if build_number < 24 {
+            // Get all algorithms
+            let algorithms = Database.current.getAlgorithms()
+            
+            // Clear downloaded algorithms
+            for algorithm in algorithms {
+                // Check if it is a download
+                if !algorithm.owner {
+                    // Remove it
+                    Database.current.deleteAlgorithm(algorithm)
+                }
+            }
+        }
         
         // Update database
         Database.current.updateDatabase(build_number: build_number)

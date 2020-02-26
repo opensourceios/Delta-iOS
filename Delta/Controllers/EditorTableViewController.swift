@@ -157,6 +157,9 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         
         // Async call
         DispatchQueue.global(qos: .background).async {
+            // Update last update
+            self.algorithm.last_update = Date()
+            
             // Save algorithm to database
             let newAlgorithm = Database.current.updateAlgorithm(self.algorithm)
             

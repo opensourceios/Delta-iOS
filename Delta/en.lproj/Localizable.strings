@@ -7,7 +7,6 @@
 "new_algorithm" = "New algorithm";
 "no_algorithm" = "No algorithm here yet!";
 "copy" = "%@ (copy)";
-"last_update" = "Updated on %@";
 "about" = "About";
 "help" = "Help and documentation";
 "follow_twitter" = "Follow us on Twitter";
@@ -23,6 +22,11 @@
 "delete" = "Delete";
 "save" = "Save";
 "cancel" = "Cancel";
+"status_local" = "Saved locally";
+"status_synchronized" = "Synchronized";
+"status_checkingforupdate" = "Checking for update...";
+"status_downloading" = "Downloading...";
+"status_failed" = "Failed to update!";
 "error_calcul" = "Calcul error";
 "error_syntax" = "Syntax error";
 "error_constant" = "Cannot set value: %@ is a constant";
@@ -46,7 +50,3 @@
 "category_output" = "Output";
 "category_settings" = "Settings";
 "category_add" = "Add an action";
-
-// Algorithm strings
-
-"algo1_name" = "2nd degree equations";

@@ -44,7 +44,6 @@ class HomeTableViewCell: UITableViewCell {
         desc.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor).isActive = true
         desc.bottomAnchor.constraint(lessThanOrEqualTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
         desc.font = .systemFont(ofSize: 15)
-        desc.textColor = .gray
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -53,7 +52,8 @@ class HomeTableViewCell: UITableViewCell {
     
     func with(algorithm: Algorithm) -> HomeTableViewCell {
         self.name.text = algorithm.name
-        self.desc.text = "last_update".localized().format(algorithm.last_update.toRenderedString())
+        self.desc.text = "status_\(algorithm.status)".localized()
+        self.desc.textColor = algorithm.status.colorForText()
         self.icon.image = algorithm.icon.getUIImage()
         self.icon.backgroundColor = algorithm.icon.color.toColor()
         
@@ -63,6 +63,7 @@ class HomeTableViewCell: UITableViewCell {
     func with(name: String, desc: String, icon: UIImage?) -> HomeTableViewCell {
         self.name.text = name
         self.desc.text = desc
+        self.desc.textColor = .systemGray
         self.icon.image = icon
         self.icon.backgroundColor = .clear
         

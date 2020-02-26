@@ -7,7 +7,6 @@
 "new_algorithm" = "Nouvel algorithme";
 "no_algorithm" = "Pas encore d'algorithme ici !";
 "copy" = "%@ (copie)";
-"last_update" = "Mis à jour le %@";
 "about" = "A propos";
 "help" = "Aide et documentation";
 "follow_twitter" = "Nous suivre sur Twitter";
@@ -23,6 +22,11 @@
 "delete" = "Supprimer";
 "save" = "Enregistrer";
 "cancel" = "Annuler";
+"status_local" = "Sauvegardé localement";
+"status_synchronized" = "Synchronisé";
+"status_checkingforupdate" = "Recherche de mise à jour...";
+"status_downloading" = "Téléchargement...";
+"status_failed" = "Echec du téléchargement !";
 "error_calcul" = "Erreur de calcul";
 "error_syntax" = "Erreur de syntaxe";
 "error_constant" = "Impossible d'attribuer la valeur : %@ est une constante";
@@ -46,7 +50,3 @@
 "category_output" = "Sortie";
 "category_settings" = "Paramètres";
 "category_add" = "Ajouter une action";
-
-// Algorithm strings
-
-"algo1_name" = "Equations du 2nd degré";

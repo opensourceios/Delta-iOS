@@ -118,7 +118,7 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
     @objc func showEditor(_ sender: UIBarButtonItem) {
         if let algorithm = algorithm {
             // Create an editor
-            let editor = EditorTableViewController(algorithm: Database.current.getAlgorithm(id: algorithm.local_id)) { newAlgorithm in
+            let editor = EditorTableViewController(algorithm: Database.current.getAlgorithm(id_local: algorithm.local_id)) { newAlgorithm in
                 // Update with new algorithm
                 self.selectAlgorithm(newAlgorithm)
                 

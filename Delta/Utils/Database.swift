@@ -88,10 +88,10 @@ class Database {
     }
     
     // Get algorithm by id
-    func getAlgorithm(id: Int64) -> Algorithm? {
+    func getAlgorithm(id_local: Int64 = -1, id_remote: Int64 = -1) -> Algorithm? {
         do {
             // Get algorithm data
-            if let result = try db?.prepare(algorithms.filter(local_id == id)) {
+            if let result = try db?.prepare(algorithms.filter(local_id == id_local || remote_id == id_remote)) {
                 // Iterate data
                 for line in result {
                     // Create the algorithm
@@ -109,9 +109,6 @@ class Database {
     // Add an algorithm into database
     func addAlgorithm(_ algorithm: Algorithm) -> Algorithm {
         do {
-            // Update last update
-            algorithm.last_update = Date()
-            
             // Insert data
             let id = try db?.run(algorithms.insert(remote_id <- algorithm.remote_id, name <- algorithm.name, lines <- algorithm.toString(), owner <- algorithm.owner, last_update <- algorithm.last_update, icon <- algorithm.icon.icon, color <- algorithm.icon.color)) ?? 0
             
@@ -138,10 +135,7 @@ class Database {
             }
             
             // Get line
-            let line = algorithms.filter(local_id == algorithm.local_id && owner == true)
-            
-            // Update last update
-            algorithm.last_update = Date()
+            let line = algorithms.filter(local_id == algorithm.local_id)
             
             // Update data
             try db?.run(line.update(remote_id <- algorithm.remote_id, name <- algorithm.name, lines <- algorithm.toString(), owner <- algorithm.owner, last_update <- algorithm.last_update, icon <- algorithm.icon.icon, color <- algorithm.icon.color))

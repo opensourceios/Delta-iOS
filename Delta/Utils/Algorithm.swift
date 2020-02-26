@@ -19,6 +19,7 @@ class Algorithm {
     var icon: AlgorithmIcon
     var inputs: [(String, String)]
     var root: RootAction
+    var status: APISyncStatus
     
     // Initializer
     
@@ -32,6 +33,7 @@ class Algorithm {
         self.icon = icon
         self.inputs = []
         self.root = root
+        self.status = remote_id ?? 0 != 0 ? .synchronized : .local
         
         // Extract inputs from actions
         self.extractInputs()

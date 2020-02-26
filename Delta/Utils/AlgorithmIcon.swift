@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlgorithmIcon {
+class AlgorithmIcon: Codable {
     
     static let defaultIcon = "x"
     static let defaultColor = "river"

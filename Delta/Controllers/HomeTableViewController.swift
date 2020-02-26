@@ -56,18 +56,24 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 // Add to Downloads
                 downloads.append(algorithm)
             }
+            
+            // Check for update
+            checkForUpdate(algorithm: algorithm)
         }
         
         // If downloads are empty, add defaults
         if downloads.isEmpty {
-            // TODO: download them from API and save them
+            // Download default downloads
             for algorithm in Algorithm.defaults {
                 // Save it locally
-                let _ = Database.current.addAlgorithm(algorithm)
+                let algorithm = Database.current.addAlgorithm(algorithm)
+                
+                // Add to Downloads
+                downloads.append(algorithm)
+                
+                // And update it
+                checkForUpdate(algorithm: algorithm)
             }
-            
-            // Reload algorithms
-            loadAlgorithms()
         }
         
         // Update tableView
@@ -77,6 +83,63 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     func algorithmsChanged() {
         // Upload algorithm list
         loadAlgorithms()
+    }
+    
+    func algorithmChanged(updatedAlgorithm: Algorithm) {
+        for i in 0 ..< self.myalgorithms.count {
+            if (self.myalgorithms[i].local_id == updatedAlgorithm.local_id && self.myalgorithms[i].local_id != 0) || (self.myalgorithms[i].remote_id == updatedAlgorithm.remote_id && self.myalgorithms[i].remote_id != 0) {
+                // Replace
+                self.myalgorithms.remove(at: i)
+                self.myalgorithms.insert(updatedAlgorithm, at: i)
+                
+                // Update tableView
+                self.tableView.beginUpdates()
+                self.tableView.reloadRows(at: [IndexPath(row: i, section: 1)], with: .automatic)
+                self.tableView.endUpdates()
+            }
+        }
+        for i in 0 ..< self.downloads.count {
+            if (self.downloads[i].local_id == updatedAlgorithm.local_id && self.downloads[i].local_id != 0) || (self.downloads[i].remote_id == updatedAlgorithm.remote_id && self.downloads[i].remote_id != 0) {
+                // Replace
+                self.downloads.remove(at: i)
+                self.downloads.insert(updatedAlgorithm, at: i)
+                
+                // Update tableView
+                self.tableView.beginUpdates()
+                self.tableView.reloadRows(at: [IndexPath(row: i, section: 2)], with: .automatic)
+                self.tableView.endUpdates()
+            }
+        }
+    }
+    
+    func checkForUpdate(algorithm: Algorithm) {
+        // If there is a remote id
+        if let remote_id = algorithm.remote_id, remote_id != 0 {
+            // Check for update
+            algorithm.status = .checkingforupdate
+            algorithmChanged(updatedAlgorithm: algorithm)
+            
+            // Download algorithm
+            algorithm.status = .downloading
+            algorithmChanged(updatedAlgorithm: algorithm)
+            APIRequest("GET", path: "/algorithm/algorithm.php").with(name: "id", value: remote_id).execute(APIAlgorithm.self) { data, status in
+                // Check if data was downloaded
+                if let data = data {
+                    // Save it to database
+                    let updatedAlgorithm = data.saveToDatabase()
+                    
+                    // Replace it in lists
+                    self.algorithmChanged(updatedAlgorithm: updatedAlgorithm)
+                } else {
+                    // Update status
+                    algorithm.status = .failed
+                    self.algorithmChanged(updatedAlgorithm: algorithm)
+                }
+            }
+            
+            // Or upload it if it was modified
+            // TODO
+        }
     }
 
     // TableView management
@@ -263,7 +326,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             }
             
             // Create an editor
-            let editor = EditorTableViewController(algorithm: Database.current.getAlgorithm(id: algorithm.local_id)) { newAlgorithm in
+            let editor = EditorTableViewController(algorithm: Database.current.getAlgorithm(id_local: algorithm.local_id)) { newAlgorithm in
                 // Update with new algorithm
                 self.loadAlgorithms()
             }

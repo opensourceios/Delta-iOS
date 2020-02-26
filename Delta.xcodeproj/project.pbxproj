@@ -61,6 +61,11 @@
 		6AC40DB02324E7E2003C8131 /* CalculError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC40DAF2324E7E2003C8131 /* CalculError.swift */; };
 		6AC908ED2406238100F5F732 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908EC2406238100F5F732 /* UIColorExtension.swift */; };
 		6AC908EF240625CE00F5F732 /* AlgorithmIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908EE240625CE00F5F732 /* AlgorithmIcon.swift */; };
+		6AC908F2240656EA00F5F732 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908F1240656EA00F5F732 /* APIRequest.swift */; };
+		6AC908F42406571700F5F732 /* APIResponseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908F32406571700F5F732 /* APIResponseStatus.swift */; };
+		6AC908F62406579300F5F732 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908F52406579300F5F732 /* Account.swift */; };
+		6AC908F82406584C00F5F732 /* APIAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908F72406584C00F5F732 /* APIAlgorithm.swift */; };
+		6AC908FA2406636A00F5F732 /* APISyncStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908F92406636A00F5F732 /* APISyncStatus.swift */; };
 		6AD2B136234E073900E75AAF /* Sum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD2B135234E073900E75AAF /* Sum.swift */; };
 		6AD2B138234E08CD00E75AAF /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD2B137234E08CD00E75AAF /* Product.swift */; };
 		6AD2B13A234E08ED00E75AAF /* Fraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD2B139234E08ED00E75AAF /* Fraction.swift */; };
@@ -145,6 +150,11 @@
 		6AC40DAF2324E7E2003C8131 /* CalculError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculError.swift; sourceTree = "<group>"; };
 		6AC908EC2406238100F5F732 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		6AC908EE240625CE00F5F732 /* AlgorithmIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmIcon.swift; sourceTree = "<group>"; };
+		6AC908F1240656EA00F5F732 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		6AC908F32406571700F5F732 /* APIResponseStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseStatus.swift; sourceTree = "<group>"; };
+		6AC908F52406579300F5F732 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		6AC908F72406584C00F5F732 /* APIAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAlgorithm.swift; sourceTree = "<group>"; };
+		6AC908F92406636A00F5F732 /* APISyncStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISyncStatus.swift; sourceTree = "<group>"; };
 		6AD2B135234E073900E75AAF /* Sum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sum.swift; sourceTree = "<group>"; };
 		6AD2B137234E08CD00E75AAF /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		6AD2B139234E08ED00E75AAF /* Fraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fraction.swift; sourceTree = "<group>"; };
@@ -189,6 +199,7 @@
 		3203EF68214FB132005C287C /* Delta */ = {
 			isa = PBXGroup;
 			children = (
+				6AC908F0240656D800F5F732 /* API */,
 				6A0A8CB52323AC0900F0C41C /* Cells */,
 				6A0A8CAD2323A88700F0C41C /* Controllers */,
 				6A0A8CB02323A92900F0C41C /* Extensions */,
@@ -255,6 +266,7 @@
 		6A16E3FD234A385D00089765 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6AC908F52406579300F5F732 /* Account.swift */,
 				6A0A8CBA2323B08D00F0C41C /* Algorithm.swift */,
 				6AC908EE240625CE00F5F732 /* AlgorithmIcon.swift */,
 				6ABC904B235DBDE800F07D6D /* AlgorithmParser.swift */,
@@ -312,6 +324,17 @@
 				6A32637A23250CE40056FA0E /* Vector.swift */,
 			);
 			path = Tokens;
+			sourceTree = "<group>";
+		};
+		6AC908F0240656D800F5F732 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				6AC908F72406584C00F5F732 /* APIAlgorithm.swift */,
+				6AC908F1240656EA00F5F732 /* APIRequest.swift */,
+				6AC908F32406571700F5F732 /* APIResponseStatus.swift */,
+				6AC908F92406636A00F5F732 /* APISyncStatus.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -402,6 +425,7 @@
 				6A89949B2382D17F00D44833 /* FunctionDeclaration.swift in Sources */,
 				6ABC904E235DEFB400F07D6D /* Keyword.swift in Sources */,
 				6A16E409234A60BB00089765 /* IfAction.swift in Sources */,
+				6AC908F42406571700F5F732 /* APIResponseStatus.swift in Sources */,
 				6A0A8CD12323FDB700F0C41C /* Variable.swift in Sources */,
 				6AC36CD02360258400523F79 /* Modulo.swift in Sources */,
 				6A32637B23250CE40056FA0E /* Vector.swift in Sources */,
@@ -409,6 +433,7 @@
 				6AC36CDB23607A8200523F79 /* DateExtension.swift in Sources */,
 				6AE83705235AED5000DBED51 /* OutputTableViewCell.swift in Sources */,
 				6AC36CD5236033B400523F79 /* Database.swift in Sources */,
+				6AC908FA2406636A00F5F732 /* APISyncStatus.swift in Sources */,
 				6AD2B138234E08CD00E75AAF /* Product.swift in Sources */,
 				6AC908EF240625CE00F5F732 /* AlgorithmIcon.swift in Sources */,
 				6AD2B136234E073900E75AAF /* Sum.swift in Sources */,
@@ -439,14 +464,17 @@
 				6ABC9048235D8C0100F07D6D /* UITextFieldExtension.swift in Sources */,
 				6A7F7890234B3E00002609EF /* WhileAction.swift in Sources */,
 				6A0A8CAC2323A88100F0C41C /* HomeTableViewController.swift in Sources */,
+				6AC908F62406579300F5F732 /* Account.swift in Sources */,
 				6AD2B13A234E08ED00E75AAF /* Fraction.swift in Sources */,
 				6AC36CCC23601E6000523F79 /* FormattedToken.swift in Sources */,
 				6A0A8CC72323CECF00F0C41C /* Operation.swift in Sources */,
 				6A0A8CCF2323EFD600F0C41C /* SyntaxError.swift in Sources */,
+				6AC908F82406584C00F5F732 /* APIAlgorithm.swift in Sources */,
 				6A16E401234A4FB500089765 /* Action.swift in Sources */,
 				6AED92C3235F38BD009EEAFE /* EditorLineCategory.swift in Sources */,
 				6ABC9052235DFFA600F07D6D /* ActionBlock.swift in Sources */,
 				6AC908ED2406238100F5F732 /* UIColorExtension.swift in Sources */,
+				6AC908F2240656EA00F5F732 /* APIRequest.swift in Sources */,
 				6AC40DAE2324DDC6003C8131 /* Equation.swift in Sources */,
 				6AC40DB02324E7E2003C8131 /* CalculError.swift in Sources */,
 				6A2F13AF23264D8100031DDA /* TokenParser.swift in Sources */,
@@ -617,7 +645,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.2;
+				MARKETING_VERSION = 3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.zabricraft.Delta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -642,7 +670,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.2;
+				MARKETING_VERSION = 3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.zabricraft.Delta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
