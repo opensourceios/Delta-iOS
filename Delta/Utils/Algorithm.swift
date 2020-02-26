@@ -189,4 +189,52 @@ class Algorithm {
         }
     }
     
+    // Check for update from server
+    
+    func checkForUpdate(algorithmChanged: @escaping (Algorithm) -> Void) {
+        // If there is a remote id
+        if let remote_id = remote_id, remote_id != 0 {
+            // Check for update
+            status = .checkingforupdate
+            algorithmChanged(self)
+            APIRequest("GET", path: "/algorithm/checkforupdate.php").with(name: "id", value: remote_id).execute(APIAlgorithm.self) { data, status in
+                // Check if data was downloaded
+                if let data = data, let last_update = data.last_update?.toDate() {
+                    // Compare last update date
+                    let compare = self.last_update.compare(last_update)
+                    if compare == .orderedAscending {
+                        // Download algorithm
+                        self.status = .downloading
+                        algorithmChanged(self)
+                        APIRequest("GET", path: "/algorithm/algorithm.php").with(name: "id", value: remote_id).execute(APIAlgorithm.self) { data, status in
+                            // Check if data was downloaded
+                            if let data = data {
+                                // Save it to database
+                                let updatedAlgorithm = data.saveToDatabase()
+                                
+                                // Replace it in lists
+                                algorithmChanged(updatedAlgorithm)
+                            } else {
+                                // Update status
+                                self.status = .failed
+                                algorithmChanged(self)
+                            }
+                        }
+                    } else if compare == .orderedDescending {
+                        // Or upload it if it was modified
+                        // TODO
+                    } else {
+                        // Algorithm is up to date
+                        self.status = .synchronized
+                        algorithmChanged(self)
+                    }
+                } else {
+                    // Update status
+                    self.status = .failed
+                    algorithmChanged(self)
+                }
+            }
+        }
+    }
+    
 }

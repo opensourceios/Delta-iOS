@@ -58,7 +58,9 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             }
             
             // Check for update
-            checkForUpdate(algorithm: algorithm)
+            algorithm.checkForUpdate() { updatedAlgorithm in
+                self.algorithmChanged(updatedAlgorithm: updatedAlgorithm)
+            }
         }
         
         // If downloads are empty, add defaults
@@ -72,7 +74,9 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 downloads.append(algorithm)
                 
                 // And update it
-                checkForUpdate(algorithm: algorithm)
+                algorithm.checkForUpdate() { updatedAlgorithm in
+                    self.algorithmChanged(updatedAlgorithm: updatedAlgorithm)
+                }
             }
         }
         
@@ -109,36 +113,6 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 self.tableView.reloadRows(at: [IndexPath(row: i, section: 2)], with: .automatic)
                 self.tableView.endUpdates()
             }
-        }
-    }
-    
-    func checkForUpdate(algorithm: Algorithm) {
-        // If there is a remote id
-        if let remote_id = algorithm.remote_id, remote_id != 0 {
-            // Check for update
-            algorithm.status = .checkingforupdate
-            algorithmChanged(updatedAlgorithm: algorithm)
-            
-            // Download algorithm
-            algorithm.status = .downloading
-            algorithmChanged(updatedAlgorithm: algorithm)
-            APIRequest("GET", path: "/algorithm/algorithm.php").with(name: "id", value: remote_id).execute(APIAlgorithm.self) { data, status in
-                // Check if data was downloaded
-                if let data = data {
-                    // Save it to database
-                    let updatedAlgorithm = data.saveToDatabase()
-                    
-                    // Replace it in lists
-                    self.algorithmChanged(updatedAlgorithm: updatedAlgorithm)
-                } else {
-                    // Update status
-                    algorithm.status = .failed
-                    self.algorithmChanged(updatedAlgorithm: algorithm)
-                }
-            }
-            
-            // Or upload it if it was modified
-            // TODO
         }
     }
 
