@@ -16,18 +16,20 @@ class Algorithm {
     var owner: Bool
     var name: String
     var last_update: Date
+    var icon: AlgorithmIcon
     var inputs: [(String, String)]
     var root: RootAction
     
     // Initializer
     
-    init(local_id: Int64, remote_id: Int64?, owner: Bool, name: String, last_update: Date, root: RootAction) {
+    init(local_id: Int64, remote_id: Int64?, owner: Bool, name: String, last_update: Date, icon: AlgorithmIcon, root: RootAction) {
         // Init values
         self.local_id = local_id
         self.remote_id = remote_id
         self.name = name
         self.owner = owner
         self.last_update = last_update
+        self.icon = icon
         self.inputs = []
         self.root = root
         
@@ -178,10 +180,10 @@ class Algorithm {
         // Check if is owned
         if owner {
             // Create an instance with same informations
-            return Algorithm(local_id: local_id, remote_id: remote_id, owner: true, name: name, last_update: last_update, root: root)
+            return Algorithm(local_id: local_id, remote_id: remote_id, owner: true, name: name, last_update: last_update, icon: icon, root: root)
         } else {
             // Create a copy
-            return Algorithm(local_id: 0, remote_id: nil, owner: true, name: "copy".localized().format(name), last_update: last_update, root: root)
+            return Algorithm(local_id: 0, remote_id: nil, owner: true, name: "copy".localized().format(name), last_update: last_update, icon: icon, root: root)
         }
     }
     

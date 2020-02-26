@@ -24,6 +24,8 @@ class Database {
     let lines = Expression<String>("lines")
     let owner = Expression<Bool>("owner")
     let last_update = Expression<Date>("last_update")
+    let icon = Expression<String>("icon")
+    let color = Expression<String>("color")
     
     // Initialize
     init() {
@@ -41,10 +43,25 @@ class Database {
                     table.column(lines)
                     table.column(owner)
                     table.column(last_update)
+                    table.column(icon, defaultValue: AlgorithmIcon.defaultIcon)
+                    table.column(color, defaultValue: AlgorithmIcon.defaultColor)
                 })
             }
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    // Update database
+    func updateDatabase(build_number: Int) {
+        if build_number < 24 {
+            // Add icon and color to table
+            do {
+                try db?.run(algorithms.addColumn(icon, defaultValue: AlgorithmIcon.defaultIcon))
+                try db?.run(algorithms.addColumn(color, defaultValue: AlgorithmIcon.defaultColor))
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
     
@@ -59,7 +76,7 @@ class Database {
                 // Iterate data
                 for line in result {
                     // Create algorithm in list
-                    list.append(AlgorithmParser(try line.get(local_id), remote_id: try line.get(remote_id), owned: try line.get(owner), named: try line.get(name), last_update: try line.get(last_update), with: try line.get(lines)).execute())
+                    list.append(AlgorithmParser(try line.get(local_id), remote_id: try line.get(remote_id), owned: try line.get(owner), named: try line.get(name), last_update: try line.get(last_update), icon: AlgorithmIcon(icon: try line.get(icon), color: try line.get(color)), with: try line.get(lines)).execute())
                 }
             }
         } catch {
@@ -78,7 +95,7 @@ class Database {
                 // Iterate data
                 for line in result {
                     // Create the algorithm
-                    return AlgorithmParser(try line.get(local_id), remote_id: try line.get(remote_id), owned: try line.get(owner), named: try line.get(name), last_update: try line.get(last_update), with: try line.get(lines)).execute()
+                    return AlgorithmParser(try line.get(local_id), remote_id: try line.get(remote_id), owned: try line.get(owner), named: try line.get(name), last_update: try line.get(last_update), icon: AlgorithmIcon(icon: try line.get(icon), color: try line.get(color)), with: try line.get(lines)).execute()
                 }
             }
         } catch {
@@ -96,7 +113,7 @@ class Database {
             algorithm.last_update = Date()
             
             // Insert data
-            let id = try db?.run(algorithms.insert(remote_id <- algorithm.remote_id, name <- algorithm.name, lines <- algorithm.toString(), owner <- algorithm.owner, last_update <- algorithm.last_update)) ?? 0
+            let id = try db?.run(algorithms.insert(remote_id <- algorithm.remote_id, name <- algorithm.name, lines <- algorithm.toString(), owner <- algorithm.owner, last_update <- algorithm.last_update, icon <- algorithm.icon.icon, color <- algorithm.icon.color)) ?? 0
             
             // Update id
             algorithm.local_id = id
@@ -127,7 +144,7 @@ class Database {
             algorithm.last_update = Date()
             
             // Update data
-            try db?.run(line.update(remote_id <- algorithm.remote_id, name <- algorithm.name, lines <- algorithm.toString(), owner <- algorithm.owner, last_update <- algorithm.last_update))
+            try db?.run(line.update(remote_id <- algorithm.remote_id, name <- algorithm.name, lines <- algorithm.toString(), owner <- algorithm.owner, last_update <- algorithm.last_update, icon <- algorithm.icon.icon, color <- algorithm.icon.color))
         } catch {
             print(error.localizedDescription)
         }

@@ -16,7 +16,7 @@ extension Algorithm {
     ]
     
     // 2nd degree equation
-    static let secondDegreeEquation = AlgorithmParser(0, remote_id: nil, owned: false, named: "algo1_name".localized(), last_update: Date(), with: """
+    static let secondDegreeEquation = AlgorithmParser(0, remote_id: nil, owned: false, named: "algo1_name".localized(), last_update: Date(), icon: AlgorithmIcon(icon: "square", color: "alizarin"), with: """
     input "a" default "1"
     input "b" default "7"
     input "c" default "12"

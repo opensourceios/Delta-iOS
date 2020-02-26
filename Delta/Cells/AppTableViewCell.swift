@@ -28,8 +28,8 @@ class AppTableViewCell: UITableViewCell {
         icon.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
         icon.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor).isActive = true
         icon.bottomAnchor.constraint(lessThanOrEqualTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
-        icon.widthAnchor.constraint(equalToConstant: 45).isActive = true
-        icon.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        icon.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        icon.heightAnchor.constraint(equalToConstant: 44).isActive = true
         icon.layer.masksToBounds = true
         icon.layer.cornerRadius = 8
         

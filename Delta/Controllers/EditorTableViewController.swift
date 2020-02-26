@@ -14,7 +14,7 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     let completionHandler: (Algorithm) -> ()
     
     init(algorithm: Algorithm?, completionHandler: @escaping (Algorithm) -> ()) {
-        self.algorithm = algorithm?.clone() ?? Algorithm(local_id: 0, remote_id: nil, owner: true, name: "new_algorithm".localized(), last_update: Date(), root: RootAction([]))
+        self.algorithm = algorithm?.clone() ?? Algorithm(local_id: 0, remote_id: nil, owner: true, name: "new_algorithm".localized(), last_update: Date(), icon: AlgorithmIcon(), root: RootAction([]))
         self.completionHandler = completionHandler
         super.init(style: .grouped)
     }

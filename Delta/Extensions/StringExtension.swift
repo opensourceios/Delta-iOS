@@ -88,6 +88,27 @@ extension String {
         return nil
     }
     
+    // Colors
+    
+    func toColor() -> UIColor {
+        switch self {
+        case "emerald":
+            return .emerald
+        case "river":
+            return .river
+        case "amethyst":
+            return .amethyst
+        case "asphalt":
+            return .asphalt
+        case "carrot":
+            return .carrot
+        case "alizarin":
+            return .alizarin
+        default:
+            return AlgorithmIcon.defaultColor.toColor()
+        }
+    }
+    
     func attributedMath() -> NSAttributedString {
         let workspace = NSMutableAttributedString(string: self)
         let power: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 10), .baselineOffset: 8]

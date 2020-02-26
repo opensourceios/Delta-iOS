@@ -25,9 +25,10 @@ class AlgorithmParser {
     private var owner: Bool
     private var name: String
     private var last_update: Date
+    private var icon: AlgorithmIcon
     private var actions: [Action]
     
-    init(_ local_id: Int64, remote_id: Int64?, owned owner: Bool, named name: String, last_update: Date, with lines: String?) {
+    init(_ local_id: Int64, remote_id: Int64?, owned owner: Bool, named name: String, last_update: Date, icon: AlgorithmIcon, with lines: String?) {
         self.lines = lines ?? ""
         self.keywords = [String]()
         self.tokens = [String]()
@@ -38,6 +39,7 @@ class AlgorithmParser {
         self.name = name
         self.owner = owner
         self.last_update = last_update
+        self.icon = icon
         self.actions = [Action]()
     }
     
@@ -74,7 +76,7 @@ class AlgorithmParser {
                 }
                 
                 // Parse block
-                let block = AlgorithmParser(0, remote_id: nil, owned: false, named: "", last_update: Date(), with: content).execute().root.actions
+                let block = AlgorithmParser(0, remote_id: nil, owned: false, named: "", last_update: Date(), icon: AlgorithmIcon(), with: content).execute().root.actions
                 
                 // Create an action from the line
                 if let action = createAction() as? ActionBlock {
@@ -157,7 +159,7 @@ class AlgorithmParser {
         }
         
         // Create an algorithm with parsed data
-        return Algorithm(local_id: local_id, remote_id: remote_id, owner: owner, name: name, last_update: last_update, root: RootAction(actions.reversed()))
+        return Algorithm(local_id: local_id, remote_id: remote_id, owner: owner, name: name, last_update: last_update, icon: icon, root: RootAction(actions.reversed()))
     }
     
     func insertAction(_ action: Action) {
