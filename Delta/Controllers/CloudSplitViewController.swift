@@ -8,8 +8,10 @@
 
 import UIKit
 
-class CloudSplitViewController: UISplitViewController, UISplitViewControllerDelegate {
+class CloudSplitViewController: UISplitViewController, UISplitViewControllerDelegate, CloudAlgorithmOpenDelegate {
 
+    weak var changedDelegate: AlgorithmsChangedDelegate?
+    weak var selectionDelegate: AlgorithmSelectionDelegate?
     let leftViewController = CloudHomeTableViewController(style: .grouped)
     let rightViewController = CloudDetailsTableViewController(style: .grouped)
 
@@ -18,6 +20,7 @@ class CloudSplitViewController: UISplitViewController, UISplitViewControllerDele
         
         // Give delegates
         leftViewController.delegate = rightViewController
+        rightViewController.delegate = self
         
         // Create navigation controllers
         let leftNavigationController = UINavigationController(rootViewController: leftViewController)
@@ -46,6 +49,22 @@ class CloudSplitViewController: UISplitViewController, UISplitViewControllerDele
     @objc func close(_ sender: UIBarButtonItem) {
         // Dismiss view controller
         dismiss(animated: true, completion: nil)
+    }
+    
+    func closeCloudAndOpen(algorithm: Algorithm) {
+        // Dismiss view controller
+        dismiss(animated: true, completion: nil)
+        
+        // Refresh the list
+        changedDelegate?.algorithmsChanged()
+        
+        // Open the algorithm
+        selectionDelegate?.selectAlgorithm(algorithm)
+        
+        // Show view controller
+        if let algorithmVC = selectionDelegate as? AlgorithmTableViewController, let algorithmNavigation = algorithmVC.navigationController, let homeVC = changedDelegate as? HomeTableViewController {
+            homeVC.splitViewController?.showDetailViewController(algorithmNavigation, sender: nil)
+        }
     }
 
 }

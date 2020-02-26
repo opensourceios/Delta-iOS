@@ -9,7 +9,8 @@
 import UIKit
 
 class CloudDetailsTableViewController: UITableViewController, CloudAlgorithmSelectionDelegate {
-
+    
+    weak var delegate: CloudAlgorithmOpenDelegate?
     var status: APIResponseStatus = .ok
     var algorithm: APIAlgorithm?
     var onDevice: Algorithm?
@@ -65,6 +66,16 @@ class CloudDetailsTableViewController: UITableViewController, CloudAlgorithmSele
         }
         
     }
+    
+    func refreshData() {
+        // Reload everything
+        selectAlgorithm(self.algorithm)
+    }
+    
+    func open(algorithm: Algorithm) {
+        // Use delegate to close Cloud and open algorithm
+        delegate?.closeCloudAndOpen(algorithm: algorithm)
+    }
 
     // MARK: - Table view data source
 
@@ -85,7 +96,7 @@ class CloudDetailsTableViewController: UITableViewController, CloudAlgorithmSele
             // Check section
             if indexPath.section == 0 {
                 // Create cell
-                return (tableView.dequeueReusableCell(withIdentifier: "detailsCell", for: indexPath) as! CloudDetailsTableViewCell).with(algorithm: algorithm, onDevice: onDevice)
+                return (tableView.dequeueReusableCell(withIdentifier: "detailsCell", for: indexPath) as! CloudDetailsTableViewCell).with(algorithm: algorithm, onDevice: onDevice, delegate: self)
             } else if let line = preview?[indexPath.row] {
                 // Create cell
                 return (tableView.dequeueReusableCell(withIdentifier: "editorLockedCell", for: indexPath) as! EditorPreviewTableViewCell).with(line: line)
@@ -95,4 +106,10 @@ class CloudDetailsTableViewController: UITableViewController, CloudAlgorithmSele
         fatalError("Data not found")
     }
 
+}
+
+protocol CloudAlgorithmOpenDelegate: class {
+    
+    func closeCloudAndOpen(algorithm: Algorithm)
+    
 }

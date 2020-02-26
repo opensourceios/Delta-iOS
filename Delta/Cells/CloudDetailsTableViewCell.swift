@@ -18,6 +18,7 @@ class CloudDetailsTableViewCell: UITableViewCell {
     let button = UIButton()
     var algorithm: APIAlgorithm?
     var onDevice: Algorithm?
+    weak var delegate: CloudAlgorithmSelectionDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -65,7 +66,6 @@ class CloudDetailsTableViewCell: UITableViewCell {
         notes.leadingAnchor.constraint(equalTo: bubble.leadingAnchor, constant: 10).isActive = true
         notes.trailingAnchor.constraint(equalTo: bubble.trailingAnchor, constant: -10).isActive = true
         notes.font = .systemFont(ofSize: 15)
-        notes.textAlignment = .justified
         notes.numberOfLines = 0
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -90,10 +90,11 @@ class CloudDetailsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func with(algorithm: APIAlgorithm, onDevice: Algorithm?) -> CloudDetailsTableViewCell {
+    func with(algorithm: APIAlgorithm, onDevice: Algorithm?, delegate: CloudAlgorithmSelectionDelegate) -> CloudDetailsTableViewCell {
         // Set algorithms
         self.algorithm = algorithm
         self.onDevice = onDevice
+        self.delegate = delegate
         
         // Set views
         self.name.text = algorithm.name
@@ -141,8 +142,10 @@ class CloudDetailsTableViewCell: UITableViewCell {
     }
     
     func open(algorithm: Algorithm?) {
-        // Open it
-        
+        if let algorithm = algorithm {
+            // Open it
+            delegate?.open(algorithm: algorithm)
+        }
     }
 
 }

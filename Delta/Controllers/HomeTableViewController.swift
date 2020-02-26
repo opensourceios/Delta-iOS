@@ -201,6 +201,8 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 // Open the cloud
                 let cloudVC = CloudSplitViewController()
                 cloudVC.modalPresentationStyle = .fullScreen
+                cloudVC.changedDelegate = self
+                cloudVC.selectionDelegate = delegate
                 
                 // Show it
                 present(cloudVC, animated: true, completion: nil)

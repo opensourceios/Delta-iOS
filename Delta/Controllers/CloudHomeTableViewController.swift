@@ -104,4 +104,8 @@ protocol CloudAlgorithmSelectionDelegate: class {
     
     func selectAlgorithm(_ algorithm: APIAlgorithm?)
     
+    func refreshData()
+    
+    func open(algorithm: Algorithm)
+    
 }
