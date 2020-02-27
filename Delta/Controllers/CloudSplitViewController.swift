@@ -34,7 +34,7 @@ class CloudSplitViewController: UISplitViewController, UISplitViewControllerDele
         delegate = self
         
         // To close the cloud
-        leftViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "cancel".localized(), style: .plain, target: self, action: #selector(close(_:)))
+        leftViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "close".localized(), style: .plain, target: self, action: #selector(close(_:)))
         
         if #available(iOS 13.0, *) {
             // Special color for Catalyst
@@ -67,4 +67,10 @@ class CloudSplitViewController: UISplitViewController, UISplitViewControllerDele
         }
     }
 
+}
+
+protocol StatusContainerDelegate: class {
+    
+    func getStatusLabel() -> UILabel
+    
 }

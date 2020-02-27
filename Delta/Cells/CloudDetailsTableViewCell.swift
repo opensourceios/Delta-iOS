@@ -77,6 +77,7 @@ class CloudDetailsTableViewCell: UITableViewCell {
         button.layer.masksToBounds = true
         button.backgroundColor = .systemBlue
         button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15)
         button.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
         
         if #available(iOS 13.0, *) {

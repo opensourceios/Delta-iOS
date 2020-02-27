@@ -31,11 +31,17 @@
 "download" = "Télécharger";
 "update" = "Mettre à jour";
 "open" = "Ouvrir";
+"close" = "Fermer";
 "status_local" = "Sauvegardé localement";
 "status_synchronized" = "Synchronisé";
 "status_checkingforupdate" = "Recherche de mise à jour...";
 "status_downloading" = "Téléchargement...";
 "status_failed" = "Echec du téléchargement !";
+"status_invalidRequest" = "Une erreur est survenue lors de la requête...";
+"status_offline" = "Il semble que vous êtes hors ligne !";
+"status_notFound" = "Le contenu que vous recherchez n'existe pas";
+"status_unauthorized" = "Vous n'avez pas le droit d'accéder à ce contenu";
+"status_loading" = "Chargement...";
 "error_calcul" = "Erreur de calcul";
 "error_syntax" = "Erreur de syntaxe";
 "error_constant" = "Impossible d'attribuer la valeur : %@ est une constante";

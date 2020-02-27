@@ -8,9 +8,10 @@
 
 import UIKit
 
-class CloudDetailsTableViewController: UITableViewController, CloudAlgorithmSelectionDelegate {
+class CloudDetailsTableViewController: UITableViewController, CloudAlgorithmSelectionDelegate, StatusContainerDelegate {
     
     weak var delegate: CloudAlgorithmOpenDelegate?
+    var statusLabel = UILabel()
     var status: APIResponseStatus = .ok
     var algorithm: APIAlgorithm?
     var onDevice: Algorithm?
@@ -19,12 +20,30 @@ class CloudDetailsTableViewController: UITableViewController, CloudAlgorithmSele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Add status label
+        view.addSubview(statusLabel)
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        statusLabel.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor).isActive = true
+        statusLabel.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.centerYAnchor).isActive = true
+        statusLabel.textAlignment = .center
+        statusLabel.numberOfLines = 0
+        statusLabel.isHidden = true
+        
         // No separator
         tableView.separatorStyle = .none
 
         // Register cells
         tableView.register(CloudDetailsTableViewCell.self, forCellReuseIdentifier: "detailsCell")
         tableView.register(EditorPreviewTableViewCell.self, forCellReuseIdentifier: "editorLockedCell")
+        
+        // Refresh control
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(reloadContent(_:)), for: .valueChanged)
+    }
+    
+    @objc func reloadContent(_ sender: UIRefreshControl) {
+        // Reload algorithms
+        refreshData()
     }
     
     func selectAlgorithm(_ algorithm: APIAlgorithm?) {
@@ -36,7 +55,7 @@ class CloudDetailsTableViewController: UITableViewController, CloudAlgorithmSele
         self.status = .loading
         
         // Update tableView
-        self.tableView.reloadData()
+        self.reloadData(withStatus: status)
         
         // Fetch data
         algorithm?.fetchMissingData() { data, status in
@@ -62,7 +81,7 @@ class CloudDetailsTableViewController: UITableViewController, CloudAlgorithmSele
             }
             
             // Update tableView
-            self.tableView.reloadData()
+            self.reloadData(withStatus: status)
         }
         
     }
@@ -75,6 +94,10 @@ class CloudDetailsTableViewController: UITableViewController, CloudAlgorithmSele
     func open(algorithm: Algorithm) {
         // Use delegate to close Cloud and open algorithm
         delegate?.closeCloudAndOpen(algorithm: algorithm)
+    }
+    
+    func getStatusLabel() -> UILabel {
+        return statusLabel
     }
 
     // MARK: - Table view data source

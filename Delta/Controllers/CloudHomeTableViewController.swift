@@ -8,9 +8,10 @@
 
 import UIKit
 
-class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate {
+class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate, StatusContainerDelegate {
     
     weak var delegate: CloudAlgorithmSelectionDelegate?
+    var statusLabel = UILabel()
     var algorithms = [APIAlgorithm]()
     var search = ""
     var searchController = UISearchController()
@@ -22,6 +23,15 @@ class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "cloud".localized()
         
+        // Add status label
+        view.addSubview(statusLabel)
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        statusLabel.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor).isActive = true
+        statusLabel.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.centerYAnchor).isActive = true
+        statusLabel.textAlignment = .center
+        statusLabel.numberOfLines = 0
+        statusLabel.isHidden = true
+        
         // Register cells
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "homeCell")
         
@@ -30,7 +40,16 @@ class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate {
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         
+        // Refresh control
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(reloadContent(_:)), for: .valueChanged)
+        
         // Load algorithms
+        loadAlgorithms()
+    }
+    
+    @objc func reloadContent(_ sender: UIRefreshControl) {
+        // Reload algorithms
         loadAlgorithms()
     }
     
@@ -40,10 +59,13 @@ class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate {
             if let data = data {
                 // Update data
                 self.algorithms = data
-                
-                // Refresh tableView
-                self.tableView.reloadData()
+            } else {
+                // Clear data
+                self.algorithms = []
             }
+            
+            // Refresh the view
+            self.reloadData(withStatus: status)
         }
     }
     
@@ -61,6 +83,10 @@ class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate {
         
         // Reload algorithms
         loadAlgorithms()
+    }
+    
+    func getStatusLabel() -> UILabel {
+        return statusLabel
     }
 
     // MARK: - Table view data source

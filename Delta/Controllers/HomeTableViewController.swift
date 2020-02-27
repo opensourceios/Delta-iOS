@@ -26,6 +26,10 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "homeCell")
         tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: "labelCell")
         
+        // Refresh control
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(reloadContent(_:)), for: .valueChanged)
+        
         // Load algorithms
         loadAlgorithms()
     }
@@ -36,6 +40,11 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
         }
+    }
+    
+    @objc func reloadContent(_ sender: UIRefreshControl) {
+        // Reload algorithms
+        loadAlgorithms()
     }
     
     func loadAlgorithms() {
@@ -71,7 +80,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         }
         
         // Update tableView
-        tableView.reloadData()
+        reloadData(withStatus: .ok)
         
         // Check for update for all algorithms
         for algorithm in myalgorithms + downloads {

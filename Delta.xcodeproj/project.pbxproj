@@ -34,6 +34,7 @@
 		6A1F488F2356F7F100B3A006 /* Interval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1F488E2356F7F100B3A006 /* Interval.swift */; };
 		6A2F13AF23264D8100031DDA /* TokenParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F13AE23264D8100031DDA /* TokenParser.swift */; };
 		6A32637B23250CE40056FA0E /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A32637A23250CE40056FA0E /* Vector.swift */; };
+		6A6F07452407B91200288191 /* UITableViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F07442407B91200288191 /* UITableViewControllerExtension.swift */; };
 		6A7F7890234B3E00002609EF /* WhileAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7F788F234B3E00002609EF /* WhileAction.swift */; };
 		6A7F7892234B412D002609EF /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7F7891234B412D002609EF /* List.swift */; };
 		6A7F7898234B7294002609EF /* ForAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7F7897234B7294002609EF /* ForAction.swift */; };
@@ -129,6 +130,7 @@
 		6A1F488E2356F7F100B3A006 /* Interval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interval.swift; sourceTree = "<group>"; };
 		6A2F13AE23264D8100031DDA /* TokenParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenParser.swift; sourceTree = "<group>"; };
 		6A32637A23250CE40056FA0E /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
+		6A6F07442407B91200288191 /* UITableViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewControllerExtension.swift; sourceTree = "<group>"; };
 		6A7F788F234B3E00002609EF /* WhileAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhileAction.swift; sourceTree = "<group>"; };
 		6A7F7891234B412D002609EF /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		6A7F7897234B7294002609EF /* ForAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForAction.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				6A0A8CDA23244BB500F0C41C /* Int64Extension.swift */,
 				6A0A8CB12323A93C00F0C41C /* StringExtension.swift */,
 				6AC908EC2406238100F5F732 /* UIColorExtension.swift */,
+				6A6F07442407B91200288191 /* UITableViewControllerExtension.swift */,
 				6ABC9047235D8C0100F07D6D /* UITextFieldExtension.swift */,
 			);
 			path = Extensions;
@@ -462,6 +465,7 @@
 				6A99A71F2406B195002C9E54 /* CloudDetailsTableViewCell.swift in Sources */,
 				6A0A8CB22323A93C00F0C41C /* StringExtension.swift in Sources */,
 				6A0A8CDB23244BB500F0C41C /* Int64Extension.swift in Sources */,
+				6A6F07452407B91200288191 /* UITableViewControllerExtension.swift in Sources */,
 				6A0A8CB92323AF2900F0C41C /* SplitViewController.swift in Sources */,
 				6A1F488F2356F7F100B3A006 /* Interval.swift in Sources */,
 				6ABC9050235DF88D00F07D6D /* ElseAction.swift in Sources */,
@@ -656,7 +660,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Delta/Delta.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 25;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = ZL9396WK65;
 				INFOPLIST_FILE = Delta/Info.plist;
@@ -681,7 +685,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Delta/Delta.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 25;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = ZL9396WK65;
 				INFOPLIST_FILE = Delta/Info.plist;
