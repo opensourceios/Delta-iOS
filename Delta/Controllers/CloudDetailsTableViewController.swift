@@ -77,7 +77,6 @@ class CloudDetailsTableViewController: UITableViewController, CloudAlgorithmSele
                 
                 // Update navigation bar
                 self.navigationItem.title = data.name
-                self.navigationItem.rightBarButtonItem?.isEnabled = algorithm != nil
             }
             
             // Update tableView
