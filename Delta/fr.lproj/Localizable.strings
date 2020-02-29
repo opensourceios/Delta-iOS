@@ -33,7 +33,7 @@
 "open" = "Ouvrir";
 "close" = "Fermer";
 "status_local" = "Sauvegardé localement";
-"status_synchronized" = "Synchronisé";
+"status_synchro" = "Synchronisé";
 "status_checkingforupdate" = "Recherche de mise à jour...";
 "status_downloading" = "Téléchargement...";
 "status_failed" = "Echec du téléchargement !";

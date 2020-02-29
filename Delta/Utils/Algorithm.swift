@@ -33,7 +33,7 @@ class Algorithm {
         self.icon = icon
         self.inputs = []
         self.root = root
-        self.status = remote_id ?? 0 != 0 ? .synchronized : .local
+        self.status = remote_id ?? 0 != 0 ? .synchro : .local
         
         // Extract inputs from actions
         self.extractInputs()
@@ -225,7 +225,7 @@ class Algorithm {
                         // TODO
                     } else {
                         // Algorithm is up to date
-                        self.status = .synchronized
+                        self.status = .synchro
                         algorithmChanged(self)
                     }
                 } else {

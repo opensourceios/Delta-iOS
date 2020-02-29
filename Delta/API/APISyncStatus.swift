@@ -10,11 +10,11 @@ import UIKit
 
 enum APISyncStatus {
     
-    case local, synchronized, checkingforupdate, downloading, failed
+    case local, synchro, checkingforupdate, downloading, failed
     
     func colorForText() -> UIColor {
         switch self {
-        case .synchronized:
+        case .synchro:
             return .systemGreen
         case .checkingforupdate, .downloading:
             return .systemOrange

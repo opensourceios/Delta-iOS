@@ -33,7 +33,7 @@
 "open" = "Open";
 "close" = "Close";
 "status_local" = "Saved locally";
-"status_synchronized" = "Synchronized";
+"status_synchro" = "Synchronized";
 "status_checkingforupdate" = "Checking for update...";
 "status_downloading" = "Downloading...";
 "status_failed" = "Failed to update!";
