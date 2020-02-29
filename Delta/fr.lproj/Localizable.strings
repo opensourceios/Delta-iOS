@@ -9,7 +9,7 @@
 "download_algorithm" = "Télécharger depuis le Cloud";
 "cloud" = "Cloud";
 "cloud_algorithms" = "Algorithmes sur le Cloud";
-"cloud_details" = "Détails de l'algoritme sélectionné";
+"cloud_details" = "Détails de l'algorithme sélectionné";
 "cloud_preview" = "Aperçu de cet algorithme";
 "cloud_no_notes" = "Aucune note n'a été écrite pour cet algorithme.";
 "copy" = "%@ (copie)";
