@@ -177,6 +177,7 @@
 		6AED92C6235F5BAD009EEAFE /* ActionSelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSelectionTableViewController.swift; sourceTree = "<group>"; };
 		6AED92CA235F65AB009EEAFE /* EditorPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		6AED92CC235F6827009EEAFE /* RootAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAction.swift; sourceTree = "<group>"; };
+		6AF697FB241E5A1F00EB8D44 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -408,6 +409,7 @@
 				en,
 				Base,
 				fr,
+				es,
 			);
 			mainGroup = 3203EF5D214FB132005C287C;
 			packageReferences = (
@@ -530,6 +532,7 @@
 			children = (
 				6A0E7B5021BD956E00A16F99 /* fr */,
 				6A0A8CAF2323A8CC00F0C41C /* en */,
+				6AF697FB241E5A1F00EB8D44 /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -660,7 +663,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Delta/Delta.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = ZL9396WK65;
 				INFOPLIST_FILE = Delta/Info.plist;
@@ -669,7 +672,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.4;
+				MARKETING_VERSION = 3.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.zabricraft.Delta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -685,7 +688,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Delta/Delta.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = ZL9396WK65;
 				INFOPLIST_FILE = Delta/Info.plist;
@@ -694,7 +697,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.4;
+				MARKETING_VERSION = 3.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.zabricraft.Delta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
