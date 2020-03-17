@@ -88,6 +88,14 @@ class APIRequest {
                 request.addValue(password, forHTTPHeaderField: "password")
             }
             
+            // Locale and version information
+            if let version = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+                request.addValue(version, forHTTPHeaderField: "client-version")
+            }
+            if Bundle.main.preferredLocalizations.count > 0 {
+                request.addValue(Bundle.main.preferredLocalizations[0], forHTTPHeaderField: "Accept-Language")
+            }
+            
             // Set body
             if let body = body {
                 do {

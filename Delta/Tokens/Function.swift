@@ -18,6 +18,8 @@ struct Function: Token {
     }
     
     func compute(with inputs: [String : Token], format: Bool) -> Token {
+        // Prepare func handling
+        let parameter = self.parameter.compute(with: inputs, format: format)
         var expression: Token
         var variable: String
         
@@ -46,6 +48,11 @@ struct Function: Token {
             // Log
             
             // Ln
+            
+            // Random
+            if name == "random", let number = parameter as? Number, number.value > 0 {
+                return Number(value: Int64.random(in: 0 ..< number.value))
+            }
             
             // Cannot be simplified
             else {

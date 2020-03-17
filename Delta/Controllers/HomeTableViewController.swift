@@ -256,7 +256,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
             } else if indexPath.row == 1 {
                 // Help and documentation
-                if let url = URL(string: "https://www.delta-math-helper.com") {
+                if let url = URL(string: "https://www.delta-math-helper.com/documentation") {
                     UIApplication.shared.open(url)
                 }
             } else if indexPath.row == 2 {

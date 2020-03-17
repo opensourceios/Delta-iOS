@@ -15,7 +15,7 @@ class TokenParser {
     static let productCoefficients = "\(variablesAndNumber))"
     static let constants = "ieπ"
     static let input = " \(variablesAndNumber)_+-*/%^√,;(){}=<>!"
-    static let funcs = ["sin", "cos", "tan", "sqrt", "exp", "log", "ln"]
+    static let funcs = ["sin", "cos", "tan", "sqrt", "exp", "log", "ln", "random"]
     
     private var tokens: String
     private var ops: [String]
