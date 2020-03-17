@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nathan FALLET. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Algorithm {
     
@@ -48,15 +48,17 @@ class Algorithm {
     
     // Execute
     
-    func execute() -> Process {
-        // Create a process with inputs
-        let process = Process(inputs: inputs)
-        
-        // Execute root
-        root.execute(in: process)
-        
-        // Return the process
-        return process
+    func execute(in viewController: UIViewController, completionHandler: @escaping (Process) -> ()) {
+        DispatchQueue.global().async {
+            // Create a process with inputs
+            let process = Process(inputs: self.inputs, in: viewController)
+            
+            // Execute root
+            self.root.execute(in: process)
+            
+            // Return the process
+            completionHandler(process)
+        }
     }
     
     // Export

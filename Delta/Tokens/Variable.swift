@@ -30,42 +30,6 @@ struct Variable: Token {
         // Compute right
         let right = right.compute(with: inputs, format: format)
         
-        // Sum
-        if operation == .addition {
-            // Right is a sum
-            if let right = right as? Sum {
-                return Sum(values: right.values + [self])
-            }
-            
-            return Sum(values: [self, right])
-        }
-        
-        // Difference
-        if operation == .subtraction {
-            return Sum(values: [self, right.opposite()])
-        }
-        
-        // Product
-        if operation == .multiplication {
-            // Right is a product
-            if let right = right as? Product {
-                return Product(values: right.values + [self])
-            }
-            
-            return Product(values: [self, right])
-        }
-        
-        // Fraction
-        if operation == .division {
-            return Fraction(numerator: self, denominator: right)
-        }
-        
-        // Modulo
-        if operation == .modulo {
-            // Return the modulo
-            return Modulo(dividend: self, divisor: right)
-        }
-        
         // Power
         if operation == .power {
             // Check for i
@@ -102,13 +66,8 @@ struct Variable: Token {
             return Power(token: self, power: right)
         }
         
-        // Root
-        if operation == .root {
-            return Root(token: self, power: right)
-        }
-        
-        // Unknown, return a calcul error
-        return CalculError()
+        // Delegate to default
+        return defaultApply(operation: operation, right: right, with: inputs, format: format)
     }
     
     func needBrackets(for operation: Operation) -> Bool {

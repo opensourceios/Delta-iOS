@@ -144,34 +144,22 @@ struct Sum: Token {
         
         // If product
         if operation == .multiplication {
-            // Add token to product
+            // If we keep format
+            if format {
+                return Product(values: [self, right])
+            }
+            
+            // Right is a sum
+            if let right = right as? Sum {
+                return Sum(values: values.map { $0.apply(operation: .multiplication, right: right, with: inputs, format: format) }).compute(with: inputs, format: format)
+            }
+            
+            // Return the product
             return Product(values: [self, right])
         }
         
-        // If fraction
-        if operation == .division {
-            // Add token to fraction
-            return Fraction(numerator: self, denominator: right)
-        }
-        
-        // Modulo
-        if operation == .modulo {
-            // Return the modulo
-            return Modulo(dividend: self, divisor: right)
-        }
-        
-        // Power
-        if operation == .power {
-            return Power(token: self, power: right)
-        }
-        
-        // Root
-        if operation == .root {
-            return Root(token: self, power: right)
-        }
-        
-        // Unknown, return a calcul error
-        return CalculError()
+        // Delegate to default
+        return defaultApply(operation: operation, right: right, with: inputs, format: format)
     }
     
     func needBrackets(for operation: Operation) -> Bool {

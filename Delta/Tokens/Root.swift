@@ -28,32 +28,6 @@ struct Root: Token {
         // Compute right
         let right = right.compute(with: inputs, format: format)
         
-        // Sum
-        if operation == .addition {
-            return Sum(values: [self, right])
-        }
-        
-        // Difference
-        if operation == .subtraction {
-            return Sum(values: [self, right.opposite()]).compute(with: inputs, format: format)
-        }
-        
-        // Product
-        if operation == .multiplication {
-            return Product(values: [self, right])
-        }
-        
-        // Fraction
-        if operation == .division {
-            return Fraction(numerator: self, denominator: right)
-        }
-        
-        // Modulo
-        if operation == .modulo {
-            // Return the modulo
-            return Modulo(dividend: self, divisor: right)
-        }
-        
         // Power
         if operation == .power {
             // Check if power is the same
@@ -67,11 +41,11 @@ struct Root: Token {
         
         // Root
         if operation == .root {
-            return Root(token: self, power: right)
+            return Root(token: token, power: Product(values: [power, right]).compute(with: inputs, format: format))
         }
         
-        // Unknown, return a calcul error
-        return CalculError()
+        // Delegate to default
+        return defaultApply(operation: operation, right: right, with: inputs, format: format)
     }
     
     func needBrackets(for operation: Operation) -> Bool {

@@ -6,16 +6,18 @@
 //  Copyright © 2019 Nathan FALLET. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Process {
     
     var inputs = [(String, String)]()
     var variables = [String: Token]()
     var outputs = [String]()
+    var viewController: UIViewController
     
-    init(inputs: [(String, String)]) {
+    init(inputs: [(String, String)], in viewController: UIViewController) {
         self.inputs = inputs
+        self.viewController = viewController
     }
     
     func set(identifier: String, to value: Token) {

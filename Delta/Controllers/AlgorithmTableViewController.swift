@@ -67,12 +67,20 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
     
     func updateResult() {
         if let algorithm = algorithm {
-            // Execute algorithm
-            let process = algorithm.execute()
-            currentOutputs = process.outputs
-            
-            // Refresh the output section
+            // Clear current outputs
+            currentOutputs = []
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+            
+            // Execute algorithm
+            algorithm.execute(in: self) { process in
+                // Get outputs
+                self.currentOutputs = process.outputs
+                
+                // Refresh the output section
+                DispatchQueue.main.async {
+                    self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+                }
+            }
         }
     }
 

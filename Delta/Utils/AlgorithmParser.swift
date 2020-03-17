@@ -174,8 +174,8 @@ class AlgorithmParser {
             keywords.removeFirst()
             
             // Keyword list
-            let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.PrintApproximated, Keyword.PrintText, Keyword.Unset, Keyword.While]
-            let grouped = [Keyword.Default: [Keyword.Input], Keyword.In: [Keyword.For], Keyword.To: [Keyword.Set]]
+            let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.PrintApproximated, Keyword.PrintText, Keyword.Unset, Keyword.While, Keyword.QuizInit, Keyword.QuizShow]
+            let grouped = [Keyword.Default: [Keyword.Input], Keyword.In: [Keyword.For], Keyword.To: [Keyword.Set], Keyword.Correct: [Keyword.QuizAdd]]
             
             // Iterate values
             for key in grouped {
@@ -206,6 +206,11 @@ class AlgorithmParser {
                                     let token = tokens.removeFirst()
                                     let identifier = tokens.removeFirst()
                                     return SetAction(identifier, to: token)
+                                } else if value == .QuizAdd && tokens.count >= 2 {
+                                    // Add input "text" with "correct" as correct answer
+                                    let correct = tokens.removeFirst()
+                                    let text = tokens.removeFirst()
+                                    return QuizAddAction(text, correct: correct)
                                 }
                             }
                         }
@@ -245,6 +250,13 @@ class AlgorithmParser {
                         // While "condition"
                         let condition = tokens.removeFirst()
                         return WhileAction(condition, do: [])
+                    } else if value == .QuizInit && tokens.count >= 1 {
+                        // Init quiz "text"
+                        let text = tokens.removeFirst()
+                        return QuizInitAction(text)
+                    } else if value == .QuizShow {
+                        // Show quiz
+                        return QuizShowAction()
                     }
                 }
             }

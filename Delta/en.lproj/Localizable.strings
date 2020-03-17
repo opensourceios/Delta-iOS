@@ -59,9 +59,13 @@
 "action_end" = "End";
 "action_while" = "While %@";
 "action_for" = "For %@ in %@";
+"action_quiz_init" = "Init quiz %@";
+"action_quiz_add" = "Add input %@ with %@ as correct answer";
+"action_quiz_show" = "Show quiz";
 "settings_name" = "Name: %@";
 "category_variable" = "Variable";
 "category_structure" = "Structure";
 "category_output" = "Output";
+"category_quiz" = "Quiz";
 "category_settings" = "Settings";
 "category_add" = "Add an action";

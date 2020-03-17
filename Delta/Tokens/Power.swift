@@ -39,47 +39,16 @@ struct Power: Token {
     }
     
     func apply(operation: Operation, right: Token, with inputs: [String : Token], format: Bool) -> Token {
-        // Compute right
-        let right = right.compute(with: inputs, format: format)
-        
-        // Sum
-        if operation == .addition {
-            return Sum(values: [self, right])
-        }
-        
-        // Difference
-        if operation == .subtraction {
-            return Sum(values: [self, right.opposite()]).compute(with: inputs, format: format)
-        }
-        
         // Product
         if operation == .multiplication {
-            return Product(values: [self, right])
+            // Token and right are the same
+            if token.toString() == right.toString() {
+                return Power(token: token, power: Sum(values: [power, Number(value: 1)])).compute(with: inputs, format: format)
+            }
         }
         
-        // Fraction
-        if operation == .division {
-            return Fraction(numerator: self, denominator: right)
-        }
-        
-        // Modulo
-        if operation == .modulo {
-            // Return the modulo
-            return Modulo(dividend: self, divisor: right)
-        }
-        
-        // Power
-        if operation == .power {
-            return Power(token: token, power: Product(values: [power, right]))
-        }
-        
-        // Root
-        if operation == .root {
-            return Root(token: self, power: right)
-        }
-        
-        // Unknown, return a calcul error
-        return CalculError()
+        // Delegate to default
+        return defaultApply(operation: operation, right: right, with: inputs, format: format)
     }
     
     func needBrackets(for operation: Operation) -> Bool {

@@ -59,9 +59,13 @@
 "action_end" = "Fin";
 "action_while" = "Mientras %@";
 "action_for" = "Para %@ en %@";
+"action_quiz_init" = "Crear un concurso %@";
+"action_quiz_add" = "Añadir la entrada %@ con %@ como buena respuesta";
+"action_quiz_show" = "Mostrar el concurso";
 "settings_name" = "Nombre: %@";
 "category_variable" = "Variable";
 "category_structure" = "Estructura";
 "category_output" = "Salida";
+"category_quiz" = "Concurso";
 "category_settings" = "Ajustes";
 "category_add" = "Añadir una acción";

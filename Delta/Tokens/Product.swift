@@ -161,28 +161,10 @@ struct Product: Token {
             return Sum(values: [self, right])
         }
         
-        // If subtraction
-        if operation == .subtraction {
-            // Add token to sum
-            return Sum(values: [self, right.opposite()]).compute(with: inputs, format: format)
-        }
-        
         // If product
         if operation == .multiplication {
             // Add token to product
             return Product(values: values + [right])
-        }
-        
-        // If fraction
-        if operation == .division {
-            // Add token to fraction
-            return Fraction(numerator: self, denominator: right)
-        }
-        
-        // Modulo
-        if operation == .modulo {
-            // Return the modulo
-            return Modulo(dividend: self, divisor: right)
         }
         
         // Power
@@ -195,8 +177,8 @@ struct Product: Token {
             return Product(values: values.map{ Root(token: $0, power: right) })
         }
         
-        // Unknown, return a calcul error
-        return CalculError()
+        // Delegate to default
+        return defaultApply(operation: operation, right: right, with: inputs, format: format)
     }
     
     func needBrackets(for operation: Operation) -> Bool {

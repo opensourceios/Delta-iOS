@@ -131,12 +131,6 @@ struct Fraction: Token {
             return Product(values: [self, right.inverse()]).compute(with: inputs, format: format)
         }
         
-        // Modulo
-        if operation == .modulo {
-            // Return the modulo
-            return Modulo(dividend: self, divisor: right)
-        }
-        
         // Power
         if operation == .power {
             // If we keep format
@@ -159,8 +153,8 @@ struct Fraction: Token {
             return Fraction(numerator: Root(token: numerator, power: right), denominator: Root(token: denominator, power: right)).compute(with: inputs, format: format)
         }
         
-        // Unknown, return a calcul error
-        return CalculError()
+        // Delegate to default
+        return defaultApply(operation: operation, right: right, with: inputs, format: format)
     }
     
     func needBrackets(for operation: Operation) -> Bool {

@@ -42,63 +42,7 @@ struct Modulo: Token {
     }
     
     func apply(operation: Operation, right: Token, with inputs: [String : Token], format: Bool) -> Token {
-        // Compute right
-        let right = right.compute(with: inputs, format: format)
-        
-        // If addition
-        if operation == .addition {
-            // Right is a sum
-            if let right = right as? Sum {
-                return Sum(values: right.values + [self])
-            }
-            
-            // Return the sum
-            return Sum(values: [self, right])
-        }
-        
-        // If subtraction
-        if operation == .subtraction {
-            // Return the sum
-            return Sum(values: [self, right.opposite()])
-        }
-        
-        // If product
-        if operation == .multiplication {
-            // Right is a product
-            if let right = right as? Product {
-                return Product(values: right.values + [self])
-            }
-            
-            // Return the product
-            return Product(values: [self, right])
-        }
-        
-        // If fraction
-        if operation == .division {
-            // Return the fraction
-            return Fraction(numerator: self, denominator: right)
-        }
-        
-        // Modulo
-        if operation == .modulo {
-            // Return the modulo
-            return Modulo(dividend: self, divisor: right)
-        }
-        
-        // Power
-        if operation == .power {
-            // Return the power
-            return Power(token: self, power: right)
-        }
-        
-        // Root
-        if operation == .root {
-            // Return root
-            return Root(token: self, power: right)
-        }
-        
-        // Unknown, return a calcul error
-        return CalculError()
+        return defaultApply(operation: operation, right: right, with: inputs, format: format)
     }
     
     func needBrackets(for operation: Operation) -> Bool {

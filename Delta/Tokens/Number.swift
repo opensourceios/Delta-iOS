@@ -36,14 +36,6 @@ struct Number: Token {
             if let right = right as? Number {
                 return Number(value: self.value + right.value)
             }
-            
-            // Right is a sum
-            if let right = right as? Sum {
-                return Sum(values: right.values + [self])
-            }
-            
-            // Return the sum
-            return Sum(values: [self, right])
         }
         
         // Difference
@@ -58,9 +50,6 @@ struct Number: Token {
             if let right = right as? Number {
                 return Number(value: self.value - right.value)
             }
-            
-            // Return the sum
-            return Sum(values: [self, right.opposite()])
         }
         
         // Product
@@ -81,35 +70,6 @@ struct Number: Token {
             if let right = right as? Number {
                 return Number(value: self.value * right.value)
             }
-            
-            // Right is a product
-            if let right = right as? Product {
-                return Product(values: right.values + [self])
-            }
-            
-            // If we keep format
-            if format {
-                return Product(values: [self, right])
-            }
-            
-            // Right is a fraction
-            if let right = right as? Fraction {
-                // a/b * c = ac/b
-                return Fraction(numerator: Product(values: [self, right.numerator]), denominator: right.denominator).compute(with: inputs, format: format)
-            }
-            
-            // Right is a sum
-            if let right = right as? Sum {
-                return Sum(values: right.values.map{ Product(values: [$0, self]) }).compute(with: inputs, format: format)
-            }
-            
-            // Right is a vector
-            if let right = right as? Vector {
-                return right.apply(operation: operation, right: self, with: inputs, format: format)
-            }
-            
-            // Return the product
-            return Product(values: [self, right])
         }
         
         // Fraction
@@ -145,9 +105,6 @@ struct Number: Token {
                     return Fraction(numerator: Number(value: numerator), denominator: Number(value: denominator))
                 }
             }
-            
-            // Return the fraction
-            return Fraction(numerator: self, denominator: right)
         }
         
         // Modulo
@@ -162,9 +119,6 @@ struct Number: Token {
                 
                 return Number(value: self.value % right.value)
             }
-            
-            // Return the modulo
-            return Modulo(dividend: self, divisor: right)
         }
         
         // Power
@@ -183,9 +137,6 @@ struct Number: Token {
                     return Number(value: Int64(pow(Double(self.value), Double(-right.value)))).inverse()
                 }
             }
-            
-            // Return the power
-            return Power(token: self, power: right)
         }
         
         // Root
@@ -220,13 +171,10 @@ struct Number: Token {
                     }
                 }
             }
-            
-            // Return root
-            return Root(token: self, power: right)
         }
         
-        // Unknown, return a calcul error
-        return CalculError()
+        // Delegate to default
+        return defaultApply(operation: operation, right: right, with: inputs, format: format)
     }
     
     func needBrackets(for operation: Operation) -> Bool {
