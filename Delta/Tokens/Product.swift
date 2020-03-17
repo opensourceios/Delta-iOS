@@ -155,10 +155,50 @@ struct Product: Token {
         
         // If addition
         if operation == .addition {
-            // TODO: Check for common factor
+            // Right is a product
+            let right = right as? Product ?? Product(values: [right])
             
-            // Add token to sum
-            return Sum(values: [self, right])
+            // Check for common factor
+            var factors = [Token]()
+            var leftValues = values
+            var rightValues = right.values
+            var leftIndex = 0
+            while leftIndex < leftValues.count {
+                // Iterate right values
+                var rightIndex = 0
+                while rightIndex < rightValues.count {
+                    // Check if left and right are the same
+                    if leftValues[leftIndex].toString() == rightValues[rightIndex].toString() {
+                        // We have a common factor
+                        factors += [leftValues[leftIndex]]
+                        leftValues[leftIndex] = Number(value: 1)
+                        rightValues[rightIndex] = Number(value: 1)
+                    }
+                    
+                    // Check if both are numbers with gcd != 1
+                    if let leftNumber = leftValues[leftIndex] as? Number, let rightNumber = rightValues[rightIndex] as? Number {
+                        let gcd = leftNumber.value.greatestCommonDivisor(with: rightNumber.value)
+                        if gcd != 1 {
+                            // We have a common factor
+                            factors += [Number(value: gcd)]
+                            leftValues[leftIndex] = Number(value: leftNumber.value / gcd)
+                            rightValues[rightIndex] = Number(value: rightNumber.value / gcd)
+                        }
+                    }
+                    
+                    // Increment
+                    rightIndex += 1
+                }
+                
+                // Increment
+                leftIndex += 1
+            }
+            
+            // Check if factors are not empty
+            if !factors.isEmpty {
+                // Create a product with common factors
+                return Product(values: factors + [Sum(values: [Product(values: leftValues), Product(values: rightValues)]).compute(with: inputs, format: format)])
+            }
         }
         
         // If product

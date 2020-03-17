@@ -35,6 +35,11 @@ extension Token {
                 return Sum(values: right.values + [self])
             }
             
+            // Left and right are the same
+            if toString() == right.toString() {
+                return Product(values: [self, Number(value: 2)]).compute(with: inputs, format: format)
+            }
+            
             return Sum(values: [self, right])
         }
         
@@ -81,7 +86,45 @@ extension Token {
         
         // Fraction
         if operation == .division {
-            return Fraction(numerator: self, denominator: right)
+            // Left and right are products
+            let left = self as? Product ?? Product(values: [self])
+            let right = right as? Product ?? Product(values: [right])
+            
+            // Check for common factor
+            var leftValues = left.values
+            var rightValues = right.values
+            var leftIndex = 0
+            while leftIndex < leftValues.count {
+                // Iterate right values
+                var rightIndex = 0
+                while rightIndex < rightValues.count {
+                    // Check if left and right are the same
+                    if leftValues[leftIndex].toString() == rightValues[rightIndex].toString() {
+                        // We have a common factor
+                        leftValues[leftIndex] = Number(value: 1)
+                        rightValues[rightIndex] = Number(value: 1)
+                    }
+                    
+                    // Check if both are numbers with gcd != 1
+                    if let leftNumber = leftValues[leftIndex] as? Number, let rightNumber = rightValues[rightIndex] as? Number {
+                        let gcd = leftNumber.value.greatestCommonDivisor(with: rightNumber.value)
+                        if gcd != 1 {
+                            // We have a common factor
+                            leftValues[leftIndex] = Number(value: leftNumber.value / gcd)
+                            rightValues[rightIndex] = Number(value: rightNumber.value / gcd)
+                        }
+                    }
+                    
+                    // Increment
+                    rightIndex += 1
+                }
+                
+                // Increment
+                leftIndex += 1
+            }
+            
+            // Return the fraction
+            return Fraction(numerator: Product(values: leftValues).compute(with: inputs, format: format), denominator: Product(values: rightValues).compute(with: inputs, format: format))
         }
         
         // Modulo
