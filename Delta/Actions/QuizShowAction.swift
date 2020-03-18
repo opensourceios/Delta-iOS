@@ -17,14 +17,19 @@ class QuizShowAction: Action {
             
             // Show quiz to user
             DispatchQueue.main.async {
-                
-                DispatchQueue.global().async {
-                    // Add it to outputs
-                    process.outputs.append(quiz)
-                    
-                    // And continue process
-                    semaphore.signal()
+                // Init a controller
+                let controller = QuizViewController(quiz) { quiz in
+                    DispatchQueue.global().async {
+                        // Add it to outputs
+                        process.outputs.append(quiz)
+                        
+                        // And continue process
+                        semaphore.signal()
+                    }
                 }
+                
+                // Show it
+                process.viewController.present(controller, animated: true, completion: nil)
             }
             
             // Wait for quiz to finish
