@@ -19,7 +19,9 @@ class QuizAddAction: Action {
     }
     
     func execute(in process: Process) {
-        
+        if let quiz = process.quiz {
+            quiz.addQuestion(text, correct: correct)
+        }
     }
     
     func toString() -> String {

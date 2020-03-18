@@ -12,7 +12,8 @@ class Process {
     
     var inputs = [(String, String)]()
     var variables = [String: Token]()
-    var outputs = [String]()
+    var outputs = [Any]()
+    var quiz: Quiz?
     var viewController: UIViewController
     
     init(inputs: [(String, String)], in viewController: UIViewController) {

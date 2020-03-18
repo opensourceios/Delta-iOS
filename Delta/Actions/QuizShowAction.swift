@@ -11,17 +11,29 @@ import Foundation
 class QuizShowAction: Action {
     
     func execute(in process: Process) {
-        let semaphore = DispatchSemaphore(value: 0)
-        
-        DispatchQueue.main.async {
+        if let quiz = process.quiz {
+            // Create the semaphore for thread management
+            let semaphore = DispatchSemaphore(value: 0)
             
-            DispatchQueue.global().async {
-                semaphore.signal()
+            // Show quiz to user
+            DispatchQueue.main.async {
+                
+                DispatchQueue.global().async {
+                    // Add it to outputs
+                    process.outputs.append(quiz)
+                    
+                    // And continue process
+                    semaphore.signal()
+                }
             }
+            
+            // Wait for quiz to finish
+            semaphore.wait()
+            semaphore.signal()
         }
         
-        semaphore.wait()
-        semaphore.signal()
+        // Reset quiz
+        process.quiz = nil
     }
     
     func toString() -> String {
