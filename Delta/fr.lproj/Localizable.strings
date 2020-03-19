@@ -32,6 +32,7 @@
 "update" = "Mettre à jour";
 "open" = "Ouvrir";
 "close" = "Fermer";
+"check" = "Vérifier";
 "status_local" = "Sauvegardé localement";
 "status_synchro" = "Synchronisé";
 "status_checkingforupdate" = "Recherche de mise à jour...";
@@ -60,7 +61,8 @@
 "action_while" = "Tant que %@";
 "action_for" = "Pour tout %@ de %@";
 "action_quiz_init" = "Créer le quiz %@";
-"action_quiz_add" = "Ajouter l'entrée %@ avec %@ comme bonne réponse";
+"action_quiz_add_question" = "Ajouter l'entrée %@ avec %@ comme bonne réponse";
+"action_quiz_add_paragraph" = "Ajouter le texte %@";
 "action_quiz_show" = "Afficher le quiz";
 "settings_name" = "Nom : %@";
 "category_variable" = "Variable";

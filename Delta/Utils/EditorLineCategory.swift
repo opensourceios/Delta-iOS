@@ -23,7 +23,7 @@ enum EditorLineCategory: String {
         case .output:
             return [PrintAction("a"), PrintAction("a", approximated: true), PrintTextAction("Hello world!")]
         case .quiz:
-            return [QuizInitAction("Your question..."), QuizAddAction("x =", correct: "x"), QuizShowAction()]
+            return [QuizInitAction("Solve equations:"), QuizAddAction("2x + 1 = 0"), QuizAddAction("x", correct: "x"), QuizShowAction()]
         default:
             return []
         }

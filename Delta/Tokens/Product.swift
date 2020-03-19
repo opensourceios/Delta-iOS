@@ -154,7 +154,7 @@ struct Product: Token {
         let right = right.compute(with: inputs, format: format)
         
         // If addition
-        if operation == .addition {
+        if operation == .addition && !format {
             // Right is a product
             let right = right as? Product ?? Product(values: [right])
             

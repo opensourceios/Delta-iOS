@@ -109,6 +109,23 @@ extension String {
         }
     }
     
+    func replaceTokens(in process: Process) -> String {
+        var output = self
+        
+        // Get "" to interprete them
+        for group in output.groups(for: "\"[^\"]*\"") {
+            // Get token based on string
+            let token = TokenParser(group[0][1 ..< group[0].count-1], in: process).execute()
+            
+            // Replace with tokens
+            if let range = output.range(of: group[0]) {
+                output = output.replacingCharacters(in: range, with: token.compute(with: process.variables, format: true).toString())
+            }
+        }
+        
+        return output
+    }
+    
     func attributedMath() -> NSAttributedString {
         let workspace = NSMutableAttributedString(string: self)
         let power: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 10), .baselineOffset: 8]

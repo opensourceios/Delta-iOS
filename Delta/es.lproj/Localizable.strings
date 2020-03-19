@@ -32,6 +32,7 @@
 "update" = "Actualizar";
 "open" = "Abrir";
 "close" = "Cerrar";
+"check" = "Verificar";
 "status_local" = "Guardado localmente";
 "status_synchro" = "Sincronizado";
 "status_checkingforupdate" = "Verificación de actualización...";
@@ -60,7 +61,8 @@
 "action_while" = "Mientras %@";
 "action_for" = "Para %@ en %@";
 "action_quiz_init" = "Crear un concurso %@";
-"action_quiz_add" = "Añadir la entrada %@ con %@ como buena respuesta";
+"action_quiz_add_question" = "Añadir la entrada %@ con %@ como buena respuesta";
+"action_quiz_add_paragraph" = "Añadir el texto %@";
 "action_quiz_show" = "Mostrar el concurso";
 "settings_name" = "Nombre: %@";
 "category_variable" = "Variable";

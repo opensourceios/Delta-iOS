@@ -32,6 +32,7 @@
 "update" = "Update";
 "open" = "Open";
 "close" = "Close";
+"check" = "Check";
 "status_local" = "Saved locally";
 "status_synchro" = "Synchronized";
 "status_checkingforupdate" = "Checking for update...";
@@ -60,7 +61,8 @@
 "action_while" = "While %@";
 "action_for" = "For %@ in %@";
 "action_quiz_init" = "Init quiz %@";
-"action_quiz_add" = "Add input %@ with %@ as correct answer";
+"action_quiz_add_question" = "Add input %@ with %@ as correct answer";
+"action_quiz_add_paragraph" = "Add text %@";
 "action_quiz_show" = "Show quiz";
 "settings_name" = "Name: %@";
 "category_variable" = "Variable";

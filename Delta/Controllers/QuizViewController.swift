@@ -12,6 +12,7 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
 
     let quiz: Quiz
     let completionHandler: (Quiz) -> ()
+    var checked = false
     let scrollView = UIScrollView()
     let contentView = UIView()
     let header = UILabel()
@@ -70,33 +71,41 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
         stack.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 16).isActive = true
         stack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         stack.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        stack.axis = .horizontal
+        stack.axis = .vertical
+        stack.spacing = 4
         
-        for i in 0 ..< quiz.questions.count {
-            let question = quiz.questions[i]
-            let questionStack = UIStackView()
-            let questionLabel = UILabel()
-            let questionField = UITextField()
-            
-            questionStack.axis = .horizontal
-            questionStack.spacing = 6
+        for i in 0 ..< quiz.elements.count {
+            if let question = quiz.elements[i] as? QuizQuestion {
+                let questionStack = UIStackView()
+                let questionLabel = UILabel()
+                let questionField = UITextField()
+                
+                questionStack.axis = .horizontal
+                questionStack.spacing = 6
 
-            questionLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-            questionLabel.setContentHuggingPriority(.required, for: .horizontal)
-            questionLabel.adjustsFontSizeToFitWidth = true
-            questionLabel.text = question.0
-            
-            questionField.setContentCompressionResistancePriority(.required, for: .horizontal)
-            questionField.autocapitalizationType = .none
-            questionField.returnKeyType = .done
-            questionField.delegate = self
-            questionField.tag = i
-            questionField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-            
-            questionStack.addArrangedSubview(questionLabel)
-            questionStack.addArrangedSubview(questionField)
-            
-            stack.addArrangedSubview(questionStack)
+                questionLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+                questionLabel.setContentHuggingPriority(.required, for: .horizontal)
+                questionLabel.adjustsFontSizeToFitWidth = true
+                questionLabel.attributedText = "\(question.text) =".attributedMath()
+                
+                questionField.setContentCompressionResistancePriority(.required, for: .horizontal)
+                questionField.autocapitalizationType = .none
+                questionField.returnKeyType = .done
+                questionField.delegate = self
+                questionField.tag = i
+                
+                questionStack.addArrangedSubview(questionLabel)
+                questionStack.addArrangedSubview(questionField)
+                
+                stack.addArrangedSubview(questionStack)
+            } else if let paragraph = quiz.elements[i] as? QuizParagraph {
+                let paragraphLabel = UILabel()
+
+                paragraphLabel.adjustsFontSizeToFitWidth = true
+                paragraphLabel.attributedText = paragraph.text.attributedMath()
+                
+                stack.addArrangedSubview(paragraphLabel)
+            }
         }
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -117,16 +126,41 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func buttonClicked(_ sender: UIButton) {
-        // Dismiss view
-        dismiss(animated: true) {
-            // Call completion handler
-            self.completionHandler(self.quiz)
+        if checked {
+            // Dismiss view
+            dismiss(animated: true) {
+                // Call completion handler
+                self.completionHandler(self.quiz)
+            }
+        } else {
+            // Get fields
+            for subview in stack.arrangedSubviews {
+                // Extract field if exists
+                if let subview = subview as? UIStackView, let label = subview.arrangedSubviews[0] as? UILabel, let field = subview.arrangedSubviews[1] as? UITextField, let question = quiz.elements[field.tag] as? QuizQuestion {
+                    // Check the question
+                    let answer = TokenParser(field.text).execute()
+                    let condition = Equation(left: answer, right: question.correct, operation: .equals)
+                    
+                    print(condition.toString())
+                    if condition.isTrue(with: [:]) {
+                        // Answer is correct
+                        label.textColor = .systemGreen
+                        field.textColor = .systemGreen
+                    } else {
+                        // Answer is not correct
+                        label.textColor = .systemRed
+                        field.textColor = .systemRed
+                    }
+                    
+                    // Disable the field
+                    field.isEnabled = false
+                }
+            }
+            
+            // Set as checked
+            checked = true
+            button.setTitle("close".localized(), for: .normal)
         }
-    }
-    
-    @objc func editingChanged(_ sender: UITextField) {
-        // Update input
-        quiz.questions[sender.tag].2 = sender.text ?? ""
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

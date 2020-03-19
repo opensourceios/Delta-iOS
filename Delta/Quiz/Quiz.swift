@@ -11,14 +11,18 @@ import Foundation
 class Quiz {
     
     var text: String
-    var questions = [(String, String, String)]()
+    var elements = [QuizElement]()
     
     init(text: String) {
         self.text = text
     }
     
-    func addQuestion(_ text: String, correct: String) {
-        questions.append((text, correct, ""))
+    func addQuestion(_ text: String, correct: Token) {
+        elements.append(QuizQuestion(text, correct: correct))
+    }
+    
+    func addParagraph(_ text: String) {
+        elements.append(QuizParagraph(text: text))
     }
     
 }

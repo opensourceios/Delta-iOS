@@ -17,7 +17,7 @@ class QuizInitAction: Action {
     }
     
     func execute(in process: Process) {
-        process.quiz = Quiz(text: text)
+        process.quiz = Quiz(text: text.replaceTokens(in: process))
     }
     
     func toString() -> String {

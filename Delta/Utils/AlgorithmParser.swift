@@ -174,7 +174,7 @@ class AlgorithmParser {
             keywords.removeFirst()
             
             // Keyword list
-            let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.PrintApproximated, Keyword.PrintText, Keyword.Unset, Keyword.While, Keyword.QuizInit, Keyword.QuizShow]
+            let alone = [Keyword.If, Keyword.Else, Keyword.Print, Keyword.PrintApproximated, Keyword.PrintText, Keyword.Unset, Keyword.While, Keyword.QuizInit, Keyword.QuizAdd, Keyword.QuizShow]
             let grouped = [Keyword.Default: [Keyword.Input], Keyword.In: [Keyword.For], Keyword.To: [Keyword.Set], Keyword.Correct: [Keyword.QuizAdd]]
             
             // Iterate values
@@ -254,6 +254,10 @@ class AlgorithmParser {
                         // Init quiz "text"
                         let text = tokens.removeFirst()
                         return QuizInitAction(text)
+                    } else if value == .QuizAdd && tokens.count >= 1 {
+                        // Add text "text"
+                        let text = tokens.removeFirst()
+                        return QuizAddAction(text)
                     } else if value == .QuizShow {
                         // Show quiz
                         return QuizShowAction()

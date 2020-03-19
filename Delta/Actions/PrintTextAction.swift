@@ -17,22 +17,8 @@ class PrintTextAction: Action {
     }
     
     func execute(in process: Process) {
-        // Get output
-        var output = text
-        
-        // Get "" to interprete them
-        for group in output.groups(for: "\"[^\"]*\"") {
-            // Get token based on string
-            let token = TokenParser(group[0][1 ..< group[0].count-1], in: process).execute()
-            
-            // Replace with tokens
-            if let range = output.range(of: group[0]) {
-                output = output.replacingCharacters(in: range, with: token.compute(with: process.variables, format: true).toString())
-            }
-        }
-        
         // Print text
-        process.outputs.append(output)
+        process.outputs.append(text.replaceTokens(in: process))
     }
     
     func toString() -> String {

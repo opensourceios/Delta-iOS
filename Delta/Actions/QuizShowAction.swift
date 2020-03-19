@@ -20,9 +20,6 @@ class QuizShowAction: Action {
                 // Init a controller
                 let controller = QuizViewController(quiz) { quiz in
                     DispatchQueue.global().async {
-                        // Add it to outputs
-                        process.outputs.append(quiz)
-                        
                         // And continue process
                         semaphore.signal()
                     }
