@@ -178,7 +178,7 @@ struct Product: Token {
                     // Check if both are numbers with gcd != 1
                     if let leftNumber = leftValues[leftIndex] as? Number, let rightNumber = rightValues[rightIndex] as? Number {
                         let gcd = leftNumber.value.greatestCommonDivisor(with: rightNumber.value)
-                        if gcd != 1 && gcd != -1 {
+                        if gcd != 1 {
                             // We have a common factor
                             factors += [Number(value: gcd)]
                             leftValues[leftIndex] = Number(value: leftNumber.value / gcd)

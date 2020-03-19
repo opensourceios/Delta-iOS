@@ -20,7 +20,7 @@ extension Int64 {
             (a, b) = (b, a % b)
         }
         
-        return a
+        return abs(a)
     }
     
     // Check for power of ten
