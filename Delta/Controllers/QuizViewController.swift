@@ -141,7 +141,6 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
                     let answer = TokenParser(field.text).execute()
                     let condition = Equation(left: answer, right: question.correct, operation: .equals)
                     
-                    print(condition.toString())
                     if condition.isTrue(with: [:]) {
                         // Answer is correct
                         label.textColor = .systemGreen
