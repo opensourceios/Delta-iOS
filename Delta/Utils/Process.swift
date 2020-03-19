@@ -14,11 +14,9 @@ class Process {
     var variables = [String: Token]()
     var outputs = [Any]()
     var quiz: Quiz?
-    var viewController: UIViewController
     
-    init(inputs: [(String, String)], in viewController: UIViewController) {
+    init(inputs: [(String, String)]) {
         self.inputs = inputs
-        self.viewController = viewController
     }
     
     func set(identifier: String, to value: Token) {

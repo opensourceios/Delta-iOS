@@ -72,7 +72,7 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
             
             // Execute algorithm
-            algorithm.execute(in: self) { process in
+            algorithm.execute() { process in
                 // Get outputs
                 self.currentOutputs = process.outputs
                 

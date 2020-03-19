@@ -48,10 +48,10 @@ class Algorithm {
     
     // Execute
     
-    func execute(in viewController: UIViewController, completionHandler: @escaping (Process) -> ()) {
+    func execute(completionHandler: @escaping (Process) -> ()) {
         DispatchQueue.global().async {
             // Create a process with inputs
-            let process = Process(inputs: self.inputs, in: viewController)
+            let process = Process(inputs: self.inputs)
             
             // Execute root
             self.root.execute(in: process)

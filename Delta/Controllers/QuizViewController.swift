@@ -64,7 +64,7 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
         header.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor, constant: -15).isActive = true
         header.font = .boldSystemFont(ofSize: 17)
         header.textAlignment = .center
-        header.text = quiz.text
+        header.attributedText = quiz.text.attributedMath()
         header.numberOfLines = 0
         
         stack.translatesAutoresizingMaskIntoConstraints = false

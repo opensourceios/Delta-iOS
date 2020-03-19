@@ -6,7 +6,7 @@
 //  Copyright © 2020 Nathan FALLET. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class QuizShowAction: Action {
     
@@ -26,7 +26,9 @@ class QuizShowAction: Action {
                 }
                 
                 // Show it
-                process.viewController.present(controller, animated: true, completion: nil)
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    appDelegate.window?.rootViewController?.present(controller, animated: true, completion: nil)
+                }
             }
             
             // Wait for quiz to finish
