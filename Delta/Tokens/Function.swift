@@ -50,7 +50,7 @@ struct Function: Token {
             // Ln
             
             // Random
-            if name == "random", let number = parameter as? Number, number.value > 0 {
+            else if name == "random", let number = parameter as? Number, number.value > 0 {
                 return Number(value: Int64.random(in: 0 ..< number.value))
             }
             
