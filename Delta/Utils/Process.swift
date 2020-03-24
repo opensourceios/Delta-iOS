@@ -13,6 +13,7 @@ class Process {
     var inputs = [(String, String)]()
     var variables = [String: Token]()
     var outputs = [Any]()
+    var semaphore = DispatchSemaphore(value: 0)
     var quiz: Quiz?
     
     init(inputs: [(String, String)]) {

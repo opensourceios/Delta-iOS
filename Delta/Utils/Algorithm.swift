@@ -48,17 +48,20 @@ class Algorithm {
     
     // Execute
     
-    func execute(completionHandler: @escaping (Process) -> ()) {
+    func execute(completionHandler: @escaping () -> ()) -> Process {
+        // Create a process with inputs
+        let process = Process(inputs: self.inputs)
+        
         DispatchQueue.global().async {
-            // Create a process with inputs
-            let process = Process(inputs: self.inputs)
-            
             // Execute root
             self.root.execute(in: process)
             
-            // Return the process
-            completionHandler(process)
+            // End execution
+            completionHandler()
         }
+        
+        // Return the process
+        return process
     }
     
     // Export

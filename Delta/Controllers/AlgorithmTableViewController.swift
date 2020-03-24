@@ -12,7 +12,7 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
     
     weak var delegate: AlgorithmsChangedDelegate?
     var algorithm: Algorithm?
-    var currentOutputs = [Any]()
+    var lastProcess: Process?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,16 +67,13 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
     
     func updateResult() {
         if let algorithm = algorithm {
-            // Clear current outputs
-            currentOutputs = []
+            // Clear last process
+            lastProcess = nil
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
             
-            // Execute algorithm
-            algorithm.execute() { process in
-                // Get outputs
-                self.currentOutputs = process.outputs
-                
-                // Refresh the output section
+            // Execute algorithm with a new process
+            self.lastProcess = algorithm.execute() {
+                // Refresh the process
                 DispatchQueue.main.async {
                     self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
                 }
@@ -91,7 +88,7 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? algorithm?.inputs.count ?? 0 : currentOutputs.count
+        return section == 0 ? algorithm?.inputs.count ?? 0 : lastProcess?.outputs.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -107,10 +104,7 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
                 
                 // Create the cell
                 return (tableView.dequeueReusableCell(withIdentifier: "inputCell", for: indexPath) as! InputTableViewCell).with(input: input, delegate: self)
-            } else {
-                // Get output
-                let output = currentOutputs[indexPath.row]
-                
+            } else if let output = lastProcess?.outputs[indexPath.row] {
                 // Create the cell
                 if let output = output as? String {
                     return (tableView.dequeueReusableCell(withIdentifier: "outputCell", for: indexPath) as! OutputTableViewCell).with(text: output)

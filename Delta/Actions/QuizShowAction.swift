@@ -12,16 +12,13 @@ class QuizShowAction: Action {
     
     func execute(in process: Process) {
         if let quiz = process.quiz {
-            // Create the semaphore for thread management
-            let semaphore = DispatchSemaphore(value: 0)
-            
             // Show quiz to user
             DispatchQueue.main.async {
                 // Init a controller
                 let controller = QuizViewController(quiz) { quiz in
                     DispatchQueue.global().async {
                         // And continue process
-                        semaphore.signal()
+                        process.semaphore.signal()
                     }
                 }
                 
@@ -32,8 +29,8 @@ class QuizShowAction: Action {
             }
             
             // Wait for quiz to finish
-            semaphore.wait()
-            semaphore.signal()
+            process.semaphore.wait()
+            process.semaphore.signal()
         }
         
         // Reset quiz
