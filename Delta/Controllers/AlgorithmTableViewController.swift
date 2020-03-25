@@ -12,6 +12,7 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
     
     weak var delegate: AlgorithmsChangedDelegate?
     var algorithm: Algorithm?
+    var currentProcess: Process?
     var lastProcess: Process?
 
     override func viewDidLoad() {
@@ -72,9 +73,10 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
             
             // Execute algorithm with a new process
-            self.lastProcess = algorithm.execute() {
+            self.currentProcess = algorithm.execute() {
                 // Refresh the process
                 DispatchQueue.main.async {
+                    self.lastProcess = self.currentProcess
                     self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
                 }
             }
