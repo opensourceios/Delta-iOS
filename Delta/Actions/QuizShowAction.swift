@@ -15,7 +15,7 @@ class QuizShowAction: Action {
             // Show quiz to user
             DispatchQueue.main.async {
                 // Init a controller
-                let controller = QuizViewController(quiz) { quiz in
+                let controller = QuizViewController(quiz) {
                     DispatchQueue.global().async {
                         // And continue process
                         process.semaphore.signal()
@@ -24,7 +24,7 @@ class QuizShowAction: Action {
                 
                 // Show it
                 if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                    appDelegate.window?.rootViewController?.present(controller, animated: true, completion: nil)
+                    appDelegate.window?.rootViewController?.present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
                 }
             }
             

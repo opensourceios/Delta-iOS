@@ -11,7 +11,7 @@ import UIKit
 class QuizViewController: UIViewController, UITextFieldDelegate {
 
     let quiz: Quiz
-    let completionHandler: (Quiz) -> ()
+    let completionHandler: () -> ()
     var checked = false
     let scrollView = UIScrollView()
     let contentView = UIView()
@@ -20,7 +20,7 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
     let button = UIButton()
     var bottomConstraint: NSLayoutConstraint!
     
-    init(_ quiz: Quiz, completionHandler: @escaping (Quiz) -> ()) {
+    init(_ quiz: Quiz, completionHandler: @escaping () -> ()) {
         self.quiz = quiz
         self.completionHandler = completionHandler
         
@@ -33,6 +33,9 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = "category_quiz".localized()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "cancel".localized(), style: .plain, target: self, action: #selector(close(_:)))
         
         view.backgroundColor = .background
         
@@ -125,12 +128,19 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardChanged(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    @objc func close(_ sender: UIBarButtonItem) {
+        dismiss(animated: true) {
+            // Call completion handler
+            self.completionHandler()
+        }
+    }
+    
     @objc func buttonClicked(_ sender: UIButton) {
         if checked {
             // Dismiss view
             dismiss(animated: true) {
                 // Call completion handler
-                self.completionHandler(self.quiz)
+                self.completionHandler()
             }
         } else {
             // Get fields
