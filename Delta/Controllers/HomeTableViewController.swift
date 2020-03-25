@@ -268,7 +268,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         } else {
             if indexPath.row == 0 {
                 // SchoolAssistant
-                if let url = URL(string: isRunningOnMac() ? "https://apps.apple.com/app/school-assistant-planner/id1489319800" : "https://apps.apple.com/app/school-assistant-planner/id1465687472") {
+                if let url = URL(string: "https://apps.apple.com/app/school-assistant-planner/id1465687472") {
                     UIApplication.shared.open(url)
                 }
             }
@@ -334,14 +334,6 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         edit.backgroundColor = .systemBlue
         
         return UISwipeActionsConfiguration(actions: [delete, edit])
-    }
-    
-    func isRunningOnMac() -> Bool {
-        #if targetEnvironment(macCatalyst)
-            return true
-        #else
-            return false
-        #endif
     }
 
 }
