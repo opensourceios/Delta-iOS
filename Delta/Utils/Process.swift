@@ -15,6 +15,7 @@ class Process {
     var outputs = [Any]()
     var semaphore = DispatchSemaphore(value: 0)
     var quiz: Quiz?
+    var cancelled: Bool = false
     
     init(inputs: [(String, String)]) {
         self.inputs = inputs
@@ -44,6 +45,10 @@ class Process {
             // Unset it as a variable
             variables.removeValue(forKey: trimmed)
         }
+    }
+    
+    func cancel() {
+        self.cancelled = true
     }
     
 }

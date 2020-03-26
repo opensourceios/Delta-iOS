@@ -57,7 +57,9 @@ class Algorithm {
             self.root.execute(in: process)
             
             // End execution
-            completionHandler()
+            if !process.cancelled {
+                completionHandler()
+            }
         }
         
         // Return the process

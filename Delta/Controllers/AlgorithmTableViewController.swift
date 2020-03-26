@@ -68,8 +68,9 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
     
     func updateResult() {
         if let algorithm = algorithm {
-            // Clear last process
+            // Clear last process and current process
             lastProcess = nil
+            currentProcess?.cancel()
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
             
             // Execute algorithm with a new process
