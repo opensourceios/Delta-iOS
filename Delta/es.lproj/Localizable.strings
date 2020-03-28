@@ -1,4 +1,3 @@
-
 // General part
 
 "name" = "Delta: Math helper";
@@ -35,14 +34,14 @@
 "check" = "Verificar";
 "status_local" = "Guardado localmente";
 "status_synchro" = "Sincronizado";
-"status_checkingforupdate" = "Verificación de actualización...";
-"status_downloading" = "Descargando...";
+"status_checkingforupdate" = "Verificación de actualización…";
+"status_downloading" = "Descargando…";
 "status_failed" = "¡No pudo actualizar!";
-"status_invalidRequest" = "Algo pasó mal durante la solicitud...";
+"status_invalidRequest" = "Algo pasó mal durante la solicitud…";
 "status_offline" = "¡Parece que no hay conexión!";
 "status_notFound" = "El contenido que busca no existe";
 "status_unauthorized" = "No tiene los derechos de ver este contenido";
-"status_loading" = "Cargando...";
+"status_loading" = "Cargando…";
 "error_calcul" = "Error de cálculo";
 "error_syntax" = "Error de sintaxis";
 "error_constant" = "No pudo asignar el valor: %@ es una constante";
