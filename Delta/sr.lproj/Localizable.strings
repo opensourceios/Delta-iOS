@@ -9,10 +9,10 @@
 "category_variable" = "Варијабла";
 "downloads" = "Преузимања";
 "new_algorithm" = "Нову алгоритму";
-"cloud" = "Кауд";
-"cloud_algorithms" = "Алгоритми на Клауд";
+"cloud" = "Клауд";
+"cloud_algorithms" = "Алгоритми на Клауду";
 "cloud_preview" = "Преглед за ову алгоритму";
-"cloud_no_notes" = "белешке нису уписани за овај алгоритму.";
+"cloud_no_notes" = "Белешке нису уписани за овај алгоритму.";
 "copy" = "%@ (копија)";
 "about" = "О нама";
 "follow_twitter" = "Пратите нам на Твитеру";
