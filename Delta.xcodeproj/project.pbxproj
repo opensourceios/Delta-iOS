@@ -194,6 +194,13 @@
 		6AED92CA235F65AB009EEAFE /* EditorPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		6AED92CC235F6827009EEAFE /* RootAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAction.swift; sourceTree = "<group>"; };
 		6AF697FB241E5A1F00EB8D44 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AFE3CFC24581E7E006B6D10 /* bs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bs; path = bs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AFE3D0324581F3F006B6D10 /* bs-Cyrl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "bs-Cyrl"; path = "bs-Cyrl.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		6AFE3D0424581F42006B6D10 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AFE3D0524581F44006B6D10 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AFE3D0624581F47006B6D10 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AFE3D0724581F4A006B6D10 /* sr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sr; path = sr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AFE3D0824581F4D006B6D10 /* sr-Latn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sr-Latn"; path = "sr-Latn.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -442,6 +449,13 @@
 				Base,
 				fr,
 				es,
+				bs,
+				"bs-Cyrl",
+				de,
+				hr,
+				ru,
+				sr,
+				"sr-Latn",
 			);
 			mainGroup = 3203EF5D214FB132005C287C;
 			packageReferences = (
@@ -573,6 +587,13 @@
 				6A0E7B5021BD956E00A16F99 /* fr */,
 				6A0A8CAF2323A8CC00F0C41C /* en */,
 				6AF697FB241E5A1F00EB8D44 /* es */,
+				6AFE3CFC24581E7E006B6D10 /* bs */,
+				6AFE3D0324581F3F006B6D10 /* bs-Cyrl */,
+				6AFE3D0424581F42006B6D10 /* hr */,
+				6AFE3D0524581F44006B6D10 /* de */,
+				6AFE3D0624581F47006B6D10 /* ru */,
+				6AFE3D0724581F4A006B6D10 /* sr */,
+				6AFE3D0824581F4D006B6D10 /* sr-Latn */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -703,7 +724,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Delta/Delta.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 33;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = ZL9396WK65;
 				INFOPLIST_FILE = Delta/Info.plist;
@@ -728,7 +749,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Delta/Delta.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 33;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = ZL9396WK65;
 				INFOPLIST_FILE = Delta/Info.plist;
