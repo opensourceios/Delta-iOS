@@ -211,7 +211,7 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
             // Get item
             for item in coordinator.session.items {
                 // Load the line
-                item.itemProvider.loadDataRepresentation(forTypeIdentifier: "fr.zabricraft.Delta.ActionMoveRequest") { data, error in
+                item.itemProvider.loadDataRepresentation(forTypeIdentifier: "fr.zabricraft.Delta.ActionMoveRequest") { data, _ in
                     if let index = data?.withUnsafeBytes({ $0.load(as: Int.self) }), let destination = coordinator.destinationIndexPath, destination.section == 1 {
                         // Remove original line to move it to destination
                         DispatchQueue.main.sync {

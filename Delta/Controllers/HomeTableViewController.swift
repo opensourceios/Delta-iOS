@@ -195,7 +195,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         if indexPath.section == 0 {
             if indexPath.row == 0 {
                 // Create an editor
-                let editor = EditorTableViewController(algorithm: nil) { newAlgorithm in
+                let editor = EditorTableViewController(algorithm: nil) { _ in
                     // Update with new algorithm
                     self.loadAlgorithms()
                 }
@@ -282,7 +282,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = UIContextualAction(style: .destructive, title: "delete".localized()) { (action, view, completionHandler) in
+        let delete = UIContextualAction(style: .destructive, title: "delete".localized()) { (_, _, completionHandler) in
             // Define algorithm
             let algorithm: Algorithm
             
@@ -304,7 +304,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         }
         delete.backgroundColor = .systemRed
         
-        let edit = UIContextualAction(style: .normal, title: "edit".localized()) { (action, view, completionHandler) in
+        let edit = UIContextualAction(style: .normal, title: "edit".localized()) { (_, _, completionHandler) in
             // Define algorithm
             let algorithm: Algorithm
             
@@ -318,7 +318,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             }
             
             // Create an editor
-            let editor = EditorTableViewController(algorithm: Database.current.getAlgorithm(id_local: algorithm.local_id)) { newAlgorithm in
+            let editor = EditorTableViewController(algorithm: Database.current.getAlgorithm(id_local: algorithm.local_id)) { _ in
                 // Update with new algorithm
                 self.loadAlgorithms()
             }
