@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import APIRequest
 
 struct APIAlgorithm: Codable {
     

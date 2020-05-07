@@ -72,8 +72,6 @@
 		6AC40DB02324E7E2003C8131 /* CalculError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC40DAF2324E7E2003C8131 /* CalculError.swift */; };
 		6AC908ED2406238100F5F732 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908EC2406238100F5F732 /* UIColorExtension.swift */; };
 		6AC908EF240625CE00F5F732 /* AlgorithmIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908EE240625CE00F5F732 /* AlgorithmIcon.swift */; };
-		6AC908F2240656EA00F5F732 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908F1240656EA00F5F732 /* APIRequest.swift */; };
-		6AC908F42406571700F5F732 /* APIResponseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908F32406571700F5F732 /* APIResponseStatus.swift */; };
 		6AC908F62406579300F5F732 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908F52406579300F5F732 /* Account.swift */; };
 		6AC908F82406584C00F5F732 /* APIAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908F72406584C00F5F732 /* APIAlgorithm.swift */; };
 		6AC908FA2406636A00F5F732 /* APISyncStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC908F92406636A00F5F732 /* APISyncStatus.swift */; };
@@ -90,6 +88,7 @@
 		6AED92C7235F5BAD009EEAFE /* ActionSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AED92C6235F5BAD009EEAFE /* ActionSelectionTableViewController.swift */; };
 		6AED92CB235F65AB009EEAFE /* EditorPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AED92CA235F65AB009EEAFE /* EditorPreviewTableViewCell.swift */; };
 		6AED92CD235F6827009EEAFE /* RootAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AED92CC235F6827009EEAFE /* RootAction.swift */; };
+		6AF8C81E2463FAF1008CB9DC /* APIRequest in Frameworks */ = {isa = PBXBuildFile; productRef = 6AF8C81D2463FAF1008CB9DC /* APIRequest */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -175,8 +174,6 @@
 		6AC40DAF2324E7E2003C8131 /* CalculError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculError.swift; sourceTree = "<group>"; };
 		6AC908EC2406238100F5F732 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		6AC908EE240625CE00F5F732 /* AlgorithmIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmIcon.swift; sourceTree = "<group>"; };
-		6AC908F1240656EA00F5F732 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
-		6AC908F32406571700F5F732 /* APIResponseStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseStatus.swift; sourceTree = "<group>"; };
 		6AC908F52406579300F5F732 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		6AC908F72406584C00F5F732 /* APIAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAlgorithm.swift; sourceTree = "<group>"; };
 		6AC908F92406636A00F5F732 /* APISyncStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISyncStatus.swift; sourceTree = "<group>"; };
@@ -209,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6AC36CD32360339C00523F79 /* SQLite in Frameworks */,
+				6AF8C81E2463FAF1008CB9DC /* APIRequest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,8 +385,6 @@
 			isa = PBXGroup;
 			children = (
 				6AC908F72406584C00F5F732 /* APIAlgorithm.swift */,
-				6AC908F1240656EA00F5F732 /* APIRequest.swift */,
-				6AC908F32406571700F5F732 /* APIResponseStatus.swift */,
 				6AC908F92406636A00F5F732 /* APISyncStatus.swift */,
 				6A99A7182406912E002C9E54 /* APIUser.swift */,
 			);
@@ -414,6 +410,7 @@
 			name = Delta;
 			packageProductDependencies = (
 				6AC36CD22360339C00523F79 /* SQLite */,
+				6AF8C81D2463FAF1008CB9DC /* APIRequest */,
 			);
 			productName = Delta;
 			productReference = 3203EF66214FB132005C287C /* Delta.app */;
@@ -460,6 +457,7 @@
 			mainGroup = 3203EF5D214FB132005C287C;
 			packageReferences = (
 				6AC36CD12360339C00523F79 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				6AF8C81C2463FAF1008CB9DC /* XCRemoteSwiftPackageReference "APIRequest.swift" */,
 			);
 			productRefGroup = 3203EF67214FB132005C287C /* Products */;
 			projectDirPath = "";
@@ -491,7 +489,6 @@
 				6A89949B2382D17F00D44833 /* FunctionDeclaration.swift in Sources */,
 				6ABC904E235DEFB400F07D6D /* Keyword.swift in Sources */,
 				6A16E409234A60BB00089765 /* IfAction.swift in Sources */,
-				6AC908F42406571700F5F732 /* APIResponseStatus.swift in Sources */,
 				6A0A8CD12323FDB700F0C41C /* Variable.swift in Sources */,
 				6AC36CD02360258400523F79 /* Modulo.swift in Sources */,
 				6A32637B23250CE40056FA0E /* Vector.swift in Sources */,
@@ -549,7 +546,6 @@
 				6A549F0724228C0800E02570 /* QuizElement.swift in Sources */,
 				6ABC9052235DFFA600F07D6D /* ActionBlock.swift in Sources */,
 				6AC908ED2406238100F5F732 /* UIColorExtension.swift in Sources */,
-				6AC908F2240656EA00F5F732 /* APIRequest.swift in Sources */,
 				6AC40DAE2324DDC6003C8131 /* Equation.swift in Sources */,
 				6AC40DB02324E7E2003C8131 /* CalculError.swift in Sources */,
 				6A99A71B24069280002C9E54 /* CloudDetailsTableViewController.swift in Sources */,
@@ -799,6 +795,14 @@
 				minimumVersion = 0.12.2;
 			};
 		};
+		6AF8C81C2463FAF1008CB9DC /* XCRemoteSwiftPackageReference "APIRequest.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/GroupeMINASTE/APIRequest.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -806,6 +810,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6AC36CD12360339C00523F79 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
+		};
+		6AF8C81D2463FAF1008CB9DC /* APIRequest */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AF8C81C2463FAF1008CB9DC /* XCRemoteSwiftPackageReference "APIRequest.swift" */;
+			productName = APIRequest;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

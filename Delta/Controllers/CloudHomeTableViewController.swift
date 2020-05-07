@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import APIRequest
 
 class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate, StatusContainerDelegate {
     
