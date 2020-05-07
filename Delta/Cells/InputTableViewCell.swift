@@ -94,7 +94,7 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractio
     
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         for item in session.items {
-            item.itemProvider.loadObject(ofClass: NSString.self) { object, error in
+            item.itemProvider.loadObject(ofClass: NSString.self) { object, _ in
                 if let string = object as? NSString {
                     DispatchQueue.main.async {
                         self.field.insertText(string as String)
@@ -106,7 +106,7 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractio
     
     override func paste(itemProviders: [NSItemProvider]) {
         for itemProvider in itemProviders {
-            itemProvider.loadObject(ofClass: NSString.self) { object, error in
+            itemProvider.loadObject(ofClass: NSString.self) { object, _ in
                 if let string = object as? NSString {
                     DispatchQueue.main.async {
                         self.field.insertText(string as String)

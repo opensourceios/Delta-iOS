@@ -32,7 +32,7 @@ extension Int64 {
             input /= 10
         }
         
-        return input == 1;
+        return input == 1
     }
     
 }
