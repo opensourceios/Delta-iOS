@@ -37,6 +37,10 @@ class CloudDetailsTableViewController: UITableViewController, CloudAlgorithmSele
         tableView.register(CloudDetailsTableViewCell.self, forCellReuseIdentifier: "detailsCell")
         tableView.register(EditorPreviewTableViewCell.self, forCellReuseIdentifier: "editorLockedCell")
         
+        // Make cells auto sizing
+        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
+        
         // Refresh control
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(reloadContent(_:)), for: .valueChanged)

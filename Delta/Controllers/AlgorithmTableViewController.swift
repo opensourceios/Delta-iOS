@@ -22,6 +22,10 @@ class AlgorithmTableViewController: UITableViewController, AlgorithmSelectionDel
         tableView.register(InputTableViewCell.self, forCellReuseIdentifier: "inputCell")
         tableView.register(OutputTableViewCell.self, forCellReuseIdentifier: "outputCell")
         
+        // Make cells auto sizing
+        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
+        
         // Add edit/view button
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "edit".localized(), style: .plain, target: self, action: #selector(showEditor(_:)))
         navigationItem.rightBarButtonItem?.isEnabled = false

@@ -38,10 +38,16 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         tableView.register(EditorTableViewCell.self, forCellReuseIdentifier: "editorCell")
         tableView.register(EditorAddTableViewCell.self, forCellReuseIdentifier: "editorAddCell")
         
+        // Make cells auto sizing
+        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
+        
         // Support for drag and drop
-        tableView.dragInteractionEnabled = true
-        tableView.dragDelegate = self
-        tableView.dropDelegate = self
+        if #available(iOS 11, *) {
+            tableView.dragInteractionEnabled = true
+            tableView.dragDelegate = self
+            tableView.dropDelegate = self
+        }
     }
     
     func editorLineChanged(_ line: EditorLine?, at index: Int) {
@@ -181,6 +187,7 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         return line.category != .settings && line.category != .add
     }
     
+    @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         // Get editor line
         let line = indexPath.section == 0 ? algorithm.getSettings()[indexPath.row] : algorithm.toEditorLines()[indexPath.row]
@@ -201,10 +208,12 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         return [dragItem]
     }
     
+    @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
         session.hasItemsConforming(toTypeIdentifiers: ["fr.zabricraft.Delta.ActionMoveRequest"]) && session.items.count == 1
     }
     
+    @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
         // Check if data can be decoded
         if coordinator.session.hasItemsConforming(toTypeIdentifiers: ["fr.zabricraft.Delta.ActionMoveRequest"]) {
@@ -223,10 +232,12 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         }
     }
     
+    @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         return session.items.count > 1 ? UITableViewDropProposal(operation: .cancel) : UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
     
+    @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, dragPreviewParametersForRowAt indexPath: IndexPath) -> UIDragPreviewParameters? {
         let previewParameters = UIDragPreviewParameters()
         

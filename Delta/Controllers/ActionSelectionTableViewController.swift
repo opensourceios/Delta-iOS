@@ -33,6 +33,10 @@ class ActionSelectionTableViewController: UITableViewController {
         
         // Register cells
         tableView.register(EditorPreviewTableViewCell.self, forCellReuseIdentifier: "editorLockedCell")
+        
+        // Make cells auto sizing
+        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
     }
 
     // MARK: - Table view data source

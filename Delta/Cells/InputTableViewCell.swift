@@ -42,9 +42,10 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractio
         field.delegate = self
         field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         
-        addInteraction(UIDropInteraction(delegate: self))
-            
-        pasteConfiguration = UIPasteConfiguration(forAccepting: NSString.self)
+        if #available(iOS 11, *) {
+            addInteraction(UIDropInteraction(delegate: self))
+            pasteConfiguration = UIPasteConfiguration(forAccepting: NSString.self)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -84,14 +85,17 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractio
         return false
     }
     
+    @available(iOS 11, *)
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSString.self)
     }
     
+    @available(iOS 11, *)
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         return UIDropProposal(operation: .copy)
     }
     
+    @available(iOS 11, *)
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         for item in session.items {
             item.itemProvider.loadObject(ofClass: NSString.self) { object, _ in
@@ -104,6 +108,7 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate, UIDropInteractio
         }
     }
     
+    @available(iOS 11, *)
     override func paste(itemProviders: [NSItemProvider]) {
         for itemProvider in itemProviders {
             itemProvider.loadObject(ofClass: NSString.self) { object, _ in

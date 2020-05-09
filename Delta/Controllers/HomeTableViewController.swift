@@ -19,12 +19,18 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         super.viewDidLoad()
         
         // Navigation bar
-        navigationController?.navigationBar.prefersLargeTitles = true
+        if #available(iOS 11, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+        }
         navigationItem.title = "name".localized()
         
         // Register cells
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "homeCell")
         tableView.register(LabelTableViewCell.self, forCellReuseIdentifier: "labelCell")
+        
+        // Make cells auto sizing
+        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
         
         // Refresh control
         refreshControl = UIRefreshControl()
@@ -257,19 +263,31 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             } else if indexPath.row == 1 {
                 // Help and documentation
                 if let url = URL(string: "https://www.delta-math-helper.com/documentation") {
-                    UIApplication.shared.open(url)
+                    if #available(iOS 10, *) {
+                        UIApplication.shared.open(url)
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
                 }
             } else if indexPath.row == 2 {
                 // Follow us on Twitter
                 if let url = URL(string: "https://twitter.com/DeltaMathHelper") {
-                    UIApplication.shared.open(url)
+                    if #available(iOS 10, *) {
+                        UIApplication.shared.open(url)
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
                 }
             }
         } else {
             if indexPath.row == 0 {
                 // SchoolAssistant
                 if let url = URL(string: "https://apps.apple.com/app/school-assistant-planner/id1465687472") {
-                    UIApplication.shared.open(url)
+                    if #available(iOS 10, *) {
+                        UIApplication.shared.open(url)
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
                 }
             }
         }
@@ -281,6 +299,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         return indexPath.section == 1 || indexPath.section == 2
     }
     
+    @available(iOS 11, *)
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "delete".localized()) { (_, _, completionHandler) in
             // Define algorithm

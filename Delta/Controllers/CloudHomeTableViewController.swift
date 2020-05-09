@@ -15,13 +15,15 @@ class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate, 
     var statusLabel = UILabel()
     var algorithms = [APIAlgorithm]()
     var search = ""
-    var searchController = UISearchController()
+    var searchController = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Navigation bar
-        navigationController?.navigationBar.prefersLargeTitles = true
+        if #available(iOS 11, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+        }
         navigationItem.title = "cloud".localized()
         
         // Add status label
@@ -36,10 +38,18 @@ class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate, 
         // Register cells
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "homeCell")
         
+        // Make cells auto sizing
+        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
+        
         // Search controller
         definesPresentationContext = true
         searchController.searchBar.delegate = self
-        navigationItem.searchController = searchController
+        if #available(iOS 11, *) {
+            navigationItem.searchController = searchController
+        } else {
+            tableView.tableHeaderView = searchController.searchBar
+        }
         
         // Refresh control
         refreshControl = UIRefreshControl()

@@ -27,7 +27,9 @@ class OutputTableViewCell: UITableViewCell, UIDragInteractionDelegate {
         label.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor).isActive = true
         label.adjustsFontSizeToFitWidth = true
         
-        addInteraction(UIDragInteraction(delegate: self))
+        if #available(iOS 11, *) {
+            addInteraction(UIDragInteraction(delegate: self))
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,6 +43,7 @@ class OutputTableViewCell: UITableViewCell, UIDragInteractionDelegate {
         return self
     }
     
+    @available(iOS 11, *)
     func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
         let itemProvider = NSItemProvider(object: (originalOutput ?? "") as NSString)
         let dragItem = UIDragItem(itemProvider: itemProvider)
