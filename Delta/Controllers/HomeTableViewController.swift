@@ -38,6 +38,15 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         
         // Load algorithms
         loadAlgorithms()
+        
+        // Check for first time
+        let datas = UserDefaults.standard
+        if !datas.bool(forKey: "welcomeShown") {
+            // Show welcome screen
+            let navigationController = UINavigationController(rootViewController: WelcomeViewController())
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true, completion: nil)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

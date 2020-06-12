@@ -70,3 +70,12 @@
 "category_quiz" = "Quiz";
 "category_settings" = "Settings";
 "category_add" = "Add an action";
+"welcome_title" = "Welcome to Delta: Math helper!";
+"welcome_header1" = "How it works?";
+"welcome_paragraph1" = "Delta works with algorithms. Each algorithm solves a problem. (eg. solve an equation)";
+"welcome_header2" = "Create an algorithm";
+"welcome_paragraph2" = "Select \"New algorithm\" on home screen to open editor. Then add some actions to solve a problem, and save your algorithm.";
+"welcome_header3" = "Or download one from the cloud";
+"welcome_paragraph3" = "Download ready to use algorithms from Delta Cloud or share the one you just created.";
+"welcome_header4" = "Ready to create your first algorithm?";
+"welcome_button" = "Get started";
