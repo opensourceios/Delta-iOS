@@ -68,3 +68,12 @@
 "action_input" = "Питај %@ са подразумевано %@";
 "action_print" = "Прикажи вариаблу %@";
 "action_print_approximated" = "Прикажи приближна вредност од %@";
+"welcome_header1" = "";
+"welcome_title" = "";
+"welcome_paragraph1" = "";
+"welcome_header2" = "";
+"welcome_button" = "";
+"welcome_paragraph3" = "";
+"welcome_header3" = "";
+"welcome_paragraph2" = "";
+"welcome_header4" = "";
