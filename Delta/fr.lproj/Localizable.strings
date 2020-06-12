@@ -70,3 +70,12 @@
 "category_quiz" = "Quiz";
 "category_settings" = "Paramètres";
 "category_add" = "Ajouter une action";
+"welcome_button" = "Commencer !";
+"welcome_header4" = "Prêt à créer votre premier algorithme ?";
+"welcome_paragraph3" = "Téléchargez des algorithmes prêts à l’usage depuis le Delta Cloud ou partagez celui que vous venez de créer.";
+"welcome_header3" = "Ou téléchargez en un depuis le Cloud";
+"welcome_paragraph2" = "Sélectionnez \"Nouvel algorithme\" sur la page d’accueil pour ouvrir l’éditeur. Ensuite, ajoutez quelques actions pour résoudre un problème, et enregistrez votre algorithme.";
+"welcome_header2" = "Créer un algorithme";
+"welcome_paragraph1" = "Delta fonctionne avec des algorithmes. Chaque algorithme résoud un problème. (ex : résoudre une équation)";
+"welcome_header1" = "Comment ça marche ?";
+"welcome_title" = "Bienvenue sur Delta: Math helper";
