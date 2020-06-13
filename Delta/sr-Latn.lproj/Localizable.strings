@@ -68,3 +68,12 @@
 "action_quiz_add_paragraph" = "Dodaj tekst %@";
 "settings_name" = "Ime: %@";
 "action_quiz_add_question" = "Dodaj ulazak %@ sa dobra odgovor %@";
+"welcome_header1" = "";
+"welcome_header2" = "";
+"welcome_paragraph3" = "";
+"welcome_header3" = "";
+"welcome_paragraph1" = "";
+"welcome_title" = "";
+"welcome_header4" = "";
+"welcome_paragraph2" = "";
+"welcome_button" = "";
