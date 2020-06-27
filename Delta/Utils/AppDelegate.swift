@@ -18,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize API
         initializeAPI()
         
+        // Check account
+        Account.current.login()
+        
         // Get build numbers
         let data = UserDefaults.standard
         let current_version = Int(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0") ?? 0

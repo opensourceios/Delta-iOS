@@ -6,6 +6,13 @@
 "new_algorithm" = "New algorithm";
 "no_algorithm" = "No algorithm here yet!";
 "download_algorithm" = "Download from Cloud";
+"my_account" = "My Delta Cloud account";
+"not_logged" = "Not logged";
+"logged_as" = "Logged as %@";
+"edit_profile" = "Edit profile";
+"sign_in" = "Sign in";
+"sign_up" = "Sign up";
+"sign_out" = "Sign out";
 "cloud" = "Cloud";
 "cloud_algorithms" = "Algorithms on the Cloud";
 "cloud_details" = "Details of the selected algorithm";

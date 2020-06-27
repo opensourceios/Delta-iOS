@@ -145,7 +145,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 2 :
+        return section == 0 ? 3 :
             section == 1 ? myalgorithms.count == 0 ? 1 : myalgorithms.count :
             section == 2 ? downloads.count == 0 ? 1 : downloads.count :
             section == 3 ? 3 : 1
@@ -159,7 +159,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         // Check for section
         if indexPath.section == 0 {
             // Create new cell
-            return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: indexPath.row == 0 ? "new_algorithm".localized() : "download_algorithm".localized(), accessory: .disclosureIndicator)
+            return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: indexPath.row == 0 ? "new_algorithm".localized() : indexPath.row == 1 ? "download_algorithm".localized() : "my_account".localized(), accessory: .disclosureIndicator)
         } else if indexPath.section == 1 {
             // Check for empty section
             if myalgorithms.count == 0 {
@@ -221,7 +221,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 
                 // Show it
                 present(navigationController, animated: true, completion: nil)
-            } else {
+            } else if indexPath.row == 1 {
                 // Open the cloud
                 let cloudVC = CloudSplitViewController()
                 cloudVC.modalPresentationStyle = .fullScreen
@@ -230,6 +230,9 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 
                 // Show it
                 present(cloudVC, animated: true, completion: nil)
+            } else {
+                // Open an account view controller
+                present(UINavigationController(rootViewController: AccountViewController()), animated: true, completion: nil)
             }
         } else if indexPath.section == 1 {
             // Check for empty section
