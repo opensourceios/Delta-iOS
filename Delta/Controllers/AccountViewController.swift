@@ -42,6 +42,7 @@ class AccountViewController: UIViewController {
         label.topAnchor.constraint(equalTo: guide.topAnchor, constant: 16).isActive = true
         label.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
         label.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
+        label.numberOfLines = 0
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 24)
         
@@ -83,7 +84,7 @@ class AccountViewController: UIViewController {
         // Check for an account
         if let user = Account.current.user {
             // User is logged
-            label.text = "logged_as".localized().format(user.name ?? "Unknown")
+            label.text = "logged_as".localized().format(user.name ?? "Unknown", user.username ?? "unknown")
             button1.setTitle("edit_profile".localized(), for: .normal)
             button2.setTitle("sign_out".localized(), for: .normal)
         } else {
@@ -103,20 +104,134 @@ class AccountViewController: UIViewController {
                 
             } else {
                 // Sign out
-                Account.current.logout { _ in
-                    // Reload the view
-                    self.loadAccount()
-                }
+                signOut()
             }
         } else {
             // Check button
             if sender == button1 {
                 // Sign in
-                
+                signIn()
             } else {
                 // Sign up
-                
+                signUp()
             }
+        }
+    }
+    
+    func signIn() {
+        // Create an alert
+        let alert = UIAlertController(title: "sign_in".localized(), message: "sign_in_description".localized(), preferredStyle: .alert)
+        
+        // Add username field
+        alert.addTextField { field in
+            // Configure it
+            field.placeholder = "field_username".localized()
+        }
+        
+        // Add password field
+        alert.addTextField { field in
+            // Configure it
+            field.placeholder = "field_password".localized()
+            field.isSecureTextEntry = true
+        }
+        
+        // Add login button
+        alert.addAction(UIAlertAction(title: "sign_in".localized(), style: .default) { _ in
+            // Extract text from fields
+            if let username = alert.textFields?[0].text, let password = alert.textFields?[1].text, !username.isEmpty, !password.isEmpty {
+                // Show a loading
+                let loading = UIAlertController(title: "loading".localized(), message: nil, preferredStyle: .alert)
+                self.present(loading, animated: true, completion: nil)
+                
+                // Start login process
+                Account.current.login(username: username, password: password) { status in
+                    // Refresh the UI
+                    self.loadAccount()
+                    loading.dismiss(animated: true) {
+                        // Check for a 404
+                        if status == .notFound {
+                            // User not found, show an alert
+                            let error = UIAlertController(title: "sign_in".localized(), message: "sign_in_error".localized(), preferredStyle: .alert)
+                            error.addAction(UIAlertAction(title: "close".localized(), style: .default, handler: nil))
+                            self.present(error, animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+        })
+        
+        // Add cancel button
+        alert.addAction(UIAlertAction(title: "cancel".localized(), style: .cancel, handler: nil))
+        
+        // Show it
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func signUp() {
+        // Create an alert
+        let alert = UIAlertController(title: "sign_up".localized(), message: "sign_up_description".localized(), preferredStyle: .alert)
+        
+        // Add name field
+        alert.addTextField { field in
+            // Configure it
+            field.placeholder = "field_name".localized()
+        }
+        
+        // Add username field
+        alert.addTextField { field in
+            // Configure it
+            field.placeholder = "field_username".localized()
+        }
+        
+        // Add password field
+        alert.addTextField { field in
+            // Configure it
+            field.placeholder = "field_password".localized()
+            field.isSecureTextEntry = true
+        }
+        
+        // Add login button
+        alert.addAction(UIAlertAction(title: "sign_up".localized(), style: .default) { _ in
+            // Extract text from fields
+            if let name = alert.textFields?[0].text, let username = alert.textFields?[1].text, let password = alert.textFields?[2].text, !name.isEmpty, !username.isEmpty, !password.isEmpty {
+                // Show a loading
+                let loading = UIAlertController(title: "loading".localized(), message: nil, preferredStyle: .alert)
+                self.present(loading, animated: true, completion: nil)
+                
+                // Start register process
+                Account.current.register(name: name, username: username, password: password) { status in
+                    // Refresh the UI
+                    self.loadAccount()
+                    loading.dismiss(animated: true) {
+                        // Check for a 400
+                        if status == .badRequest {
+                            // Username already taken
+                            let error = UIAlertController(title: "sign_up".localized(), message: "sign_up_error".localized(), preferredStyle: .alert)
+                            error.addAction(UIAlertAction(title: "close".localized(), style: .default, handler: nil))
+                            self.present(error, animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+        })
+        
+        // Add cancel button
+        alert.addAction(UIAlertAction(title: "cancel".localized(), style: .cancel, handler: nil))
+        
+        // Show it
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func signOut() {
+        // Show a loading
+        let loading = UIAlertController(title: "loading".localized(), message: nil, preferredStyle: .alert)
+        self.present(loading, animated: true, completion: nil)
+        
+        // Just call API
+        Account.current.logout { _ in
+            // Reload the view
+            self.loadAccount()
+            loading.dismiss(animated: true, completion: nil)
         }
     }
 

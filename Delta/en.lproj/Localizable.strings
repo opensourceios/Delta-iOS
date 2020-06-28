@@ -8,11 +8,18 @@
 "download_algorithm" = "Download from Cloud";
 "my_account" = "My Delta Cloud account";
 "not_logged" = "Not logged";
-"logged_as" = "Logged as %@";
+"logged_as" = "Logged as %@ (%@)";
 "edit_profile" = "Edit profile";
 "sign_in" = "Sign in";
 "sign_up" = "Sign up";
 "sign_out" = "Sign out";
+"sign_in_description" = "Enter your credentials to start a session";
+"sign_up_description" = "Create an account to start with Delta Cloud";
+"sign_in_error" = "Incorrect username or password!";
+"sign_up_error" = "This username is already taken!";
+"field_name" = "Full name";
+"field_username" = "Username";
+"field_password" = "Password";
 "cloud" = "Cloud";
 "cloud_algorithms" = "Algorithms on the Cloud";
 "cloud_details" = "Details of the selected algorithm";
@@ -39,6 +46,7 @@
 "open" = "Open";
 "close" = "Close";
 "check" = "Check";
+"loading" = "Loading...";
 "status_local" = "Saved locally";
 "status_synchro" = "Synchronized";
 "status_checkingforupdate" = "Checking for update…";

@@ -35,7 +35,7 @@ class Account: Codable {
     // Login with an access token
     func login(access_token: String, completionHandler: @escaping (APIResponseStatus) -> ()) {
         // Fetch api with token
-        APIRequest("GET", path: "/auth/account.php").with(header: "access_token", value: access_token).execute(Account.self) { data, status in
+        APIRequest("GET", path: "/auth/account.php").with(header: "access-token", value: access_token).execute(Account.self) { data, status in
             // Check response validity
             if let account = data, status == .ok {
                 // Store token and user
@@ -53,9 +53,12 @@ class Account: Codable {
         // Fetch api with credentials
         APIRequest("GET", path: "/auth/access_token.php").with(header: "username", value: username).with(header: "password", value: password).execute(Account.self) { data, status in
             // Check response validity
-            if let account = data, status == .created {
+            if let account = data, let access_token = account.access_token, status == .created {
+                // Save token to keychain
+                let _ = Account.keychain.save(access_token, forKey: "access_token")
+                
                 // Store token and user
-                self.access_token = account.access_token
+                self.access_token = access_token
                 self.user = account.user
             }
             
@@ -88,11 +91,12 @@ class Account: Codable {
     func logout(completionHandler: @escaping (APIResponseStatus) -> ()) {
         // Delete token from API
         APIRequest("DELETE", path: "/auth/access_token.php").execute([String: Bool].self) { data, status in
-            // Check response validity
-            if data != nil, status == .ok {
-                // Clear from keychain
-                let _ = Account.keychain.remove(forKey: "access_token")
-            }
+            // Clear from object
+            self.access_token = nil
+            self.user = nil
+            
+            // Clear from keychain
+            let _ = Account.keychain.remove(forKey: "access_token")
             
             // Call completion handler
             completionHandler(status)
