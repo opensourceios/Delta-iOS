@@ -14,6 +14,8 @@ class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate, 
     weak var delegate: CloudAlgorithmSelectionDelegate?
     var statusLabel = UILabel()
     var algorithms = [APIAlgorithm]()
+    var loading = false
+    var hasMore = true
     var search = ""
     var searchController = UISearchController(searchResultsController: nil)
 
@@ -37,6 +39,7 @@ class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate, 
         
         // Register cells
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "homeCell")
+        tableView.register(LoadingTableViewCell.self, forCellReuseIdentifier: "loadingCell")
         
         // Make cells auto sizing
         tableView.estimatedRowHeight = 44
@@ -56,24 +59,45 @@ class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate, 
         refreshControl?.addTarget(self, action: #selector(reloadContent(_:)), for: .valueChanged)
         
         // Load algorithms
-        loadAlgorithms()
+        loadAlgorithms(reset: true)
     }
     
     @objc func reloadContent(_ sender: UIRefreshControl) {
         // Reload algorithms
-        loadAlgorithms()
+        loadAlgorithms(reset: true)
     }
     
-    func loadAlgorithms() {
+    func loadAlgorithms(reset: Bool = false) {
+        // Reset content if needed
+        if reset {
+            self.hasMore = true
+        }
+        
+        // Check that it is not already loading
+        guard !loading && hasMore else { return }
+        loading = true
+        
         // Load algorithms from API
-        APIRequest("GET", path: "/algorithm/search.php").with(name: "search", value: search).execute([APIAlgorithm].self) { data, status in
-            if let data = data {
-                // Update data
-                self.algorithms = data
-            } else {
-                // Clear data
+        APIRequest("GET", path: "/algorithm/search.php").with(name: "search", value: search).with(name: "start", value: reset ? 0 : algorithms.count).execute([APIAlgorithm].self) { data, status in
+            // Reset if needed
+            if reset {
                 self.algorithms = []
             }
+            
+            // Check data
+            if let data = data {
+                // Check content size
+                if !data.isEmpty {
+                    // Update data
+                    self.algorithms.append(contentsOf: data)
+                } else {
+                    // No more content
+                    self.hasMore = false
+                }
+            }
+            
+            // No more loading
+            self.loading = false
             
             // Refresh the view
             self.reloadData(withStatus: status)
@@ -103,26 +127,42 @@ class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate, 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return algorithms.count
+        return section == 0 ? algorithms.count : hasMore ? 1 : 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "cloud_algorithms".localized()
+        return section == 0 ? "cloud_algorithms".localized() : nil
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Loading cell
+        if indexPath.section != 0 {
+            return (tableView.dequeueReusableCell(withIdentifier: "loadingCell", for: indexPath) as! LoadingTableViewCell).with()
+        }
+        
         // Get algorithm
         let algorithm = algorithms[indexPath.row]
         
         // Create cell
         return (tableView.dequeueReusableCell(withIdentifier: "homeCell", for: indexPath) as! HomeTableViewCell).with(algorithm: algorithm)
     }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // Loading cell
+        guard indexPath.section != 0 else { return }
+        
+        // Load more content
+        loadAlgorithms()
+    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Check that cell is not a loading cell
+        guard indexPath.section == 0 else { return }
+        
         // Get selected algorithm
         let algorithm = algorithms[indexPath.row]
         

@@ -57,6 +57,7 @@
 		6AAF521B24045EEF0001D931 /* UnsetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAF521A24045EEF0001D931 /* UnsetAction.swift */; };
 		6AB147E324BB0DF2005077F3 /* DonateViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6AB147E224BB0DF2005077F3 /* DonateViewController */; };
 		6AB147E524BB10A7005077F3 /* CustomDonateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB147E424BB10A6005077F3 /* CustomDonateViewController.swift */; };
+		6AB147E724BB27A3005077F3 /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB147E624BB27A3005077F3 /* LoadingTableViewCell.swift */; };
 		6AB41A4523531FF000A4F348 /* Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB41A4423531FF000A4F348 /* Power.swift */; };
 		6AB41A47235328C000A4F348 /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB41A46235328C000A4F348 /* Root.swift */; };
 		6ABC9048235D8C0100F07D6D /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABC9047235D8C0100F07D6D /* UITextFieldExtension.swift */; };
@@ -164,6 +165,7 @@
 		6AAE8BCB235CBAAF000634CA /* EditorLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorLine.swift; sourceTree = "<group>"; };
 		6AAF521A24045EEF0001D931 /* UnsetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsetAction.swift; sourceTree = "<group>"; };
 		6AB147E424BB10A6005077F3 /* CustomDonateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDonateViewController.swift; sourceTree = "<group>"; };
+		6AB147E624BB27A3005077F3 /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
 		6AB41A4423531FF000A4F348 /* Power.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Power.swift; sourceTree = "<group>"; };
 		6AB41A46235328C000A4F348 /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
 		6ABC9047235D8C0100F07D6D /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
@@ -306,12 +308,13 @@
 			isa = PBXGroup;
 			children = (
 				6A99A71E2406B195002C9E54 /* CloudDetailsTableViewCell.swift */,
-				6AC36CD623606BB600523F79 /* HomeTableViewCell.swift */,
 				6AAE8BC9235C9F42000634CA /* EditorTableViewCell.swift */,
 				6AED92C4235F4675009EEAFE /* EditorAddTableViewCell.swift */,
 				6AED92CA235F65AB009EEAFE /* EditorPreviewTableViewCell.swift */,
+				6AC36CD623606BB600523F79 /* HomeTableViewCell.swift */,
 				6A0A8CBC2323BE5B00F0C41C /* InputTableViewCell.swift */,
 				6A0A8CB62323AE3400F0C41C /* LabelTableViewCell.swift */,
+				6AB147E624BB27A3005077F3 /* LoadingTableViewCell.swift */,
 				6AE83704235AED5000DBED51 /* OutputTableViewCell.swift */,
 			);
 			path = Cells;
@@ -568,6 +571,7 @@
 				6AC908ED2406238100F5F732 /* UIColorExtension.swift in Sources */,
 				6AC40DAE2324DDC6003C8131 /* Equation.swift in Sources */,
 				6AC40DB02324E7E2003C8131 /* CalculError.swift in Sources */,
+				6AB147E724BB27A3005077F3 /* LoadingTableViewCell.swift in Sources */,
 				6A99A71B24069280002C9E54 /* CloudDetailsTableViewController.swift in Sources */,
 				6A2F13AF23264D8100031DDA /* TokenParser.swift in Sources */,
 				6A0A8CBD2323BE5B00F0C41C /* InputTableViewCell.swift in Sources */,
