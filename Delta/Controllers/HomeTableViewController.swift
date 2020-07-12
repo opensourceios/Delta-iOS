@@ -8,6 +8,7 @@
 
 import UIKit
 import StoreKit
+import DonateViewController
 
 class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate {
     
@@ -148,7 +149,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         return section == 0 ? 3 :
             section == 1 ? myalgorithms.count == 0 ? 1 : myalgorithms.count :
             section == 2 ? downloads.count == 0 ? 1 : downloads.count :
-            section == 3 ? 3 : 1
+            section == 3 ? 4 : 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -192,6 +193,9 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
             } else if indexPath.row == 2 {
                 // Follow us on Twitter
                 return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "follow_twitter".localized(), accessory: .disclosureIndicator)
+            } else if indexPath.row == 3 {
+                // Donate
+                return (tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell).with(text: "donate_title".localized(), accessory: .disclosureIndicator)
             }
         } else {
             if indexPath.row == 0 {
@@ -290,6 +294,9 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                         UIApplication.shared.openURL(url)
                     }
                 }
+            } else if indexPath.row == 3 {
+                // Donate
+                present(UINavigationController(rootViewController: CustomDonateViewController()), animated: true, completion: nil)
             }
         } else {
             if indexPath.row == 0 {
