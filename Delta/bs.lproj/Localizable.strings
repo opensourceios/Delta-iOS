@@ -12,7 +12,7 @@
 "edit" = "Promeni";
 "settings" = "Postavke";
 "status_offline" = "Izgleda da niste povezan!";
-"status_invalidRequest" = "Došlo je do greška u zahtev…";
+"status_error" = "Došlo je do greška u zahtev…";
 "status_failed" = "Neuspeh ažuriranja!";
 "status_downloading" = "Preuzimanje…";
 "status_checkingforupdate" = "Provera za ažuriranje…";

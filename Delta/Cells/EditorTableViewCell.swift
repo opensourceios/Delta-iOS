@@ -11,7 +11,7 @@ import UIKit
 class EditorTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     let bubble = UIView()
-    let scroll = UIScrollView()
+    let scroll = CellScrollView()
     let icon = UIImageView()
     let delete = UIButton(type: .custom)
     let category = UILabel()

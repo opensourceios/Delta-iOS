@@ -64,7 +64,7 @@
 "action_input" = "Присвоить переменной %@ значение %@";
 "error_constant" = "Невозможно установить значение: %@ - константа";
 "status_loading" = "Загрузка…";
-"status_invalidRequest" = "Ошибка во время запроса…";
+"status_error" = "Ошибка во время запроса…";
 "status_downloading" = "Загрузка…";
 "status_checkingforupdate" = "Проверка наличия обновлений…";
 "copy" = "%@ (копировать)";

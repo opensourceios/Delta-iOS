@@ -30,7 +30,7 @@
 "status_unauthorized" = "Sie Dürfen nicht dieses Inhalt Zugriffen";
 "status_notFound" = "Der Inhalt die Sie suchen existiert nicht";
 "status_offline" = "Es scheint dass Sie Offline sind!";
-"status_invalidRequest" = "Etwas ist schiefgelaufen in dem Anfrage…";
+"status_error" = "Etwas ist schiefgelaufen in dem Anfrage…";
 "status_failed" = "Aktualisierungsfehler!";
 "status_downloading" = "Wird heruntergeladet…";
 "status_checkingforupdate" = "Sucht nach Aktualisierungen…";

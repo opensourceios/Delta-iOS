@@ -37,7 +37,7 @@
 "status_checkingforupdate" = "Recherche de mise à jour…";
 "status_downloading" = "Téléchargement…";
 "status_failed" = "Echec du téléchargement !";
-"status_invalidRequest" = "Une erreur est survenue lors de la requête…";
+"status_error" = "Une erreur est survenue lors de la requête…";
 "status_offline" = "Il semble que vous êtes hors ligne !";
 "status_notFound" = "Le contenu que vous recherchez n'existe pas";
 "status_unauthorized" = "Vous n'avez pas le droit d'accéder à ce contenu";
@@ -64,6 +64,8 @@
 "action_quiz_add_paragraph" = "Ajouter le texte %@";
 "action_quiz_show" = "Afficher le quiz";
 "settings_name" = "Nom : %@";
+"settings_icon" = "Cliquez pour configurer l'icône";
+"settings_cloud" = "Cliquez pour configurer le partage dans le cloud";
 "category_variable" = "Variable";
 "category_structure" = "Structure";
 "category_output" = "Sortie";

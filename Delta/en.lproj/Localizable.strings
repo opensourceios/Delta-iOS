@@ -52,7 +52,7 @@
 "status_checkingforupdate" = "Checking for update…";
 "status_downloading" = "Downloading…";
 "status_failed" = "Failed to update!";
-"status_invalidRequest" = "Something went wrong during the request…";
+"status_error" = "Something went wrong during the request…";
 "status_offline" = "It seems that you're offline!";
 "status_notFound" = "The content you're looking for doesn't exist";
 "status_unauthorized" = "You don't have the right to access to this content";
@@ -62,6 +62,9 @@
 "error_constant" = "Cannot set value: %@ is a constant";
 "error_while_limit" = "Stopped while statement: More than 1000 iterations";
 "editor" = "Algorithm editor";
+"icon_title" = "Icon editor";
+"icon_image" = "Image";
+"icon_color" = "Color";
 "action_selector" = "Select an action";
 "action_input" = "Ask for %@ with default %@";
 "action_print" = "Print variable %@";
@@ -79,6 +82,8 @@
 "action_quiz_add_paragraph" = "Add text %@";
 "action_quiz_show" = "Show quiz";
 "settings_name" = "Name: %@";
+"settings_icon" = "Click to configure icon";
+"settings_cloud" = "Click to configure cloud sharing";
 "category_variable" = "Variable";
 "category_structure" = "Structure";
 "category_output" = "Output";

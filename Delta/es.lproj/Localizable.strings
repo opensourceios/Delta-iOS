@@ -37,7 +37,7 @@
 "status_checkingforupdate" = "Verificación de actualización…";
 "status_downloading" = "Descargando…";
 "status_failed" = "¡No pudo actualizar!";
-"status_invalidRequest" = "Algo pasó mal durante la solicitud…";
+"status_error" = "Algo pasó mal durante la solicitud…";
 "status_offline" = "¡Parece que no hay conexión!";
 "status_notFound" = "El contenido que busca no existe";
 "status_unauthorized" = "No tiene los derechos de ver este contenido";

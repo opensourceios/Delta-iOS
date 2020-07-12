@@ -109,6 +109,14 @@ extension String {
         }
     }
     
+    // Icons
+    
+    func toIcon() -> UIImage? {
+        return UIImage(named: "Icon\(capitalizeFirstLetter())") ?? AlgorithmIcon.defaultIcon.toIcon()
+    }
+    
+    // Tokens
+    
     func replaceTokens(in process: Process) -> String {
         var output = self
         

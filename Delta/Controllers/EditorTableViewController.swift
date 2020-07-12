@@ -129,14 +129,6 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return section == 0 ? "settings".localized() : "instructions".localized()
     }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Get editor line
@@ -150,6 +142,19 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
         
         // Return cell
         return (tableView.dequeueReusableCell(withIdentifier: "editorCell", for: indexPath) as! EditorTableViewCell).with(line: line, delegate: self, at: indexPath.row)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Get editor line
+        let line = indexPath.section == 0 ? algorithm.getSettings()[indexPath.row] : algorithm.toEditorLines()[indexPath.row]
+        
+        // Check if icon
+        if line.format == "settings_icon" {
+            // Open icon editor
+            present(UINavigationController(rootViewController: IconEditorTableViewController(icon: algorithm.icon, completionHandler: { icon in
+                self.algorithm.icon = icon
+            })), animated: true, completion: nil)
+        }
     }
 
     @objc func close(_ sender: UIBarButtonItem) {

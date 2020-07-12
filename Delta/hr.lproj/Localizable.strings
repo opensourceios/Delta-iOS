@@ -38,7 +38,7 @@
 "error_syntax" = "Sintaksikalna greška";
 "error_calcul" = "Greška u kalkulaciju";
 "status_loading" = "Učitavanje…";
-"status_invalidRequest" = "Došlo je do greška u zahtev…";
+"status_error" = "Došlo je do greška u zahtev…";
 "status_failed" = "Neuspeh ažuriranja!";
 "status_downloading" = "Preuzimanje…";
 "status_checkingforupdate" = "Provera za ažuriranje…";

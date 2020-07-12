@@ -35,12 +35,12 @@ class HomeTableViewCell: UITableViewCell {
         
         name.translatesAutoresizingMaskIntoConstraints = false
         name.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
-        name.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10).isActive = true
+        name.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 8).isActive = true
         name.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor).isActive = true
         
         desc.translatesAutoresizingMaskIntoConstraints = false
         desc.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 4).isActive = true
-        desc.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10).isActive = true
+        desc.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 8).isActive = true
         desc.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor).isActive = true
         desc.bottomAnchor.constraint(lessThanOrEqualTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
         desc.font = .systemFont(ofSize: 15)
@@ -54,7 +54,7 @@ class HomeTableViewCell: UITableViewCell {
         self.name.text = algorithm.name
         self.desc.text = "status_\(algorithm.status)".localized()
         self.desc.textColor = algorithm.status.colorForText()
-        self.icon.image = algorithm.icon.getUIImage()
+        self.icon.image = algorithm.icon.icon.toIcon()
         self.icon.backgroundColor = algorithm.icon.color.toColor()
         
         return self
@@ -64,7 +64,7 @@ class HomeTableViewCell: UITableViewCell {
         self.name.text = algorithm.name
         self.desc.text = algorithm.owner?.name
         self.desc.textColor = .systemGray
-        self.icon.image = algorithm.icon?.getUIImage()
+        self.icon.image = algorithm.icon?.icon.toIcon()
         self.icon.backgroundColor = algorithm.icon?.color.toColor()
         
         return self

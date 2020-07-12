@@ -58,6 +58,9 @@
 		6AB147E324BB0DF2005077F3 /* DonateViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6AB147E224BB0DF2005077F3 /* DonateViewController */; };
 		6AB147E524BB10A7005077F3 /* CustomDonateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB147E424BB10A6005077F3 /* CustomDonateViewController.swift */; };
 		6AB147E724BB27A3005077F3 /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB147E624BB27A3005077F3 /* LoadingTableViewCell.swift */; };
+		6AB147E924BB3F34005077F3 /* IconEditorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB147E824BB3F34005077F3 /* IconEditorTableViewController.swift */; };
+		6AB147EB24BB432C005077F3 /* IconEditorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB147EA24BB432C005077F3 /* IconEditorTableViewCell.swift */; };
+		6AB147EE24BB4C8A005077F3 /* CellScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB147ED24BB4C8A005077F3 /* CellScrollView.swift */; };
 		6AB41A4523531FF000A4F348 /* Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB41A4423531FF000A4F348 /* Power.swift */; };
 		6AB41A47235328C000A4F348 /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB41A46235328C000A4F348 /* Root.swift */; };
 		6ABC9048235D8C0100F07D6D /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABC9047235D8C0100F07D6D /* UITextFieldExtension.swift */; };
@@ -166,6 +169,9 @@
 		6AAF521A24045EEF0001D931 /* UnsetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsetAction.swift; sourceTree = "<group>"; };
 		6AB147E424BB10A6005077F3 /* CustomDonateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDonateViewController.swift; sourceTree = "<group>"; };
 		6AB147E624BB27A3005077F3 /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
+		6AB147E824BB3F34005077F3 /* IconEditorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditorTableViewController.swift; sourceTree = "<group>"; };
+		6AB147EA24BB432C005077F3 /* IconEditorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditorTableViewCell.swift; sourceTree = "<group>"; };
+		6AB147ED24BB4C8A005077F3 /* CellScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellScrollView.swift; sourceTree = "<group>"; };
 		6AB41A4423531FF000A4F348 /* Power.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Power.swift; sourceTree = "<group>"; };
 		6AB41A46235328C000A4F348 /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
 		6ABC9047235D8C0100F07D6D /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
@@ -253,6 +259,7 @@
 				6A16E3FF234A387C00089765 /* Tokens */,
 				6A549F0524228BD500E02570 /* Quiz */,
 				6A16E3FD234A385D00089765 /* Utils */,
+				6AB147EC24BB4C5F005077F3 /* Views */,
 				3203EF70214FB134005C287C /* Assets.xcassets */,
 				329C2F38215645EC000A2575 /* Delta.entitlements */,
 				3203EF75214FB134005C287C /* Info.plist */,
@@ -282,6 +289,7 @@
 				6AB147E424BB10A6005077F3 /* CustomDonateViewController.swift */,
 				6AAE8BC5235C8153000634CA /* EditorTableViewController.swift */,
 				6A0A8CAB2323A88100F0C41C /* HomeTableViewController.swift */,
+				6AB147E824BB3F34005077F3 /* IconEditorTableViewController.swift */,
 				6A549F03242264BA00E02570 /* QuizViewController.swift */,
 				6A0A8CB82323AF2900F0C41C /* SplitViewController.swift */,
 				6A83255324926AD60055D36E /* WelcomeViewController.swift */,
@@ -312,6 +320,7 @@
 				6AED92C4235F4675009EEAFE /* EditorAddTableViewCell.swift */,
 				6AED92CA235F65AB009EEAFE /* EditorPreviewTableViewCell.swift */,
 				6AC36CD623606BB600523F79 /* HomeTableViewCell.swift */,
+				6AB147EA24BB432C005077F3 /* IconEditorTableViewCell.swift */,
 				6A0A8CBC2323BE5B00F0C41C /* InputTableViewCell.swift */,
 				6A0A8CB62323AE3400F0C41C /* LabelTableViewCell.swift */,
 				6AB147E624BB27A3005077F3 /* LoadingTableViewCell.swift */,
@@ -395,6 +404,14 @@
 				6A549F0A24228C3500E02570 /* QuizParagraph.swift */,
 			);
 			path = Quiz;
+			sourceTree = "<group>";
+		};
+		6AB147EC24BB4C5F005077F3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6AB147ED24BB4C8A005077F3 /* CellScrollView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		6AC908F0240656D800F5F732 /* API */ = {
@@ -562,6 +579,7 @@
 				6AD2B13A234E08ED00E75AAF /* Fraction.swift in Sources */,
 				6AC36CCC23601E6000523F79 /* FormattedToken.swift in Sources */,
 				6A0A8CC72323CECF00F0C41C /* Operation.swift in Sources */,
+				6AB147EB24BB432C005077F3 /* IconEditorTableViewCell.swift in Sources */,
 				6A0A8CCF2323EFD600F0C41C /* SyntaxError.swift in Sources */,
 				6AC908F82406584C00F5F732 /* APIAlgorithm.swift in Sources */,
 				6A16E401234A4FB500089765 /* Action.swift in Sources */,
@@ -570,6 +588,7 @@
 				6ABC9052235DFFA600F07D6D /* ActionBlock.swift in Sources */,
 				6AC908ED2406238100F5F732 /* UIColorExtension.swift in Sources */,
 				6AC40DAE2324DDC6003C8131 /* Equation.swift in Sources */,
+				6AB147EE24BB4C8A005077F3 /* CellScrollView.swift in Sources */,
 				6AC40DB02324E7E2003C8131 /* CalculError.swift in Sources */,
 				6AB147E724BB27A3005077F3 /* LoadingTableViewCell.swift in Sources */,
 				6A99A71B24069280002C9E54 /* CloudDetailsTableViewController.swift in Sources */,
@@ -577,6 +596,7 @@
 				6A0A8CBD2323BE5B00F0C41C /* InputTableViewCell.swift in Sources */,
 				6AAE8BC6235C8153000634CA /* EditorTableViewController.swift in Sources */,
 				6AED92C7235F5BAD009EEAFE /* ActionSelectionTableViewController.swift in Sources */,
+				6AB147E924BB3F34005077F3 /* IconEditorTableViewController.swift in Sources */,
 				6A0A8CD52324057800F0C41C /* AlgorithmExtension.swift in Sources */,
 				6A99A71D24069298002C9E54 /* CloudSplitViewController.swift in Sources */,
 				6A99A71724069042002C9E54 /* CloudHomeTableViewController.swift in Sources */,

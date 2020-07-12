@@ -15,8 +15,6 @@ class LabelTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        selectionStyle = .none
-        
         contentView.addSubview(label)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -34,6 +32,7 @@ class LabelTableViewCell: UITableViewCell {
     func with(text: String, accessory: UITableViewCell.AccessoryType = .none) -> LabelTableViewCell {
         label.text = text
         accessoryType = accessory
+        selectionStyle = accessory == .disclosureIndicator ? .default : .none
         
         return self
     }

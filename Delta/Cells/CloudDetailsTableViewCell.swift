@@ -101,7 +101,7 @@ class CloudDetailsTableViewCell: UITableViewCell {
         self.name.text = algorithm.name
         self.desc.text = algorithm.owner?.name
         self.notes.text = algorithm.notes ?? "cloud_no_notes".localized()
-        self.icon.image = algorithm.icon?.getUIImage()
+        self.icon.image = algorithm.icon?.icon.toIcon()
         self.icon.backgroundColor = algorithm.icon?.color.toColor()
         
         // Calculate button

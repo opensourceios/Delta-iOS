@@ -15,7 +15,7 @@
 "cancel" = "Otkaži";
 "status_synchro" = "Sinhronizovano";
 "status_offline" = "Izgleda da niste povezan!";
-"status_invalidRequest" = "Došlo je do greška u zahtev…";
+"status_error" = "Došlo je do greška u zahtev…";
 "error_while_limit" = "Stopiranje dok petlje: više od 1000 iteracije";
 "downloads" = "Preuzimanja";
 "download_algorithm" = "Preuzimate od Clouda";

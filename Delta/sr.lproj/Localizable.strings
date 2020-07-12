@@ -56,7 +56,7 @@
 "status_checkingforupdate" = "Провера за ажурирање…";
 "status_downloading" = "Преузимање…";
 "status_failed" = "Неуспех ажурирања!";
-"status_invalidRequest" = "Дошло је до грешка у захтев…";
+"status_error" = "Дошло је до грешка у захтев…";
 "status_offline" = "Изгледа да нисте повезан!";
 "status_notFound" = "Садржај ко тражите не постоји";
 "status_unauthorized" = "Не смете да приступите ову садржај";

@@ -169,11 +169,15 @@ class Algorithm {
     // Settings editor lines
     
     func getSettings() -> [EditorLine] {
-        return [EditorLine(format: "settings_name", category: .settings, values: [name], movable: false)]
+        return [
+            EditorLine(format: "settings_name", category: .settings, values: [name], movable: false),
+            EditorLine(format: "settings_icon", category: .settings, values: [], movable: false),
+            EditorLine(format: "settings_cloud", category: .settings, values: [], movable: false)
+        ]
     }
     
     func settingsCount() -> Int {
-        return 1
+        return 3
     }
     
     func updateSettings(at index: Int, with values: [String]) {
