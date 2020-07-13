@@ -98,6 +98,9 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
         // Update tableView
         reloadData(withStatus: .ok)
         
+        // Check if user is logged but not loaded
+        Account.current.login()
+        
         // Check for update for all algorithms
         for algorithm in myalgorithms + downloads {
             // Check for update

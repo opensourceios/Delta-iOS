@@ -36,6 +36,7 @@
 "status_synchro" = "Synchronisé";
 "status_checkingforupdate" = "Recherche de mise à jour…";
 "status_downloading" = "Téléchargement…";
+"status_uploading" = "Mise en ligne…";
 "status_failed" = "Echec du téléchargement !";
 "status_error" = "Une erreur est survenue lors de la requête…";
 "status_offline" = "Il semble que vous êtes hors ligne !";

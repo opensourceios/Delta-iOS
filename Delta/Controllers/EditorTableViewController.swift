@@ -154,6 +154,15 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
             present(UINavigationController(rootViewController: IconEditorTableViewController(icon: algorithm.icon, completionHandler: { icon in
                 self.algorithm.icon = icon
             })), animated: true, completion: nil)
+        } else if line.format == "settings_cloud" {
+            // Check if user is connected
+            if Account.current.user != nil {
+                // Open cloud sharing settings
+                
+            } else {
+                // User not logged in
+                //let alert = UIAlertController(title: "", message: <#T##String?#>, preferredStyle: <#T##UIAlertController.Style#>)
+            }
         }
     }
 

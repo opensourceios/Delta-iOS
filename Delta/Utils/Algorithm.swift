@@ -73,6 +73,10 @@ class Algorithm {
         return root.toString()
     }
     
+    func toAPIAlgorithm() -> APIAlgorithm {
+        return APIAlgorithm(id: remote_id, name: name, owner: nil, last_update: nil, lines: toString(), notes: nil, icon: icon)
+    }
+    
     // Actions editor lines
     
     func toEditorLines() -> [EditorLine] {
@@ -177,7 +181,7 @@ class Algorithm {
     }
     
     func settingsCount() -> Int {
-        return 3
+        return owner && local_id != 0 ? 3 : 2
     }
     
     func updateSettings(at index: Int, with values: [String]) {
@@ -218,7 +222,7 @@ class Algorithm {
                         // Download algorithm
                         self.status = .downloading
                         algorithmChanged(self)
-                        APIRequest("GET", path: "/algorithm/algorithm.php").with(name: "id", value: remote_id).execute(APIAlgorithm.self) { data, status in
+                        data.fetchMissingData { data, status in
                             // Check if data was downloaded
                             if let data = data {
                                 // Save it to database
@@ -234,7 +238,22 @@ class Algorithm {
                         }
                     } else if compare == .orderedDescending {
                         // Or upload it if it was modified
-                        // TODO
+                        self.status = .uploading
+                        algorithmChanged(self)
+                        self.toAPIAlgorithm().upload { data, status in
+                            // Check if data was uploaded
+                            if let data = data {
+                                // Save it to database
+                                let updatedAlgorithm = data.saveToDatabase()
+                                
+                                // Replace it in lists
+                                algorithmChanged(updatedAlgorithm)
+                            } else {
+                                // Update status
+                                self.status = .failed
+                                algorithmChanged(self)
+                            }
+                        }
                     } else {
                         // Algorithm is up to date
                         self.status = .synchro

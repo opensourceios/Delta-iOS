@@ -20,8 +20,19 @@ class Account: Codable {
     var access_token: String?
     var user: APIUser?
     
+    // Enum for coding keys
+    enum CodingKeys: String, CodingKey {
+        case access_token, user
+    }
+    
+    // Status management
+    var loading = false
+    
     // Login from keychain
     func login() {
+        // Check user data is not already loaded or loading
+        guard user == nil && !loading else { return }
+        
         // Check token from keychain
         if let access_token = Account.keychain.value(forKey: "access_token") as? String {
             // Login to account
@@ -34,16 +45,25 @@ class Account: Codable {
     
     // Login with an access token
     func login(access_token: String, completionHandler: @escaping (APIResponseStatus) -> ()) {
+        // Save token
+        self.access_token = access_token
+        self.loading = true
+        
         // Fetch api with token
-        APIRequest("GET", path: "/auth/account.php").with(header: "access-token", value: access_token).execute(Account.self) { data, status in
+        APIRequest("GET", path: "/auth/account.php").execute(Account.self) { data, status in
             // Check response validity
             if let account = data, status == .ok {
                 // Store token and user
                 self.access_token = account.access_token
                 self.user = account.user
+            } else if status != .offline {
+                // Remove access token (invalid)
+                self.access_token = nil
+                let _ = Account.keychain.remove(forKey: "access_token")
             }
             
             // Call completion handler
+            self.loading = false
             completionHandler(status)
         }
     }

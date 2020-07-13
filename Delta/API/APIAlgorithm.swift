@@ -20,7 +20,7 @@ struct APIAlgorithm: Codable {
     var icon: AlgorithmIcon?
     
     func toAlgorithm() -> Algorithm {
-        return AlgorithmParser(0, remote_id: id, owned: false, named: name ?? "new_algorithm".localized(), last_update: last_update?.toDate() ?? Date(), icon: icon ?? AlgorithmIcon(), with: lines).execute()
+        return AlgorithmParser(0, remote_id: id, owned: owner?.id == Account.current.user?.id, named: name ?? "new_algorithm".localized(), last_update: last_update?.toDate() ?? Date(), icon: icon ?? AlgorithmIcon(), with: lines).execute()
     }
     
     func saveToDatabase() -> Algorithm {
@@ -41,6 +41,17 @@ struct APIAlgorithm: Codable {
     func fetchMissingData(completionHandler: @escaping (APIAlgorithm?, APIResponseStatus) -> Void) {
         // Make a request to API
         APIRequest("GET", path: "/algorithm/algorithm.php").with(name: "id", value: id ?? 0).execute(APIAlgorithm.self, completionHandler: completionHandler)
+    }
+    
+    func upload(completionHandler: @escaping (APIAlgorithm?, APIResponseStatus) -> Void) {
+        // Check if algorithm already has an ID
+        if let id = id {
+            // Update it
+            APIRequest("PUT", path: "/algorithm/algorithm.php").with(name: "id", value: id).with(body: self).execute(APIAlgorithm.self, completionHandler: completionHandler)
+        } else {
+            // Create it
+            APIRequest("POST", path: "/algorithm/algorithm.php").with(body: self).execute(APIAlgorithm.self, completionHandler: completionHandler)
+        }
     }
     
 }

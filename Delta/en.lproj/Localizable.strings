@@ -51,6 +51,7 @@
 "status_synchro" = "Synchronized";
 "status_checkingforupdate" = "Checking for update…";
 "status_downloading" = "Downloading…";
+"status_uploading" = "Uploading…";
 "status_failed" = "Failed to update!";
 "status_error" = "Something went wrong during the request…";
 "status_offline" = "It seems that you're offline!";
