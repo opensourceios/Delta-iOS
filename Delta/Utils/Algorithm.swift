@@ -73,8 +73,8 @@ class Algorithm {
         return root.toString()
     }
     
-    func toAPIAlgorithm() -> APIAlgorithm {
-        return APIAlgorithm(id: remote_id, name: name, owner: nil, last_update: nil, lines: toString(), notes: nil, icon: icon)
+    func toAPIAlgorithm(public: Bool? = nil, notes: String? = nil) -> APIAlgorithm {
+        return APIAlgorithm(id: remote_id, name: name, owner: nil, last_update: nil, lines: toString(), notes: notes, icon: icon, public: `public`)
     }
     
     // Actions editor lines

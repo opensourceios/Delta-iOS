@@ -25,6 +25,11 @@
 "cloud_details" = "Details of the selected algorithm";
 "cloud_preview" = "Preview of this algorithm";
 "cloud_no_notes" = "No notes were written for this algorithm.";
+"cloud_settings_title" = "Cloud settings";
+"cloud_settings_sync" = "Save to Delta Cloud";
+"cloud_settings_sync_title" = "Synchronization";
+"cloud_settings_public" = "Public";
+"cloud_settings_public_title" = "Algorithm visibility";
 "copy" = "%@ (copy)";
 "about" = "About";
 "help" = "Help and documentation";
@@ -85,6 +90,7 @@
 "settings_name" = "Name: %@";
 "settings_icon" = "Click to configure icon";
 "settings_cloud" = "Click to configure cloud sharing";
+"settings_cloud_error" = "Please connect to your delta cloud account to use this feature!";
 "category_variable" = "Variable";
 "category_structure" = "Structure";
 "category_output" = "Output";

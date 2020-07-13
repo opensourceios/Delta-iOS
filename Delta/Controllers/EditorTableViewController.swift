@@ -156,12 +156,32 @@ class EditorTableViewController: UITableViewController, EditorLineChangedDelegat
             })), animated: true, completion: nil)
         } else if line.format == "settings_cloud" {
             // Check if user is connected
-            if Account.current.user != nil {
+            if Account.current.access_token != nil {
                 // Open cloud sharing settings
-                
+                present(UINavigationController(rootViewController: CloudSettingsTableViewController(algorithm: algorithm, completionHandler: { algorithm in
+                    // Take new algorithm remote id
+                    self.algorithm.remote_id = algorithm.remote_id
+                    
+                    // Background processing
+                    DispatchQueue.global(qos: .background).async {
+                        // Update last update
+                        self.algorithm.last_update = Date()
+                        
+                        // Save algorithm to database
+                        let newAlgorithm = Database.current.updateAlgorithm(self.algorithm)
+                        
+                        // UI call
+                        DispatchQueue.main.async {
+                            // Call completion handler
+                            self.completionHandler(newAlgorithm)
+                        }
+                    }
+                })), animated: true, completion: nil)
             } else {
                 // User not logged in
-                //let alert = UIAlertController(title: "", message: <#T##String?#>, preferredStyle: <#T##UIAlertController.Style#>)
+                let error = UIAlertController(title: "settings_cloud_error".localized(), message: nil, preferredStyle: .alert)
+                error.addAction(UIAlertAction(title: "close".localized(), style: .default, handler: nil))
+                self.present(error, animated: true, completion: nil)
             }
         }
     }

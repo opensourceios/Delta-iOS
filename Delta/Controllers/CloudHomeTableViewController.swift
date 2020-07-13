@@ -109,7 +109,7 @@ class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate, 
         search = searchBar.text ?? ""
         
         // Reload algorithms
-        loadAlgorithms()
+        loadAlgorithms(reset: true)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -117,7 +117,7 @@ class CloudHomeTableViewController: UITableViewController, UISearchBarDelegate, 
         search = ""
         
         // Reload algorithms
-        loadAlgorithms()
+        loadAlgorithms(reset: true)
     }
     
     func getStatusLabel() -> UILabel {

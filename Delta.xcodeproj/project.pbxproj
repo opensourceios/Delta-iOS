@@ -95,6 +95,8 @@
 		6AED92C7235F5BAD009EEAFE /* ActionSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AED92C6235F5BAD009EEAFE /* ActionSelectionTableViewController.swift */; };
 		6AED92CB235F65AB009EEAFE /* EditorPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AED92CA235F65AB009EEAFE /* EditorPreviewTableViewCell.swift */; };
 		6AED92CD235F6827009EEAFE /* RootAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AED92CC235F6827009EEAFE /* RootAction.swift */; };
+		6AEF876124BC90B200863E2C /* CloudSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF876024BC90B200863E2C /* CloudSettingsTableViewController.swift */; };
+		6AEF876324BC9AAE00863E2C /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF876224BC9AAE00863E2C /* SwitchTableViewCell.swift */; };
 		6AF8C81E2463FAF1008CB9DC /* APIRequest in Frameworks */ = {isa = PBXBuildFile; productRef = 6AF8C81D2463FAF1008CB9DC /* APIRequest */; };
 		6AFFCFD324A7A63D003EA3B8 /* Keychain in Frameworks */ = {isa = PBXBuildFile; productRef = 6AFFCFD224A7A63D003EA3B8 /* Keychain */; };
 		6AFFCFD524A7AE7B003EA3B8 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFFCFD424A7AE7B003EA3B8 /* AccountViewController.swift */; };
@@ -205,6 +207,8 @@
 		6AED92C6235F5BAD009EEAFE /* ActionSelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSelectionTableViewController.swift; sourceTree = "<group>"; };
 		6AED92CA235F65AB009EEAFE /* EditorPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		6AED92CC235F6827009EEAFE /* RootAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAction.swift; sourceTree = "<group>"; };
+		6AEF876024BC90B200863E2C /* CloudSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSettingsTableViewController.swift; sourceTree = "<group>"; };
+		6AEF876224BC9AAE00863E2C /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 		6AF697FB241E5A1F00EB8D44 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6AFE3CFC24581E7E006B6D10 /* bs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bs; path = bs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6AFE3D0324581F3F006B6D10 /* bs-Cyrl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "bs-Cyrl"; path = "bs-Cyrl.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -285,6 +289,7 @@
 				6A0A8CB32323A99500F0C41C /* AlgorithmTableViewController.swift */,
 				6A99A71A24069280002C9E54 /* CloudDetailsTableViewController.swift */,
 				6A99A71624069042002C9E54 /* CloudHomeTableViewController.swift */,
+				6AEF876024BC90B200863E2C /* CloudSettingsTableViewController.swift */,
 				6A99A71C24069298002C9E54 /* CloudSplitViewController.swift */,
 				6AB147E424BB10A6005077F3 /* CustomDonateViewController.swift */,
 				6AAE8BC5235C8153000634CA /* EditorTableViewController.swift */,
@@ -325,6 +330,7 @@
 				6A0A8CB62323AE3400F0C41C /* LabelTableViewCell.swift */,
 				6AB147E624BB27A3005077F3 /* LoadingTableViewCell.swift */,
 				6AE83704235AED5000DBED51 /* OutputTableViewCell.swift */,
+				6AEF876224BC9AAE00863E2C /* SwitchTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -532,9 +538,11 @@
 				6A7F7898234B7294002609EF /* ForAction.swift in Sources */,
 				6AC36CDB23607A8200523F79 /* DateExtension.swift in Sources */,
 				6AE83705235AED5000DBED51 /* OutputTableViewCell.swift in Sources */,
+				6AEF876124BC90B200863E2C /* CloudSettingsTableViewController.swift in Sources */,
 				6AC36CD5236033B400523F79 /* Database.swift in Sources */,
 				6A549F0224224F6C00E02570 /* Quiz.swift in Sources */,
 				6AC908FA2406636A00F5F732 /* APISyncStatus.swift in Sources */,
+				6AEF876324BC9AAE00863E2C /* SwitchTableViewCell.swift in Sources */,
 				6A99A7192406912E002C9E54 /* APIUser.swift in Sources */,
 				6AD2B138234E08CD00E75AAF /* Product.swift in Sources */,
 				6AC908EF240625CE00F5F732 /* AlgorithmIcon.swift in Sources */,

@@ -18,6 +18,7 @@ struct APIAlgorithm: Codable {
     var lines: String?
     var notes: String?
     var icon: AlgorithmIcon?
+    var `public`: Bool?
     
     func toAlgorithm() -> Algorithm {
         return AlgorithmParser(0, remote_id: id, owned: owner?.id == Account.current.user?.id, named: name ?? "new_algorithm".localized(), last_update: last_update?.toDate() ?? Date(), icon: icon ?? AlgorithmIcon(), with: lines).execute()
