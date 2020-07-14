@@ -57,7 +57,7 @@
 "close" = "Close";
 "check" = "Check";
 "share" = "Share";
-"loading" = "Loading...";
+"loading" = "Loading…";
 "status_local" = "Saved locally";
 "status_synchro" = "Synchronized";
 "status_checkingforupdate" = "Checking for update…";
