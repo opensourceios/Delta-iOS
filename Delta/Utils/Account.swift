@@ -133,5 +133,24 @@ class Account: Codable {
             completionHandler(status)
         }
     }
+    
+    // Edit profile
+    func editProfile(name: String, username: String, password: String, completionHandler: @escaping (APIResponseStatus) -> ()) {
+        // Fetch api with data
+        APIRequest("PUT", path: "/auth/account.php").with(body: [
+            "name": name,
+            "username": username,
+            "password": password
+        ]).execute(Account.self) { data, status in
+            // Check response validity
+            if let account = data, status == .ok {
+                // Update user
+                self.user = account.user
+            }
+            
+            // Call completion handler
+            completionHandler(status)
+        }
+    }
 
 }

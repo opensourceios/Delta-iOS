@@ -101,7 +101,7 @@ class AccountViewController: UIViewController {
             // Check button
             if sender == button1 {
                 // Edit profile
-                
+                editProfile()
             } else {
                 // Sign out
                 signOut()
@@ -233,6 +233,63 @@ class AccountViewController: UIViewController {
             self.loadAccount()
             loading.dismiss(animated: true, completion: nil)
         }
+    }
+    
+    func editProfile() {
+        // Create an alert
+        let alert = UIAlertController(title: "edit_profile".localized(), message: "edit_profile_description".localized(), preferredStyle: .alert)
+        
+        // Add name field
+        alert.addTextField { field in
+            // Configure it
+            field.placeholder = "field_name".localized()
+            field.text = Account.current.user?.name
+        }
+        
+        // Add username field
+        alert.addTextField { field in
+            // Configure it
+            field.placeholder = "field_username".localized()
+            field.text = Account.current.user?.username
+        }
+        
+        // Add password field
+        alert.addTextField { field in
+            // Configure it
+            field.placeholder = "field_password".localized()
+            field.isSecureTextEntry = true
+        }
+        
+        // Add submit button
+        alert.addAction(UIAlertAction(title: "edit_profile".localized(), style: .default) { _ in
+            // Extract text from fields
+            if let name = alert.textFields?[0].text, let username = alert.textFields?[1].text, let password = alert.textFields?[2].text, !name.isEmpty, !username.isEmpty {
+                // Show a loading
+                let loading = UIAlertController(title: "loading".localized(), message: nil, preferredStyle: .alert)
+                self.present(loading, animated: true, completion: nil)
+                
+                // Start register process
+                Account.current.editProfile(name: name, username: username, password: password) { status in
+                    // Refresh the UI
+                    self.loadAccount()
+                    loading.dismiss(animated: true) {
+                        // Check for a 400
+                        if status == .badRequest {
+                            // Username already taken
+                            let error = UIAlertController(title: "edit_profile".localized(), message: "edit_profile_error".localized(), preferredStyle: .alert)
+                            error.addAction(UIAlertAction(title: "close".localized(), style: .default, handler: nil))
+                            self.present(error, animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+        })
+        
+        // Add cancel button
+        alert.addAction(UIAlertAction(title: "cancel".localized(), style: .cancel, handler: nil))
+        
+        // Show it
+        present(alert, animated: true, completion: nil)
     }
 
 }
