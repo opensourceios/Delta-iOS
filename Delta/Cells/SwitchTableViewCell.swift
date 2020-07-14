@@ -17,6 +17,8 @@ class SwitchTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        selectionStyle = .none
+        
         contentView.addSubview(label)
         contentView.addSubview(element)
         

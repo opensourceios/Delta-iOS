@@ -30,6 +30,9 @@
 "cloud_settings_sync_title" = "Synchronization";
 "cloud_settings_public" = "Public";
 "cloud_settings_public_title" = "Algorithm visibility";
+"cloud_settings_other_title" = "Other";
+"cloud_settings_notes" = "Notes";
+"cloud_settings_notes_title" = "Edit notes";
 "copy" = "%@ (copy)";
 "about" = "About";
 "help" = "Help and documentation";
