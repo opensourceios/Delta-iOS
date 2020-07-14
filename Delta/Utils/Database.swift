@@ -168,6 +168,19 @@ class Database {
         }
     }
     
+    // Update owned algorithms
+    func updateOwned(owned: [Int64]) {
+        do {
+            // Get lines
+            let lines = algorithms.filter(owned.contains(remote_id))
+            
+            // Update data
+            try db?.run(lines.update(owner <- true))
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     // Check for review
     func checkForReview() {
         // Check number of saves to ask for a review

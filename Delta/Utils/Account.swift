@@ -19,10 +19,11 @@ class Account: Codable {
     // Account properties
     var access_token: String?
     var user: APIUser?
+    var algorithms: [Int64]?
     
     // Enum for coding keys
     enum CodingKeys: String, CodingKey {
-        case access_token, user
+        case access_token, user, algorithms
     }
     
     // Status management
@@ -56,6 +57,11 @@ class Account: Codable {
                 // Store token and user
                 self.access_token = account.access_token
                 self.user = account.user
+                
+                // Update owned algorithms
+                if let owned = account.algorithms {
+                    Database.current.updateOwned(owned: owned)
+                }
             } else if status != .offline {
                 // Remove access token (invalid)
                 self.access_token = nil
@@ -80,6 +86,11 @@ class Account: Codable {
                 // Store token and user
                 self.access_token = access_token
                 self.user = account.user
+                
+                // Update owned algorithms
+                if let owned = account.algorithms {
+                    Database.current.updateOwned(owned: owned)
+                }
             }
             
             // Call completion handler
