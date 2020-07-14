@@ -91,6 +91,30 @@ class CloudSettingsTableViewController: UITableViewController {
         }
     }
     
+    func removeFromCloud() {
+        // Create an alert (for progress)
+        let alert = UIAlertController(title: "status_deleting".localized(), message: nil, preferredStyle: .alert)
+        present(alert, animated: true, completion: nil)
+        
+        // Start deleting
+        algorithm.toAPIAlgorithm().delete { data, status in
+            // Remove alert
+            alert.dismiss(animated: true, completion: nil)
+            
+            // Check data
+            if status == .ok {
+                // Remove remote id
+                self.algorithm.remote_id = nil
+                
+                // Send back new data
+                self.completionHandler(self.algorithm)
+            }
+            
+            // Refresh table view
+            self.tableView.reloadData()
+        }
+    }
+    
     @objc func close(_ sender: UIBarButtonItem) {
         // Dismiss view controller
         dismiss(animated: true, completion: nil)
@@ -129,6 +153,9 @@ class CloudSettingsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Check that content is loaded before
+        guard loaded else { return }
+        
         // Other
         if indexPath.section == 2 {
             // Notes
@@ -148,7 +175,7 @@ class CloudSettingsTableViewController: UITableViewController {
             sendMetadatas()
         } else {
             // Remove from cloud
-            // TODO
+            removeFromCloud()
         }
     }
     

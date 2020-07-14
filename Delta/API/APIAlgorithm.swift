@@ -55,4 +55,15 @@ struct APIAlgorithm: Codable {
         }
     }
     
+    func delete(completionHandler: @escaping (APIAlgorithm?, APIResponseStatus) -> Void) {
+        // Check if algorithm already has an ID
+        if let id = id {
+            // Delete it
+            APIRequest("DELETE", path: "/algorithm/algorithm.php").with(name: "id", value: id).execute(APIAlgorithm.self, completionHandler: completionHandler)
+        } else {
+            // Nothing to delete
+            completionHandler(self, .ok)
+        }
+    }
+    
 }
