@@ -230,13 +230,7 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                 present(navigationController, animated: true, completion: nil)
             } else if indexPath.row == 1 {
                 // Open the cloud
-                let cloudVC = CloudSplitViewController()
-                cloudVC.modalPresentationStyle = .fullScreen
-                cloudVC.changedDelegate = self
-                cloudVC.selectionDelegate = delegate
-                
-                // Show it
-                present(cloudVC, animated: true, completion: nil)
+                openCloud()
             } else {
                 // Open an account view controller
                 present(UINavigationController(rootViewController: AccountViewController()), animated: true, completion: nil)
@@ -310,6 +304,28 @@ class HomeTableViewController: UITableViewController, AlgorithmsChangedDelegate 
                     } else {
                         UIApplication.shared.openURL(url)
                     }
+                }
+            }
+        }
+    }
+    
+    func openCloud(with algorithm: Int64? = nil) {
+        // Open the cloud
+        let cloudVC = CloudSplitViewController()
+        cloudVC.modalPresentationStyle = .fullScreen
+        cloudVC.changedDelegate = self
+        cloudVC.selectionDelegate = delegate
+        
+        // Show it
+        present(cloudVC, animated: true) {
+            // Load an algorithm if specified
+            if let algorithm = algorithm {
+                // Select algorithm
+                cloudVC.rightViewController.selectAlgorithm(APIAlgorithm(id: algorithm, name: nil, owner: nil, last_update: nil, lines: nil, notes: nil, icon: nil, public: nil))
+                
+                // Show the details view if required
+                if let algorithmNavigation = cloudVC.rightViewController.navigationController {
+                    cloudVC.showDetailViewController(algorithmNavigation, sender: nil)
                 }
             }
         }

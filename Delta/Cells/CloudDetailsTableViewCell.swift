@@ -16,6 +16,7 @@ class CloudDetailsTableViewCell: UITableViewCell {
     let desc = UILabel()
     let notes = UILabel()
     let button = UIButton()
+    let share = UIButton()
     var algorithm: APIAlgorithm?
     var onDevice: Algorithm?
     weak var delegate: CloudAlgorithmSelectionDelegate?
@@ -32,6 +33,7 @@ class CloudDetailsTableViewCell: UITableViewCell {
         contentView.addSubview(desc)
         contentView.addSubview(notes)
         contentView.addSubview(button)
+        contentView.addSubview(share)
         
         bubble.translatesAutoresizingMaskIntoConstraints = false
         bubble.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
@@ -71,7 +73,6 @@ class CloudDetailsTableViewCell: UITableViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.topAnchor.constraint(greaterThanOrEqualTo: notes.bottomAnchor, constant: 15).isActive = true
         button.leadingAnchor.constraint(equalTo: bubble.leadingAnchor, constant: 10).isActive = true
-        button.trailingAnchor.constraint(equalTo: bubble.trailingAnchor, constant: -10).isActive = true
         button.bottomAnchor.constraint(equalTo: bubble.bottomAnchor, constant: -10).isActive = true
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
@@ -79,6 +80,20 @@ class CloudDetailsTableViewCell: UITableViewCell {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
+        
+        share.translatesAutoresizingMaskIntoConstraints = false
+        share.topAnchor.constraint(equalTo: button.topAnchor).isActive = true
+        share.leadingAnchor.constraint(equalTo: button.trailingAnchor, constant: 10).isActive = true
+        share.trailingAnchor.constraint(equalTo: bubble.trailingAnchor, constant: -10).isActive = true
+        share.bottomAnchor.constraint(equalTo: bubble.bottomAnchor, constant: -10).isActive = true
+        share.widthAnchor.constraint(equalTo: button.widthAnchor).isActive = true
+        share.layer.cornerRadius = 10
+        share.layer.masksToBounds = true
+        share.backgroundColor = .systemBlue
+        share.setTitleColor(.white, for: .normal)
+        share.setTitle("share".localized(), for: .normal)
+        share.titleLabel?.font = .systemFont(ofSize: 15)
+        share.addTarget(self, action: #selector(shareClicked(_:)), for: .touchUpInside)
         
         if #available(iOS 13.0, *) {
             bubble.backgroundColor = .secondarySystemGroupedBackground
@@ -134,6 +149,14 @@ class CloudDetailsTableViewCell: UITableViewCell {
             open(algorithm: download())
         } else {
             open(algorithm: onDevice)
+        }
+    }
+    
+    @objc func shareClicked(_ sender: UIButton) {
+        // Get algorithm url
+        if let id = algorithm?.id, let url = URL(string: "https://www.delta-math-helper.com/algorithm/\(id)"), let controller = delegate as? UIViewController {
+            // Show the activity controller
+            controller.present(UIActivityViewController(activityItems: [url], applicationActivities: nil), animated: true, completion: nil)
         }
     }
     

@@ -82,6 +82,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
     }
     
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        // Check if user comes from URL
+        if let url = userActivity.webpageURL, url.host == "delta-math-helper.com" || url.host == "www.delta-math-helper.com" {
+            // Check if the url corresponds to an algorithm
+            if url.pathComponents.count == 3, url.pathComponents[1] == "algorithm", let id = Int64(url.pathComponents[2]) {
+                // Get home view controller
+                if let split = window?.rootViewController as? SplitViewController {
+                    // Open cloud
+                    split.leftViewController.openCloud(with: id)
+                }
+            }
+        }
+        
+        // Not handled
+        return false
+    }
+    
 }
 
 #if targetEnvironment(macCatalyst)

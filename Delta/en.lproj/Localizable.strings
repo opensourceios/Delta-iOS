@@ -54,6 +54,7 @@
 "open" = "Open";
 "close" = "Close";
 "check" = "Check";
+"share" = "Share";
 "loading" = "Loading...";
 "status_local" = "Saved locally";
 "status_synchro" = "Synchronized";
