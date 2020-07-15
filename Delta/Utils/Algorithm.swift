@@ -224,7 +224,7 @@ class Algorithm {
                         algorithmChanged(self)
                         data.fetchMissingData { data, status in
                             // Check if data was downloaded
-                            if let data = data {
+                            if let data = data, status == .ok {
                                 // Save it to database
                                 let updatedAlgorithm = data.saveToDatabase()
                                 
@@ -242,7 +242,7 @@ class Algorithm {
                         algorithmChanged(self)
                         self.toAPIAlgorithm().upload { data, status in
                             // Check if data was uploaded
-                            if let data = data {
+                            if let data = data, status == .ok {
                                 // Save it to database
                                 let updatedAlgorithm = data.saveToDatabase()
                                 
