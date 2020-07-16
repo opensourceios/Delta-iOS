@@ -53,7 +53,7 @@ class CloudSettingsTableViewController: UITableViewController {
         // Call API
         APIAlgorithm(id: algorithm.remote_id, name: nil, owner: nil, last_update: nil, lines: nil, notes: nil, icon: nil, public: nil).fetchMissingData { data, status in
             // Check response
-            if let data = data {
+            if let data = data, status == .ok {
                 // Update data
                 self.public = data.public
                 self.notes = data.notes
