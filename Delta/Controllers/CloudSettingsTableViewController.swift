@@ -81,6 +81,7 @@ class CloudSettingsTableViewController: UITableViewController {
                 self.algorithm.remote_id = data.id
                 self.public = data.public
                 self.notes = data.notes
+                self.loaded = true
                 
                 // Send back new data
                 self.completionHandler(self.algorithm)
@@ -105,6 +106,7 @@ class CloudSettingsTableViewController: UITableViewController {
             if status == .ok {
                 // Remove remote id
                 self.algorithm.remote_id = nil
+                self.loaded = false
                 
                 // Send back new data
                 self.completionHandler(self.algorithm)
