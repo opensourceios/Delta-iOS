@@ -117,3 +117,8 @@
 "logged_as" = "Connecté en tant que %@ (%@)";
 "not_logged" = "Non connecté";
 "my_account" = "Mon compte Delta Cloud";
+"delete_account" = "Supprimer mon compte";
+"delete_account_success" = "Votre compte a bien été supprimé !";
+"download_account" = "Télécharger mes données";
+"delete_account_description" = "Êtes vous sur de vouloir supprimer votre compte ? Cette action est irréversible !";
+"more" = "Plus…";
