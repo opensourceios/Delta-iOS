@@ -155,8 +155,15 @@ class CloudDetailsTableViewCell: UITableViewCell {
     @objc func shareClicked(_ sender: UIButton) {
         // Get algorithm url
         if let id = algorithm?.id, let url = URL(string: "https://www.delta-math-helper.com/algorithm/\(id)"), let controller = delegate as? UIViewController {
+            // Create the controller
+            let shareVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            
+            // Set source (for iPad)
+            shareVC.popoverPresentationController?.sourceView = share
+            shareVC.popoverPresentationController?.sourceRect = share.bounds
+            
             // Show the activity controller
-            controller.present(UIActivityViewController(activityItems: [url], applicationActivities: nil), animated: true, completion: nil)
+            controller.present(shareVC, animated: true, completion: nil)
         }
     }
     

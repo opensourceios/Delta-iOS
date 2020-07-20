@@ -15,6 +15,7 @@ class AccountViewController: UIViewController {
     let label = UILabel()
     let button1 = UIButton()
     let button2 = UIButton()
+    let more = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,7 @@ class AccountViewController: UIViewController {
         view.addSubview(label)
         view.addSubview(button1)
         view.addSubview(button2)
+        view.addSubview(more)
         
         // Configure guide
         guide.translatesAutoresizingMaskIntoConstraints = false
@@ -71,6 +73,14 @@ class AccountViewController: UIViewController {
         button2.setTitleColor(.white, for: .normal)
         button2.addTarget(self, action: #selector(onClick(_:)), for: .touchUpInside)
         
+        // Configure more
+        more.translatesAutoresizingMaskIntoConstraints = false
+        more.topAnchor.constraint(equalTo: button2.bottomAnchor, constant: 16).isActive = true
+        more.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor).isActive = true
+        more.setTitleColor(.systemBlue, for: .normal)
+        more.setTitle("more".localized(), for: .normal)
+        more.addTarget(self, action: #selector(onClick(_:)), for: .touchUpInside)
+        
         // Load account
         loadAccount()
     }
@@ -87,11 +97,13 @@ class AccountViewController: UIViewController {
             label.text = "logged_as".localized().format(user.name ?? "Unknown", user.username ?? "unknown")
             button1.setTitle("edit_profile".localized(), for: .normal)
             button2.setTitle("sign_out".localized(), for: .normal)
+            more.isHidden = false
         } else {
             // User is not logged
             label.text = "not_logged".localized()
             button1.setTitle("sign_in".localized(), for: .normal)
             button2.setTitle("sign_up".localized(), for: .normal)
+            more.isHidden = true
         }
     }
     
@@ -102,16 +114,19 @@ class AccountViewController: UIViewController {
             if sender == button1 {
                 // Edit profile
                 editProfile()
-            } else {
+            } else if sender == button2 {
                 // Sign out
                 signOut()
+            } else {
+                // More
+                openMore()
             }
         } else {
             // Check button
             if sender == button1 {
                 // Sign in
                 signIn()
-            } else {
+            } else if sender == button2 {
                 // Sign up
                 signUp()
             }
@@ -283,6 +298,86 @@ class AccountViewController: UIViewController {
                     }
                 }
             }
+        })
+        
+        // Add cancel button
+        alert.addAction(UIAlertAction(title: "cancel".localized(), style: .cancel, handler: nil))
+        
+        // Show it
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func openMore() {
+        // Create an alert
+        let alert = UIAlertController(title: "more".localized(), message: nil, preferredStyle: .alert)
+        
+        // Add download button
+        alert.addAction(UIAlertAction(title: "download_account".localized(), style: .default) { _ in
+            // Show a loading
+            let loading = UIAlertController(title: "status_downloading".localized(), message: nil, preferredStyle: .alert)
+            self.present(loading, animated: true, completion: nil)
+            
+            // Download data
+            Account.current.downloadData { data, status in
+                loading.dismiss(animated: true) {
+                    // Check data
+                    if let data = data, status == .ok {
+                        // Create the controller
+                        let shareVC = UIActivityViewController(activityItems: [data.string], applicationActivities: nil)
+                        
+                        // Set source (for iPad)
+                        shareVC.popoverPresentationController?.sourceView = self.more
+                        shareVC.popoverPresentationController?.sourceRect = self.more.bounds
+                        
+                        // Show the activity controller
+                        self.present(shareVC, animated: true, completion: nil)
+                    } else {
+                        // Download error
+                        let error = UIAlertController(title: "download_account".localized(), message: "status_error".localized(), preferredStyle: .alert)
+                        error.addAction(UIAlertAction(title: "close".localized(), style: .default, handler: nil))
+                        self.present(error, animated: true, completion: nil)
+                    }
+                }
+            }
+        })
+        
+        // Add delete button
+        alert.addAction(UIAlertAction(title: "delete_account".localized(), style: .default) { _ in
+            // Ask for a confirmation (to be sure)
+            let confirmation = UIAlertController(title: "delete_account".localized(), message: "delete_account_description".localized(), preferredStyle: .alert)
+            
+            // Add delete button
+            confirmation.addAction(UIAlertAction(title: "delete".localized(), style: .destructive) { _ in
+                // Show a loading
+                let loading = UIAlertController(title: "loading".localized(), message: nil, preferredStyle: .alert)
+                self.present(loading, animated: true, completion: nil)
+                
+                // Delete data
+                Account.current.delete { status in
+                    // Reload the view
+                    self.loadAccount()
+                    loading.dismiss(animated: true) {
+                        // Check data
+                        if status == .ok {
+                            // Delete success
+                            let error = UIAlertController(title: "delete_account".localized(), message: "delete_account_success".localized(), preferredStyle: .alert)
+                            error.addAction(UIAlertAction(title: "close".localized(), style: .default, handler: nil))
+                            self.present(error, animated: true, completion: nil)
+                        } else {
+                            // Delete error
+                            let error = UIAlertController(title: "delete_account".localized(), message: "status_error".localized(), preferredStyle: .alert)
+                            error.addAction(UIAlertAction(title: "close".localized(), style: .default, handler: nil))
+                            self.present(error, animated: true, completion: nil)
+                        }
+                    }
+                }
+            })
+
+            // Add cancel button
+            confirmation.addAction(UIAlertAction(title: "cancel".localized(), style: .cancel, handler: nil))
+            
+            // Show it
+            self.present(confirmation, animated: true, completion: nil)
         })
         
         // Add cancel button

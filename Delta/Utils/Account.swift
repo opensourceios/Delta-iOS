@@ -152,5 +152,29 @@ class Account: Codable {
             completionHandler(status)
         }
     }
+    
+    // Download data
+    func downloadData(completionHandler: @escaping (Exported?, APIResponseStatus) -> ()) {
+        // Fetch api with token
+        APIRequest("GET", path: "/auth/export.php").execute(Exported.self, completionHandler: completionHandler)
+    }
+    
+    // Delete account
+    func delete(completionHandler: @escaping (APIResponseStatus) -> ()) {
+        // Delete account from API
+        APIRequest("DELETE", path: "/auth/account.php").execute([String: Bool].self) { data, status in
+            if status == .ok {
+                // Clear from object
+                self.access_token = nil
+                self.user = nil
+                
+                // Clear from keychain
+                let _ = Account.keychain.remove(forKey: "access_token")
+            }
+            
+            // Call completion handler
+            completionHandler(status)
+        }
+    }
 
 }

@@ -22,6 +22,10 @@
 "field_name" = "Full name";
 "field_username" = "Username";
 "field_password" = "Password";
+"delete_account" = "Delete my account";
+"delete_account_description" = "Are you sure to delete your account? This is irreversible!";
+"delete_account_success" = "Your account has been deleted!";
+"download_account" = "Download my data";
 "cloud" = "Cloud";
 "cloud_algorithms" = "Algorithms on the Cloud";
 "cloud_details" = "Details of the selected algorithm";
@@ -56,6 +60,7 @@
 "open" = "Open";
 "close" = "Close";
 "check" = "Check";
+"more" = "More…";
 "share" = "Share";
 "loading" = "Loading…";
 "status_local" = "Saved locally";
