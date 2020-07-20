@@ -83,7 +83,7 @@
 "donate_thanks" = "¡Gracias por tu donación para nuestra organización!";
 "donate_footer" = "Esta donación ayuda nuestra organización para desarrollar sus proyectos, principalmente Extopy, la red social que somos desarrollando, que necesitara almacenamiento para sus servidores.";
 "donate_header" = "Elige cuanto quiere donar:";
-"donate_title" = "Hacer una donación";
+"donate_title" = "Donar";
 "settings_cloud_error" = "¡Inicia sesión para utilizar esta funcionalidad!";
 "settings_cloud" = "Hace un clic para configurar el compartir en el nube";
 "settings_icon" = "Hace un clic para configurar el icono";
@@ -117,3 +117,8 @@
 "logged_as" = "Conectado como %@ (%@)";
 "not_logged" = "No conectado";
 "my_account" = "Mi cuenta Delta en el nube";
+"download_account" = "Descargar mis datos";
+"delete_account" = "Suprimir mi cuenta";
+"more" = "Más…";
+"delete_account_description" = "¿Estás seguro de suprimir tu cuenta? ¡Esto es irreversible!";
+"delete_account_success" = "¡Tu cuenta ha sido suprimido!";
