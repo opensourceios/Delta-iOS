@@ -115,3 +115,8 @@
 "settings_cloud" = "Kliknite da podesite Cloud delenje";
 "cloud_settings_other_title" = "Drugo";
 "cloud_settings_notes" = "Beleške";
+"more" = "Više…";
+"download_account" = "Preuzmi moj datoteke";
+"delete_account_success" = "Vaš nalog je izbrisan!";
+"delete_account_description" = "Dali ste sigurni da želite da izbrišate vaš nalog? Ovo je nepovratan!";
+"delete_account" = "Obriši moj nalog";
