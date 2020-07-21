@@ -115,3 +115,8 @@
 "cloud_settings_sync_title" = "Synchronisation";
 "cloud_settings_public" = "öffentlich";
 "cloud_settings_other_title" = "Andren";
+"more" = "Mehr…";
+"download_account" = "Mein Datei herunterladen";
+"delete_account_success" = "Ihren Konto ist gelöscht!";
+"delete_account_description" = "Sind Sie sicher, dass sie ihren Konto löschen wollen? Das ist unumkehrbar!";
+"delete_account" = "Mein Konto löschen";
