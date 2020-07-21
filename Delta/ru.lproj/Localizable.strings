@@ -115,3 +115,8 @@
 "cloud_settings_title" = "Настройки Облака";
 "cloud_settings_sync" = "Сохранить в Delta Cloud";
 "cloud_settings_sync_title" = "Синхронизация";
+"delete_account_description" = "Вы уверены, что удалите свой аккаунт? Это необратимо!";
+"more" = "Больше…";
+"download_account" = "Скачать мои данные";
+"delete_account_success" = "Твой аккаунт был удалён!";
+"delete_account" = "Удалить мой аккаунт";
