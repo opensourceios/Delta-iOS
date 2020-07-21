@@ -115,3 +115,8 @@
 "cloud_settings_notes_title" = "Промени белешке";
 "loading" = "Учитабање…";
 "settings_icon" = "Кликните да подесите иконица";
+"more" = "Више…";
+"download_account" = "Преузми мој датотеке";
+"delete_account_success" = "Ваш налог је избрисан!";
+"delete_account_description" = "Дали сте сигурни да желите да избришате ваш налог? Ово је неповратна!";
+"delete_account" = "Обриши мој налог";
